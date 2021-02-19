@@ -14,9 +14,9 @@
     "build": "yarn clean && tsc",
     "test": "jest",
     "clean": "rm -rf dist && rm -rf node_modules/.cache",
-    "release:stable": "dripip stable",
-    "release:preview": "dripip preview",
     "release:pr": "dripip pr",
+    "release:canary": "dripip preview",
+    "release:stable": "dripip stable",
     "prepublishOnly": "yarn build"
   },
   "devDependencies": {

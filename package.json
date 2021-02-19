@@ -1,6 +1,6 @@
 {
   "name": "nexus-prisma",
-  "version": "0.0.0",
+  "version": "0.0.0-dripip",
   "main": "dist/index.js",
   "repository": "git@github.com:prisma/nexus-prisma.git",
   "author": "Jason Kuhrt",

@@ -1,5 +1,9 @@
 {
   "extends": "../tsconfig.base.json",
   "references": [{ "path": ".." }],
-  "include": ["."]
+  "include": ["."],
+  "compilerOptions": {
+    // for strip-ansi
+    "esModuleInterop": true
+  }
 }

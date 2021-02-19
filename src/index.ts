@@ -1,7 +1,7 @@
-import { validatePeerDependencies } from './lib/package'
+import { enforceValidPeerDependencies } from './lib/peerDepValidator'
 
-validatePeerDependencies({
-  packageJson: require('../package.json'),
+enforceValidPeerDependencies({
+  packageJson: require('../../package.json'),
 })
 
 const nexusPrisma = 'todo'

@@ -122,7 +122,7 @@ it('if project is missing peer dependency an error is thrown', () => {
   expect(runPeerDepValidator()).toMatchInlineSnapshot(`
     "{
       kind: 'peer_dep_not_installed',
-      message: '\\\\x1B[31mERROR:\\\\x1B[39m \\\\x1B[32mcharlie\\\\x1B[39m is a peer dependency required by \\\\x1B[33malpha\\\\x1B[39m. But you have not installed it into this project yet. Please run \`\\\\x1B[32myarn add charlie\\\\x1B[39m\`.'
+      message: 'ERROR: charlie is a peer dependency required by alpha. But you have not installed it into this project yet. Please run \`yarn add charlie\`.'
     }"
   `)
 })
@@ -145,7 +145,7 @@ it('if project peer dep version does not satisfy required range, then a warning 
   expect(runPeerDepValidator()).toMatchInlineSnapshot(`
     "{
       kind: 'peer_dep_invalid_version',
-      message: '\\\\x1B[33mWARNING:\\\\x1B[39m Peer dependency validation check failed: alpha@1.0.0 does not officially support charlie@1.0.0. The officially supported range is: \`2.0.x\`. This could lead to undefined behaviors and bugs.'
+      message: 'WARNING: Peer dependency validation check failed: alpha@1.0.0 does not officially support charlie@1.0.0. The officially supported range is: \`2.0.x\`. This could lead to undefined behaviors and bugs.'
     }"
   `)
 })
@@ -169,7 +169,7 @@ it('if peer dep package.json missing version field, then a warning given', () =>
   expect(runPeerDepValidator()).toMatchInlineSnapshot(`
     "{
       kind: 'peer_dep_invalid_package_json',
-      message: '\\\\x1B[33mWARNING:\\\\x1B[39m Peer dependency validation check failed unexpectedly. alpha requires peer dependency charlie. No version info for charlie could be found in its package.json thus preventing a check if its version satisfies the peer dependency version range.'
+      message: 'WARNING: Peer dependency validation check failed unexpectedly. alpha requires peer dependency charlie. No version info for charlie could be found in its package.json thus preventing a check if its version satisfies the peer dependency version range.'
     }"
   `)
 })

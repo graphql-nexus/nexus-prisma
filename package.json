@@ -13,6 +13,7 @@
     "dev": "tsc --build --watch",
     "build": "yarn clean && tsc",
     "test": "jest",
+    "tdd": "jest --watch",
     "clean": "rm -rf dist && rm -rf node_modules/.cache",
     "release:pr": "dripip pr",
     "release:canary": "dripip preview",
@@ -21,13 +22,19 @@
   },
   "devDependencies": {
     "@prisma-labs/prettier-config": "0.1.0",
+    "@prisma/client": "2.17.0",
     "@types/jest": "26.0.20",
+    "@types/lodash": "^4.14.168",
     "@types/semver": "^7.3.4",
     "dripip": "0.10.0",
+    "execa": "^5.0.0",
+    "fs-jetpack": "^4.1.0",
     "jest": "26.6.3",
     "jest-watch-typeahead": "0.6.1",
+    "lodash": "^4.17.20",
     "nexus": "^1.0.0",
     "prettier": "2.2.1",
+    "prisma": "2.17.0",
     "ts-jest": "26.5.1",
     "ts-node": "^9.1.1",
     "type-fest": "^0.21.1",
@@ -35,10 +42,11 @@
   },
   "prettier": "@prisma-labs/prettier-config",
   "peerDependencies": {
-    "@prisma/client": "^2.17.0",
+    "@prisma/client": "2.17.x",
     "nexus": "^1.0.0"
   },
   "dependencies": {
+    "endent": "^2.0.1",
     "kleur": "^4.1.4",
     "semver": "^7.3.4"
   }

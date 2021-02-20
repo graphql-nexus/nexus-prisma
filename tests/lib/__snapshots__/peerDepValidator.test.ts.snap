@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ValidatePeerDependencies if peer dep missing, then returns failure 1`] = `
+"{
+  kind: 'peer_dep_not_installed',
+  message: 'ERROR: charlie is a peer dependency required by alpha. But you have not installed it into this project yet. Please run \`yarn add charlie\`.'
+}"
+`;
+
+exports[`ValidatePeerDependencies if peer dep package.json missing version field, then returns failure 1`] = `
+"{
+  kind: 'peer_dep_invalid_package_json',
+  message: 'WARNING: Peer dependency validation check failed unexpectedly. alpha requires peer dependency charlie. No version info for charlie could be found in its package.json thus preventing a check if its version satisfies the peer dependency version range.'
+}"
+`;
+
+exports[`ValidatePeerDependencies if peer dep version satisfies required range, then returns null 1`] = `"null"`;
+
+exports[`ValidatePeerDependencies if project peer dep version does not satisfy required range, then returns failure 1`] = `
+"{
+  kind: 'peer_dep_invalid_version',
+  message: 'WARNING: Peer dependency validation check failed: alpha@1.0.0 does not officially support charlie@1.0.0. The officially supported range is: \`2.0.x\`. This could lead to undefined behaviors and bugs.'
+}"
+`;
+
+exports[`enforceValidPeerDependencies if peer dependency is missing, than logs and process exits 1 1`] = `
+"{
+  kind: 'peer_dep_not_installed',
+  message: 'ERROR: charlie is a peer dependency required by alpha. But you have not installed it into this project yet. Please run \`yarn add charlie\`.'
+}
+ERROR: charlie is a peer dependency required by alpha. But you have not installed it into this project yet. Please run \`yarn add charlie\`."
+`;

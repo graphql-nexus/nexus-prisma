@@ -201,7 +201,9 @@ describe('enforceValidPeerDependencies', () => {
     expect(runEnforceValidPeerDependencies({ env: { NO_PEER_DEPENDENCY_CHECK: '1' } }).stdout).toEqual(``)
   })
 
-  it('if peer dependency is missing, than process exits 1', () => {
-    expect(runEnforceValidPeerDependencies().exitCode).toEqual(1)
+  it('if peer dependency is missing, than logs and process exits 1', () => {
+    const result = runEnforceValidPeerDependencies()
+    expect(result.exitCode).toEqual(1)
+    expect(result.stdout).toMatchSnapshot()
   })
 })

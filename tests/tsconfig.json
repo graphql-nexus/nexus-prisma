@@ -3,7 +3,6 @@
   "references": [{ "path": ".." }],
   "include": ["."],
   "compilerOptions": {
-    // for strip-ansi
-    "esModuleInterop": true
+    "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo.test"
   }
 }

@@ -14,6 +14,7 @@ export function enforceValidPeerDependencies({ packageJson }: { packageJson: Pac
   if (['false', '0'].includes(process.env.PEER_DEPENDENCY_CHECK ?? '')) return
 
   const failure = validatePeerDependencies({ packageJson })
+  console.log(failure)
 
   if (failure) {
     console.log(failure.message)

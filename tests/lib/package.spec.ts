@@ -2,8 +2,11 @@ import endent from 'endent'
 import * as execa from 'execa'
 import * as fs from 'fs-jetpack'
 import { FSJetpack } from 'fs-jetpack/types'
+import kleur from 'kleur'
 import { merge, omit } from 'lodash'
 import { PackageJson } from 'type-fest'
+
+kleur.enabled = false
 
 /**
  * setup

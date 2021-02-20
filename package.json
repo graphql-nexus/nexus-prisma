@@ -12,7 +12,7 @@
     "format": "prettier --write .",
     "dev": "tsc --build --watch",
     "build": "yarn clean && tsc",
-    "test": "FORCE_COLOR=0 jest",
+    "test": "jest",
     "tdd": "jest --watch",
     "clean": "rm -rf dist && rm -rf node_modules/.cache",
     "release:pr": "dripip pr",

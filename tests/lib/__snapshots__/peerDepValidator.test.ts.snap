@@ -9,7 +9,7 @@ exports[`ValidatePeerDependencies if peer dep missing, then returns failure 1`] 
 
 exports[`ValidatePeerDependencies if peer dep package.json missing version field, then returns failure 1`] = `
 "{
-  kind: 'peer_dep_invalid_package_json',
+  kind: 'peer_dep_package_json_invalid',
   message: 'WARNING: Peer dependency validation check failed unexpectedly. alpha requires peer dependency charlie. No version info for charlie could be found in its package.json thus preventing a check if its version satisfies the peer dependency version range.'
 }"
 `;

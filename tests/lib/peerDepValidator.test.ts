@@ -159,7 +159,7 @@ describe('ValidatePeerDependencies', () => {
         return badJson
       },
     })
-    expect(runValidatePeerDependencies().stdout).toMatch(/peer_dep_invalid_json/)
+    expect(runValidatePeerDependencies().stdout).toMatch(/peer_dep_package_json_read_error/)
   })
 
   it('if project peer dep version does not satisfy required range, then returns failure', () => {

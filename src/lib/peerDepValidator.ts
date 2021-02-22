@@ -3,10 +3,14 @@ import * as Semver from 'semver'
 import { PackageJson } from 'type-fest'
 
 type Failure =
-  | { message: string; kind: 'peer_dep_not_installed' }
-  | { message: string; kind: 'peer_dep_invalid_json'; error: unknown }
-  | { message: string; kind: 'peer_dep_invalid_package_json' }
+  // todo
+  // | { message: string; kind: 'peer_dep_import_error' }
+  // | { message: string; kind: 'peer_dep_missing_from_node_modules' }
+  // | { message: string; kind: 'peer_dep_missing_from_package_json' }
+  | { message: string; kind: 'peer_dep_not_installed' } // replace with peer_dep_missing_from_package_json
   | { message: string; kind: 'peer_dep_invalid_version' }
+  | { message: string; kind: 'peer_dep_package_json_invalid' }
+  | { message: string; kind: 'peer_dep_package_json_read_error'; error: unknown }
   | { message: string; kind: 'unexpected_error'; error: unknown }
 
 export function enforceValidPeerDependencies({ packageJson }: { packageJson: PackageJson }): void {
@@ -74,7 +78,7 @@ export function validatePeerDependencyRangeSatisfied({
   } catch (error: unknown) {
     if (!isModuleNotFoundError(error)) {
       return {
-        kind: 'peer_dep_invalid_json',
+        kind: 'peer_dep_package_json_read_error',
         message: `Peer dependency check found ${peerDependencyName} requried by ${requireer.name} to be installed but encountered an error while reading its package.json.`,
         error,
       }
@@ -99,7 +103,7 @@ export function validatePeerDependencyRangeSatisfied({
   // case _should_ never happen under normal circumstances.
   if (!pdVersion) {
     return {
-      kind: 'peer_dep_invalid_package_json',
+      kind: 'peer_dep_package_json_invalid',
       message: renderWarning(
         `Peer dependency validation check failed unexpectedly. ${requireer.name} requires peer dependency ${pdPackageJson.name}. No version info for ${pdPackageJson.name} could be found in its package.json thus preventing a check if its version satisfies the peer dependency version range.`
       ),

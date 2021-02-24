@@ -1,6 +1,9 @@
-import kleur = require('kleur')
+import endent from 'endent'
 import * as Semver from 'semver'
 import { PackageJson } from 'type-fest'
+import { d } from '../helpers/debugNexusPrisma'
+import { detectProjectPackageManager, renderAddDeps } from './packageManager'
+import kleur = require('kleur')
 
 type Failure =
   // todo
@@ -16,6 +19,7 @@ type Failure =
 export function enforceValidPeerDependencies({ packageJson }: { packageJson: PackageJson }): void {
   if (['true', '1'].includes(process.env.NO_PEER_DEPENDENCY_CHECK ?? '')) return
   if (['false', '0'].includes(process.env.PEER_DEPENDENCY_CHECK ?? '')) return
+  d('validating peer dependencies')
 
   const failure = validatePeerDependencies({ packageJson })
   console.log(failure)
@@ -87,11 +91,10 @@ export function validatePeerDependencyRangeSatisfied({
     return {
       kind: 'peer_dep_not_installed',
       message: renderError(
-        `${kleur.green(peerDependencyName)} is a peer dependency required by ${kleur.yellow(
-          requireer.name ?? ''
-        )}. But you have not installed it into this project yet. Please run \`${kleur.green(
-          renderPackageCommand(`add ${peerDependencyName}`)
-        )}\`.`
+        // prettier-ignore
+        endent`
+          ${kleur.green(peerDependencyName)} is a peer dependency required by ${kleur.yellow(requireer.name ?? '')}. But you have not installed it into this project yet. Please run \`${kleur.green(renderAddDeps(detectProjectPackageManager(),[peerDependencyName]))}\`.
+        `
       ),
     }
   }
@@ -137,17 +140,6 @@ function renderError(message: string): string {
 
 function renderWarning(message: string): string {
   return `${kleur.yellow('WARNING:')} ${message}`
-}
-
-function getPackageManagerBinName(): string {
-  const userAgent = process.env.npm_config_user_agent || ''
-
-  const packageManagerBinName = userAgent.includes('yarn') ? 'yarn' : 'npm'
-  return packageManagerBinName
-}
-
-function renderPackageCommand(command: string): string {
-  return `${getPackageManagerBinName()} ${command}`
 }
 
 function isModuleNotFoundError(error: any): error is Error {

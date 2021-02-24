@@ -1,10 +1,9 @@
 import { enforceValidPeerDependencies } from './lib/peerDepValidator'
+import * as nexusPrisma from './nexusPrisma'
 
 enforceValidPeerDependencies({
-  packageJson: require('../../package.json'),
+  packageJson: require('../package.json'),
 })
-
-const nexusPrisma = 'todo'
 
 export { nexusPrisma }
 

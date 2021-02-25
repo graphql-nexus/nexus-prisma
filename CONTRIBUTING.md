@@ -13,7 +13,6 @@ The solution is to use [Yalc](https://github.com/wclr/yalc).
 One-time instructions:
 
 1. Install yalc on your machine `npm -g add yalc`.
-1. Install `watchexec` on your machine `brew install watchexec`.
 
 Usually-one-time instructions:
 

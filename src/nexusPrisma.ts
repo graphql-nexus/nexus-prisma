@@ -1,2 +1,2 @@
 export { plugin } from './plugin'
-export { models } from './runtime'
+export { nexus, prisma } from './runtime'

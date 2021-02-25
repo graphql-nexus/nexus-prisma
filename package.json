@@ -12,7 +12,7 @@
     "format": "prettier --write .",
     "dev": "tsc --build --watch",
     "dev:ts": "yarn dev",
-    "dev:yalc": "watchexec 'yalc push --no-scripts' --filter */dist/**/*",
+    "dev:yalc": "nodemon --exec 'yalc push --no-scripts' --watch 'dist/**/*'",
     "build": "yarn clean && tsc",
     "test": "jest",
     "tdd": "jest --watch",
@@ -38,6 +38,7 @@
     "jest-watch-typeahead": "0.6.1",
     "lodash": "^4.17.21",
     "nexus": "^1.0.0",
+    "nodemon": "^2.0.7",
     "prettier": "2.2.1",
     "prettier-plugin-jsdoc": "^0.3.12",
     "prisma": "2.17.0",
@@ -60,5 +61,10 @@
     "setset": "^0.0.6",
     "ts-morph": "^9.1.0",
     "typescript": "^4.2.2"
+  },
+  "nodemonConfig": {
+    "events": {
+      "start": "echo \"\\x1Bc\""
+    }
   }
 }

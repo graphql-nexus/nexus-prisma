@@ -2,7 +2,8 @@
 
 [![trunk](https://github.com/prisma/nexus-prisma/actions/workflows/trunk.yml/badge.svg)](https://github.com/prisma/nexus-prisma/actions/workflows/trunk.yml)
 
-Official Prisma plugin for Nexus
+Official Prisma plugin for Nexus.  
+**Currently in development - not to be used in Production.** Follow the progress from [here](https://github.com/graphql-nexus/nexus-plugin-prisma/issues/1039).
 
 ## Features
 

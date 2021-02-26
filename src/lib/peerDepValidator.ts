@@ -22,11 +22,8 @@ export function enforceValidPeerDependencies({ packageJson }: { packageJson: Pac
   d('validating peer dependencies')
 
   const failure = validatePeerDependencies({ packageJson })
-  console.log(failure)
 
   if (failure) {
-    console.log(failure.message)
-
     if ('error' in failure) {
       console.error(failure.error)
     }
@@ -42,8 +39,8 @@ export function enforceValidPeerDependencies({ packageJson }: { packageJson: Pac
  *
  * When envar skipping enabled then:
  *
- *    1. NO-op if PEER_DEPENDENCY_CHECK envar is set to false or 0
- *    2. NO-op if NO_PEER_DEPENDENCY_CHECK envar is set to true or 1
+ * 1. NO-op if PEER_DEPENDENCY_CHECK envar is set to false or 0
+ * 2. NO-op if NO_PEER_DEPENDENCY_CHECK envar is set to true or 1
  */
 export function validatePeerDependencies({ packageJson }: { packageJson: PackageJson }): null | Failure {
   try {

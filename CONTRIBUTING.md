@@ -10,16 +10,36 @@ Linking with Nexus Prisma is problematic because some modules in the Nexus Prism
 
 The solution is to use [Yalc](https://github.com/wclr/yalc).
 
-One-time instructions:
+#### Instructions
+
+Definitions:
+
+- `Nexus Prisma`: Your local checkout of the source code.
+- `Project`: Some project that you are trying out your local version of Nexus Prisma on.
+
+One-time:
 
 1. Install yalc on your machine `npm -g add yalc`.
+1. Install nodemon on your machine `npm -g add nodemon`.
 
-Usually-one-time instructions:
+Usually-one-time:
 
-1. In your project where you want to try out the local version of Nexus Prisma run `yalc add nexus-prisma`.
+1. In `Project` run `yalc add nexus-prisma`.
 
-Every-time instructions:
+Every-time:
 
-1. In your Nexus Prisma checkout run the VSCode task `dev:link`.
+1. In `Nexus Prisma` run the VSCode task `dev:link`.
+1. In `Project` run `nodemon --watch '.yalc/**/*' --exec 'yarn -s prisma generate'`
 
-Now every time you edit Nexus Prisma source, and after TS has emitted a build, `yalc push` will run, and you should have effectively a link workflow! 🚀
+With all this in place, the chain reaction goes like this:
+
+1. You change `Nexus Prisma`
+1. `Nexus Prisma` TS in watch mode emits into `dist`
+1. `Nexus Prisma` `nodemon` reacts to this, runs `yalc push`, Yalc emits into `Project`'s `.yalc` dir
+1. `Project` `nodemon` reacts to this, runs `prisma generate`
+1. You try things out with newly generated Nexus Prisma in `Project`!
+
+## Debugging
+
+- We use `debug`. Enable by setting envar `DEBUG=nexus-prisma*`
+- If you set envar `NP_DEBUG=true` then Nexus Prisma will write `dmmf.json` to CWD at generation time.

@@ -33,7 +33,41 @@ nexusPrisma.models.User.name.isRequired // false
 
 ## Features
 
-### Type Safe Seamless Generated Library Code
+### PSL model & field documentation projected as GraphQL documentaton
+
+```prisma
+/// A user
+model User {
+  /// A stable identifier to find users by
+  id  String  @id
+}
+```
+
+```ts
+import { User } from 'nexus-prisma'
+
+User.$description // JSDoc: A user
+User.id.description // JSDoc: A stable identifier to find users by
+```
+
+### PSL model & field documentation projected as JSDoc in generated library
+
+```prisma
+/// A user
+model User {
+  /// A stable identifier to find users by
+  id  String  @id
+}
+```
+
+```ts
+import { User } from 'nexus-prisma'
+
+User // JSDoc: A user
+User.id // JSDoc: A stable identifier to find users by
+```
+
+### Type-safe seamless generated library code
 
 Part of the Nexus Prisma API is generated code based on your Prisma schema. The result is an API that feels tailor made for your project.
 

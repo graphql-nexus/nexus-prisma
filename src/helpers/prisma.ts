@@ -31,3 +31,14 @@ export const getPrismaClientDmmf = (importId: string = '@prisma/client'): DMMF.D
 
   return dmmf
 }
+
+export type PrismaScalarType =
+  | 'String'
+  | 'Boolean'
+  | 'Int'
+  | 'BigInt'
+  | 'Float'
+  | 'Decimal'
+  | 'DateTime'
+  | 'Json'
+  | 'Bytes'

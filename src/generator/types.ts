@@ -1,4 +1,4 @@
-export type GeneratedModule = {
+export type ModuleSpec = {
   fileName: string
   content: string
 }

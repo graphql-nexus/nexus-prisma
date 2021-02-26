@@ -6,13 +6,18 @@
   "author": "Jason Kuhrt",
   "license": "MIT",
   "files": [
-    "dist"
+    "dist",
+    "plugin.js"
   ],
+  "bin": {
+    "nexus-prisma": "./dist/cli/nexus-prisma.js",
+    "nexus-prisma-2": "./dist/cli/nexus-prisma.js"
+  },
   "scripts": {
     "format": "prettier --write .",
     "dev": "tsc --build --watch",
     "dev:ts": "yarn dev",
-    "dev:yalc": "nodemon --exec 'yalc push --no-scripts' --watch 'dist/**/*'",
+    "dev:yalc": "nodemon --exec 'yalc push --no-scripts && chmod +x /Users/jasonkuhrt/projects/prisma/cloud/node_modules/.bin/nexus-prisma-2' --watch 'dist/**/*'",
     "build": "yarn clean && tsc",
     "test": "jest",
     "tdd": "jest --watch",
@@ -29,6 +34,7 @@
     "@types/debug": "^4.1.5",
     "@types/jest": "26.0.20",
     "@types/lodash": "^4.14.168",
+    "@types/pluralize": "^0.0.29",
     "@types/semver": "^7.3.4",
     "dripip": "0.10.0",
     "execa": "^5.0.0",
@@ -44,7 +50,8 @@
     "prisma": "2.17.0",
     "ts-jest": "26.5.1",
     "ts-node": "^9.1.1",
-    "type-fest": "^0.21.1"
+    "type-fest": "^0.21.2",
+    "typescript": "^4.2.2"
   },
   "prettier": "@prisma-labs/prettier-config",
   "peerDependencies": {
@@ -57,10 +64,10 @@
     "endent": "^2.0.1",
     "kleur": "^4.1.4",
     "ono": "^7.1.3",
+    "pkg-up": "^3.1.0",
+    "pluralize": "^8.0.0",
     "semver": "^7.3.4",
-    "setset": "^0.0.6",
-    "ts-morph": "^9.1.0",
-    "typescript": "^4.2.2"
+    "setset": "^0.0.6"
   },
   "nodemonConfig": {
     "events": {

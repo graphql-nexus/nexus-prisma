@@ -48,7 +48,7 @@ export const schema = makeSchema({
 
 ## Features
 
-> **Note**: ⛑ The following use abbreviated examples that skip a complete setup of passing Nexus type definition to Nexus `makeSchema`. If you are new to Nexus, Consider reading the [official Nexus tutorial](https://nxs.li/tutorial) before jumping into Nexus Prisma :person_doing_cartwheel::skin-tone-2:.
+> **Note**: ⛑ The following use abbreviated examples that skip a complete setup of passing Nexus type definition to Nexus `makeSchema`. If you are new to Nexus, Consider reading the [official Nexus tutorial](https://nxs.li/tutorial) before jumping into Nexus Prisma.
 
 ### Type-safe seamless generated library code
 

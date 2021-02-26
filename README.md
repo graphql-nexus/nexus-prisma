@@ -8,72 +8,173 @@ Official Prisma plugin for Nexus
 
 ```prisma
 
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator nexusPrisma {
+  // This is a temporary name, soon will be just "nexus-prisma" (pending a change in Prisma core).
+  provider = "nexus-prisma-2"
+}
+
+
+/// This is a user!
 model User {
-  id    String  @id
-  name  String?
-  email String
+  /// This is an id!
+  id  String  @id
 }
 ```
 
+```
+$ prisma generate
+```
+
 ```ts
-import { nexusPrisma } from 'nexus-prisma'
-import { makeSchema } from 'nexus'
+import { User } from 'nexus-prisma'
+import { makeSchema, objectType } from 'nexus'
 
-makeSchema({
-  plugins: [nexusPrisma.plugin()],
+export const schema = makeSchema({
+  types: [
+    objectType({
+      name: User.$name
+      description: User.$description
+      definition(t) {
+        t.field(User.id.name, User.id)
+      }
+    })
+  ]
 })
-
-// Before Nexus reflection `models` is a recursive proxy trapping all interactions typed as `any`
-// After Nexus reflection this data will be available to you, fully typed!
-
-nexusPrisma.models.User.id.type // "String"
-nexusPrisma.models.User.name.isRequired // false
-// ...
 ```
 
 ## Features
 
-### PSL model & field documentation projected as GraphQL documentaton
-
-```prisma
-/// A user
-model User {
-  /// A stable identifier to find users by
-  id  String  @id
-}
-```
-
-```ts
-import { User } from 'nexus-prisma'
-
-User.$description // JSDoc: A user
-User.id.description // JSDoc: A stable identifier to find users by
-```
-
-### PSL model & field documentation projected as JSDoc in generated library
-
-```prisma
-/// A user
-model User {
-  /// A stable identifier to find users by
-  id  String  @id
-}
-```
-
-```ts
-import { User } from 'nexus-prisma'
-
-User // JSDoc: A user
-User.id // JSDoc: A stable identifier to find users by
-```
+> **Note**: ⛑ The following use abbreviated examples that skip a complete setup of passing Nexus type definition to Nexus `makeSchema`. If you are new to Nexus, Consider reading the [official Nexus tutorial](https://nxs.li/tutorial) before jumping into Nexus Prisma :person_doing_cartwheel::skin-tone-2:.
 
 ### Type-safe seamless generated library code
 
-Part of the Nexus Prisma API is generated code based on your Prisma schema. The result is an API that feels tailor made for your project.
+Following the same philosophy as Prisma Client, Nexus Prisma uses generation to create an API that feels tailor made for your project.
 
-When your project is in a state where the generated Nexus Prisma part is missing (new repo clone, reinstalled deps, etc.) Nexus Prisma gives you a runtime _proxy_ that quietly lets your runtime execute without a hard error, whilst you get your code generation development loop running.
+```prisma
+model User {
+  id  String  @id
+}
+```
 
-### Opt-outable friendly runtime peer dependency checks
+```ts
+import { User } from 'nexus-prisma'
+import { objectType } from 'nexus'
+
+objectType({
+  name: User.$name
+  description: User.$description
+  definition(t) {
+    t.field(User.id.name, {
+      type: User.id.type,
+      description: User.id.description
+    })
+  }
+})
+```
+
+### Prisma ID field to GraphQL ID scalar type mapping
+
+All `@id` fields in your Prisma Schema get projected as `ID` types, not `String` types.
+
+```prisma
+model User {
+  id  String  @id
+}
+```
+
+```ts
+import { User } from 'nexus-prisma'
+import { objectType } from 'nexus'
+
+objectType({
+  name: User.$name
+  description: User.$description
+  definition(t) {
+    t.field(User.id.name, User.id)
+  }
+})
+```
+
+```graphql
+type User {
+  id: ID
+}
+```
+
+### Prisma Schema model & field documentation re-use
+
+#### GraphQL documentation for your API clients
+
+```prisma
+/// A user.
+model User {
+  /// A stable identifier to find users by.
+  id  String  @id
+}
+```
+
+```ts
+import { User } from 'nexus-prisma'
+import { objectType } from 'nexus'
+
+User.$description // JSDoc: A user.
+User.id.description // JSDoc: A stable identifier to find users by.
+
+objectType({
+  name: User.$name
+  description: User.$description
+  definition(t) {
+    t.field(User.id.name, User.id)
+  }
+})
+```
+
+```graphql
+"""
+A user.
+"""
+type User {
+  """
+  A stable identifier to find users by.
+  """
+  id: ID
+}
+```
+
+#### Internal JSDoc for your team
+
+```prisma
+/// A user.
+model User {
+  /// A stable identifier to find users by.
+  id  String  @id
+}
+```
+
+```ts
+import { User } from 'nexus-prisma'
+
+User // JSDoc: A user.
+User.id // JSDoc: A stable identifier to find users by.
+```
+
+### Refined DX
+
+These are finer points that aren't perhaps worth a top-level point but none the less add up toward a thoughtful developer experience.
+
+##### Default JSDoc Prompts
+
+Fields and models that you do not document will result in a helpful default JSDoc that teaches you about this.
+
+##### Runtime Proxy
+
+When your project is in a state where the generated Nexus Prisma part is missing (new repo clone, reinstalled deps, etc.) Nexus Prisma gives you a default runtime export named `PleaseRunPrismaGenerate` and will error with a clear message.
+
+##### Opt-outable friendly runtime peer dependency checks
 
 When `nexus-prisma` is imported it will validate that your project has peer dependencies setup correctly.
 

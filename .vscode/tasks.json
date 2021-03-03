@@ -7,6 +7,17 @@
       "label": "dev:link",
       "dependsOn": ["dev:yalc", "dev:ts"]
     },
+    {
+      "label": "tdd",
+      "type": "shell",
+      "command": "yarn -s tdd",
+      "presentation": {
+        "group": "test",
+        "focus": true,
+        "panel": "shared",
+        "clear": true
+      }
+    },
 
     // Lower level task building blocks
 

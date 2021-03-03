@@ -22,7 +22,7 @@ export function jsDocForField({ field, model }: { field: DMMF.Field; model: DMMF
     : missingFieldDocumentation({ field, model })
 }
 
-export function missingModelDocumentation({ name }: DMMF.Model) {
+export function missingModelDocumentation({ name }: DMMF.Model): string {
   return endent`
     /**
      * ### 📔 Missing Model Documentation for \`${name}\`
@@ -57,7 +57,13 @@ export function missingModelDocumentation({ name }: DMMF.Model) {
   `
 }
 
-export function missingFieldDocumentation({ field, model }: { field: DMMF.Field; model: DMMF.Model }) {
+export function missingFieldDocumentation({
+  field,
+  model,
+}: {
+  field: DMMF.Field
+  model: DMMF.Model
+}): string {
   return endent`
     /**
      * ### 📔 Missing Field Documentation for \`${field.name}\`

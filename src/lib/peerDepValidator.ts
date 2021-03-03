@@ -54,7 +54,7 @@ export function validatePeerDependencies({ packageJson }: { packageJson: Package
 
       if (failure) return failure
     }
-  } catch (error) {
+  } catch (error: unknown) {
     return {
       kind: 'unexpected_error',
       message: renderWarning(`Something went wrong while trying to validate peer dependencies`),
@@ -75,12 +75,16 @@ export function validatePeerDependencyRangeSatisfied({
   let pdPackageJson: PackageJson
 
   try {
+    // Use the Node dep lookup algorithm
+    // eslint-disable-next-line
     pdPackageJson = require(`${peerDependencyName}/package.json`) as PackageJson
   } catch (error: unknown) {
     if (!isModuleNotFoundError(error)) {
       return {
         kind: 'peer_dep_package_json_read_error',
-        message: `Peer dependency check found ${peerDependencyName} requried by ${requireer.name} to be installed but encountered an error while reading its package.json.`,
+        message: `Peer dependency check found ${peerDependencyName} requried by ${
+          requireer.name ?? '<undefined>'
+        } to be installed but encountered an error while reading its package.json.`,
         error,
       }
     }
@@ -90,7 +94,7 @@ export function validatePeerDependencyRangeSatisfied({
       message: renderError(
         // prettier-ignore
         endent`
-          ${kleur.green(peerDependencyName)} is a peer dependency required by ${kleur.yellow(requireer.name ?? '')}. But you have not installed it into this project yet. Please run \`${kleur.green(renderAddDeps(detectProjectPackageManager(),[peerDependencyName]))}\`.
+          ${kleur.green(peerDependencyName)} is a peer dependency required by ${renderPackageJsonField(requireer,'name')}. But you have not installed it into this project yet. Please run \`${kleur.green(renderAddDeps(detectProjectPackageManager(),[peerDependencyName]))}\`.
         `
       ),
     }
@@ -105,7 +109,16 @@ export function validatePeerDependencyRangeSatisfied({
     return {
       kind: 'peer_dep_package_json_invalid',
       message: renderWarning(
-        `Peer dependency validation check failed unexpectedly. ${requireer.name} requires peer dependency ${pdPackageJson.name}. No version info for ${pdPackageJson.name} could be found in its package.json thus preventing a check if its version satisfies the peer dependency version range.`
+        `Peer dependency validation check failed unexpectedly. ${renderPackageJsonField(
+          requireer,
+          'name'
+        )} requires peer dependency ${renderPackageJsonField(
+          pdPackageJson,
+          'name'
+        )}. No version info for ${renderPackageJsonField(
+          pdPackageJson,
+          'name'
+        )} could be found in its package.json thus preventing a check if its version satisfies the peer dependency version range.`
       ),
     }
   }
@@ -113,7 +126,16 @@ export function validatePeerDependencyRangeSatisfied({
   if (!pdVersionRangeSupported) {
     console.warn(
       renderWarning(
-        `Peer dependency validation check failed unexpectedly. ${requireer.name} apparently requires peer dependency ${pdPackageJson.name} yet ${pdPackageJson.name} is not listed in the peer dependency listing of ${requireer.name}.`
+        `Peer dependency validation check failed unexpectedly. ${renderPackageJsonField(
+          requireer,
+          'name'
+        )} apparently requires peer dependency ${renderPackageJsonField(
+          pdPackageJson,
+          'name'
+        )} yet ${renderPackageJsonField(
+          pdPackageJson,
+          'name'
+        )} is not listed in the peer dependency listing of ${renderPackageJsonField(requireer, 'name')}.`
       )
     )
     return null
@@ -126,7 +148,16 @@ export function validatePeerDependencyRangeSatisfied({
   return {
     kind: 'peer_dep_invalid_version',
     message: renderWarning(
-      `Peer dependency validation check failed: ${requireer.name}@${requireer.version} does not officially support ${pdPackageJson.name}@${pdPackageJson.version}. The officially supported range is: \`${pdVersionRangeSupported}\`. This could lead to undefined behaviors and bugs.`
+      `Peer dependency validation check failed: ${renderPackageJsonField(
+        requireer,
+        'name'
+      )}@${renderPackageJsonField(requireer, 'version')} does not officially support ${renderPackageJsonField(
+        pdPackageJson,
+        'name'
+      )}@${renderPackageJsonField(
+        pdPackageJson,
+        'version'
+      )}. The officially supported range is: \`${pdVersionRangeSupported}\`. This could lead to undefined behaviors and bugs.`
     ),
   }
 }
@@ -139,10 +170,17 @@ function renderWarning(message: string): string {
   return `${kleur.yellow('WARNING:')} ${message}`
 }
 
-function isModuleNotFoundError(error: any): error is Error {
-  if (error instanceof Error && (error as any).code === 'MODULE_NOT_FOUND') {
+function isModuleNotFoundError(error: unknown): error is Error {
+  // @ts-expect-error .code is not a standard field
+  if (error instanceof Error && error.code === 'MODULE_NOT_FOUND') {
     return true
   }
 
   return false
+}
+
+function renderPackageJsonField(packageJson: PackageJson, fieldName: keyof PackageJson): string {
+  return kleur.yellow(
+    packageJson[fieldName] === undefined ? `<${fieldName} is undefined>` : String(packageJson[fieldName])
+  )
 }

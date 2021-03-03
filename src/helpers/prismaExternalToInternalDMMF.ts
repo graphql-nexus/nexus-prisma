@@ -1,3 +1,10 @@
+/* eslint-disable */
+/**
+ * This module is pulled out of @prisma/client codebase.
+ *
+ * TODO Ask client team to expose this helper function from @prisma/client
+ */
+
 import { DMMF, DMMF as ExternalDMMF } from '@prisma/generator-helper'
 import { capitalize, lowerCase } from 'lodash'
 import pluralize from 'pluralize'

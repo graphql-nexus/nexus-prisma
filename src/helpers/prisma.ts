@@ -6,13 +6,15 @@ import { d } from './debugNexusPrisma'
 import { GITHUB_NEW_DISCUSSION_LINK } from './errorMessages'
 import kleur = require('kleur')
 
-export const getPrismaClientDmmf = (importId: string = '@prisma/client'): DMMF.Document => {
+export const getPrismaClientDmmf = (importId = '@prisma/client'): DMMF.Document => {
   d('get dmmf from @prisma/client')
 
-  let dmmf: DMMF.Document | undefined
+  let maybeDmmf: DMMF.Document | undefined
 
   try {
-    dmmf = require(importId).dmmf
+    // We duck type check below
+    // eslint-disable-next-line
+    maybeDmmf = require(importId).dmmf
   } catch (error) {
     // prettier-ignore
     throw ono(error, endent`
@@ -20,7 +22,7 @@ export const getPrismaClientDmmf = (importId: string = '@prisma/client'): DMMF.D
     `)
   }
 
-  if (!dmmf) {
+  if (maybeDmmf === undefined) {
     // prettier-ignore
     throw new Error(endent`
       Failed to get Prisma Client DMMF. It was imported from ${kleur.yellow(importId)} but was \`undefined\`.
@@ -29,7 +31,18 @@ export const getPrismaClientDmmf = (importId: string = '@prisma/client'): DMMF.D
     `)
   }
 
-  return dmmf
+  /** Simple duck type to sanity check we got good data at runtime. */
+
+  const dmmf = maybeDmmf
+  const expectedFields = ['datamodel', 'schema', 'mappings'] as const
+
+  if (expectedFields.find((fieldName) => dmmf[fieldName] && typeof dmmf[fieldName] !== 'object')) {
+    throw new Error(endent`
+      The DMMF imported from ${importId} appears to be invalid. Missing one/all of expected fields: 
+    `)
+  }
+
+  return maybeDmmf
 }
 
 export type PrismaScalarType =

@@ -3,7 +3,7 @@ import * as Nexus from 'nexus'
 import { d } from './helpers/debugNexusPrisma'
 import { settings, SettingsInput } from './settings'
 
-export const plugin = (settingsInput?: SettingsInput) => {
+export function plugin(settingsInput?: SettingsInput): Nexus.core.NexusPlugin {
   return Nexus.plugin({
     name: 'nexus-prisma',
     onInstall() {

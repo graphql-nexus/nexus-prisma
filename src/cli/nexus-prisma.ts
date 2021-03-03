@@ -5,7 +5,6 @@
 process.env.DEBUG_COLORS = 'true'
 process.env.DEBUG_HIDE_DATE = 'true'
 
-import {} from '@prisma/client'
 import { generatorHandler } from '@prisma/generator-helper'
 import * as Path from 'path'
 import { generateRuntime } from '../generator'
@@ -23,6 +22,8 @@ generatorHandler({
       prettyName: 'Nexus Prisma',
     }
   },
+  // async required by interface
+  // eslint-disable-next-line
   async onGenerate({ dmmf }) {
     const internalDMMF = externalToInternalDmmf(dmmf)
     console.log('created internal dmmf')

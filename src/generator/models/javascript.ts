@@ -12,6 +12,8 @@ type Models = Record<
     string,
     | {
         name: string
+        // Any types required by Nexus API here. `unknown` does not work.
+        // eslint-disable-next-line
         type: NexusNonNullDef<any> | NexusListDef<any> | NexusNullDef<any>
         description: string
       }
@@ -58,6 +60,8 @@ export function createModels(dmmf: DMMF.Document): Models {
   return result
 }
 
+// Complex return type I don't really understand how to easily work with manually.
+// eslint-disable-next-line
 export function fieldToNexusType(field: DMMF.Field) {
   const graphqlType = fieldTypeToGraphQLType(field)
 

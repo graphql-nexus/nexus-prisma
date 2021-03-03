@@ -1,10 +1,8 @@
 /**
- * This module deals with abstractions around if the user's project is npm or
- * yarn based. Sometimes messages need to be written with one of these tools in
- * mind, or spawns must be executed using one of these tools. The one to use is
- * typically a reflection of what the user has chosen in their project. This
- * module provides utilities for working in code with the package managers in an
- * agnostic way.
+ * This module deals with abstractions around if the user's project is npm or yarn based. Sometimes messages
+ * need to be written with one of these tools in mind, or spawns must be executed using one of these tools.
+ * The one to use is typically a reflection of what the user has chosen in their project. This module provides
+ * utilities for working in code with the package managers in an agnostic way.
  */
 import * as fs from 'fs-jetpack'
 import * as Path from 'path'
@@ -12,16 +10,14 @@ import * as Path from 'path'
 const YARN_LOCK_FILE_NAME = 'yarn.lock'
 const NPM_LOCK_FILE_NAME = 'package-lock.json'
 
-/**
- *  Example: 'yarn/1.22.4 npm/? node/v13.11.0 darwin x64'
- */
+/** Example: 'yarn/1.22.4 npm/? node/v13.11.0 darwin x64' */
 const NPM_CONFIG_USER_AGENT_PACKAGE_MANAGER_TYPE_PATTERN = /(yarn|npm)(?=\/\d+\.?)+/
 
 export type PackageManagerType = 'yarn' | 'npm'
 
 /**
- * Detect if the project is yarn or npm based. Detection is based on useragent,
- * if present, then the lockfile present. If nothing is found, npm is assumed.
+ * Detect if the project is yarn or npm based. Detection is based on useragent, if present, then the lockfile
+ * present. If nothing is found, npm is assumed.
  */
 export function detectProjectPackageManager(opts?: {
   /**
@@ -34,7 +30,7 @@ export function detectProjectPackageManager(opts?: {
   const userAgent: string | undefined = process.env.npm_config_user_agent
 
   if (userAgent) {
-    const matchResult = userAgent.match(NPM_CONFIG_USER_AGENT_PACKAGE_MANAGER_TYPE_PATTERN)
+    const matchResult = NPM_CONFIG_USER_AGENT_PACKAGE_MANAGER_TYPE_PATTERN.exec(userAgent)
     if (matchResult && (matchResult[0] === 'yarn' || matchResult[0] === 'npm')) {
       return matchResult[0]
     }
@@ -54,23 +50,17 @@ export function detectProjectPackageManager(opts?: {
   return 'npm'
 }
 
-/**
- * Render the running of the given command as coming from the local bin.
- */
+/** Render the running of the given command as coming from the local bin. */
 export function renderRunBin(pmt: PackageManagerType, commandString: string): string {
   return pmt === 'npm' ? `npx ${commandString}` : `yarn -s ${commandString}`
 }
 
-/**
- * Render running of the given script defined in package.json.
- */
+/** Render running of the given script defined in package.json. */
 export function renderRunScript(pmt: PackageManagerType, scriptName: string): string {
   return pmt === 'npm' ? `npm run -s ${scriptName}` : `yarn -s ${scriptName}`
 }
 
-/**
- * Add a package to the project.
- */
+/** Add a package to the project. */
 export function renderAddDeps(
   pmt: PackageManagerType,
   packages: string[],

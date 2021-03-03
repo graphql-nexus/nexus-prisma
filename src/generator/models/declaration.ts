@@ -152,7 +152,7 @@ export function fieldTypeToGraphQLType(field: DMMF.Field): LiteralUnion<GraphQLS
           return graphQLScalarTypes.String
         }
         default: {
-          allCasesHandled(typeName)
+          return allCasesHandled(typeName)
         }
       }
     }

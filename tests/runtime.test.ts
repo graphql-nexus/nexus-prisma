@@ -1,6 +1,6 @@
 import * as PrismaSDK from '@prisma/sdk'
 import endent from 'endent'
-import { generateRuntimeSource } from '../src/generator'
+import { generateRuntime } from '../src/generator/generate'
 
 it('generates static TS code given DMMF', async () => {
   const schema = endent`
@@ -26,7 +26,7 @@ it('generates static TS code given DMMF', async () => {
     datamodel: schema,
   })
 
-  const source = generateRuntimeSource(dmmf)
+  const source = generateRuntime(dmmf)
 
   expect(source).toMatchSnapshot()
 })

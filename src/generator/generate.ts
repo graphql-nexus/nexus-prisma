@@ -8,13 +8,8 @@ import { ModuleSpec } from './types'
 
 const OUTPUT_SOURCE_DIR = getOutputSourceDir()
 
-/**
- * Generate the Nexus Prisma runtime.
- *
- * This will transform the given DMMF into JS source code with accompanying TS declarations. This will be
- * emitted into a "hole" in the internal package source tree.
- */
-export function generateRuntime(dmmf: DMMF.Document): void {
+/** Generate the Nexus Prisma runtime files and emit them into a "hole" in the internal package source tree. */
+export function generateRuntimeAndEmit(dmmf: DMMF.Document): void {
   d('start generateRuntime')
 
   if (process.env.NP_DEBUG) {
@@ -35,7 +30,17 @@ export function generateRuntime(dmmf: DMMF.Document): void {
     d(`did write ${filePath}`)
   })
 
-  d(`done writing all emitting files`)
+  d(`done writing all emitted files`)
+}
+
+/** Transform the given DMMF into JS source code with accompanying TS declarations. */
+export function generateRuntime(dmmf: DMMF.Document): ModuleSpec[] {
+  const sourceFiles: ModuleSpec[] = [
+    ModelsGenerator.JS.createModuleSpec(),
+    ModelsGenerator.TS.createModuleSpec(dmmf),
+  ]
+
+  return sourceFiles
 }
 
 /**

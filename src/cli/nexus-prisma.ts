@@ -7,7 +7,7 @@ process.env.DEBUG_HIDE_DATE = 'true'
 
 import { generatorHandler } from '@prisma/generator-helper'
 import * as Path from 'path'
-import { generateRuntime } from '../generator'
+import { generateRuntimeAndEmit } from '../generator'
 import { externalToInternalDmmf } from '../helpers/prismaExternalToInternalDMMF'
 
 // todo by default error in ci and warn in local
@@ -27,6 +27,6 @@ generatorHandler({
   async onGenerate({ dmmf }) {
     const internalDMMF = externalToInternalDmmf(dmmf)
     console.log('created internal dmmf')
-    generateRuntime(internalDMMF)
+    generateRuntimeAndEmit(internalDMMF)
   },
 })

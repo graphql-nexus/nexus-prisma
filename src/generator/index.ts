@@ -1,1 +1,1 @@
-export { generateRuntime } from './generate'
+export { generateRuntimeAndEmit } from './generate'

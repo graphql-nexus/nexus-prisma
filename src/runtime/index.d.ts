@@ -1,19 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`generates static TS code given DMMF 1`] = `
-Array [
-  Object {
-    "content": "const { getPrismaClientDmmf } = require('../helpers/prisma')
-const ModelsGenerator = require('../generator/models')
-
-const dmmf = getPrismaClientDmmf()
-const models = ModelsGenerator.JS.createModels(dmmf)
-
-module.exports = models",
-    "fileName": "index.js",
-  },
-  Object {
-    "content": "import * as Nexus from 'nexus'
+import * as Nexus from 'nexus'
 import * as NexusCore from 'nexus/dist/core'
 
 //
@@ -22,7 +7,7 @@ import * as NexusCore from 'nexus/dist/core'
 
 namespace $Types {
   /**
-   * ### 📔 Missing Model Documentation for \`M1\`
+   * ### 📔 Missing Model Documentation for `M1`
    * 
    * Get JSDoc documentation for this model automatically by documenting
    * it in your Prisma Schema ✨!
@@ -33,29 +18,29 @@ namespace $Types {
    * 
    * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
    * 
-   * \`\`\`prisma
+   * ```prisma
    * /// Lorem ipsum dolor sit amet...
    * model M1 {
    *   id  String  @id
    * }
-   * \`\`\`
+   * ```
    * 
    * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
    * 
-   * \`\`\`prisma
+   * ```prisma
    * /// A user record. A user maps 1:1 with a person. Not
-   * /// to be confused with an \`Account\` which on person
-   * /// may have multiple of, all linked to a single \`User\`.
+   * /// to be confused with an `Account` which on person
+   * /// may have multiple of, all linked to a single `User`.
    * model User {
    *   id  String  @id
    * }
-   * \`\`\`
+   * ```
    */
   interface M1 {
     $name: 'M1'
     $description: null
     /**
-     * ### 📔 Missing Field Documentation for \`f10\`
+     * ### 📔 Missing Field Documentation for `f10`
      * 
      * Get JSDoc documentation for this field automatically by documenting
      * it in your Prisma Schema ✨!
@@ -66,25 +51,25 @@ namespace $Types {
      * 
      * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
      * 
-     * \`\`\`prisma
+     * ```prisma
      * model M1 {
      *   /// Lorem ipsum dolor sit amet.
      *   f10  String
      * }
-     * \`\`\`
+     * ```
      * 
      * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
      * 
-     * \`\`\`prisma
+     * ```prisma
      * model User {
      *   /// Identifier for a user. Will never change once set.
-     *   /// More stable than the \`handle\` field  which user
+     *   /// More stable than the `handle` field  which user
      *   /// _can_ change, but is not human-friendly. Prefer this
-     *   /// for machine consumers but prefer \`handle\` for human
+     *   /// for machine consumers but prefer `handle` for human
      *   /// visible things like URL slugs.
      *   id  String  @id
      * }
-     * \`\`\`
+     * ```
      */
     f10: {
       /**
@@ -103,7 +88,7 @@ namespace $Types {
       description: undefined
     }
     /**
-     * ### 📔 Missing Field Documentation for \`f11\`
+     * ### 📔 Missing Field Documentation for `f11`
      * 
      * Get JSDoc documentation for this field automatically by documenting
      * it in your Prisma Schema ✨!
@@ -114,25 +99,25 @@ namespace $Types {
      * 
      * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
      * 
-     * \`\`\`prisma
+     * ```prisma
      * model M1 {
      *   /// Lorem ipsum dolor sit amet.
      *   f11  Int
      * }
-     * \`\`\`
+     * ```
      * 
      * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
      * 
-     * \`\`\`prisma
+     * ```prisma
      * model User {
      *   /// Identifier for a user. Will never change once set.
-     *   /// More stable than the \`handle\` field  which user
+     *   /// More stable than the `handle` field  which user
      *   /// _can_ change, but is not human-friendly. Prefer this
-     *   /// for machine consumers but prefer \`handle\` for human
+     *   /// for machine consumers but prefer `handle` for human
      *   /// visible things like URL slugs.
      *   id  String  @id
      * }
-     * \`\`\`
+     * ```
      */
     f11: {
       /**
@@ -151,7 +136,7 @@ namespace $Types {
       description: undefined
     }
     /**
-     * ### 📔 Missing Field Documentation for \`f12\`
+     * ### 📔 Missing Field Documentation for `f12`
      * 
      * Get JSDoc documentation for this field automatically by documenting
      * it in your Prisma Schema ✨!
@@ -162,25 +147,25 @@ namespace $Types {
      * 
      * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
      * 
-     * \`\`\`prisma
+     * ```prisma
      * model M1 {
      *   /// Lorem ipsum dolor sit amet.
      *   f12  Float
      * }
-     * \`\`\`
+     * ```
      * 
      * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
      * 
-     * \`\`\`prisma
+     * ```prisma
      * model User {
      *   /// Identifier for a user. Will never change once set.
-     *   /// More stable than the \`handle\` field  which user
+     *   /// More stable than the `handle` field  which user
      *   /// _can_ change, but is not human-friendly. Prefer this
-     *   /// for machine consumers but prefer \`handle\` for human
+     *   /// for machine consumers but prefer `handle` for human
      *   /// visible things like URL slugs.
      *   id  String  @id
      * }
-     * \`\`\`
+     * ```
      */
     f12: {
       /**
@@ -199,7 +184,7 @@ namespace $Types {
       description: undefined
     }
     /**
-     * ### 📔 Missing Field Documentation for \`f13\`
+     * ### 📔 Missing Field Documentation for `f13`
      * 
      * Get JSDoc documentation for this field automatically by documenting
      * it in your Prisma Schema ✨!
@@ -210,25 +195,25 @@ namespace $Types {
      * 
      * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
      * 
-     * \`\`\`prisma
+     * ```prisma
      * model M1 {
      *   /// Lorem ipsum dolor sit amet.
      *   f13  Boolean
      * }
-     * \`\`\`
+     * ```
      * 
      * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
      * 
-     * \`\`\`prisma
+     * ```prisma
      * model User {
      *   /// Identifier for a user. Will never change once set.
-     *   /// More stable than the \`handle\` field  which user
+     *   /// More stable than the `handle` field  which user
      *   /// _can_ change, but is not human-friendly. Prefer this
-     *   /// for machine consumers but prefer \`handle\` for human
+     *   /// for machine consumers but prefer `handle` for human
      *   /// visible things like URL slugs.
      *   id  String  @id
      * }
-     * \`\`\`
+     * ```
      */
     f13: {
       /**
@@ -247,7 +232,7 @@ namespace $Types {
       description: undefined
     }
     /**
-     * ### 📔 Missing Field Documentation for \`f14\`
+     * ### 📔 Missing Field Documentation for `f14`
      * 
      * Get JSDoc documentation for this field automatically by documenting
      * it in your Prisma Schema ✨!
@@ -258,25 +243,25 @@ namespace $Types {
      * 
      * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
      * 
-     * \`\`\`prisma
+     * ```prisma
      * model M1 {
      *   /// Lorem ipsum dolor sit amet.
      *   f14  Decimal
      * }
-     * \`\`\`
+     * ```
      * 
      * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
      * 
-     * \`\`\`prisma
+     * ```prisma
      * model User {
      *   /// Identifier for a user. Will never change once set.
-     *   /// More stable than the \`handle\` field  which user
+     *   /// More stable than the `handle` field  which user
      *   /// _can_ change, but is not human-friendly. Prefer this
-     *   /// for machine consumers but prefer \`handle\` for human
+     *   /// for machine consumers but prefer `handle` for human
      *   /// visible things like URL slugs.
      *   id  String  @id
      * }
-     * \`\`\`
+     * ```
      */
     f14: {
       /**
@@ -295,7 +280,7 @@ namespace $Types {
       description: undefined
     }
     /**
-     * ### 📔 Missing Field Documentation for \`f15\`
+     * ### 📔 Missing Field Documentation for `f15`
      * 
      * Get JSDoc documentation for this field automatically by documenting
      * it in your Prisma Schema ✨!
@@ -306,25 +291,25 @@ namespace $Types {
      * 
      * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
      * 
-     * \`\`\`prisma
+     * ```prisma
      * model M1 {
      *   /// Lorem ipsum dolor sit amet.
      *   f15  BigInt
      * }
-     * \`\`\`
+     * ```
      * 
      * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
      * 
-     * \`\`\`prisma
+     * ```prisma
      * model User {
      *   /// Identifier for a user. Will never change once set.
-     *   /// More stable than the \`handle\` field  which user
+     *   /// More stable than the `handle` field  which user
      *   /// _can_ change, but is not human-friendly. Prefer this
-     *   /// for machine consumers but prefer \`handle\` for human
+     *   /// for machine consumers but prefer `handle` for human
      *   /// visible things like URL slugs.
      *   id  String  @id
      * }
-     * \`\`\`
+     * ```
      */
     f15: {
       /**
@@ -343,7 +328,7 @@ namespace $Types {
       description: undefined
     }
     /**
-     * ### 📔 Missing Field Documentation for \`f16\`
+     * ### 📔 Missing Field Documentation for `f16`
      * 
      * Get JSDoc documentation for this field automatically by documenting
      * it in your Prisma Schema ✨!
@@ -354,25 +339,25 @@ namespace $Types {
      * 
      * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
      * 
-     * \`\`\`prisma
+     * ```prisma
      * model M1 {
      *   /// Lorem ipsum dolor sit amet.
      *   f16  DateTime
      * }
-     * \`\`\`
+     * ```
      * 
      * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
      * 
-     * \`\`\`prisma
+     * ```prisma
      * model User {
      *   /// Identifier for a user. Will never change once set.
-     *   /// More stable than the \`handle\` field  which user
+     *   /// More stable than the `handle` field  which user
      *   /// _can_ change, but is not human-friendly. Prefer this
-     *   /// for machine consumers but prefer \`handle\` for human
+     *   /// for machine consumers but prefer `handle` for human
      *   /// visible things like URL slugs.
      *   id  String  @id
      * }
-     * \`\`\`
+     * ```
      */
     f16: {
       /**
@@ -391,7 +376,7 @@ namespace $Types {
       description: undefined
     }
     /**
-     * ### 📔 Missing Field Documentation for \`f17\`
+     * ### 📔 Missing Field Documentation for `f17`
      * 
      * Get JSDoc documentation for this field automatically by documenting
      * it in your Prisma Schema ✨!
@@ -402,25 +387,25 @@ namespace $Types {
      * 
      * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
      * 
-     * \`\`\`prisma
+     * ```prisma
      * model M1 {
      *   /// Lorem ipsum dolor sit amet.
      *   f17  Json
      * }
-     * \`\`\`
+     * ```
      * 
      * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
      * 
-     * \`\`\`prisma
+     * ```prisma
      * model User {
      *   /// Identifier for a user. Will never change once set.
-     *   /// More stable than the \`handle\` field  which user
+     *   /// More stable than the `handle` field  which user
      *   /// _can_ change, but is not human-friendly. Prefer this
-     *   /// for machine consumers but prefer \`handle\` for human
+     *   /// for machine consumers but prefer `handle` for human
      *   /// visible things like URL slugs.
      *   id  String  @id
      * }
-     * \`\`\`
+     * ```
      */
     f17: {
       /**
@@ -439,7 +424,7 @@ namespace $Types {
       description: undefined
     }
     /**
-     * ### 📔 Missing Field Documentation for \`f18\`
+     * ### 📔 Missing Field Documentation for `f18`
      * 
      * Get JSDoc documentation for this field automatically by documenting
      * it in your Prisma Schema ✨!
@@ -450,25 +435,25 @@ namespace $Types {
      * 
      * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
      * 
-     * \`\`\`prisma
+     * ```prisma
      * model M1 {
      *   /// Lorem ipsum dolor sit amet.
      *   f18  Bytes
      * }
-     * \`\`\`
+     * ```
      * 
      * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
      * 
-     * \`\`\`prisma
+     * ```prisma
      * model User {
      *   /// Identifier for a user. Will never change once set.
-     *   /// More stable than the \`handle\` field  which user
+     *   /// More stable than the `handle` field  which user
      *   /// _can_ change, but is not human-friendly. Prefer this
-     *   /// for machine consumers but prefer \`handle\` for human
+     *   /// for machine consumers but prefer `handle` for human
      *   /// visible things like URL slugs.
      *   id  String  @id
      * }
-     * \`\`\`
+     * ```
      */
     f18: {
       /**
@@ -495,7 +480,7 @@ namespace $Types {
 //
 
 /**
- * ### 📔 Missing Model Documentation for \`M1\`
+ * ### 📔 Missing Model Documentation for `M1`
  * 
  * Get JSDoc documentation for this model automatically by documenting
  * it in your Prisma Schema ✨!
@@ -506,26 +491,22 @@ namespace $Types {
  * 
  * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
  * 
- * \`\`\`prisma
+ * ```prisma
  * /// Lorem ipsum dolor sit amet...
  * model M1 {
  *   id  String  @id
  * }
- * \`\`\`
+ * ```
  * 
  * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
  * 
- * \`\`\`prisma
+ * ```prisma
  * /// A user record. A user maps 1:1 with a person. Not
- * /// to be confused with an \`Account\` which on person
- * /// may have multiple of, all linked to a single \`User\`.
+ * /// to be confused with an `Account` which on person
+ * /// may have multiple of, all linked to a single `User`.
  * model User {
  *   id  String  @id
  * }
- * \`\`\`
+ * ```
  */
-export const M1: $Types.M1",
-    "fileName": "index.d.ts",
-  },
-]
-`;
+export const M1: $Types.M1

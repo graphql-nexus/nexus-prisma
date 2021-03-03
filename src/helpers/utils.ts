@@ -1,3 +1,5 @@
+import { inspect } from 'util'
+
 export function allCasesHandled(x: never): never {
   // Should never happen, but in case it does :)
   // eslint-disable-next-line
@@ -13,4 +15,8 @@ export function arrayify<T>(x: T): T extends unknown[] ? T : T[] {
   }
 
   return [x] as any
+}
+
+export function dump(x: unknown): void {
+  console.error(inspect(x, { depth: null }))
 }

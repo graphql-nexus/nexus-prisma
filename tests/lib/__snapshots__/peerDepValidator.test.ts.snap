@@ -23,10 +23,4 @@ exports[`ValidatePeerDependencies if project peer dep version does not satisfy r
 }"
 `;
 
-exports[`enforceValidPeerDependencies if peer dependency is missing, than logs and process exits 1 1`] = `
-"{
-  kind: 'peer_dep_not_installed',
-  message: 'ERROR: charlie is a peer dependency required by alpha. But you have not installed it into this project yet. Please run \`yarn add charlie\`.'
-}
-ERROR: charlie is a peer dependency required by alpha. But you have not installed it into this project yet. Please run \`yarn add charlie\`."
-`;
+exports[`enforceValidPeerDependencies if peer dependency is missing, than logs and process exits 1 1`] = `"ERROR: charlie is a peer dependency required by alpha. But you have not installed it into this project yet. Please run \`yarn add charlie\`."`;

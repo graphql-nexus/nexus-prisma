@@ -24,6 +24,8 @@ export function enforceValidPeerDependencies({ packageJson }: { packageJson: Pac
   const failure = validatePeerDependencies({ packageJson })
 
   if (failure) {
+    console.error(failure.message)
+
     if ('error' in failure) {
       console.error(failure.error)
     }

@@ -39,7 +39,7 @@ beforeAll(() => {
 
   // setup alpha dep that has peer dep requirements
 
-  execa.commandSync(`yarn add kleur semver endent --production`, { cwd: tmpdir.cwd() })
+  execa.commandSync(`yarn add kleur semver tslib endent debug fs-jetpack --production`, { cwd: tmpdir.cwd() })
 
   tmpdir.write(`node_modules/${requireer.name}/package.json`, {
     name: requireer.name,
@@ -198,6 +198,6 @@ describe('enforceValidPeerDependencies', () => {
   it('if peer dependency is missing, than logs and process exits 1', () => {
     const result = runEnforceValidPeerDependencies()
     expect(result.exitCode).toEqual(1)
-    expect(result.stdout).toMatchSnapshot()
+    expect(result.stderr).toMatchSnapshot()
   })
 })

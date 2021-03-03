@@ -4,6 +4,7 @@ const debugName = 'nexus-prisma'
 
 export const d = debug(debugName)
 
+/** Prisma generator system swallows stderr output. */
 d.log = console.log.bind(console)
 
 export function debugNexusPrisma(...names: string[]): debug.Debugger {

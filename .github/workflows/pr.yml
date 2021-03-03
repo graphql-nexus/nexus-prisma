@@ -4,6 +4,28 @@ on:
   - pull_request
 
 jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile
+      - run: yarn -s format:check
+
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile
+      - run: yarn -s lint:check
+
   test:
     strategy:
       matrix:

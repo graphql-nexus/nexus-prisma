@@ -6,11 +6,21 @@
   "author": "Jason Kuhrt",
   "license": "MIT",
   "files": [
-    "dist"
+    "dist",
+    "plugin.js"
   ],
+  "bin": {
+    "nexus-prisma": "./dist/cli/nexus-prisma.js",
+    "nexus-prisma-2": "./dist/cli/nexus-prisma.js"
+  },
   "scripts": {
     "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint . --ext .ts,.tsx --fix",
+    "lint:check": "eslint . --ext .ts,.tsx --max-warnings 0",
     "dev": "tsc --build --watch",
+    "dev:ts": "yarn dev",
+    "dev:yalc": "nodemon --exec 'yalc push --no-scripts && chmod +x /Users/jasonkuhrt/projects/prisma/cloud/node_modules/.bin/nexus-prisma-2' --watch 'dist/**/*'",
     "build": "yarn clean && tsc",
     "test": "jest",
     "tdd": "jest --watch",
@@ -23,22 +33,33 @@
   "devDependencies": {
     "@prisma-labs/prettier-config": "0.1.0",
     "@prisma/client": "2.17.0",
+    "@prisma/sdk": "^2.17.0",
+    "@types/debug": "^4.1.5",
     "@types/jest": "26.0.20",
     "@types/lodash": "^4.14.168",
+    "@types/pluralize": "^0.0.29",
     "@types/semver": "^7.3.4",
+    "@typescript-eslint/eslint-plugin": "^4.16.1",
+    "@typescript-eslint/parser": "^4.16.1",
     "dripip": "0.10.0",
+    "eslint": "^7.21.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-only-warn": "^1.0.2",
     "execa": "^5.0.0",
     "fs-jetpack": "^4.1.0",
+    "graphql": "^15.5.0",
     "jest": "26.6.3",
     "jest-watch-typeahead": "0.6.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "nexus": "^1.0.0",
+    "nodemon": "^2.0.7",
     "prettier": "2.2.1",
+    "prettier-plugin-jsdoc": "^0.3.12",
     "prisma": "2.17.0",
     "ts-jest": "26.5.1",
     "ts-node": "^9.1.1",
-    "type-fest": "^0.21.1",
-    "typescript": "4.1.5"
+    "type-fest": "^0.21.2",
+    "typescript": "^4.2.2"
   },
   "prettier": "@prisma-labs/prettier-config",
   "peerDependencies": {
@@ -46,8 +67,19 @@
     "nexus": "^1.0.0"
   },
   "dependencies": {
+    "@prisma/generator-helper": "^2.17.0",
+    "debug": "^4.3.1",
     "endent": "^2.0.1",
     "kleur": "^4.1.4",
-    "semver": "^7.3.4"
+    "ono": "^7.1.3",
+    "pkg-up": "^3.1.0",
+    "pluralize": "^8.0.0",
+    "semver": "^7.3.4",
+    "setset": "^0.0.6"
+  },
+  "nodemonConfig": {
+    "events": {
+      "start": "echo \"\\x1Bc\""
+    }
   }
 }

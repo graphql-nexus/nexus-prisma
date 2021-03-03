@@ -1,0 +1,1 @@
+export { generateRuntimeAndEmit } from './generate'

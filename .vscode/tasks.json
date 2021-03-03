@@ -1,0 +1,47 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "dev:link",
+      "dependsOn": ["dev:yalc", "dev:ts"]
+    },
+    {
+      "label": "tdd",
+      "type": "shell",
+      "command": "yarn -s tdd",
+      "presentation": {
+        "group": "test",
+        "focus": true,
+        "panel": "shared",
+        "clear": true
+      }
+    },
+
+    // Lower level task building blocks
+
+    {
+      "label": "dev:yalc",
+      "type": "shell",
+      "command": "yarn -s dev:yalc",
+      "presentation": {
+        "group": "dev",
+        "focus": false,
+        "panel": "shared",
+        "clear": true
+      }
+    },
+    {
+      "label": "dev:ts",
+      "type": "shell",
+      "command": "yarn -s dev:ts",
+      "presentation": {
+        "group": "dev",
+        "focus": false,
+        "panel": "shared",
+        "clear": true
+      }
+    }
+  ]
+}

@@ -5,9 +5,7 @@ import { FSJetpack } from 'fs-jetpack/types'
 import { merge, omit } from 'lodash'
 import { PackageJson } from 'type-fest'
 
-/**
- * setup
- */
+/** Setup */
 
 const badJson = ';'
 
@@ -93,9 +91,7 @@ beforeEach(() => {
   tmpdir.remove(`node_modules/${peerDep.name}`)
 })
 
-/**
- * helpers
- */
+/** Helpers */
 
 function setupDep({
   name,
@@ -143,9 +139,7 @@ function runEnforceValidPeerDependencies(params?: { env?: Record<string, string>
   })
 }
 
-/**
- * tests
- */
+/** Tests */
 
 describe('ValidatePeerDependencies', () => {
   it('if peer dep missing, then returns failure', () => {

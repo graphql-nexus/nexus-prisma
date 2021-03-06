@@ -1,14 +1,8 @@
-import * as PrismaSDK from '@prisma/sdk'
 import endent from 'endent'
-import { generateRuntime } from '../src/generator/generate'
+import { generate } from './__helpers__'
 
 it('generates static TS code given DMMF', async () => {
-  const schema = endent`
-    datasource db {
-      provider = "postgresql"
-      url      = env("DB_URL")
-    }
-
+  const runtime = await generate(endent`
     model M1 {
       f10 String @id
       f11 Int
@@ -20,13 +14,7 @@ it('generates static TS code given DMMF', async () => {
       f17 Json
       f18 Bytes
     }
-  `
+  `)
 
-  const dmmf = await PrismaSDK.getDMMF({
-    datamodel: schema,
-  })
-
-  const source = generateRuntime(dmmf)
-
-  expect(source).toMatchSnapshot()
+  expect(runtime).toMatchSnapshot()
 })

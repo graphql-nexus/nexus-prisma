@@ -77,6 +77,47 @@ objectType({
 })
 ```
 
+### Custom GraphQL Scalars
+
+Prisma has a few native scalar types that are not supported by any native GraphQL scalar type.
+
+When Nexus Prisma sees a Prisma field whose type is one of these scalars, it does nothing special. It just generates them as GraphQL type references like any other.
+
+You are responsible for filling this gap in the scalar mapping by implementing the custom scalars in your GrpahQL API.
+
+The following is a guide about how you might do that.
+
+#### Json
+
+```ts
+import { asNexusMethod } from 'nexus'
+import { JSONObjectResolver } from 'graphql-scalars'
+import { GraphQLScalarType } from 'graphql'
+
+const JsonScalar = new GraphQLScalarType({
+  ...JSONObjectResolver,
+  name: 'Json',
+  description:
+    'The `Json` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).',
+})
+
+// Pass this to `types` in `makeSchema`
+const nexusJsonScalar = asNexusMethod(JsonScalar, 'json')
+```
+
+#### DateTime
+
+```ts
+import { asNexusMethod } from 'nexus'
+import { DateTimeResolver } from 'graphql-scalars'
+import { GraphQLScalarType } from 'graphql'
+
+const dateTimeScalar = new GraphQLScalarType(DateTimeResolver)
+
+// Pass this to `types` in `makeSchema`
+const nexusDateTimeScalar = asNexusMethod(dateTimeScalar, 'dateTime')
+```
+
 ### Prisma ID field to GraphQL ID scalar type mapping
 
 All `@id` fields in your Prisma Schema get projected as `ID` types, not `String` types.

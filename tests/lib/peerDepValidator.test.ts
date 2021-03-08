@@ -1,9 +1,8 @@
 import endent from 'endent'
-import * as execa from 'execa'
-import * as fs from 'fs-jetpack'
-import { FSJetpack } from 'fs-jetpack/types'
+import * as Execa from 'execa'
 import { merge, omit } from 'lodash'
 import { PackageJson } from 'type-fest'
+import { assertBuildPresent, setupTestProject, TestProject } from '../__helpers__'
 
 /** Setup */
 
@@ -17,29 +16,17 @@ const peerDep = {
   name: 'charlie',
 }
 
-process.exit
-
-let tmpdir: FSJetpack
+let testProject: TestProject
 
 beforeAll(() => {
-  if (fs.exists('../../dist')) {
-    throw new Error(`Please build package before running this test`)
-  }
+  assertBuildPresent()
+  testProject = setupTestProject()
 
-  tmpdir = fs.tmpDir()
-  // console.log(tmpdir.cwd())
-
-  // Setup project
-
-  tmpdir.write('package.json', {
-    name: 'myapp',
-    version: '1.0.0',
-    dependencies: {},
-  })
+  const { tmpdir } = testProject
 
   // setup alpha dep that has peer dep requirements
 
-  execa.commandSync(`yarn add kleur semver tslib endent debug fs-jetpack --production`, { cwd: tmpdir.cwd() })
+  Execa.commandSync(`yarn add kleur semver tslib endent debug fs-jetpack --production`, { cwd: tmpdir.cwd() })
 
   tmpdir.write(`node_modules/${requireer.name}/package.json`, {
     name: requireer.name,
@@ -88,7 +75,7 @@ beforeAll(() => {
 })
 
 beforeEach(() => {
-  tmpdir.remove(`node_modules/${peerDep.name}`)
+  testProject.tmpdir.remove(`node_modules/${peerDep.name}`)
 })
 
 /** Helpers */
@@ -105,21 +92,20 @@ function setupDep({
   packageJson?: (defaultPackageJson: PackageJson) => PackageJson | string
 }): void {
   const depdir = `node_modules/${name}`
-  tmpdir.write(`${depdir}/package.json`, packageJson({ name, version, main: './index.js' }))
-  tmpdir.write(`${depdir}/index.js`, main)
+  testProject.tmpdir.write(`${depdir}/package.json`, packageJson({ name, version, main: './index.js' }))
+  testProject.tmpdir.write(`${depdir}/index.js`, main)
 }
 
 function setupPeerDepRequirement({ name, range }: { name: string; range: string }) {
-  const old = tmpdir.read(`node_modules/${requireer.name}/package.json`, 'json')
-  tmpdir.write(
+  const old = testProject.tmpdir.read(`node_modules/${requireer.name}/package.json`, 'json')
+  testProject.tmpdir.write(
     `node_modules/${requireer.name}/package.json`,
     merge(old, { peerDependencies: { [name]: range } })
   )
 }
 
 function runValidatePeerDependencies() {
-  return execa.commandSync('node validatePeerDependencies.js', {
-    cwd: tmpdir.cwd(),
+  return testProject.run('node validatePeerDependencies.js', {
     env: {
       ...process.env,
       FORCE_COLOR: '0',
@@ -128,14 +114,12 @@ function runValidatePeerDependencies() {
 }
 
 function runEnforceValidPeerDependencies(params?: { env?: Record<string, string> }) {
-  return execa.commandSync('node enforceValidPeerDependencies.js', {
-    cwd: tmpdir.cwd(),
+  return testProject.run('node enforceValidPeerDependencies.js', {
     env: {
       ...process.env,
       FORCE_COLOR: '0',
       ...params?.env,
     },
-    reject: false,
   })
 }
 

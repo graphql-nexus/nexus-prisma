@@ -3,6 +3,7 @@
   "references": [{ "path": ".." }],
   "include": [".."],
   "compilerOptions": {
+    "strict": true,
     "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo.test",
     "rootDir": ".."
   }

@@ -27,7 +27,7 @@ export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document
     // Types
     //
 
-    namespace $Types {
+    declare namespace $Types {
       ${models.map(renderTypeScriptDeclarationForModel).join('\n\n')}
     }
 
@@ -140,7 +140,7 @@ export function fieldTypeToGraphQLType(field: DMMF.Field): LiteralUnion<Standard
           return StandardgraphQLScalarTypes.String
         }
         case 'DateTime': {
-          return StandardgraphQLScalarTypes.String
+          return 'DateTime'
         }
         case 'Json': {
           return 'Json'

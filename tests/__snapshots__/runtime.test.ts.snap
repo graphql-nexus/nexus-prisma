@@ -20,7 +20,7 @@ import * as NexusCore from 'nexus/dist/core'
 // Types
 //
 
-namespace $Types {
+declare namespace $Types {
   /**
    * ### 📔 Missing Model Documentation for \`M1\`
    * 
@@ -383,7 +383,7 @@ namespace $Types {
       /**
        * The type of this field.
        */
-      type: NexusCore.NexusNonNullDef<'String'>
+      type: NexusCore.NexusNonNullDef<'DateTime'>
     
       /**
        * The documentation of this field.
@@ -431,7 +431,7 @@ namespace $Types {
       /**
        * The type of this field.
        */
-      type: NexusCore.NexusNonNullDef<'String'>
+      type: NexusCore.NexusNonNullDef<'Json'>
     
       /**
        * The documentation of this field.

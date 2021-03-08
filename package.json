@@ -7,7 +7,10 @@
   "license": "MIT",
   "files": [
     "dist",
-    "plugin.js"
+    "plugin.js",
+    "plugin.d.ts",
+    "scalars.js",
+    "scalars.d.ts"
   ],
   "bin": {
     "nexus-prisma": "./dist/cli/nexus-prisma.js",
@@ -21,7 +24,8 @@
     "dev": "tsc --build --watch",
     "dev:ts": "yarn dev",
     "dev:yalc": "nodemon --exec 'yalc push --no-scripts && chmod +x /Users/jasonkuhrt/projects/prisma/cloud/node_modules/.bin/nexus-prisma-2' --watch 'dist/**/*'",
-    "build": "yarn clean && tsc",
+    "build:module-facades": "ts-node scripts/build-module-facades",
+    "build": "yarn clean && tsc && yarn build:module-facades",
     "test": "jest",
     "tdd": "jest --watch",
     "clean": "rm -rf dist && rm -rf node_modules/.cache",

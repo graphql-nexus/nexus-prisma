@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Facades
+scalars.d.ts
+scalars.js
+plugin.js
+plugin.d.ts

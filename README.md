@@ -5,6 +5,15 @@
 Official Prisma plugin for Nexus.  
 **Currently in development - not to be used in Production.** Follow the progress from [here](https://github.com/graphql-nexus/nexus-plugin-prisma/issues/1039).
 
+## Installation
+
+```
+npm add nexus-prisma graphql @prisma/client
+npm add --dev prisma
+```
+
+> `graphql` and `@prisma/client` are peer dependencies. `prisma` is for the Prisma CLI which you'll probably want during development.
+
 ## Example
 
 ```prisma
@@ -226,3 +235,7 @@ If a peer dependenvy is not installed it `nexus-prisma` will log an error and th
 NO_PEER_DEPENDENCY_CHECK=true|1
 PEER_DEPENDENCY_CHECK=false|0
 ```
+
+## Notes
+
+- Versions of `nexus-prisma` package prior to `0.20` were a completely different version of the API, and had also become deprecated at one point to migrate to `nexus-plugi-prisma` when Nexus Framework was being worked on. All of that is history.

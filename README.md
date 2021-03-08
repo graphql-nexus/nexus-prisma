@@ -92,17 +92,32 @@ objectType({
 })
 ```
 
-### Custom GraphQL Scalars for Native Prisma Scalars
+### Scalar Mapping & Custom GraphQL Scalars for Native Prisma Scalars
 
-Prisma has a few native scalar types that are not supported by any native GraphQL scalar type.
+Like GraphQL Prisma has the concept of scalar types. Some of the Prisma scalars can be naturally mapped to standard GraphQL scalars. The mapping is as follows:
 
-When Nexus Prisma sees a Prisma field whose type is one of these scalars, it does nothing special. It just generates them as GraphQL type references like any other.
+**Prisma Standard Scalar to GraphQL Standard Scalar Mapping**
 
-Nexus Prisma does not allow to directly map these Prisma scalars to GraphQL scalar `String`. Instead you should define the necessary custom scalars in your GraphQL API.
+| Prisma              | GraphQL   |
+| ------------------- | --------- |
+| `Boolean`           | `Boolean` |
+| `String`            | `String`  |
+| `Int`               | `Int`     |
+| `Float`             | `Float`   |
+| `String` with `@id` | `ID`      |
 
-You can define the necessary custom scalars manually, or use the pre-prepared Nexus scalar type definitions from Nexus Prisma.
+However some of the Prisma scalars do not have a natural standard representation in GraphQL. For these cases Nexus Prisma generates code that references type names matching those scalar names in Prisma. Then, you are expected to define those custom scalar types in your GraphQL API. Nexus Prisma ships with pre-defined mappings in `nexus-prisma/scalars` you _can_ use for convenience. The mapping is as follows:
 
-Example: Use the pre-prepared scalar type definitions from Nexus Prisma:
+**Prisma Standard Scalar to GraphQL Custom Scalar Mapping**
+
+| Prisma     | GraphQL    | GraphQL Scalar Implementation                                     |
+| ---------- | ---------- | ----------------------------------------------------------------- |
+| `Json`     | `Json`     | [JsonObject](https://github.com/Urigo/graphql-scalars#jsonobject) |
+| `DateTime` | `DateTime` | [DateTime](https://github.com/Urigo/graphql-scalars#datetime)     |
+
+While you are not required to use the implementations supplied by Nexus Prisma, you _are required to define custom scalars whose name matches the above mapping_.
+
+Here is an example using the Nexus Prisma pre-defined custom scalars:
 
 ```ts
 import * as customScalars from 'nexus-prisma/scalars'
@@ -113,7 +128,7 @@ makeSchema({
 })
 ```
 
-Example: Use custom Nexus scalar type definitions:
+The following is a brief example how you could roll the implementations yourself:
 
 ```ts
 import { GraphQLScalarType } from 'graphql'

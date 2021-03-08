@@ -94,7 +94,7 @@ objectType({
 
 ### Scalar Mapping & Custom GraphQL Scalars for Native Prisma Scalars
 
-Like GraphQL Prisma has the concept of scalar types. Some of the Prisma scalars can be naturally mapped to standard GraphQL scalars. The mapping is as follows:
+Like GraphQL [Prisma has the concept of scalar types](https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference/#model-field-scalar-types). Some of the Prisma scalars can be naturally mapped to standard GraphQL scalars. The mapping is as follows:
 
 **Prisma Standard Scalar to GraphQL Standard Scalar Mapping**
 
@@ -114,6 +114,8 @@ However some of the Prisma scalars do not have a natural standard representation
 | ---------- | ---------- | ----------------------------------------------------------------- |
 | `Json`     | `Json`     | [JsonObject](https://github.com/Urigo/graphql-scalars#jsonobject) |
 | `DateTime` | `DateTime` | [DateTime](https://github.com/Urigo/graphql-scalars#datetime)     |
+
+> **Note:** Not all Prisma scalar mappings are implemented yet: `Bytes`, `BigInt`, `Decimal`, `Unsupported`
 
 While you are not required to use the implementations supplied by Nexus Prisma, you _are required to define custom scalars whose name matches the above mapping_.
 

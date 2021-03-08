@@ -77,45 +77,45 @@ objectType({
 })
 ```
 
-### Custom GraphQL Scalars
+### Custom GraphQL Scalars for Native Prisma Scalars
 
 Prisma has a few native scalar types that are not supported by any native GraphQL scalar type.
 
 When Nexus Prisma sees a Prisma field whose type is one of these scalars, it does nothing special. It just generates them as GraphQL type references like any other.
 
-You are responsible for filling this gap in the scalar mapping by implementing the custom scalars in your GrpahQL API.
+Nexus Prisma does not allow to directly map these Prisma scalars to GraphQL scalar `String`. Instead you should define the necessary custom scalars in your GraphQL API.
 
-The following is a guide about how you might do that.
+You can define the necessary custom scalars manually, or use the pre-prepared Nexus scalar type definitions from Nexus Prisma.
 
-#### Json
+Example: Use the pre-prepared scalar type definitions from Nexus Prisma:
 
 ```ts
-import { asNexusMethod } from 'nexus'
-import { JSONObjectResolver } from 'graphql-scalars'
-import { GraphQLScalarType } from 'graphql'
+import * as customScalars from 'nexus-prisma/scalars'
+import { makeSchema } from 'nexus'
 
-const JsonScalar = new GraphQLScalarType({
-  ...JSONObjectResolver,
-  name: 'Json',
-  description:
-    'The `Json` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).',
+makeSchema({
+  types: [customScalars],
 })
-
-// Pass this to `types` in `makeSchema`
-const nexusJsonScalar = asNexusMethod(JsonScalar, 'json')
 ```
 
-#### DateTime
+Example: Use custom Nexus scalar type definitions:
 
 ```ts
-import { asNexusMethod } from 'nexus'
-import { DateTimeResolver } from 'graphql-scalars'
 import { GraphQLScalarType } from 'graphql'
+import { JSONObjectResolver, DateTimeResolver } from 'graphql-scalars'
+import { asNexusMethod, makeSchema } from 'nexus'
+
+const jsonScalar = new GraphQLScalarType({
+  ...JSONObjectResolver,
+  // Override the default 'JsonObject' name with one that matches what Nexus Prisma expects.
+  name: 'Json',
+})
 
 const dateTimeScalar = new GraphQLScalarType(DateTimeResolver)
 
-// Pass this to `types` in `makeSchema`
-const nexusDateTimeScalar = asNexusMethod(dateTimeScalar, 'dateTime')
+makeSchema({
+  types: [asNexusMethod(jsonScalar, 'json'), asNexusMethod(dateTimeScalar, 'dateTime')],
+})
 ```
 
 ### Prisma ID field to GraphQL ID scalar type mapping

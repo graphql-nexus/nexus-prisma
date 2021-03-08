@@ -14,7 +14,13 @@ npm add --dev prisma
 
 > `graphql` and `@prisma/client` are peer dependencies. `prisma` is for the Prisma CLI which you'll probably want during development.
 
-## Example
+## Usage
+
+1. Add a `nexus-prisma` generator block to your Prisma Schema.
+1. Run `prisma generate` in your terminal.
+1. Import models from `nexus-prisma` and then pass them to your Nexus type definition and field definition configurations. In this way you will be effectively projecting models from your data layer into GraphQL types in your API layer.
+
+### Example
 
 ```prisma
 
@@ -24,7 +30,7 @@ generator client {
 
 generator nexusPrisma {
   // This is a temporary name, soon will be just "nexus-prisma" (pending a change in Prisma core).
-  provider = "nexus-prisma-2"
+  provider = "nexus-prisma"
 }
 
 

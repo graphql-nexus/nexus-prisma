@@ -1,7 +1,7 @@
 import { DMMF } from '@prisma/generator-helper'
 import endent from 'endent'
 import { LiteralUnion } from 'type-fest'
-import { GraphQLScalarType, graphQLScalarTypes } from '../../helpers/graphql'
+import { StandardGraphQLScalarType, StandardgraphQLScalarTypes } from '../../helpers/graphql'
 import { PrismaScalarType } from '../../helpers/prisma'
 import { allCasesHandled } from '../../helpers/utils'
 import { jsDocForField, jsDocForModel } from '../helpers/JSDocTemplates'
@@ -27,7 +27,7 @@ export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document
     // Types
     //
 
-    namespace $Types {
+    declare namespace $Types {
       ${models.map(renderTypeScriptDeclarationForModel).join('\n\n')}
     }
 
@@ -113,7 +113,7 @@ function renderNexusType2(field: DMMF.Field): string {
 }
 
 /** Map the fields type to a GraphQL type */
-export function fieldTypeToGraphQLType(field: DMMF.Field): LiteralUnion<GraphQLScalarType, string> {
+export function fieldTypeToGraphQLType(field: DMMF.Field): LiteralUnion<StandardGraphQLScalarType, string> {
   const fieldKind = field.kind
 
   switch (fieldKind) {
@@ -123,33 +123,33 @@ export function fieldTypeToGraphQLType(field: DMMF.Field): LiteralUnion<GraphQLS
       switch (typeName) {
         case 'String': {
           if (field.isId) {
-            return graphQLScalarTypes.ID
+            return StandardgraphQLScalarTypes.ID
           }
-          return graphQLScalarTypes.String
+          return StandardgraphQLScalarTypes.String
         }
         case 'Int': {
-          return graphQLScalarTypes.Int
+          return StandardgraphQLScalarTypes.Int
         }
         case 'Boolean': {
-          return graphQLScalarTypes.Boolean
+          return StandardgraphQLScalarTypes.Boolean
         }
         case 'Float': {
-          return graphQLScalarTypes.Float
+          return StandardgraphQLScalarTypes.Float
         }
         case 'BigInt': {
-          return graphQLScalarTypes.String
+          return StandardgraphQLScalarTypes.String
         }
         case 'DateTime': {
-          return graphQLScalarTypes.String
+          return 'DateTime'
         }
         case 'Json': {
-          return graphQLScalarTypes.String
+          return 'Json'
         }
         case 'Bytes': {
-          return graphQLScalarTypes.String
+          return StandardgraphQLScalarTypes.String
         }
         case 'Decimal': {
-          return graphQLScalarTypes.String
+          return StandardgraphQLScalarTypes.String
         }
         default: {
           return allCasesHandled(typeName)

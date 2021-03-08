@@ -5,7 +5,22 @@
 Official Prisma plugin for Nexus.  
 **Currently in development - not to be used in Production.** Follow the progress from [here](https://github.com/graphql-nexus/nexus-plugin-prisma/issues/1039).
 
-## Example
+## Installation
+
+```
+npm add nexus-prisma graphql @prisma/client
+npm add --dev prisma
+```
+
+> `graphql` and `@prisma/client` are peer dependencies. `prisma` is for the Prisma CLI which you'll probably want during development.
+
+## Usage
+
+1. Add a `nexus-prisma` generator block to your Prisma Schema.
+1. Run `prisma generate` in your terminal.
+1. Import models from `nexus-prisma` and then pass them to your Nexus type definition and field definition configurations. In this way you will be effectively projecting models from your data layer into GraphQL types in your API layer.
+
+### Example
 
 ```prisma
 
@@ -15,7 +30,7 @@ generator client {
 
 generator nexusPrisma {
   // This is a temporary name, soon will be just "nexus-prisma" (pending a change in Prisma core).
-  provider = "nexus-prisma-2"
+  provider = "nexus-prisma"
 }
 
 
@@ -74,6 +89,64 @@ objectType({
       description: User.id.description
     })
   }
+})
+```
+
+### Scalar Mapping & Custom GraphQL Scalars for Native Prisma Scalars
+
+Like GraphQL [Prisma has the concept of scalar types](https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference/#model-field-scalar-types). Some of the Prisma scalars can be naturally mapped to standard GraphQL scalars. The mapping is as follows:
+
+**Prisma Standard Scalar to GraphQL Standard Scalar Mapping**
+
+| Prisma              | GraphQL   |
+| ------------------- | --------- |
+| `Boolean`           | `Boolean` |
+| `String`            | `String`  |
+| `Int`               | `Int`     |
+| `Float`             | `Float`   |
+| `String` with `@id` | `ID`      |
+
+However some of the Prisma scalars do not have a natural standard representation in GraphQL. For these cases Nexus Prisma generates code that references type names matching those scalar names in Prisma. Then, you are expected to define those custom scalar types in your GraphQL API. Nexus Prisma ships with pre-defined mappings in `nexus-prisma/scalars` you _can_ use for convenience. The mapping is as follows:
+
+**Prisma Standard Scalar to GraphQL Custom Scalar Mapping**
+
+| Prisma     | GraphQL    | GraphQL Scalar Implementation                                     |
+| ---------- | ---------- | ----------------------------------------------------------------- |
+| `Json`     | `Json`     | [JsonObject](https://github.com/Urigo/graphql-scalars#jsonobject) |
+| `DateTime` | `DateTime` | [DateTime](https://github.com/Urigo/graphql-scalars#datetime)     |
+
+> **Note:** Not all Prisma scalar mappings are implemented yet: `Bytes`, `BigInt`, `Decimal`, `Unsupported`
+
+While you are not required to use the implementations supplied by Nexus Prisma, you _are required to define custom scalars whose name matches the above mapping_.
+
+Here is an example using the Nexus Prisma pre-defined custom scalars:
+
+```ts
+import * as customScalars from 'nexus-prisma/scalars'
+import { makeSchema } from 'nexus'
+
+makeSchema({
+  types: [customScalars],
+})
+```
+
+The following is a brief example how you could roll the implementations yourself:
+
+```ts
+import { GraphQLScalarType } from 'graphql'
+import { JSONObjectResolver, DateTimeResolver } from 'graphql-scalars'
+import { asNexusMethod, makeSchema } from 'nexus'
+
+const jsonScalar = new GraphQLScalarType({
+  ...JSONObjectResolver,
+  // Override the default 'JsonObject' name with one that matches what Nexus Prisma expects.
+  name: 'Json',
+})
+
+const dateTimeScalar = new GraphQLScalarType(DateTimeResolver)
+
+makeSchema({
+  types: [asNexusMethod(jsonScalar, 'json'), asNexusMethod(dateTimeScalar, 'dateTime')],
 })
 ```
 
@@ -185,3 +258,7 @@ If a peer dependenvy is not installed it `nexus-prisma` will log an error and th
 NO_PEER_DEPENDENCY_CHECK=true|1
 PEER_DEPENDENCY_CHECK=false|0
 ```
+
+## Notes
+
+- Versions of `nexus-prisma` package prior to `0.20` were a completely different version of the API, and had also become deprecated at one point to migrate to `nexus-plugi-prisma` when Nexus Framework was being worked on. All of that is history.

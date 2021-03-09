@@ -14,6 +14,7 @@ import { asNexusMethod } from 'nexus'
  * here typically help you quickly create new fields.
  *
  * @example
+ *
  *   import { makeSchema, objectType } from 'nexus'
  *   import { Json } from 'nexus-prisma/scalars'
  *
@@ -27,6 +28,7 @@ import { asNexusMethod } from 'nexus'
  *   makeSchema({
  *     types: [Json, SomeObject],
  *   })
+ *
  */
 export const Json = asNexusMethod(
   new GraphQLScalarType({

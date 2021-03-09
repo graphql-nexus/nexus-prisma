@@ -110,10 +110,10 @@ However some of the Prisma scalars do not have a natural standard representation
 
 **Prisma Standard Scalar to GraphQL Custom Scalar Mapping**
 
-| Prisma     | GraphQL    | GraphQL Scalar Implementation                                     |
-| ---------- | ---------- | ----------------------------------------------------------------- |
-| `Json`     | `Json`     | [JsonObject](https://github.com/Urigo/graphql-scalars#jsonobject) |
-| `DateTime` | `DateTime` | [DateTime](https://github.com/Urigo/graphql-scalars#datetime)     |
+| Prisma     | GraphQL    | Nexus `t` Helper | GraphQL Scalar Implementation                                     |
+| ---------- | ---------- | ---------------- | ----------------------------------------------------------------- |
+| `Json`     | `Json`     | `json`           | [JsonObject](https://github.com/Urigo/graphql-scalars#jsonobject) |
+| `DateTime` | `DateTime` | `datetime`       | [DateTime](https://github.com/Urigo/graphql-scalars#datetime)     |
 
 > **Note:** Not all Prisma scalar mappings are implemented yet: `Bytes`, `BigInt`, `Decimal`, `Unsupported`
 
@@ -122,11 +122,11 @@ While you are not required to use the implementations supplied by Nexus Prisma, 
 Here is an example using the Nexus Prisma pre-defined custom scalars:
 
 ```ts
-import * as customScalars from 'nexus-prisma/scalars'
+import NexusPrismaScalars from 'nexus-prisma/scalars'
 import { makeSchema } from 'nexus'
 
 makeSchema({
-  types: [customScalars],
+  types: [NexusPrismaScalars],
 })
 ```
 
@@ -258,6 +258,10 @@ If a peer dependenvy is not installed it `nexus-prisma` will log an error and th
 NO_PEER_DEPENDENCY_CHECK=true|1
 PEER_DEPENDENCY_CHECK=false|0
 ```
+
+##### Auto-Import Optimized
+
+- `nexus-prisma/scalars` offers a default export you can easily auto-import by name: `NexusPrismaScalars`.
 
 ## Notes
 

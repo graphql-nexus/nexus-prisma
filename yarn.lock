@@ -321,6 +321,15 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@homer0/prettier-plugin-jsdoc@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@homer0/prettier-plugin-jsdoc/-/prettier-plugin-jsdoc-3.0.0.tgz#b4d1989fc86e3e30190e4933a2309def87e53f33"
+  integrity sha512-JTVA1Wp1T0aHJSqnJAPsctlX09M7U8EX3W05hrdY6Ckz+DHB8D3/vVv2mT7yK9NVwd9De/Jwd5eegV47BtuzyA==
+  dependencies:
+    comment-parser "1.1.1"
+    prettier "^2.2.1"
+    ramda "0.27.1"
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
@@ -1485,11 +1494,6 @@ binary-extensions@^2.0.0:
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
 
-binary-search-bounds@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/binary-search-bounds/-/binary-search-bounds-2.0.5.tgz#125e5bd399882f71e6660d4bf1186384e989fba7"
-  integrity sha512-H0ea4Fd3lS1+sTEB2TgcLoK21lLhwEJzlQv3IN47pJS976Gx4zoWe0ak3q+uYh60ppQxg9F16Ri4tS1sfD4+jA==
-
 bl@^4.0.3:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/bl/-/bl-4.1.0.tgz#451535264182bec2fbbc83a62ab98cf11d9f7b3a"
@@ -1845,10 +1849,10 @@ commander@^2.19.0:
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
   integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
 
-comment-parser@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/comment-parser/-/comment-parser-1.1.2.tgz#e5317d7a2ec22b470dcb54a29b25426c30bf39d8"
-  integrity sha512-AOdq0i8ghZudnYv8RUnHrhTgafUGs61Rdz9jemU5x2lnZwAWyOq7vySo626K59e1fVKH1xSRorJwPVRLSWOoAQ==
+comment-parser@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/comment-parser/-/comment-parser-1.1.1.tgz#c0581d520677e2cfab1a568e94ea0400df9fe4bd"
+  integrity sha512-vue7cRi1ZO5/72FJ+wZ5+siTSBlUv3ZksTk8bWD2IkaA6obitzMZP3yI65azTJLckwmi8lxfPP5Sd9oGuZ8e2g==
 
 common-tags@^1.8.0:
   version "1.8.0"
@@ -4013,11 +4017,6 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"
   integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
 
-linguist-languages@^7.12.2:
-  version "7.13.0"
-  resolved "https://registry.yarnpkg.com/linguist-languages/-/linguist-languages-7.13.0.tgz#9f533f3753861755c7414d57211e0df48bf6c113"
-  integrity sha512-n1X6l+YYbEDtXE9tDr8nYZAgeuKw+qBFvYGzIGltw3Z3oJwS+4vyVtFG5UFa71kvmPWMS3RT/yB95RWzD7MrVQ==
-
 locate-path@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-3.0.0.tgz#dbec3b3ab759758071b58fe59fc41871af21400e"
@@ -4726,16 +4725,7 @@ prepend-http@^2.0.0:
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-2.0.0.tgz#e92434bfa5ea8c19f41cdfd401d741a3c819d897"
   integrity sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc=
 
-prettier-plugin-jsdoc@^0.3.13:
-  version "0.3.13"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-jsdoc/-/prettier-plugin-jsdoc-0.3.13.tgz#02894b1b5acbf8a06b930d8e57d39a81eb047afc"
-  integrity sha512-muq5DMqpMMogRJIiA1eeyVFkjG8H9dU7miXIGQP4qXQgC2IS36wL+Y5WCHN92rowP8DHlQj6dR1eoA8SztnogA==
-  dependencies:
-    binary-search-bounds "^2.0.5"
-    comment-parser "^1.1.2"
-    linguist-languages "^7.12.2"
-
-prettier@2.2.1:
+prettier@2.2.1, prettier@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.2.1.tgz#795a1a78dd52f073da0cd42b21f9c91381923ff5"
   integrity sha512-PqyhM2yCjg/oKkFPtTGUojv7gnZAoG80ttl45O6x2Ug/rMJw4wcc9k6aaf2hibP7BGVCCM33gZoGjyvt9mm16Q==
@@ -4829,6 +4819,11 @@ queue-microtask@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.2.tgz#abf64491e6ecf0f38a6502403d4cda04f372dfd3"
   integrity sha512-dB15eXv3p2jDlbOiNLyMabYg1/sXvppd8DP2J3EOCQ0AkuSXCW2tP7mnVouVLJKgUMY6yP0kcQDVpLCN13h4Xg==
+
+ramda@0.27.1:
+  version "0.27.1"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.27.1.tgz#66fc2df3ef873874ffc2da6aa8984658abacf5c9"
+  integrity sha512-PgIdVpn5y5Yns8vqb8FzBUEYn98V3xcPgawAkkgj0YJ0qDsnHCiNmZYfOGMgOvoB0eWFLpYbhxUR3mxfDIMvpw==
 
 rc@^1.2.8:
   version "1.2.8"

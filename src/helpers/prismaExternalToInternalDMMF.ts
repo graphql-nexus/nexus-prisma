@@ -14,7 +14,7 @@ export function getCountAggregateOutputName(modelName: string): string {
 }
 
 /**
- * Turns type: string into type: string[] for all args in order to support union input types
+ * Turns type: string into type: string[] for all args in order to support union input types.
  *
  * @param document
  */

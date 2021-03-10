@@ -22,6 +22,8 @@ npm add --dev prisma
 
 ### Example
 
+> **Note:** If you are using Prisma@=<2.17.x then you _must_ use the Nexus Prisma Prisma generator name of `nexus_prisma` instead of `nexus-prisma`. This is because prior to prisma@2.18.x there was a hardcode check for `nexus-prisma` generator name wherein it would give feedback about it no longer being a generator.
+
 ```prisma
 
 generator client {
@@ -29,10 +31,9 @@ generator client {
 }
 
 generator nexusPrisma {
-  // This is a temporary name, soon will be just "nexus-prisma" (pending a change in Prisma core).
-  provider = "nexus-prisma"
+   provider = "nexus-prisma"
+// provider = "nexus_prisma" <-- For prisma@=<2.17.x users
 }
-
 
 /// This is a user!
 model User {

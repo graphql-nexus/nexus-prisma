@@ -253,7 +253,7 @@ When your project is in a state where the generated Nexus Prisma part is missing
 
 When `nexus-prisma` is imported it will validate that your project has peer dependencies setup correctly.
 
-If a peer dependenvy is not installed it `nexus-prisma` will log an error and then exit 1. If its version does not satify the range supported by the current version of `nexus-prisma` that you have installed, then a warning will be logged. If you want to opt-out of this validation then set an envar as follows:
+If a peer dependency is not installed it `nexus-prisma` will log an error and then exit 1. If its version does not satify the range supported by the current version of `nexus-prisma` that you have installed, then a warning will be logged. If you want to opt-out of this validation then set an envar as follows:
 
 ```
 NO_PEER_DEPENDENCY_CHECK=true|1
@@ -266,4 +266,4 @@ PEER_DEPENDENCY_CHECK=false|0
 
 ## Notes
 
-- Versions of `nexus-prisma` package prior to `0.20` were a completely different version of the API, and had also become deprecated at one point to migrate to `nexus-plugi-prisma` when Nexus Framework was being worked on. All of that is history.
+- Versions of `nexus-prisma` package prior to `0.20` were a completely different version of the API, and had also become deprecated at one point to migrate to `nexus-plugin-prisma` when Nexus Framework was being worked on. All of that is history.

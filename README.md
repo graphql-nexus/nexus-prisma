@@ -63,6 +63,29 @@ export const schema = makeSchema({
 })
 ```
 
+## Roadmap
+
+#### Done
+
+- [x] ([#4](https://github.com/prisma/nexus-prisma/issues/4)) Support for Prisma Model field types that map to standard GraphQL scalars
+- [x] ([#8](https://github.com/prisma/nexus-prisma/issues/8)) Support for Prisma Model field types of `DateTime` & `Json`
+
+#### Shortterm
+
+- [ ] ([#16](https://github.com/prisma/nexus-prisma/issues/16)) Support for Prisma enums
+- [ ] Support for Prisma Model field types of remaiming scalars (`Byes`, etc.)
+
+#### Midterm
+
+- [ ] Support for Prisma Model field types relating to other Models 1:1
+- [ ] Support for Prisma Model field types relating to other Models 1:n
+- [ ] Support for Prisma Model field types relating to other Models n:n
+
+#### Longterm
+
+- [ ] Nexus Plugin? `t.model`? `t.crud`?
+- [ ] ...
+
 ## Features
 
 > **Note**: ⛑ The following use abbreviated examples that skip a complete setup of passing Nexus type definition to Nexus `makeSchema`. If you are new to Nexus, Consider reading the [official Nexus tutorial](https://nxs.li/tutorial) before jumping into Nexus Prisma.

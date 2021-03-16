@@ -95,7 +95,7 @@ it('When bundled custom scalars are used the project type checks and generates e
           t.json('JsonManually')
           t.dateTime('DateTimeManually')
           t.field(M1.someJsonField.name, M1.someJsonField)
-          tefield(M1.someDateTimeField.name, M1.someDateTimeField)
+          t.field(M1.someDateTimeField.name, M1.someDateTimeField)
         },
       })
       

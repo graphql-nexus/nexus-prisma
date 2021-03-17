@@ -27,16 +27,19 @@ export function createSchema(content: string): string {
   `
 }
 
-export async function generate(content: string): Promise<ModuleSpec[]> {
+export async function generate(content: string): Promise<{ indexjs: string; indexdts: string }> {
   const schema = createSchema(content)
 
   const dmmf = await PrismaSDK.getDMMF({
     datamodel: schema,
   })
 
-  const runtime = generateRuntime(dmmf)
+  const [indexjs, indexdts] = generateRuntime(dmmf) as [ModuleSpec, ModuleSpec]
 
-  return runtime
+  return {
+    indexdts: indexdts.content,
+    indexjs: indexjs.content,
+  }
 }
 
 export function setupTestProject({

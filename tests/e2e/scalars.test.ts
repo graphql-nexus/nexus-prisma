@@ -1,6 +1,6 @@
 import * as Execa from 'execa'
 import stripAnsi from 'strip-ansi'
-import { assertBuildPresent, createSchema, setupTestProject, TestProject } from '../__helpers__'
+import { assertBuildPresent, createPrismaSchema, setupTestProject, TestProject } from '../__helpers__'
 
 function setupTestProjectCase({
   prismaSchema,
@@ -112,7 +112,7 @@ it('When bundled custom scalars are used the project type checks and generates e
       // wait for output generation
       setTimeout(() => {}, 1000)
     `,
-    prismaSchema: createSchema(`
+    prismaSchema: createPrismaSchema(`
       model M1 {
         id                String   @id
         someJsonField     Json

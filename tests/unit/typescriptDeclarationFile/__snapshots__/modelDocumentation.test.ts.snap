@@ -67,7 +67,7 @@ declare namespace $Types {
 
   // Enums
 
-  // N/A –– You have no defined any enums in your Prisma schema file.
+  // N/A –– You have not defined any models in your Prisma schema file.
 }
 
 
@@ -109,7 +109,9 @@ declare namespace $Types {
  */
 export const SomeModel: $Types.SomeModel
 
-// Enums"
+// Enums
+
+// N/A –– You have not defined any models in your Prisma schema file."
 `;
 
 exports[`When a model field has no documentation comment, then it gets the default JSDoc and its description field is null 1`] = `
@@ -208,7 +210,7 @@ declare namespace $Types {
 
   // Enums
 
-  // N/A –– You have no defined any enums in your Prisma schema file.
+  // N/A –– You have not defined any models in your Prisma schema file.
 }
 
 
@@ -250,7 +252,9 @@ declare namespace $Types {
  */
 export const SomeModel: $Types.SomeModel
 
-// Enums"
+// Enums
+
+// N/A –– You have not defined any models in your Prisma schema file."
 `;
 
 exports[`When a model has a documentation comment, then it is used for the JSDoc of that model and its $description field 1`] = `
@@ -322,7 +326,7 @@ declare namespace $Types {
 
   // Enums
 
-  // N/A –– You have no defined any enums in your Prisma schema file.
+  // N/A –– You have not defined any models in your Prisma schema file.
 }
 
 
@@ -337,7 +341,9 @@ declare namespace $Types {
  */
 export const SomeModel: $Types.SomeModel
 
-// Enums"
+// Enums
+
+// N/A –– You have not defined any models in your Prisma schema file."
 `;
 
 exports[`When a model has no documentation comment, then it gets the default JSDoc and its description field is null 1`] = `
@@ -436,7 +442,7 @@ declare namespace $Types {
 
   // Enums
 
-  // N/A –– You have no defined any enums in your Prisma schema file.
+  // N/A –– You have not defined any models in your Prisma schema file.
 }
 
 
@@ -478,5 +484,7 @@ declare namespace $Types {
  */
 export const SomeModel: $Types.SomeModel
 
-// Enums"
+// Enums
+
+// N/A –– You have not defined any models in your Prisma schema file."
 `;

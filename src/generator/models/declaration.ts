@@ -16,6 +16,14 @@ export function createModuleSpec(dmmf: DMMF.Document): ModuleSpec {
   }
 }
 
+const NO_ENUMS_DEFINED_COMMENT = endent`
+  // N/A –– You have not defined any models in your Prisma schema file.
+`
+
+const NO_MODELS_DEFINED_COMMENT = endent`
+  // N/A –– You have not defined any enums in your Prisma schema file.
+`
+
 export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document): string {
   const models = dmmf.datamodel.models
   const enums = dmmf.datamodel.enums
@@ -33,7 +41,7 @@ export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document
 
       ${
         models.length === 0
-          ? `// N/A –– Your Prisma schema has no models defined`
+          ? NO_MODELS_DEFINED_COMMENT
           : models.map(renderTypeScriptDeclarationForModel).join('\n\n')
       }
 
@@ -41,7 +49,7 @@ export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document
 
       ${
         enums.length === 0
-          ? `// N/A –– You have no defined any enums in your Prisma schema file.`
+          ? NO_ENUMS_DEFINED_COMMENT
           : enums.map(renderTypeScriptDeclarationForEnum).join('\n\n')
       }
     }
@@ -53,25 +61,33 @@ export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document
 
     // Models
 
-    ${models
-      .map((model) => {
-        return endent`
+    ${
+      models.length === 0
+        ? NO_MODELS_DEFINED_COMMENT
+        : models
+            .map((model) => {
+              return endent`
           ${jsDocForModel(model)}
           export const ${model.name}: $Types.${model.name}
         `
-      })
-      .join('\n\n')}
+            })
+            .join('\n\n')
+    }
 
     // Enums
 
-    ${enums
-      .map((enum_) => {
-        return endent`
+    ${
+      enums.length === 0
+        ? NO_ENUMS_DEFINED_COMMENT
+        : enums
+            .map((enum_) => {
+              return endent`
           ${jsDocForEnum(enum_)}
           export const ${enum_.name}: $Types.${enum_.name}
         `
-      })
-      .join('\n\n')}
+            })
+            .join('\n\n')
+    }
 
   `
 }

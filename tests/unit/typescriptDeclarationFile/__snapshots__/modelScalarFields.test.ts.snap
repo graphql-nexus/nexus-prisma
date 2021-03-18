@@ -144,7 +144,7 @@ declare namespace $Types {
 
   // Enums
 
-  // N/A –– You have no defined any enums in your Prisma schema file.
+  // N/A –– You have not defined any models in your Prisma schema file.
 }
 
 
@@ -186,7 +186,9 @@ declare namespace $Types {
  */
 export const SomeModel: $Types.SomeModel
 
-// Enums"
+// Enums
+
+// N/A –– You have not defined any models in your Prisma schema file."
 `;
 
 exports[`A model field with type DateTime maps to GraphQL DateTime custom scalar 1`] = `
@@ -333,7 +335,7 @@ declare namespace $Types {
 
   // Enums
 
-  // N/A –– You have no defined any enums in your Prisma schema file.
+  // N/A –– You have not defined any models in your Prisma schema file.
 }
 
 
@@ -375,7 +377,9 @@ declare namespace $Types {
  */
 export const SomeModel: $Types.SomeModel
 
-// Enums"
+// Enums
+
+// N/A –– You have not defined any models in your Prisma schema file."
 `;
 
 exports[`A model field with type Float maps to GraphQL Float scalar 1`] = `
@@ -522,7 +526,7 @@ declare namespace $Types {
 
   // Enums
 
-  // N/A –– You have no defined any enums in your Prisma schema file.
+  // N/A –– You have not defined any models in your Prisma schema file.
 }
 
 
@@ -564,7 +568,9 @@ declare namespace $Types {
  */
 export const SomeModel: $Types.SomeModel
 
-// Enums"
+// Enums
+
+// N/A –– You have not defined any models in your Prisma schema file."
 `;
 
 exports[`A model field with type Int maps to GraphQL Int scalar 1`] = `
@@ -711,7 +717,7 @@ declare namespace $Types {
 
   // Enums
 
-  // N/A –– You have no defined any enums in your Prisma schema file.
+  // N/A –– You have not defined any models in your Prisma schema file.
 }
 
 
@@ -753,7 +759,9 @@ declare namespace $Types {
  */
 export const SomeModel: $Types.SomeModel
 
-// Enums"
+// Enums
+
+// N/A –– You have not defined any models in your Prisma schema file."
 `;
 
 exports[`A model field with type Int, attribute @id, maps to GraphQL ID scalar 1`] = `
@@ -852,7 +860,7 @@ declare namespace $Types {
 
   // Enums
 
-  // N/A –– You have no defined any enums in your Prisma schema file.
+  // N/A –– You have not defined any models in your Prisma schema file.
 }
 
 
@@ -894,7 +902,9 @@ declare namespace $Types {
  */
 export const SomeModel: $Types.SomeModel
 
-// Enums"
+// Enums
+
+// N/A –– You have not defined any models in your Prisma schema file."
 `;
 
 exports[`A model field with type Json maps to GraphQL Json custom scalar 1`] = `
@@ -1041,7 +1051,7 @@ declare namespace $Types {
 
   // Enums
 
-  // N/A –– You have no defined any enums in your Prisma schema file.
+  // N/A –– You have not defined any models in your Prisma schema file.
 }
 
 
@@ -1083,7 +1093,9 @@ declare namespace $Types {
  */
 export const SomeModel: $Types.SomeModel
 
-// Enums"
+// Enums
+
+// N/A –– You have not defined any models in your Prisma schema file."
 `;
 
 exports[`A model field with type String, attribute @id, maps to GraphQL ID scalar 1`] = `
@@ -1182,7 +1194,7 @@ declare namespace $Types {
 
   // Enums
 
-  // N/A –– You have no defined any enums in your Prisma schema file.
+  // N/A –– You have not defined any models in your Prisma schema file.
 }
 
 
@@ -1224,5 +1236,7 @@ declare namespace $Types {
  */
 export const SomeModel: $Types.SomeModel
 
-// Enums"
+// Enums
+
+// N/A –– You have not defined any models in your Prisma schema file."
 `;

@@ -11,7 +11,7 @@ import * as NexusCore from 'nexus/dist/core'
 declare namespace $Types {
   // Models
 
-  // N/A –– Your Prisma schema has no models defined
+  // N/A –– You have not defined any enums in your Prisma schema file.
 
   // Enums
 
@@ -34,7 +34,7 @@ declare namespace $Types {
 
 // Models
 
-
+// N/A –– You have not defined any enums in your Prisma schema file.
 
 // Enums
 
@@ -57,7 +57,7 @@ import * as NexusCore from 'nexus/dist/core'
 declare namespace $Types {
   // Models
 
-  // N/A –– Your Prisma schema has no models defined
+  // N/A –– You have not defined any enums in your Prisma schema file.
 
   // Enums
 
@@ -78,7 +78,7 @@ declare namespace $Types {
 
 // Models
 
-
+// N/A –– You have not defined any enums in your Prisma schema file.
 
 // Enums
 

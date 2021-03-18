@@ -1,28 +1,47 @@
+**⚠️ Currently in development - _not to be used in Production_.** Follow progress from [here](https://github.com/graphql-nexus/nexus-plugin-prisma/issues/1039).
+
 # nexus-prisma
 
 [![trunk](https://github.com/prisma/nexus-prisma/actions/workflows/trunk.yml/badge.svg)](https://github.com/prisma/nexus-prisma/actions/workflows/trunk.yml)
 
-Official Prisma plugin for Nexus.  
-**Currently in development - not to be used in Production.** Follow the progress from [here](https://github.com/graphql-nexus/nexus-plugin-prisma/issues/1039).
+Official Prisma plugin for Nexus.
 
-## Installation
+<!-- toc -->
 
-```
-npm add nexus-prisma graphql @prisma/client
-npm add --dev prisma
-```
+- [Usage](#usage)
+- [Roadmap](#roadmap)
+- [Features](#features)
+  * [Type-safe seamless generated library code](#type-safe-seamless-generated-library-code)
+  * [Scalar Mapping & Custom GraphQL Scalars for Native Prisma Scalars](#scalar-mapping--custom-graphql-scalars-for-native-prisma-scalars)
+  * [Prisma ID field to GraphQL ID scalar type mapping](#prisma-id-field-to-graphql-id-scalar-type-mapping)
+  * [Prisma Schema model & field documentation re-use](#prisma-schema-model--field-documentation-re-use)
+    + [GraphQL documentation for your API clients](#graphql-documentation-for-your-api-clients)
+    + [Internal JSDoc for your team](#internal-jsdoc-for-your-team)
+  * [Refined DX](#refined-dx)
+- [Notes](#notes)
 
-> `graphql` and `@prisma/client` are peer dependencies. `prisma` is for the Prisma CLI which you'll probably want during development.
+<!-- tocstop -->
 
 ## Usage
 
+1. Install dependencies
+
+   ```
+   npm add nexus-prisma graphql @prisma/client
+   npm add --dev prisma
+   ```
+
+   > `graphql` and `@prisma/client` are peer dependencies. `prisma` is for the Prisma CLI which you'll probably want during development.
+
 1. Add a `nexus-prisma` generator block to your Prisma Schema.
+
+   > **Note:** If you are using Prisma@=<2.17.x then you _must_ use the Nexus Prisma Prisma generator name of `nexus_prisma` instead of `nexus-prisma`. This is because prior to prisma@2.18.x there was a hardcode check for `nexus-prisma` generator name wherein it would give feedback about it no longer being a generator.
+
 1. Run `prisma generate` in your terminal.
+
 1. Import models from `nexus-prisma` and then pass them to your Nexus type definition and field definition configurations. In this way you will be effectively projecting models from your data layer into GraphQL types in your API layer.
 
-### Example
-
-> **Note:** If you are using Prisma@=<2.17.x then you _must_ use the Nexus Prisma Prisma generator name of `nexus_prisma` instead of `nexus-prisma`. This is because prior to prisma@2.18.x there was a hardcode check for `nexus-prisma` generator name wherein it would give feedback about it no longer being a generator.
+##### Example
 
 ```prisma
 
@@ -65,23 +84,23 @@ export const schema = makeSchema({
 
 ## Roadmap
 
-#### Done
+##### Done
 
 - [x] ([#4](https://github.com/prisma/nexus-prisma/issues/4)) Support for Prisma Model field types that map to standard GraphQL scalars
 - [x] ([#8](https://github.com/prisma/nexus-prisma/issues/8)) Support for Prisma Model field types of `DateTime` & `Json`
 
-#### Shortterm
+##### Shortterm
 
 - [ ] ([#16](https://github.com/prisma/nexus-prisma/issues/16)) Support for Prisma enums
 - [ ] Support for Prisma Model field types of remaiming scalars (`Byes`, etc.)
 
-#### Midterm
+##### Midterm
 
 - [ ] Support for Prisma Model field types relating to other Models 1:1
 - [ ] Support for Prisma Model field types relating to other Models 1:n
 - [ ] Support for Prisma Model field types relating to other Models n:n
 
-#### Longterm
+##### Longterm
 
 - [ ] Nexus Plugin? `t.model`? `t.crud`?
 - [ ] ...
@@ -264,15 +283,15 @@ User.id // JSDoc: A stable identifier to find users by.
 
 These are finer points that aren't perhaps worth a top-level point but none the less add up toward a thoughtful developer experience.
 
-##### Default JSDoc Prompts
+##### Default JSDoc
 
 Fields and models that you do not document will result in a helpful default JSDoc that teaches you about this.
 
-##### Runtime Proxy
+##### Defualt Runtime
 
 When your project is in a state where the generated Nexus Prisma part is missing (new repo clone, reinstalled deps, etc.) Nexus Prisma gives you a default runtime export named `PleaseRunPrismaGenerate` and will error with a clear message.
 
-##### Opt-outable friendly runtime peer dependency checks
+##### Peer-Dependency Validation
 
 When `nexus-prisma` is imported it will validate that your project has peer dependencies setup correctly.
 

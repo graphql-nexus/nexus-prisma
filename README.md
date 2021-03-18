@@ -11,13 +11,13 @@ Official Prisma plugin for Nexus.
 - [Usage](#usage)
 - [Roadmap](#roadmap)
 - [Features](#features)
-  * [Type-safe seamless generated library code](#type-safe-seamless-generated-library-code)
-  * [Scalar Mapping & Custom GraphQL Scalars for Native Prisma Scalars](#scalar-mapping--custom-graphql-scalars-for-native-prisma-scalars)
-  * [Prisma ID field to GraphQL ID scalar type mapping](#prisma-id-field-to-graphql-id-scalar-type-mapping)
-  * [Prisma Schema model & field documentation re-use](#prisma-schema-model--field-documentation-re-use)
-    + [GraphQL documentation for your API clients](#graphql-documentation-for-your-api-clients)
-    + [Internal JSDoc for your team](#internal-jsdoc-for-your-team)
-  * [Refined DX](#refined-dx)
+  - [Type-safe seamless generated library code](#type-safe-seamless-generated-library-code)
+  - [Scalar Mapping & Custom GraphQL Scalars for Native Prisma Scalars](#scalar-mapping--custom-graphql-scalars-for-native-prisma-scalars)
+  - [Prisma ID field to GraphQL ID scalar type mapping](#prisma-id-field-to-graphql-id-scalar-type-mapping)
+  - [Prisma Schema model & field documentation re-use](#prisma-schema-model--field-documentation-re-use)
+    - [GraphQL documentation for your API clients](#graphql-documentation-for-your-api-clients)
+    - [Internal JSDoc for your team](#internal-jsdoc-for-your-team)
+  - [Refined DX](#refined-dx)
 - [Notes](#notes)
 
 <!-- tocstop -->
@@ -35,7 +35,7 @@ Official Prisma plugin for Nexus.
 
 1. Add a `nexus-prisma` generator block to your Prisma Schema.
 
-   > **Note:** If you are using Prisma@=<2.17.x then you _must_ use the Nexus Prisma Prisma generator name of `nexus_prisma` instead of `nexus-prisma`. This is because prior to prisma@2.18.x there was a hardcode check for `nexus-prisma` generator name wherein it would give feedback about it no longer being a generator.
+   > If you are using `prisma@=<2.17.x` then you must use the Nexus Prisma Prisma generator name of `nexus_prisma` instead of `nexus-prisma`. See [notes](#notes) for more detail.
 
 1. Run `prisma generate` in your terminal.
 
@@ -62,7 +62,7 @@ model User {
 ```
 
 ```
-$ prisma generate
+prisma generate
 ```
 
 ```ts
@@ -88,10 +88,10 @@ export const schema = makeSchema({
 
 - [x] ([#4](https://github.com/prisma/nexus-prisma/issues/4)) Support for Prisma Model field types that map to standard GraphQL scalars
 - [x] ([#8](https://github.com/prisma/nexus-prisma/issues/8)) Support for Prisma Model field types of `DateTime` & `Json`
+- [x] ([#16](https://github.com/prisma/nexus-prisma/issues/16)) Support for Prisma enums
 
 ##### Shortterm
 
-- [ ] ([#16](https://github.com/prisma/nexus-prisma/issues/16)) Support for Prisma enums
 - [ ] Support for Prisma Model field types of remaiming scalars (`Byes`, etc.)
 
 ##### Midterm
@@ -107,9 +107,9 @@ export const schema = makeSchema({
 
 ## Features
 
-> **Note**: ⛑ The following use abbreviated examples that skip a complete setup of passing Nexus type definition to Nexus `makeSchema`. If you are new to Nexus, Consider reading the [official Nexus tutorial](https://nxs.li/tutorial) before jumping into Nexus Prisma.
+> **Note**: ⛑ The following use abbreviated examples that skip a complete setup of passing Nexus type definition to Nexus' `makeSchema`. If you are new to Nexus, Consider reading the [official Nexus tutorial](https://nxs.li/tutorial) before jumping into Nexus Prisma.
 
-### Type-safe seamless generated library code
+### Type-safe Generated Library Code
 
 Following the same philosophy as Prisma Client, Nexus Prisma uses generation to create an API that feels tailor made for your project.
 
@@ -135,9 +135,30 @@ objectType({
 })
 ```
 
-### Scalar Mapping & Custom GraphQL Scalars for Native Prisma Scalars
+### Project Enums
 
-Like GraphQL [Prisma has the concept of scalar types](https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference/#model-field-scalar-types). Some of the Prisma scalars can be naturally mapped to standard GraphQL scalars. The mapping is as follows:
+Every enum defined in your Prisma schema becomes importable as a Nexus enum type definition configuration. This makes it trivial to project enums from your database layer into your API layer.
+
+```prisma
+enum SomeEnum {
+  foo
+  bar
+}
+```
+
+```ts
+import { SomeEnum } from 'nexus-prisma'
+import { enumType } from 'nexus'
+
+SomeEnum.name //    'SomeEnum'
+SomeEnum.members // ['foo', 'bar']
+
+enumType(SomeEnum)
+```
+
+### Project Scalars
+
+Like GraphQL, [Prisma has the concept of scalar types](https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference/#model-field-scalar-types). Some of the Prisma scalars can be naturally mapped to standard GraphQL scalars. The mapping is as follows:
 
 **Prisma Standard Scalar to GraphQL Standard Scalar Mapping**
 
@@ -173,25 +194,7 @@ makeSchema({
 })
 ```
 
-The following is a brief example how you could roll the implementations yourself:
-
-```ts
-import { GraphQLScalarType } from 'graphql'
-import { JSONObjectResolver, DateTimeResolver } from 'graphql-scalars'
-import { asNexusMethod, makeSchema } from 'nexus'
-
-const jsonScalar = new GraphQLScalarType({
-  ...JSONObjectResolver,
-  // Override the default 'JsonObject' name with one that matches what Nexus Prisma expects.
-  name: 'Json',
-})
-
-const dateTimeScalar = new GraphQLScalarType(DateTimeResolver)
-
-makeSchema({
-  types: [asNexusMethod(jsonScalar, 'json'), asNexusMethod(dateTimeScalar, 'dateTime')],
-})
-```
+There is a [recipe below](#Supply-custom-custom-scalars-to-your-GraphQL-schema) showing how to add your own custom scalars if you want.
 
 ### Prisma ID field to GraphQL ID scalar type mapping
 
@@ -222,9 +225,7 @@ type User {
 }
 ```
 
-### Prisma Schema model & field documentation re-use
-
-#### GraphQL documentation for your API clients
+### Prisma Schema docs re-used for GraphQL schema doc
 
 ```prisma
 /// A user.
@@ -262,7 +263,7 @@ type User {
 }
 ```
 
-#### Internal JSDoc for your team
+### Prisma Schema docs re-used for JSDoc
 
 ```prisma
 /// A user.
@@ -306,6 +307,32 @@ PEER_DEPENDENCY_CHECK=false|0
 
 - `nexus-prisma/scalars` offers a default export you can easily auto-import by name: `NexusPrismaScalars`.
 
+## Recipes
+
+### Supply custom custom scalars to your GraphQL schema
+
+The following is a brief example how you could add your own custom GraphQL custom scalars to satisfy Nexus Prisma. Note that most of the time using the defaults exported by `nexus-prisma/scalars` will probably be good enough for you.
+
+```ts
+import { GraphQLScalarType } from 'graphql'
+import { JSONObjectResolver, DateTimeResolver } from 'graphql-scalars'
+import { asNexusMethod, makeSchema } from 'nexus'
+
+const jsonScalar = new GraphQLScalarType({
+  ...JSONObjectResolver,
+  // Override the default 'JsonObject' name with one that matches what Nexus Prisma expects.
+  name: 'Json',
+})
+
+const dateTimeScalar = new GraphQLScalarType(DateTimeResolver)
+
+makeSchema({
+  types: [asNexusMethod(jsonScalar, 'json'), asNexusMethod(dateTimeScalar, 'dateTime')],
+})
+```
+
 ## Notes
 
 - Versions of `nexus-prisma` package prior to `0.20` were a completely different version of the API, and had also become deprecated at one point to migrate to `nexus-plugin-prisma` when Nexus Framework was being worked on. All of that is history.
+
+- If you are using `prisma@=<2.17.x` then you must use the Nexus Prisma Prisma generator name of `nexus_prisma` instead of `nexus-prisma`. This is because prior to `prisma@2.18.x` there was a hardcode check for `nexus-prisma` that would fail with an error message about a now-old migration.

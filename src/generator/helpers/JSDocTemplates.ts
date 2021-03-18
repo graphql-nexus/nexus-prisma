@@ -14,11 +14,13 @@ export function jsDocForEnum(enum_: DMMF.DatamodelEnum): JSDoc {
     : missingEnumDocumentation(enum_)
 }
 
-export function missingEnumDocumentation(enum_: DMMF.DatamodelEnum): JSDoc {
+export function missingEnumDocumentation({ name }: DMMF.DatamodelEnum): JSDoc {
   // todo
   return endent`
     /**
-     * todo
+     * ### 📔 Missing Enum Documentation for \`${name}\`
+     * 
+     * TODO
      */
   `
 }

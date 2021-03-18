@@ -2,7 +2,28 @@ import { DMMF } from '@prisma/client/runtime'
 import endent from 'endent'
 import { repeat } from 'lodash'
 
-export function jsDocForModel(model: DMMF.Model): string {
+type JSDoc = string
+
+export function jsDocForEnum(enum_: DMMF.DatamodelEnum): JSDoc {
+  return enum_.documentation
+    ? endent`
+        /**
+         * ${enum_.documentation}
+         */
+      `
+    : missingEnumDocumentation(enum_)
+}
+
+export function missingEnumDocumentation(enum_: DMMF.DatamodelEnum): JSDoc {
+  // todo
+  return endent`
+    /**
+     * todo
+     */
+  `
+}
+
+export function jsDocForModel(model: DMMF.Model): JSDoc {
   return model.documentation
     ? endent`
         /**
@@ -12,7 +33,7 @@ export function jsDocForModel(model: DMMF.Model): string {
     : missingModelDocumentation(model)
 }
 
-export function jsDocForField({ field, model }: { field: DMMF.Field; model: DMMF.Model }): string {
+export function jsDocForField({ field, model }: { field: DMMF.Field; model: DMMF.Model }): JSDoc {
   return field.documentation
     ? endent`
         /**
@@ -22,7 +43,7 @@ export function jsDocForField({ field, model }: { field: DMMF.Field; model: DMMF
     : missingFieldDocumentation({ field, model })
 }
 
-export function missingModelDocumentation({ name }: DMMF.Model): string {
+export function missingModelDocumentation({ name }: DMMF.Model): JSDoc {
   return endent`
     /**
      * ### 📔 Missing Model Documentation for \`${name}\`
@@ -57,13 +78,7 @@ export function missingModelDocumentation({ name }: DMMF.Model): string {
   `
 }
 
-export function missingFieldDocumentation({
-  field,
-  model,
-}: {
-  field: DMMF.Field
-  model: DMMF.Model
-}): string {
+export function missingFieldDocumentation({ field, model }: { field: DMMF.Field; model: DMMF.Model }): JSDoc {
   return endent`
     /**
      * ### 📔 Missing Field Documentation for \`${field.name}\`

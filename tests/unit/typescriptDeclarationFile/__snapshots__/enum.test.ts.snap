@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`An enum maps to a Nexus enum type definition 1`] = `
+"import * as Nexus from 'nexus'
+import * as NexusCore from 'nexus/dist/core'
+
+//
+// Types
+//
+
+declare namespace $Types {
+  // Models
+
+  // N/A –– Your Prisma schema has no models defined
+
+  // Enums
+
+  /**
+   * todo
+   */
+  interface Foo {
+    name: 'Foo'
+    description: null
+    members: ['a']
+  }
+}
+
+
+//
+// Exports
+//"
+`;
+
+exports[`When prisma enum has documentation then it is used for JSDoc and GraphQL enum description 1`] = `
+"import * as Nexus from 'nexus'
+import * as NexusCore from 'nexus/dist/core'
+
+//
+// Types
+//
+
+declare namespace $Types {
+  // Models
+
+  // N/A –– Your Prisma schema has no models defined
+
+  // Enums
+
+  /**
+   * Some documentation
+   */
+  interface Foo {
+    name: 'Foo'
+    description: 'Some documentation'
+    members: ['a']
+  }
+}
+
+
+//
+// Exports
+//"
+`;

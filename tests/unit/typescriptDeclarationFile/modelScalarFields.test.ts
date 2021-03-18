@@ -1,7 +1,7 @@
-import { generate } from '../__helpers__'
+import { generateModules } from '../../__helpers__'
 
 it('A model field with type String, attribute @id, maps to GraphQL ID scalar', async () => {
-  const { indexdts } = await generate(`
+  const { indexdts } = await generateModules(`
     model SomeModel {
       id String @id
     }
@@ -11,7 +11,7 @@ it('A model field with type String, attribute @id, maps to GraphQL ID scalar', a
 })
 
 it('A model field with type Int, attribute @id, maps to GraphQL ID scalar', async () => {
-  const { indexdts } = await generate(`
+  const { indexdts } = await generateModules(`
     model SomeModel {
       id Int @id
     }
@@ -21,7 +21,7 @@ it('A model field with type Int, attribute @id, maps to GraphQL ID scalar', asyn
 })
 
 it('A model field with type Int maps to GraphQL Int scalar', async () => {
-  const { indexdts } = await generate(`
+  const { indexdts } = await generateModules(`
     model SomeModel {
       id  String @id
       foo Int
@@ -32,7 +32,7 @@ it('A model field with type Int maps to GraphQL Int scalar', async () => {
 })
 
 it('A model field with type Float maps to GraphQL Float scalar', async () => {
-  const { indexdts } = await generate(`
+  const { indexdts } = await generateModules(`
     model SomeModel {
       id  String @id
       foo Float
@@ -43,7 +43,7 @@ it('A model field with type Float maps to GraphQL Float scalar', async () => {
 })
 
 it('A model field with type Boolean maps to GraphQL Boolean scalar', async () => {
-  const { indexdts } = await generate(`
+  const { indexdts } = await generateModules(`
     model SomeModel {
       id  String @id
       foo Boolean
@@ -54,7 +54,7 @@ it('A model field with type Boolean maps to GraphQL Boolean scalar', async () =>
 })
 
 it('A model field with type Json maps to GraphQL Json custom scalar', async () => {
-  const { indexdts } = await generate(`
+  const { indexdts } = await generateModules(`
     model SomeModel {
       id  String @id
       foo Json
@@ -65,7 +65,7 @@ it('A model field with type Json maps to GraphQL Json custom scalar', async () =
 })
 
 it('A model field with type DateTime maps to GraphQL DateTime custom scalar', async () => {
-  const { indexdts } = await generate(`
+  const { indexdts } = await generateModules(`
     model SomeModel {
       id  String @id
       foo DateTime

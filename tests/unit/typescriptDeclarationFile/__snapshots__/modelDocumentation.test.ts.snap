@@ -9,6 +9,8 @@ import * as NexusCore from 'nexus/dist/core'
 //
 
 declare namespace $Types {
+  // Models
+
   /**
    * ### 📔 Missing Model Documentation for \`SomeModel\`
    * 
@@ -62,6 +64,10 @@ declare namespace $Types {
       description: string
     }
   }
+
+  // Enums
+
+  // N/A –– You have no defined any enums in your Prisma schema file.
 }
 
 
@@ -111,6 +117,8 @@ import * as NexusCore from 'nexus/dist/core'
 //
 
 declare namespace $Types {
+  // Models
+
   /**
    * ### 📔 Missing Model Documentation for \`SomeModel\`
    * 
@@ -193,6 +201,10 @@ declare namespace $Types {
       description: undefined
     }
   }
+
+  // Enums
+
+  // N/A –– You have no defined any enums in your Prisma schema file.
 }
 
 
@@ -242,6 +254,8 @@ import * as NexusCore from 'nexus/dist/core'
 //
 
 declare namespace $Types {
+  // Models
+
   /**
    * Some documentation
    */
@@ -297,6 +311,10 @@ declare namespace $Types {
       description: undefined
     }
   }
+
+  // Enums
+
+  // N/A –– You have no defined any enums in your Prisma schema file.
 }
 
 
@@ -319,6 +337,8 @@ import * as NexusCore from 'nexus/dist/core'
 //
 
 declare namespace $Types {
+  // Models
+
   /**
    * ### 📔 Missing Model Documentation for \`SomeModel\`
    * 
@@ -401,6 +421,10 @@ declare namespace $Types {
       description: undefined
     }
   }
+
+  // Enums
+
+  // N/A –– You have no defined any enums in your Prisma schema file.
 }
 
 

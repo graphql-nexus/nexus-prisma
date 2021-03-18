@@ -4,7 +4,7 @@ import { LiteralUnion } from 'type-fest'
 import { StandardGraphQLScalarType, StandardgraphQLScalarTypes } from '../../helpers/graphql'
 import { PrismaScalarType } from '../../helpers/prisma'
 import { allCasesHandled } from '../../helpers/utils'
-import { jsDocForField, jsDocForModel } from '../helpers/JSDocTemplates'
+import { jsDocForEnum, jsDocForField, jsDocForModel } from '../helpers/JSDocTemplates'
 import { ModuleSpec } from '../types'
 
 export function createModuleSpec(dmmf: DMMF.Document): ModuleSpec {
@@ -18,6 +18,7 @@ export function createModuleSpec(dmmf: DMMF.Document): ModuleSpec {
 
 export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document): string {
   const models = dmmf.datamodel.models
+  const enums = dmmf.datamodel.enums
 
   return endent`
     import * as Nexus from 'nexus'
@@ -28,7 +29,21 @@ export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document
     //
 
     declare namespace $Types {
-      ${models.map(renderTypeScriptDeclarationForModel).join('\n\n')}
+      // Models
+
+      ${
+        models.length === 0
+          ? `// N/A –– Your Prisma schema has no models defined`
+          : models.map(renderTypeScriptDeclarationForModel).join('\n\n')
+      }
+
+      // Enums
+
+      ${
+        enums.length === 0
+          ? `// N/A –– You have no defined any enums in your Prisma schema file.`
+          : enums.map(renderTypeScriptDeclarationForEnum).join('\n\n')
+      }
     }
 
 
@@ -44,6 +59,17 @@ export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document
         `
       })
       .join('\n\n')}
+  `
+}
+
+function renderTypeScriptDeclarationForEnum(enum_: DMMF.DatamodelEnum): string {
+  return endent`
+    ${jsDocForEnum(enum_)}
+    interface ${enum_.name} {
+      name: '${enum_.name}'
+      description: ${enum_.documentation ? `'${enum_.documentation}'` : 'null'}
+      members: [${enum_.values.map((value) => `'${value.name}'`).join(', ')}]
+    }
   `
 }
 

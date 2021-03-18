@@ -83,24 +83,43 @@ beforeAll(() => {
 it('When bundled custom scalars are used the project type checks and generates expected GraphQL schema', () => {
   setupTestProjectCase({
     testProject,
+    prismaSchema: createPrismaSchema(`
+      model M1 {
+        id                String   @id
+        someJsonField     Json
+        someDateTimeField DateTime
+      }
+
+      enum E1 {
+        a
+        b
+        c
+      }
+    `),
     main: `
       import { makeSchema, objectType } from 'nexus'
-      import { M1 } from 'nexus-prisma'
+      import { M1, E1 } from 'nexus-prisma'
       import * as customScalars from 'nexus-prisma/scalars'
       import * as Path from 'path'
       
-      const SomeObject = objectType({
-        name: 'SomeObject',
-        definition(t) {
-          t.json('JsonManually')
-          t.dateTime('DateTimeManually')
-          t.field(M1.someJsonField.name, M1.someJsonField)
-          t.field(M1.someDateTimeField.name, M1.someDateTimeField)
-        },
-      })
+      const types = [
+        enumType(E1)
+        objectType({
+          name: M1.$name,
+          definition(t) {
+            t.field('e1', {
+              type: 'E1'
+            })
+            t.json('JsonManually')
+            t.dateTime('DateTimeManually')
+            t.field(M1.someJsonField.name, M1.someJsonField)
+            t.field(M1.someDateTimeField.name, M1.someDateTimeField)
+          },
+        }),
+      ]
       
       makeSchema({
-        types: [customScalars, SomeObject],
+        types,
         shouldGenerateArtifacts: true,
         shouldExitAfterGenerateArtifacts: true,
         outputs: {
@@ -112,13 +131,6 @@ it('When bundled custom scalars are used the project type checks and generates e
       // wait for output generation
       setTimeout(() => {}, 1000)
     `,
-    prismaSchema: createPrismaSchema(`
-      model M1 {
-        id                String   @id
-        someJsonField     Json
-        someDateTimeField DateTime
-      }
-    `),
   })
 
   // uncomment this to see dir (helpful to go there yourself and manually debug)

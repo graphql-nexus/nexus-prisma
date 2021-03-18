@@ -1,5 +1,6 @@
 import * as Execa from 'execa'
 import stripAnsi from 'strip-ansi'
+import { dump } from '../../src/helpers/utils'
 import { assertBuildPresent, createPrismaSchema, setupTestProject, TestProject } from '../__helpers__'
 
 function setupTestProjectCase({
@@ -97,13 +98,14 @@ it('When bundled custom scalars are used the project type checks and generates e
       }
     `),
     main: `
-      import { makeSchema, objectType } from 'nexus'
+      import { makeSchema, objectType, enumType } from 'nexus'
       import { M1, E1 } from 'nexus-prisma'
       import * as customScalars from 'nexus-prisma/scalars'
       import * as Path from 'path'
       
       const types = [
-        enumType(E1)
+        customScalars,
+        enumType(E1),
         objectType({
           name: M1.$name,
           definition(t) {
@@ -134,12 +136,12 @@ it('When bundled custom scalars are used the project type checks and generates e
   })
 
   // uncomment this to see dir (helpful to go there yourself and manually debug)
-  // console.log(testProject.tmpdir.cwd())
+  console.log(testProject.tmpdir.cwd())
 
   const results = runTestProject(testProject)
 
   // uncomment this to see the raw results (helpful for debugging)
-  // dump(results)
+  dump(results)
 
   expect(results.runFirstBuild.exitCode).toBe(2)
 
@@ -147,10 +149,10 @@ it('When bundled custom scalars are used the project type checks and generates e
     /.*error TS2305: Module '"nexus-prisma"' has no exported member 'M1'.*/
   )
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2339: Property 'json' does not exist on type 'ObjectDefinitionBlock<"SomeObject">'.*/
+    /.*error TS2339: Property 'json' does not exist on type 'ObjectDefinitionBlock<any>'.*/
   )
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2339: Property 'dateTime' does not exist on type 'ObjectDefinitionBlock<"SomeObject">'.*/
+    /.*error TS2339: Property 'dateTime' does not exist on type 'ObjectDefinitionBlock<any>'.*/
   )
 
   expect(results.runReflectPrisma.exitCode).toBe(0)

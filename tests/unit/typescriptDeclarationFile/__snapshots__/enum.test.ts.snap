@@ -16,7 +16,9 @@ declare namespace $Types {
   // Enums
 
   /**
-   * todo
+   * ### 📔 Missing Enum Documentation for \`Foo\`
+   * 
+   * TODO
    */
   interface Foo {
     name: 'Foo'
@@ -28,7 +30,20 @@ declare namespace $Types {
 
 //
 // Exports
-//"
+//
+
+// Models
+
+
+
+// Enums
+
+/**
+ * ### 📔 Missing Enum Documentation for \`Foo\`
+ * 
+ * TODO
+ */
+export const Foo: $Types.Foo"
 `;
 
 exports[`When prisma enum has documentation then it is used for JSDoc and GraphQL enum description 1`] = `
@@ -59,5 +74,16 @@ declare namespace $Types {
 
 //
 // Exports
-//"
+//
+
+// Models
+
+
+
+// Enums
+
+/**
+ * Some documentation
+ */
+export const Foo: $Types.Foo"
 `;

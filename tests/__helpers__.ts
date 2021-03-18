@@ -68,10 +68,10 @@ export async function generateSchema({
     printedSchema
       .replace(
         endent`
-      type Query {
-        ok: Boolean!
-      }
-    `,
+          type Query {
+            ok: Boolean!
+          }
+        `,
         ''
       )
       .trim() +

@@ -16,10 +16,30 @@ declare namespace $Types {
   // Enums
 
   /**
-   * ### 📔 Missing Enum Documentation for \`Foo\`
-   * 
-   * TODO
-   */
+    * Nexus \`enumType\` configuration based on the \`Foo\` enum in your Prisma schema.
+    *
+    * ### ️⚠️ Missing Documentation for this Enum
+    * 
+    * Automatically ✨ enrich this JSDoc with information about your enum
+    * type by documenting it in your Prisma schema. For example:
+    *
+    *
+    * \`\`\`prisma
+    * /// Lorem ipsum dolor sit amet...
+    * enum Foo {
+    *   a
+    * }
+    * \`\`\`
+    * 
+    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { enumType } from 'nexus'
+    * import { Foo } from 'nexus-prisma'
+    *
+    * enumType(Foo)
+    */
   interface Foo {
     name: 'Foo'
     description: null
@@ -39,10 +59,30 @@ declare namespace $Types {
 // Enums
 
 /**
- * ### 📔 Missing Enum Documentation for \`Foo\`
- * 
- * TODO
- */
+  * Nexus \`enumType\` configuration based on the \`Foo\` enum in your Prisma schema.
+  *
+  * ### ️⚠️ Missing Documentation for this Enum
+  * 
+  * Automatically ✨ enrich this JSDoc with information about your enum
+  * type by documenting it in your Prisma schema. For example:
+  *
+  *
+  * \`\`\`prisma
+  * /// Lorem ipsum dolor sit amet...
+  * enum Foo {
+  *   a
+  * }
+  * \`\`\`
+  * 
+  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  *
+  * @example
+  *
+  * import { enumType } from 'nexus'
+  * import { Foo } from 'nexus-prisma'
+  *
+  * enumType(Foo)
+  */
 export const Foo: $Types.Foo"
 `;
 
@@ -62,8 +102,17 @@ declare namespace $Types {
   // Enums
 
   /**
-   * Some documentation
-   */
+    * Nexus \`enumType\` configuration based on the \`Foo\` enum in your Prisma schema.
+    *
+    * Some documentation
+    *
+    * @example
+    *
+    * import { enumType } from 'nexus'
+    * import { Foo } from 'nexus-prisma'
+    *
+    * enumType(Foo)
+    */
   interface Foo {
     name: 'Foo'
     description: 'Some documentation'
@@ -83,7 +132,16 @@ declare namespace $Types {
 // Enums
 
 /**
- * Some documentation
- */
+  * Nexus \`enumType\` configuration based on the \`Foo\` enum in your Prisma schema.
+  *
+  * Some documentation
+  *
+  * @example
+  *
+  * import { enumType } from 'nexus'
+  * import { Foo } from 'nexus-prisma'
+  *
+  * enumType(Foo)
+  */
 export const Foo: $Types.Foo"
 `;

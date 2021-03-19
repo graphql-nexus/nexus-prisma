@@ -1,134 +1,186 @@
 import { DMMF } from '@prisma/client/runtime'
 import endent from 'endent'
-import { repeat } from 'lodash'
+import { upperFirst } from 'lodash'
 
 type JSDoc = string
 
+type FieldModelParams = {
+  field: DMMF.Field
+  model: DMMF.Model
+}
+
+/**
+ * Enum
+ */
+
 export function jsDocForEnum(enum_: DMMF.DatamodelEnum): JSDoc {
-  return enum_.documentation
-    ? endent`
-        /**
-         * ${enum_.documentation}
-         */
-      `
-    : missingEnumDocumentation(enum_)
-}
-
-export function missingEnumDocumentation({ name }: DMMF.DatamodelEnum): JSDoc {
-  // todo
+  const enumDoc = enum_.documentation ? `* ${enum_.documentation}` : enumMissingDoc(enum_)
   return endent`
     /**
-     * ### 📔 Missing Enum Documentation for \`${name}\`
-     * 
-     * TODO
-     */
+      ${enumIntro(enum_)}
+      *
+      ${enumDoc}
+      *
+      ${enumExample(enum_)}
+      */
   `
 }
 
-export function jsDocForModel(model: DMMF.Model): JSDoc {
-  return model.documentation
-    ? endent`
-        /**
-         * ${model.documentation}
-         */
-      `
-    : missingModelDocumentation(model)
-}
-
-export function jsDocForField({ field, model }: { field: DMMF.Field; model: DMMF.Model }): JSDoc {
-  return field.documentation
-    ? endent`
-        /**
-         * ${field.documentation}
-         */
-      `
-    : missingFieldDocumentation({ field, model })
-}
-
-export function missingModelDocumentation({ name }: DMMF.Model): JSDoc {
+function enumIntro(enum_: DMMF.DatamodelEnum): string {
   return endent`
-    /**
-     * ### 📔 Missing Model Documentation for \`${name}\`
-     * 
-     * Get JSDoc documentation for this model automatically by documenting
-     * it in your Prisma Schema ✨!
-     * 
-     * To document a model add a tripple slash comment above it.
-     * 
-     * Learn more about Prisma Schema comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-     * 
-     * ${jsDocDiviion('Example 1')}
-     * 
-     * \`\`\`prisma
-     * /// Lorem ipsum dolor sit amet...
-     * model ${name} {
-     *   id  String  @id
-     * }
-     * \`\`\`
-     * 
-     * ${jsDocDiviion('Example 2')}
-     * 
-     * \`\`\`prisma
-     * /// A user record. A user maps 1:1 with a person. Not
-     * /// to be confused with an \`Account\` which on person
-     * /// may have multiple of, all linked to a single \`User\`.
-     * model User {
-     *   id  String  @id
-     * }
-     * \`\`\`
-     */
+    * Nexus \`enumType\` configuration based on the \`${enum_.name}\` enum in your Prisma schema.
   `
 }
 
-export function missingFieldDocumentation({ field, model }: { field: DMMF.Field; model: DMMF.Model }): JSDoc {
+function enumExample(enum_: DMMF.DatamodelEnum): string {
   return endent`
-    /**
-     * ### 📔 Missing Field Documentation for \`${field.name}\`
-     * 
-     * Get JSDoc documentation for this field automatically by documenting
-     * it in your Prisma Schema ✨!
-     * 
-     * To document a field add a tripple slash comment above it.
-     * 
-     * Learn more about Prisma Schema comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-     * 
-     * ${jsDocDiviion('Example 1')}
-     * 
-     * \`\`\`prisma
-     * model ${model.name} {
-     *   /// Lorem ipsum dolor sit amet.
-     *   ${field.name}  ${field.type}${field.isRequired ? '' : '?'}
-     * }
-     * \`\`\`
-     * 
-     * ${jsDocDiviion('Example 2')}
-     * 
-     * \`\`\`prisma
-     * model User {
-     *   /// Identifier for a user. Will never change once set.
-     *   /// More stable than the \`handle\` field  which user
-     *   /// _can_ change, but is not human-friendly. Prefer this
-     *   /// for machine consumers but prefer \`handle\` for human
-     *   /// visible things like URL slugs.
-     *   id  String  @id
-     * }
-     * \`\`\`
-     */
+    * @example
+    *
+    * import { enumType } from 'nexus'
+    * import { ${enum_.name} } from 'nexus-prisma'
+    *
+    * enumType(${enum_.name})
+  `
+}
+
+function enumMissingDoc(enum_: DMMF.DatamodelEnum): string {
+  return endent`
+    ${missingDocsIntro('enum')}
+    *
+    * \`\`\`prisma
+    * /// Lorem ipsum dolor sit amet...
+    * enum ${enum_.name} {
+    ${enum_.values.map((value) => `*   ${value.name}`).join('\n')}
+    * }
+    * \`\`\`
+    * 
+    ${missingDocsOutro}
   `
 }
 
 /**
- * Render a centered title with bars on either side filling left over space.
- *
- * Sized according to standard JSDoc window size in VSCode.
+ * Model
  */
-function jsDocDiviion(title: string): string {
-  const titlePadding = ' '
-  const barLength = Math.floor(MAX_JS_DOC_LENGTH / 2 - title.length - titlePadding.length * 2)
-  const bar = repeat('–', barLength)
+
+export function jsDocForModel(model: DMMF.Model): JSDoc {
+  const modelDoc = model.documentation ? `* ${model.documentation}` : modelMissingDoc(model)
   return endent`
-    #### ${bar}${titlePadding}${title}${titlePadding}${bar}
+    /**
+      ${modelIntro(model)}
+      *
+      ${modelDoc}
+      *
+      ${modelExample(model)} 
+      */
   `
 }
 
-const MAX_JS_DOC_LENGTH = 72
+function modelIntro(model: DMMF.Model): string {
+  return endent`
+    * Nexus \`objectType\` related configuration based on the \`${model.name}\` model in your Prisma schema.
+  `
+}
+
+function modelMissingDoc(model: DMMF.Model): string {
+  // TODO once https://stackoverflow.com/questions/61893953/how-to-escape-symbol-in-jsdoc-for-vscode
+  // is resolved then we can write better examples below like: id String @id
+  return endent`
+    ${missingDocsIntro('model')}
+    * 
+    * \`\`\`prisma
+    * /// Lorem ipsum dolor sit amet...
+    * model ${model.name} {
+    *   foo  String
+    * }
+    * \`\`\`
+    * 
+    ${missingDocsOutro}
+  `
+}
+
+function modelExample(model: DMMF.Model): string {
+  return endent`
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { ${model.name} } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: ${model.name}.$name
+    *   description: ${model.name}.$description
+    *   definition(t) {
+    *     t.field(${model.name}.id.name, ${model.name}.id)
+    *   }
+    * })
+  `
+}
+
+/**
+ * Field
+ */
+
+export function jsDocForField({ field, model }: FieldModelParams): JSDoc {
+  const fieldDocs = field.documentation ? `* ${field.documentation}` : fieldMissingDoc({ field, model })
+  return endent`
+    /**
+     ${fieldIntro({ field, model })}
+      *
+      ${fieldDocs}
+      *
+      ${fieldExample({ field, model })} 
+      */
+  `
+}
+
+function fieldIntro({ model, field }: FieldModelParams): string {
+  return endent`
+    * Nexus \`t.field\` related configuration based on the \`${model.name}.${field.name}\` field in your Prisma schema.
+  `
+}
+
+function fieldMissingDoc({ model, field }: FieldModelParams): string {
+  return endent`
+    ${missingDocsIntro('model')}
+    * \`\`\`prisma
+    * model ${model.name} {
+    *   /// Lorem ipsum dolor sit amet.
+    *   ${field.name}  ${field.type}${field.isRequired ? '' : '?'}
+    * }
+    * \`\`\`
+    *
+    ${missingDocsOutro}
+  `
+}
+
+function fieldExample({ model, field }: FieldModelParams): string {
+  return endent`
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { ${model.name} } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: ${model.name}.$name
+    *   description: ${model.name}.$description
+    *   definition(t) {
+    *     t.field(${model.name}.${field.name}.name, ${model.name}.${field.name})
+    *   }
+    * })
+  `
+}
+
+/**
+ * Helpers
+ */
+
+function missingDocsIntro(kind: 'model' | 'enum' | 'field'): string {
+  return endent`
+     * ### ️⚠️ Missing Documentation for this ${upperFirst(kind)}
+     * 
+     * Automatically ✨ enrich this JSDoc with information about your enum
+     * type by documenting it in your Prisma schema. For example:
+     * 
+  `
+}
+
+const missingDocsOutro = `* Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).`

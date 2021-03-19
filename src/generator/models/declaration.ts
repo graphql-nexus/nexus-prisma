@@ -67,9 +67,9 @@ export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document
         : models
             .map((model) => {
               return endent`
-          ${jsDocForModel(model)}
-          export const ${model.name}: $Types.${model.name}
-        `
+                ${jsDocForModel(model)}
+                export const ${model.name}: $Types.${model.name}
+              `
             })
             .join('\n\n')
     }
@@ -82,9 +82,9 @@ export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document
         : enums
             .map((enum_) => {
               return endent`
-          ${jsDocForEnum(enum_)}
-          export const ${enum_.name}: $Types.${enum_.name}
-        `
+                ${jsDocForEnum(enum_)}
+                export const ${enum_.name}: $Types.${enum_.name}
+              `
             })
             .join('\n\n')
     }

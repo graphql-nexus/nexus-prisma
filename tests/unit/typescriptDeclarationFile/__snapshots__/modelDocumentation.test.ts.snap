@@ -12,41 +12,57 @@ declare namespace $Types {
   // Models
 
   /**
-   * ### 📔 Missing Model Documentation for \`SomeModel\`
-   * 
-   * Get JSDoc documentation for this model automatically by documenting
-   * it in your Prisma Schema ✨!
-   * 
-   * To document a model add a tripple slash comment above it.
-   * 
-   * Learn more about Prisma Schema comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-   * 
-   * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
-   * 
-   * \`\`\`prisma
-   * /// Lorem ipsum dolor sit amet...
-   * model SomeModel {
-   *   id  String  @id
-   * }
-   * \`\`\`
-   * 
-   * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
-   * 
-   * \`\`\`prisma
-   * /// A user record. A user maps 1:1 with a person. Not
-   * /// to be confused with an \`Account\` which on person
-   * /// may have multiple of, all linked to a single \`User\`.
-   * model User {
-   *   id  String  @id
-   * }
-   * \`\`\`
-   */
+    * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+    *
+    * ### ️⚠️ Missing Documentation for this Model
+    * 
+    * Automatically ✨ enrich this JSDoc with information about your enum
+    * type by documenting it in your Prisma schema. For example:
+    *
+    * 
+    * \`\`\`prisma
+    * /// Lorem ipsum dolor sit amet...
+    * model SomeModel {
+    *   foo  String
+    * }
+    * \`\`\`
+    * 
+    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id.name, SomeModel.id)
+    *   }
+    * }) 
+    */
   interface SomeModel {
     $name: 'SomeModel'
     $description: null
     /**
-     * Some documentation
-     */
+     * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
+      *
+      * Some documentation
+      *
+      * @example
+      *
+      * import { objectType } from 'nexus'
+      * import { SomeModel } from 'nexus-prisma'
+      *
+      * objectType({
+      *   name: SomeModel.$name
+      *   description: SomeModel.$description
+      *   definition(t) {
+      *     t.field(SomeModel.id.name, SomeModel.id)
+      *   }
+      * }) 
+      */
     id: {
       /**
        * The name of this field.
@@ -78,35 +94,36 @@ declare namespace $Types {
 // Models
 
 /**
- * ### 📔 Missing Model Documentation for \`SomeModel\`
- * 
- * Get JSDoc documentation for this model automatically by documenting
- * it in your Prisma Schema ✨!
- * 
- * To document a model add a tripple slash comment above it.
- * 
- * Learn more about Prisma Schema comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
- * 
- * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
- * 
- * \`\`\`prisma
- * /// Lorem ipsum dolor sit amet...
- * model SomeModel {
- *   id  String  @id
- * }
- * \`\`\`
- * 
- * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
- * 
- * \`\`\`prisma
- * /// A user record. A user maps 1:1 with a person. Not
- * /// to be confused with an \`Account\` which on person
- * /// may have multiple of, all linked to a single \`User\`.
- * model User {
- *   id  String  @id
- * }
- * \`\`\`
- */
+  * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+  *
+  * ### ️⚠️ Missing Documentation for this Model
+  * 
+  * Automatically ✨ enrich this JSDoc with information about your enum
+  * type by documenting it in your Prisma schema. For example:
+  *
+  * 
+  * \`\`\`prisma
+  * /// Lorem ipsum dolor sit amet...
+  * model SomeModel {
+  *   foo  String
+  * }
+  * \`\`\`
+  * 
+  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  *
+  * @example
+  *
+  * import { objectType } from 'nexus'
+  * import { SomeModel } from 'nexus-prisma'
+  *
+  * objectType({
+  *   name: SomeModel.$name
+  *   description: SomeModel.$description
+  *   definition(t) {
+  *     t.field(SomeModel.id.name, SomeModel.id)
+  *   }
+  * }) 
+  */
 export const SomeModel: $Types.SomeModel
 
 // Enums
@@ -126,70 +143,69 @@ declare namespace $Types {
   // Models
 
   /**
-   * ### 📔 Missing Model Documentation for \`SomeModel\`
-   * 
-   * Get JSDoc documentation for this model automatically by documenting
-   * it in your Prisma Schema ✨!
-   * 
-   * To document a model add a tripple slash comment above it.
-   * 
-   * Learn more about Prisma Schema comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-   * 
-   * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
-   * 
-   * \`\`\`prisma
-   * /// Lorem ipsum dolor sit amet...
-   * model SomeModel {
-   *   id  String  @id
-   * }
-   * \`\`\`
-   * 
-   * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
-   * 
-   * \`\`\`prisma
-   * /// A user record. A user maps 1:1 with a person. Not
-   * /// to be confused with an \`Account\` which on person
-   * /// may have multiple of, all linked to a single \`User\`.
-   * model User {
-   *   id  String  @id
-   * }
-   * \`\`\`
-   */
+    * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+    *
+    * ### ️⚠️ Missing Documentation for this Model
+    * 
+    * Automatically ✨ enrich this JSDoc with information about your enum
+    * type by documenting it in your Prisma schema. For example:
+    *
+    * 
+    * \`\`\`prisma
+    * /// Lorem ipsum dolor sit amet...
+    * model SomeModel {
+    *   foo  String
+    * }
+    * \`\`\`
+    * 
+    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id.name, SomeModel.id)
+    *   }
+    * }) 
+    */
   interface SomeModel {
     $name: 'SomeModel'
     $description: null
     /**
-     * ### 📔 Missing Field Documentation for \`id\`
-     * 
-     * Get JSDoc documentation for this field automatically by documenting
-     * it in your Prisma Schema ✨!
-     * 
-     * To document a field add a tripple slash comment above it.
-     * 
-     * Learn more about Prisma Schema comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-     * 
-     * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
-     * 
-     * \`\`\`prisma
-     * model SomeModel {
-     *   /// Lorem ipsum dolor sit amet.
-     *   id  String
-     * }
-     * \`\`\`
-     * 
-     * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
-     * 
-     * \`\`\`prisma
-     * model User {
-     *   /// Identifier for a user. Will never change once set.
-     *   /// More stable than the \`handle\` field  which user
-     *   /// _can_ change, but is not human-friendly. Prefer this
-     *   /// for machine consumers but prefer \`handle\` for human
-     *   /// visible things like URL slugs.
-     *   id  String  @id
-     * }
-     * \`\`\`
-     */
+     * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
+      *
+      * ### ️⚠️ Missing Documentation for this Model
+      * 
+      * Automatically ✨ enrich this JSDoc with information about your enum
+      * type by documenting it in your Prisma schema. For example:
+      *
+      * \`\`\`prisma
+      * model SomeModel {
+      *   /// Lorem ipsum dolor sit amet.
+      *   id  String
+      * }
+      * \`\`\`
+      *
+      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      *
+      * @example
+      *
+      * import { objectType } from 'nexus'
+      * import { SomeModel } from 'nexus-prisma'
+      *
+      * objectType({
+      *   name: SomeModel.$name
+      *   description: SomeModel.$description
+      *   definition(t) {
+      *     t.field(SomeModel.id.name, SomeModel.id)
+      *   }
+      * }) 
+      */
     id: {
       /**
        * The name of this field.
@@ -221,35 +237,36 @@ declare namespace $Types {
 // Models
 
 /**
- * ### 📔 Missing Model Documentation for \`SomeModel\`
- * 
- * Get JSDoc documentation for this model automatically by documenting
- * it in your Prisma Schema ✨!
- * 
- * To document a model add a tripple slash comment above it.
- * 
- * Learn more about Prisma Schema comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
- * 
- * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
- * 
- * \`\`\`prisma
- * /// Lorem ipsum dolor sit amet...
- * model SomeModel {
- *   id  String  @id
- * }
- * \`\`\`
- * 
- * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
- * 
- * \`\`\`prisma
- * /// A user record. A user maps 1:1 with a person. Not
- * /// to be confused with an \`Account\` which on person
- * /// may have multiple of, all linked to a single \`User\`.
- * model User {
- *   id  String  @id
- * }
- * \`\`\`
- */
+  * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+  *
+  * ### ️⚠️ Missing Documentation for this Model
+  * 
+  * Automatically ✨ enrich this JSDoc with information about your enum
+  * type by documenting it in your Prisma schema. For example:
+  *
+  * 
+  * \`\`\`prisma
+  * /// Lorem ipsum dolor sit amet...
+  * model SomeModel {
+  *   foo  String
+  * }
+  * \`\`\`
+  * 
+  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  *
+  * @example
+  *
+  * import { objectType } from 'nexus'
+  * import { SomeModel } from 'nexus-prisma'
+  *
+  * objectType({
+  *   name: SomeModel.$name
+  *   description: SomeModel.$description
+  *   definition(t) {
+  *     t.field(SomeModel.id.name, SomeModel.id)
+  *   }
+  * }) 
+  */
 export const SomeModel: $Types.SomeModel
 
 // Enums
@@ -269,43 +286,56 @@ declare namespace $Types {
   // Models
 
   /**
-   * Some documentation
-   */
+    * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+    *
+    * Some documentation
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id.name, SomeModel.id)
+    *   }
+    * }) 
+    */
   interface SomeModel {
     $name: 'SomeModel'
     $description: 'Some documentation'
     /**
-     * ### 📔 Missing Field Documentation for \`id\`
-     * 
-     * Get JSDoc documentation for this field automatically by documenting
-     * it in your Prisma Schema ✨!
-     * 
-     * To document a field add a tripple slash comment above it.
-     * 
-     * Learn more about Prisma Schema comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-     * 
-     * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
-     * 
-     * \`\`\`prisma
-     * model SomeModel {
-     *   /// Lorem ipsum dolor sit amet.
-     *   id  String
-     * }
-     * \`\`\`
-     * 
-     * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
-     * 
-     * \`\`\`prisma
-     * model User {
-     *   /// Identifier for a user. Will never change once set.
-     *   /// More stable than the \`handle\` field  which user
-     *   /// _can_ change, but is not human-friendly. Prefer this
-     *   /// for machine consumers but prefer \`handle\` for human
-     *   /// visible things like URL slugs.
-     *   id  String  @id
-     * }
-     * \`\`\`
-     */
+     * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
+      *
+      * ### ️⚠️ Missing Documentation for this Model
+      * 
+      * Automatically ✨ enrich this JSDoc with information about your enum
+      * type by documenting it in your Prisma schema. For example:
+      *
+      * \`\`\`prisma
+      * model SomeModel {
+      *   /// Lorem ipsum dolor sit amet.
+      *   id  String
+      * }
+      * \`\`\`
+      *
+      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      *
+      * @example
+      *
+      * import { objectType } from 'nexus'
+      * import { SomeModel } from 'nexus-prisma'
+      *
+      * objectType({
+      *   name: SomeModel.$name
+      *   description: SomeModel.$description
+      *   definition(t) {
+      *     t.field(SomeModel.id.name, SomeModel.id)
+      *   }
+      * }) 
+      */
     id: {
       /**
        * The name of this field.
@@ -337,8 +367,23 @@ declare namespace $Types {
 // Models
 
 /**
- * Some documentation
- */
+  * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+  *
+  * Some documentation
+  *
+  * @example
+  *
+  * import { objectType } from 'nexus'
+  * import { SomeModel } from 'nexus-prisma'
+  *
+  * objectType({
+  *   name: SomeModel.$name
+  *   description: SomeModel.$description
+  *   definition(t) {
+  *     t.field(SomeModel.id.name, SomeModel.id)
+  *   }
+  * }) 
+  */
 export const SomeModel: $Types.SomeModel
 
 // Enums
@@ -358,70 +403,69 @@ declare namespace $Types {
   // Models
 
   /**
-   * ### 📔 Missing Model Documentation for \`SomeModel\`
-   * 
-   * Get JSDoc documentation for this model automatically by documenting
-   * it in your Prisma Schema ✨!
-   * 
-   * To document a model add a tripple slash comment above it.
-   * 
-   * Learn more about Prisma Schema comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-   * 
-   * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
-   * 
-   * \`\`\`prisma
-   * /// Lorem ipsum dolor sit amet...
-   * model SomeModel {
-   *   id  String  @id
-   * }
-   * \`\`\`
-   * 
-   * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
-   * 
-   * \`\`\`prisma
-   * /// A user record. A user maps 1:1 with a person. Not
-   * /// to be confused with an \`Account\` which on person
-   * /// may have multiple of, all linked to a single \`User\`.
-   * model User {
-   *   id  String  @id
-   * }
-   * \`\`\`
-   */
+    * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+    *
+    * ### ️⚠️ Missing Documentation for this Model
+    * 
+    * Automatically ✨ enrich this JSDoc with information about your enum
+    * type by documenting it in your Prisma schema. For example:
+    *
+    * 
+    * \`\`\`prisma
+    * /// Lorem ipsum dolor sit amet...
+    * model SomeModel {
+    *   foo  String
+    * }
+    * \`\`\`
+    * 
+    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id.name, SomeModel.id)
+    *   }
+    * }) 
+    */
   interface SomeModel {
     $name: 'SomeModel'
     $description: null
     /**
-     * ### 📔 Missing Field Documentation for \`id\`
-     * 
-     * Get JSDoc documentation for this field automatically by documenting
-     * it in your Prisma Schema ✨!
-     * 
-     * To document a field add a tripple slash comment above it.
-     * 
-     * Learn more about Prisma Schema comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-     * 
-     * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
-     * 
-     * \`\`\`prisma
-     * model SomeModel {
-     *   /// Lorem ipsum dolor sit amet.
-     *   id  String
-     * }
-     * \`\`\`
-     * 
-     * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
-     * 
-     * \`\`\`prisma
-     * model User {
-     *   /// Identifier for a user. Will never change once set.
-     *   /// More stable than the \`handle\` field  which user
-     *   /// _can_ change, but is not human-friendly. Prefer this
-     *   /// for machine consumers but prefer \`handle\` for human
-     *   /// visible things like URL slugs.
-     *   id  String  @id
-     * }
-     * \`\`\`
-     */
+     * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
+      *
+      * ### ️⚠️ Missing Documentation for this Model
+      * 
+      * Automatically ✨ enrich this JSDoc with information about your enum
+      * type by documenting it in your Prisma schema. For example:
+      *
+      * \`\`\`prisma
+      * model SomeModel {
+      *   /// Lorem ipsum dolor sit amet.
+      *   id  String
+      * }
+      * \`\`\`
+      *
+      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      *
+      * @example
+      *
+      * import { objectType } from 'nexus'
+      * import { SomeModel } from 'nexus-prisma'
+      *
+      * objectType({
+      *   name: SomeModel.$name
+      *   description: SomeModel.$description
+      *   definition(t) {
+      *     t.field(SomeModel.id.name, SomeModel.id)
+      *   }
+      * }) 
+      */
     id: {
       /**
        * The name of this field.
@@ -453,35 +497,36 @@ declare namespace $Types {
 // Models
 
 /**
- * ### 📔 Missing Model Documentation for \`SomeModel\`
- * 
- * Get JSDoc documentation for this model automatically by documenting
- * it in your Prisma Schema ✨!
- * 
- * To document a model add a tripple slash comment above it.
- * 
- * Learn more about Prisma Schema comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
- * 
- * #### ––––––––––––––––––––––––– Example 1 –––––––––––––––––––––––––
- * 
- * \`\`\`prisma
- * /// Lorem ipsum dolor sit amet...
- * model SomeModel {
- *   id  String  @id
- * }
- * \`\`\`
- * 
- * #### ––––––––––––––––––––––––– Example 2 –––––––––––––––––––––––––
- * 
- * \`\`\`prisma
- * /// A user record. A user maps 1:1 with a person. Not
- * /// to be confused with an \`Account\` which on person
- * /// may have multiple of, all linked to a single \`User\`.
- * model User {
- *   id  String  @id
- * }
- * \`\`\`
- */
+  * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+  *
+  * ### ️⚠️ Missing Documentation for this Model
+  * 
+  * Automatically ✨ enrich this JSDoc with information about your enum
+  * type by documenting it in your Prisma schema. For example:
+  *
+  * 
+  * \`\`\`prisma
+  * /// Lorem ipsum dolor sit amet...
+  * model SomeModel {
+  *   foo  String
+  * }
+  * \`\`\`
+  * 
+  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  *
+  * @example
+  *
+  * import { objectType } from 'nexus'
+  * import { SomeModel } from 'nexus-prisma'
+  *
+  * objectType({
+  *   name: SomeModel.$name
+  *   description: SomeModel.$description
+  *   definition(t) {
+  *     t.field(SomeModel.id.name, SomeModel.id)
+  *   }
+  * }) 
+  */
 export const SomeModel: $Types.SomeModel
 
 // Enums

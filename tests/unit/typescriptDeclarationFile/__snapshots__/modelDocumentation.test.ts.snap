@@ -5,7 +5,12 @@ exports[`When a model field has a documentation comment, then it is used for the
 import * as NexusCore from 'nexus/dist/core'
 
 //
-// Types
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
 //
 
 declare namespace $Types {
@@ -88,10 +93,22 @@ declare namespace $Types {
 
 
 //
-// Exports
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
 //
 
-// Models
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
 
 /**
   * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
@@ -126,7 +143,14 @@ declare namespace $Types {
   */
 export const SomeModel: $Types.SomeModel
 
-// Enums
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
 
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
@@ -136,7 +160,12 @@ exports[`When a model field has no documentation comment, then it gets the defau
 import * as NexusCore from 'nexus/dist/core'
 
 //
-// Types
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
 //
 
 declare namespace $Types {
@@ -231,10 +260,22 @@ declare namespace $Types {
 
 
 //
-// Exports
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
 //
 
-// Models
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
 
 /**
   * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
@@ -269,7 +310,14 @@ declare namespace $Types {
   */
 export const SomeModel: $Types.SomeModel
 
-// Enums
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
 
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
@@ -279,7 +327,12 @@ exports[`When a model has a documentation comment, then it is used for the JSDoc
 import * as NexusCore from 'nexus/dist/core'
 
 //
-// Types
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
 //
 
 declare namespace $Types {
@@ -361,10 +414,22 @@ declare namespace $Types {
 
 
 //
-// Exports
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
 //
 
-// Models
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
 
 /**
   * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
@@ -386,7 +451,14 @@ declare namespace $Types {
   */
 export const SomeModel: $Types.SomeModel
 
-// Enums
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
 
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
@@ -396,7 +468,12 @@ exports[`When a model has no documentation comment, then it gets the default JSD
 import * as NexusCore from 'nexus/dist/core'
 
 //
-// Types
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
 //
 
 declare namespace $Types {
@@ -491,10 +568,22 @@ declare namespace $Types {
 
 
 //
-// Exports
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
 //
 
-// Models
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
 
 /**
   * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
@@ -529,7 +618,14 @@ declare namespace $Types {
   */
 export const SomeModel: $Types.SomeModel
 
-// Enums
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
 
 // N/A –– You have not defined any models in your Prisma schema file."
 `;

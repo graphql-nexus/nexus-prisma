@@ -33,7 +33,12 @@ export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document
     import * as NexusCore from 'nexus/dist/core'
 
     //
-    // Types
+    //
+    // TYPES
+    // TYPES
+    // TYPES
+    // TYPES
+    //
     //
 
     declare namespace $Types {
@@ -56,10 +61,22 @@ export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document
 
 
     //
-    // Exports
+    //
+    // EXPORTS
+    // EXPORTS
+    // EXPORTS
+    // EXPORTS
+    //
     //
 
-    // Models
+    //
+    //
+    // EXPORTS: PRISMA MODELS
+    // EXPORTS: PRISMA MODELS
+    // EXPORTS: PRISMA MODELS
+    // EXPORTS: PRISMA MODELS
+    //
+    //
 
     ${
       models.length === 0
@@ -74,7 +91,14 @@ export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document
             .join('\n\n')
     }
 
-    // Enums
+    //
+    //
+    // EXPORTS: PRISMA ENUMS
+    // EXPORTS: PRISMA ENUMS
+    // EXPORTS: PRISMA ENUMS
+    // EXPORTS: PRISMA ENUMS
+    //
+    //
 
     ${
       enums.length === 0

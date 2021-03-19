@@ -5,7 +5,12 @@ exports[`A model field with type Boolean maps to GraphQL Boolean scalar 1`] = `
 import * as NexusCore from 'nexus/dist/core'
 
 //
-// Types
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
 //
 
 declare namespace $Types {
@@ -146,10 +151,22 @@ declare namespace $Types {
 
 
 //
-// Exports
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
 //
 
-// Models
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
 
 /**
   * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
@@ -184,7 +201,14 @@ declare namespace $Types {
   */
 export const SomeModel: $Types.SomeModel
 
-// Enums
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
 
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
@@ -194,7 +218,12 @@ exports[`A model field with type DateTime maps to GraphQL DateTime custom scalar
 import * as NexusCore from 'nexus/dist/core'
 
 //
-// Types
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
 //
 
 declare namespace $Types {
@@ -335,10 +364,22 @@ declare namespace $Types {
 
 
 //
-// Exports
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
 //
 
-// Models
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
 
 /**
   * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
@@ -373,7 +414,14 @@ declare namespace $Types {
   */
 export const SomeModel: $Types.SomeModel
 
-// Enums
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
 
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
@@ -383,7 +431,12 @@ exports[`A model field with type Float maps to GraphQL Float scalar 1`] = `
 import * as NexusCore from 'nexus/dist/core'
 
 //
-// Types
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
 //
 
 declare namespace $Types {
@@ -524,10 +577,22 @@ declare namespace $Types {
 
 
 //
-// Exports
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
 //
 
-// Models
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
 
 /**
   * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
@@ -562,7 +627,14 @@ declare namespace $Types {
   */
 export const SomeModel: $Types.SomeModel
 
-// Enums
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
 
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
@@ -572,7 +644,12 @@ exports[`A model field with type Int maps to GraphQL Int scalar 1`] = `
 import * as NexusCore from 'nexus/dist/core'
 
 //
-// Types
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
 //
 
 declare namespace $Types {
@@ -713,10 +790,22 @@ declare namespace $Types {
 
 
 //
-// Exports
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
 //
 
-// Models
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
 
 /**
   * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
@@ -751,7 +840,14 @@ declare namespace $Types {
   */
 export const SomeModel: $Types.SomeModel
 
-// Enums
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
 
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
@@ -761,7 +857,12 @@ exports[`A model field with type Int, attribute @id, maps to GraphQL ID scalar 1
 import * as NexusCore from 'nexus/dist/core'
 
 //
-// Types
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
 //
 
 declare namespace $Types {
@@ -856,10 +957,22 @@ declare namespace $Types {
 
 
 //
-// Exports
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
 //
 
-// Models
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
 
 /**
   * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
@@ -894,7 +1007,14 @@ declare namespace $Types {
   */
 export const SomeModel: $Types.SomeModel
 
-// Enums
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
 
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
@@ -904,7 +1024,12 @@ exports[`A model field with type Json maps to GraphQL Json custom scalar 1`] = `
 import * as NexusCore from 'nexus/dist/core'
 
 //
-// Types
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
 //
 
 declare namespace $Types {
@@ -1045,10 +1170,22 @@ declare namespace $Types {
 
 
 //
-// Exports
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
 //
 
-// Models
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
 
 /**
   * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
@@ -1083,7 +1220,14 @@ declare namespace $Types {
   */
 export const SomeModel: $Types.SomeModel
 
-// Enums
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
 
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
@@ -1093,7 +1237,12 @@ exports[`A model field with type String, attribute @id, maps to GraphQL ID scala
 import * as NexusCore from 'nexus/dist/core'
 
 //
-// Types
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
 //
 
 declare namespace $Types {
@@ -1188,10 +1337,22 @@ declare namespace $Types {
 
 
 //
-// Exports
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
 //
 
-// Models
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
 
 /**
   * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
@@ -1226,7 +1387,14 @@ declare namespace $Types {
   */
 export const SomeModel: $Types.SomeModel
 
-// Enums
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
 
 // N/A –– You have not defined any models in your Prisma schema file."
 `;

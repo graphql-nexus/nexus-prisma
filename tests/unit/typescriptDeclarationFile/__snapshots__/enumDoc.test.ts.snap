@@ -1,0 +1,195 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`When an enum has a documentation comment, then it is used for the JSDoc of that enum and its $description field 1`] = `
+"import * as Nexus from 'nexus'
+import * as NexusCore from 'nexus/dist/core'
+
+//
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
+//
+
+declare namespace $Types {
+  // Models
+
+  // N/A –– You have not defined any enums in your Prisma schema file.
+
+  // Enums
+
+  /**
+    * Nexus \`enumType\` configuration based on the \`Foo\` enum in your Prisma schema.
+    *
+    * Some documentation
+    *
+    * @example
+    *
+    * import { enumType } from 'nexus'
+    * import { Foo } from 'nexus-prisma'
+    *
+    * enumType(Foo)
+    */
+  interface Foo {
+    name: 'Foo'
+    description: 'Some documentation'
+    members: ['a']
+  }
+}
+
+
+//
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
+//
+
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
+
+// N/A –– You have not defined any enums in your Prisma schema file.
+
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
+
+/**
+  * Nexus \`enumType\` configuration based on the \`Foo\` enum in your Prisma schema.
+  *
+  * Some documentation
+  *
+  * @example
+  *
+  * import { enumType } from 'nexus'
+  * import { Foo } from 'nexus-prisma'
+  *
+  * enumType(Foo)
+  */
+export const Foo: $Types.Foo"
+`;
+
+exports[`When an enum has no documentation comment, then it gets the default JSDoc and its description field is null 1`] = `
+"import * as Nexus from 'nexus'
+import * as NexusCore from 'nexus/dist/core'
+
+//
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
+//
+
+declare namespace $Types {
+  // Models
+
+  // N/A –– You have not defined any enums in your Prisma schema file.
+
+  // Enums
+
+  /**
+    * Nexus \`enumType\` configuration based on the \`Foo\` enum in your Prisma schema.
+    *
+    * ### ️⚠️ Missing Documentation for this Enum
+    * 
+    * Automatically ✨ enrich this JSDoc with information about your enum
+    * type by documenting it in your Prisma schema. For example:
+    *
+    *
+    * \`\`\`prisma
+    * /// Lorem ipsum dolor sit amet...
+    * enum Foo {
+    *   a
+    * }
+    * \`\`\`
+    * 
+    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { enumType } from 'nexus'
+    * import { Foo } from 'nexus-prisma'
+    *
+    * enumType(Foo)
+    */
+  interface Foo {
+    name: 'Foo'
+    description: null
+    members: ['a']
+  }
+}
+
+
+//
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
+//
+
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
+
+// N/A –– You have not defined any enums in your Prisma schema file.
+
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
+
+/**
+  * Nexus \`enumType\` configuration based on the \`Foo\` enum in your Prisma schema.
+  *
+  * ### ️⚠️ Missing Documentation for this Enum
+  * 
+  * Automatically ✨ enrich this JSDoc with information about your enum
+  * type by documenting it in your Prisma schema. For example:
+  *
+  *
+  * \`\`\`prisma
+  * /// Lorem ipsum dolor sit amet...
+  * enum Foo {
+  *   a
+  * }
+  * \`\`\`
+  * 
+  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  *
+  * @example
+  *
+  * import { enumType } from 'nexus'
+  * import { Foo } from 'nexus-prisma'
+  *
+  * enumType(Foo)
+  */
+export const Foo: $Types.Foo"
+`;

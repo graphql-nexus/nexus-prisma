@@ -1,0 +1,1400 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`A model field with type Boolean maps to GraphQL Boolean scalar 1`] = `
+"import * as Nexus from 'nexus'
+import * as NexusCore from 'nexus/dist/core'
+
+//
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
+//
+
+declare namespace $Types {
+  // Models
+
+  /**
+    * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+    *
+    * ### ️⚠️ Missing Documentation for this Model
+    * 
+    * Automatically ✨ enrich this JSDoc with information about your enum
+    * type by documenting it in your Prisma schema. For example:
+    *
+    * 
+    * \`\`\`prisma
+    * /// Lorem ipsum dolor sit amet...
+    * model SomeModel {
+    *   foo  String
+    * }
+    * \`\`\`
+    * 
+    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id.name, SomeModel.id)
+    *   }
+    * }) 
+    */
+  interface SomeModel {
+    $name: 'SomeModel'
+    $description: null
+    /**
+     * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
+      *
+      * ### ️⚠️ Missing Documentation for this Model
+      * 
+      * Automatically ✨ enrich this JSDoc with information about your enum
+      * type by documenting it in your Prisma schema. For example:
+      *
+      * \`\`\`prisma
+      * model SomeModel {
+      *   /// Lorem ipsum dolor sit amet.
+      *   id  String
+      * }
+      * \`\`\`
+      *
+      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      *
+      * @example
+      *
+      * import { objectType } from 'nexus'
+      * import { SomeModel } from 'nexus-prisma'
+      *
+      * objectType({
+      *   name: SomeModel.$name
+      *   description: SomeModel.$description
+      *   definition(t) {
+      *     t.field(SomeModel.id.name, SomeModel.id)
+      *   }
+      * }) 
+      */
+    id: {
+      /**
+       * The name of this field.
+       */
+      name: 'id'
+    
+      /**
+       * The type of this field.
+       */
+      type: NexusCore.NexusNonNullDef<'ID'>
+    
+      /**
+       * The documentation of this field.
+       */
+      description: undefined
+    }
+    /**
+     * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
+      *
+      * ### ️⚠️ Missing Documentation for this Model
+      * 
+      * Automatically ✨ enrich this JSDoc with information about your enum
+      * type by documenting it in your Prisma schema. For example:
+      *
+      * \`\`\`prisma
+      * model SomeModel {
+      *   /// Lorem ipsum dolor sit amet.
+      *   foo  Boolean
+      * }
+      * \`\`\`
+      *
+      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      *
+      * @example
+      *
+      * import { objectType } from 'nexus'
+      * import { SomeModel } from 'nexus-prisma'
+      *
+      * objectType({
+      *   name: SomeModel.$name
+      *   description: SomeModel.$description
+      *   definition(t) {
+      *     t.field(SomeModel.foo.name, SomeModel.foo)
+      *   }
+      * }) 
+      */
+    foo: {
+      /**
+       * The name of this field.
+       */
+      name: 'foo'
+    
+      /**
+       * The type of this field.
+       */
+      type: NexusCore.NexusNonNullDef<'Boolean'>
+    
+      /**
+       * The documentation of this field.
+       */
+      description: undefined
+    }
+  }
+
+  // Enums
+
+  // N/A –– You have not defined any models in your Prisma schema file.
+}
+
+
+//
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
+//
+
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
+
+/**
+  * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+  *
+  * ### ️⚠️ Missing Documentation for this Model
+  * 
+  * Automatically ✨ enrich this JSDoc with information about your enum
+  * type by documenting it in your Prisma schema. For example:
+  *
+  * 
+  * \`\`\`prisma
+  * /// Lorem ipsum dolor sit amet...
+  * model SomeModel {
+  *   foo  String
+  * }
+  * \`\`\`
+  * 
+  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  *
+  * @example
+  *
+  * import { objectType } from 'nexus'
+  * import { SomeModel } from 'nexus-prisma'
+  *
+  * objectType({
+  *   name: SomeModel.$name
+  *   description: SomeModel.$description
+  *   definition(t) {
+  *     t.field(SomeModel.id.name, SomeModel.id)
+  *   }
+  * }) 
+  */
+export const SomeModel: $Types.SomeModel
+
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
+
+// N/A –– You have not defined any models in your Prisma schema file."
+`;
+
+exports[`A model field with type DateTime maps to GraphQL DateTime custom scalar 1`] = `
+"import * as Nexus from 'nexus'
+import * as NexusCore from 'nexus/dist/core'
+
+//
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
+//
+
+declare namespace $Types {
+  // Models
+
+  /**
+    * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+    *
+    * ### ️⚠️ Missing Documentation for this Model
+    * 
+    * Automatically ✨ enrich this JSDoc with information about your enum
+    * type by documenting it in your Prisma schema. For example:
+    *
+    * 
+    * \`\`\`prisma
+    * /// Lorem ipsum dolor sit amet...
+    * model SomeModel {
+    *   foo  String
+    * }
+    * \`\`\`
+    * 
+    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id.name, SomeModel.id)
+    *   }
+    * }) 
+    */
+  interface SomeModel {
+    $name: 'SomeModel'
+    $description: null
+    /**
+     * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
+      *
+      * ### ️⚠️ Missing Documentation for this Model
+      * 
+      * Automatically ✨ enrich this JSDoc with information about your enum
+      * type by documenting it in your Prisma schema. For example:
+      *
+      * \`\`\`prisma
+      * model SomeModel {
+      *   /// Lorem ipsum dolor sit amet.
+      *   id  String
+      * }
+      * \`\`\`
+      *
+      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      *
+      * @example
+      *
+      * import { objectType } from 'nexus'
+      * import { SomeModel } from 'nexus-prisma'
+      *
+      * objectType({
+      *   name: SomeModel.$name
+      *   description: SomeModel.$description
+      *   definition(t) {
+      *     t.field(SomeModel.id.name, SomeModel.id)
+      *   }
+      * }) 
+      */
+    id: {
+      /**
+       * The name of this field.
+       */
+      name: 'id'
+    
+      /**
+       * The type of this field.
+       */
+      type: NexusCore.NexusNonNullDef<'ID'>
+    
+      /**
+       * The documentation of this field.
+       */
+      description: undefined
+    }
+    /**
+     * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
+      *
+      * ### ️⚠️ Missing Documentation for this Model
+      * 
+      * Automatically ✨ enrich this JSDoc with information about your enum
+      * type by documenting it in your Prisma schema. For example:
+      *
+      * \`\`\`prisma
+      * model SomeModel {
+      *   /// Lorem ipsum dolor sit amet.
+      *   foo  DateTime
+      * }
+      * \`\`\`
+      *
+      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      *
+      * @example
+      *
+      * import { objectType } from 'nexus'
+      * import { SomeModel } from 'nexus-prisma'
+      *
+      * objectType({
+      *   name: SomeModel.$name
+      *   description: SomeModel.$description
+      *   definition(t) {
+      *     t.field(SomeModel.foo.name, SomeModel.foo)
+      *   }
+      * }) 
+      */
+    foo: {
+      /**
+       * The name of this field.
+       */
+      name: 'foo'
+    
+      /**
+       * The type of this field.
+       */
+      type: NexusCore.NexusNonNullDef<'DateTime'>
+    
+      /**
+       * The documentation of this field.
+       */
+      description: undefined
+    }
+  }
+
+  // Enums
+
+  // N/A –– You have not defined any models in your Prisma schema file.
+}
+
+
+//
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
+//
+
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
+
+/**
+  * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+  *
+  * ### ️⚠️ Missing Documentation for this Model
+  * 
+  * Automatically ✨ enrich this JSDoc with information about your enum
+  * type by documenting it in your Prisma schema. For example:
+  *
+  * 
+  * \`\`\`prisma
+  * /// Lorem ipsum dolor sit amet...
+  * model SomeModel {
+  *   foo  String
+  * }
+  * \`\`\`
+  * 
+  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  *
+  * @example
+  *
+  * import { objectType } from 'nexus'
+  * import { SomeModel } from 'nexus-prisma'
+  *
+  * objectType({
+  *   name: SomeModel.$name
+  *   description: SomeModel.$description
+  *   definition(t) {
+  *     t.field(SomeModel.id.name, SomeModel.id)
+  *   }
+  * }) 
+  */
+export const SomeModel: $Types.SomeModel
+
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
+
+// N/A –– You have not defined any models in your Prisma schema file."
+`;
+
+exports[`A model field with type Float maps to GraphQL Float scalar 1`] = `
+"import * as Nexus from 'nexus'
+import * as NexusCore from 'nexus/dist/core'
+
+//
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
+//
+
+declare namespace $Types {
+  // Models
+
+  /**
+    * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+    *
+    * ### ️⚠️ Missing Documentation for this Model
+    * 
+    * Automatically ✨ enrich this JSDoc with information about your enum
+    * type by documenting it in your Prisma schema. For example:
+    *
+    * 
+    * \`\`\`prisma
+    * /// Lorem ipsum dolor sit amet...
+    * model SomeModel {
+    *   foo  String
+    * }
+    * \`\`\`
+    * 
+    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id.name, SomeModel.id)
+    *   }
+    * }) 
+    */
+  interface SomeModel {
+    $name: 'SomeModel'
+    $description: null
+    /**
+     * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
+      *
+      * ### ️⚠️ Missing Documentation for this Model
+      * 
+      * Automatically ✨ enrich this JSDoc with information about your enum
+      * type by documenting it in your Prisma schema. For example:
+      *
+      * \`\`\`prisma
+      * model SomeModel {
+      *   /// Lorem ipsum dolor sit amet.
+      *   id  String
+      * }
+      * \`\`\`
+      *
+      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      *
+      * @example
+      *
+      * import { objectType } from 'nexus'
+      * import { SomeModel } from 'nexus-prisma'
+      *
+      * objectType({
+      *   name: SomeModel.$name
+      *   description: SomeModel.$description
+      *   definition(t) {
+      *     t.field(SomeModel.id.name, SomeModel.id)
+      *   }
+      * }) 
+      */
+    id: {
+      /**
+       * The name of this field.
+       */
+      name: 'id'
+    
+      /**
+       * The type of this field.
+       */
+      type: NexusCore.NexusNonNullDef<'ID'>
+    
+      /**
+       * The documentation of this field.
+       */
+      description: undefined
+    }
+    /**
+     * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
+      *
+      * ### ️⚠️ Missing Documentation for this Model
+      * 
+      * Automatically ✨ enrich this JSDoc with information about your enum
+      * type by documenting it in your Prisma schema. For example:
+      *
+      * \`\`\`prisma
+      * model SomeModel {
+      *   /// Lorem ipsum dolor sit amet.
+      *   foo  Float
+      * }
+      * \`\`\`
+      *
+      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      *
+      * @example
+      *
+      * import { objectType } from 'nexus'
+      * import { SomeModel } from 'nexus-prisma'
+      *
+      * objectType({
+      *   name: SomeModel.$name
+      *   description: SomeModel.$description
+      *   definition(t) {
+      *     t.field(SomeModel.foo.name, SomeModel.foo)
+      *   }
+      * }) 
+      */
+    foo: {
+      /**
+       * The name of this field.
+       */
+      name: 'foo'
+    
+      /**
+       * The type of this field.
+       */
+      type: NexusCore.NexusNonNullDef<'Float'>
+    
+      /**
+       * The documentation of this field.
+       */
+      description: undefined
+    }
+  }
+
+  // Enums
+
+  // N/A –– You have not defined any models in your Prisma schema file.
+}
+
+
+//
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
+//
+
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
+
+/**
+  * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+  *
+  * ### ️⚠️ Missing Documentation for this Model
+  * 
+  * Automatically ✨ enrich this JSDoc with information about your enum
+  * type by documenting it in your Prisma schema. For example:
+  *
+  * 
+  * \`\`\`prisma
+  * /// Lorem ipsum dolor sit amet...
+  * model SomeModel {
+  *   foo  String
+  * }
+  * \`\`\`
+  * 
+  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  *
+  * @example
+  *
+  * import { objectType } from 'nexus'
+  * import { SomeModel } from 'nexus-prisma'
+  *
+  * objectType({
+  *   name: SomeModel.$name
+  *   description: SomeModel.$description
+  *   definition(t) {
+  *     t.field(SomeModel.id.name, SomeModel.id)
+  *   }
+  * }) 
+  */
+export const SomeModel: $Types.SomeModel
+
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
+
+// N/A –– You have not defined any models in your Prisma schema file."
+`;
+
+exports[`A model field with type Int maps to GraphQL Int scalar 1`] = `
+"import * as Nexus from 'nexus'
+import * as NexusCore from 'nexus/dist/core'
+
+//
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
+//
+
+declare namespace $Types {
+  // Models
+
+  /**
+    * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+    *
+    * ### ️⚠️ Missing Documentation for this Model
+    * 
+    * Automatically ✨ enrich this JSDoc with information about your enum
+    * type by documenting it in your Prisma schema. For example:
+    *
+    * 
+    * \`\`\`prisma
+    * /// Lorem ipsum dolor sit amet...
+    * model SomeModel {
+    *   foo  String
+    * }
+    * \`\`\`
+    * 
+    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id.name, SomeModel.id)
+    *   }
+    * }) 
+    */
+  interface SomeModel {
+    $name: 'SomeModel'
+    $description: null
+    /**
+     * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
+      *
+      * ### ️⚠️ Missing Documentation for this Model
+      * 
+      * Automatically ✨ enrich this JSDoc with information about your enum
+      * type by documenting it in your Prisma schema. For example:
+      *
+      * \`\`\`prisma
+      * model SomeModel {
+      *   /// Lorem ipsum dolor sit amet.
+      *   id  String
+      * }
+      * \`\`\`
+      *
+      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      *
+      * @example
+      *
+      * import { objectType } from 'nexus'
+      * import { SomeModel } from 'nexus-prisma'
+      *
+      * objectType({
+      *   name: SomeModel.$name
+      *   description: SomeModel.$description
+      *   definition(t) {
+      *     t.field(SomeModel.id.name, SomeModel.id)
+      *   }
+      * }) 
+      */
+    id: {
+      /**
+       * The name of this field.
+       */
+      name: 'id'
+    
+      /**
+       * The type of this field.
+       */
+      type: NexusCore.NexusNonNullDef<'ID'>
+    
+      /**
+       * The documentation of this field.
+       */
+      description: undefined
+    }
+    /**
+     * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
+      *
+      * ### ️⚠️ Missing Documentation for this Model
+      * 
+      * Automatically ✨ enrich this JSDoc with information about your enum
+      * type by documenting it in your Prisma schema. For example:
+      *
+      * \`\`\`prisma
+      * model SomeModel {
+      *   /// Lorem ipsum dolor sit amet.
+      *   foo  Int
+      * }
+      * \`\`\`
+      *
+      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      *
+      * @example
+      *
+      * import { objectType } from 'nexus'
+      * import { SomeModel } from 'nexus-prisma'
+      *
+      * objectType({
+      *   name: SomeModel.$name
+      *   description: SomeModel.$description
+      *   definition(t) {
+      *     t.field(SomeModel.foo.name, SomeModel.foo)
+      *   }
+      * }) 
+      */
+    foo: {
+      /**
+       * The name of this field.
+       */
+      name: 'foo'
+    
+      /**
+       * The type of this field.
+       */
+      type: NexusCore.NexusNonNullDef<'Int'>
+    
+      /**
+       * The documentation of this field.
+       */
+      description: undefined
+    }
+  }
+
+  // Enums
+
+  // N/A –– You have not defined any models in your Prisma schema file.
+}
+
+
+//
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
+//
+
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
+
+/**
+  * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+  *
+  * ### ️⚠️ Missing Documentation for this Model
+  * 
+  * Automatically ✨ enrich this JSDoc with information about your enum
+  * type by documenting it in your Prisma schema. For example:
+  *
+  * 
+  * \`\`\`prisma
+  * /// Lorem ipsum dolor sit amet...
+  * model SomeModel {
+  *   foo  String
+  * }
+  * \`\`\`
+  * 
+  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  *
+  * @example
+  *
+  * import { objectType } from 'nexus'
+  * import { SomeModel } from 'nexus-prisma'
+  *
+  * objectType({
+  *   name: SomeModel.$name
+  *   description: SomeModel.$description
+  *   definition(t) {
+  *     t.field(SomeModel.id.name, SomeModel.id)
+  *   }
+  * }) 
+  */
+export const SomeModel: $Types.SomeModel
+
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
+
+// N/A –– You have not defined any models in your Prisma schema file."
+`;
+
+exports[`A model field with type Int, attribute @id, maps to GraphQL ID scalar 1`] = `
+"import * as Nexus from 'nexus'
+import * as NexusCore from 'nexus/dist/core'
+
+//
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
+//
+
+declare namespace $Types {
+  // Models
+
+  /**
+    * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+    *
+    * ### ️⚠️ Missing Documentation for this Model
+    * 
+    * Automatically ✨ enrich this JSDoc with information about your enum
+    * type by documenting it in your Prisma schema. For example:
+    *
+    * 
+    * \`\`\`prisma
+    * /// Lorem ipsum dolor sit amet...
+    * model SomeModel {
+    *   foo  String
+    * }
+    * \`\`\`
+    * 
+    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id.name, SomeModel.id)
+    *   }
+    * }) 
+    */
+  interface SomeModel {
+    $name: 'SomeModel'
+    $description: null
+    /**
+     * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
+      *
+      * ### ️⚠️ Missing Documentation for this Model
+      * 
+      * Automatically ✨ enrich this JSDoc with information about your enum
+      * type by documenting it in your Prisma schema. For example:
+      *
+      * \`\`\`prisma
+      * model SomeModel {
+      *   /// Lorem ipsum dolor sit amet.
+      *   id  Int
+      * }
+      * \`\`\`
+      *
+      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      *
+      * @example
+      *
+      * import { objectType } from 'nexus'
+      * import { SomeModel } from 'nexus-prisma'
+      *
+      * objectType({
+      *   name: SomeModel.$name
+      *   description: SomeModel.$description
+      *   definition(t) {
+      *     t.field(SomeModel.id.name, SomeModel.id)
+      *   }
+      * }) 
+      */
+    id: {
+      /**
+       * The name of this field.
+       */
+      name: 'id'
+    
+      /**
+       * The type of this field.
+       */
+      type: NexusCore.NexusNonNullDef<'ID'>
+    
+      /**
+       * The documentation of this field.
+       */
+      description: undefined
+    }
+  }
+
+  // Enums
+
+  // N/A –– You have not defined any models in your Prisma schema file.
+}
+
+
+//
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
+//
+
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
+
+/**
+  * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+  *
+  * ### ️⚠️ Missing Documentation for this Model
+  * 
+  * Automatically ✨ enrich this JSDoc with information about your enum
+  * type by documenting it in your Prisma schema. For example:
+  *
+  * 
+  * \`\`\`prisma
+  * /// Lorem ipsum dolor sit amet...
+  * model SomeModel {
+  *   foo  String
+  * }
+  * \`\`\`
+  * 
+  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  *
+  * @example
+  *
+  * import { objectType } from 'nexus'
+  * import { SomeModel } from 'nexus-prisma'
+  *
+  * objectType({
+  *   name: SomeModel.$name
+  *   description: SomeModel.$description
+  *   definition(t) {
+  *     t.field(SomeModel.id.name, SomeModel.id)
+  *   }
+  * }) 
+  */
+export const SomeModel: $Types.SomeModel
+
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
+
+// N/A –– You have not defined any models in your Prisma schema file."
+`;
+
+exports[`A model field with type Json maps to GraphQL Json custom scalar 1`] = `
+"import * as Nexus from 'nexus'
+import * as NexusCore from 'nexus/dist/core'
+
+//
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
+//
+
+declare namespace $Types {
+  // Models
+
+  /**
+    * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+    *
+    * ### ️⚠️ Missing Documentation for this Model
+    * 
+    * Automatically ✨ enrich this JSDoc with information about your enum
+    * type by documenting it in your Prisma schema. For example:
+    *
+    * 
+    * \`\`\`prisma
+    * /// Lorem ipsum dolor sit amet...
+    * model SomeModel {
+    *   foo  String
+    * }
+    * \`\`\`
+    * 
+    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id.name, SomeModel.id)
+    *   }
+    * }) 
+    */
+  interface SomeModel {
+    $name: 'SomeModel'
+    $description: null
+    /**
+     * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
+      *
+      * ### ️⚠️ Missing Documentation for this Model
+      * 
+      * Automatically ✨ enrich this JSDoc with information about your enum
+      * type by documenting it in your Prisma schema. For example:
+      *
+      * \`\`\`prisma
+      * model SomeModel {
+      *   /// Lorem ipsum dolor sit amet.
+      *   id  String
+      * }
+      * \`\`\`
+      *
+      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      *
+      * @example
+      *
+      * import { objectType } from 'nexus'
+      * import { SomeModel } from 'nexus-prisma'
+      *
+      * objectType({
+      *   name: SomeModel.$name
+      *   description: SomeModel.$description
+      *   definition(t) {
+      *     t.field(SomeModel.id.name, SomeModel.id)
+      *   }
+      * }) 
+      */
+    id: {
+      /**
+       * The name of this field.
+       */
+      name: 'id'
+    
+      /**
+       * The type of this field.
+       */
+      type: NexusCore.NexusNonNullDef<'ID'>
+    
+      /**
+       * The documentation of this field.
+       */
+      description: undefined
+    }
+    /**
+     * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
+      *
+      * ### ️⚠️ Missing Documentation for this Model
+      * 
+      * Automatically ✨ enrich this JSDoc with information about your enum
+      * type by documenting it in your Prisma schema. For example:
+      *
+      * \`\`\`prisma
+      * model SomeModel {
+      *   /// Lorem ipsum dolor sit amet.
+      *   foo  Json
+      * }
+      * \`\`\`
+      *
+      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      *
+      * @example
+      *
+      * import { objectType } from 'nexus'
+      * import { SomeModel } from 'nexus-prisma'
+      *
+      * objectType({
+      *   name: SomeModel.$name
+      *   description: SomeModel.$description
+      *   definition(t) {
+      *     t.field(SomeModel.foo.name, SomeModel.foo)
+      *   }
+      * }) 
+      */
+    foo: {
+      /**
+       * The name of this field.
+       */
+      name: 'foo'
+    
+      /**
+       * The type of this field.
+       */
+      type: NexusCore.NexusNonNullDef<'Json'>
+    
+      /**
+       * The documentation of this field.
+       */
+      description: undefined
+    }
+  }
+
+  // Enums
+
+  // N/A –– You have not defined any models in your Prisma schema file.
+}
+
+
+//
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
+//
+
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
+
+/**
+  * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+  *
+  * ### ️⚠️ Missing Documentation for this Model
+  * 
+  * Automatically ✨ enrich this JSDoc with information about your enum
+  * type by documenting it in your Prisma schema. For example:
+  *
+  * 
+  * \`\`\`prisma
+  * /// Lorem ipsum dolor sit amet...
+  * model SomeModel {
+  *   foo  String
+  * }
+  * \`\`\`
+  * 
+  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  *
+  * @example
+  *
+  * import { objectType } from 'nexus'
+  * import { SomeModel } from 'nexus-prisma'
+  *
+  * objectType({
+  *   name: SomeModel.$name
+  *   description: SomeModel.$description
+  *   definition(t) {
+  *     t.field(SomeModel.id.name, SomeModel.id)
+  *   }
+  * }) 
+  */
+export const SomeModel: $Types.SomeModel
+
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
+
+// N/A –– You have not defined any models in your Prisma schema file."
+`;
+
+exports[`A model field with type String, attribute @id, maps to GraphQL ID scalar 1`] = `
+"import * as Nexus from 'nexus'
+import * as NexusCore from 'nexus/dist/core'
+
+//
+//
+// TYPES
+// TYPES
+// TYPES
+// TYPES
+//
+//
+
+declare namespace $Types {
+  // Models
+
+  /**
+    * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+    *
+    * ### ️⚠️ Missing Documentation for this Model
+    * 
+    * Automatically ✨ enrich this JSDoc with information about your enum
+    * type by documenting it in your Prisma schema. For example:
+    *
+    * 
+    * \`\`\`prisma
+    * /// Lorem ipsum dolor sit amet...
+    * model SomeModel {
+    *   foo  String
+    * }
+    * \`\`\`
+    * 
+    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id.name, SomeModel.id)
+    *   }
+    * }) 
+    */
+  interface SomeModel {
+    $name: 'SomeModel'
+    $description: null
+    /**
+     * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
+      *
+      * ### ️⚠️ Missing Documentation for this Model
+      * 
+      * Automatically ✨ enrich this JSDoc with information about your enum
+      * type by documenting it in your Prisma schema. For example:
+      *
+      * \`\`\`prisma
+      * model SomeModel {
+      *   /// Lorem ipsum dolor sit amet.
+      *   id  String
+      * }
+      * \`\`\`
+      *
+      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      *
+      * @example
+      *
+      * import { objectType } from 'nexus'
+      * import { SomeModel } from 'nexus-prisma'
+      *
+      * objectType({
+      *   name: SomeModel.$name
+      *   description: SomeModel.$description
+      *   definition(t) {
+      *     t.field(SomeModel.id.name, SomeModel.id)
+      *   }
+      * }) 
+      */
+    id: {
+      /**
+       * The name of this field.
+       */
+      name: 'id'
+    
+      /**
+       * The type of this field.
+       */
+      type: NexusCore.NexusNonNullDef<'ID'>
+    
+      /**
+       * The documentation of this field.
+       */
+      description: undefined
+    }
+  }
+
+  // Enums
+
+  // N/A –– You have not defined any models in your Prisma schema file.
+}
+
+
+//
+//
+// EXPORTS
+// EXPORTS
+// EXPORTS
+// EXPORTS
+//
+//
+
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
+
+/**
+  * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+  *
+  * ### ️⚠️ Missing Documentation for this Model
+  * 
+  * Automatically ✨ enrich this JSDoc with information about your enum
+  * type by documenting it in your Prisma schema. For example:
+  *
+  * 
+  * \`\`\`prisma
+  * /// Lorem ipsum dolor sit amet...
+  * model SomeModel {
+  *   foo  String
+  * }
+  * \`\`\`
+  * 
+  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  *
+  * @example
+  *
+  * import { objectType } from 'nexus'
+  * import { SomeModel } from 'nexus-prisma'
+  *
+  * objectType({
+  *   name: SomeModel.$name
+  *   description: SomeModel.$description
+  *   definition(t) {
+  *     t.field(SomeModel.id.name, SomeModel.id)
+  *   }
+  * }) 
+  */
+export const SomeModel: $Types.SomeModel
+
+//
+//
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+// EXPORTS: PRISMA ENUMS
+//
+//
+
+// N/A –– You have not defined any models in your Prisma schema file."
+`;

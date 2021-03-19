@@ -4,7 +4,7 @@ import { LiteralUnion } from 'type-fest'
 import { StandardGraphQLScalarType, StandardgraphQLScalarTypes } from '../../helpers/graphql'
 import { PrismaScalarType } from '../../helpers/prisma'
 import { allCasesHandled } from '../../helpers/utils'
-import { jsDocForField, jsDocForModel } from '../helpers/JSDocTemplates'
+import { jsDocForEnum, jsDocForField, jsDocForModel } from '../helpers/JSDocTemplates'
 import { ModuleSpec } from '../types'
 
 export function createModuleSpec(dmmf: DMMF.Document): ModuleSpec {
@@ -16,34 +16,114 @@ export function createModuleSpec(dmmf: DMMF.Document): ModuleSpec {
   }
 }
 
+const NO_ENUMS_DEFINED_COMMENT = endent`
+  // N/A –– You have not defined any models in your Prisma schema file.
+`
+
+const NO_MODELS_DEFINED_COMMENT = endent`
+  // N/A –– You have not defined any enums in your Prisma schema file.
+`
+
 export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document): string {
   const models = dmmf.datamodel.models
+  const enums = dmmf.datamodel.enums
 
   return endent`
     import * as Nexus from 'nexus'
     import * as NexusCore from 'nexus/dist/core'
 
     //
-    // Types
+    //
+    // TYPES
+    // TYPES
+    // TYPES
+    // TYPES
+    //
     //
 
     declare namespace $Types {
-      ${models.map(renderTypeScriptDeclarationForModel).join('\n\n')}
+      // Models
+
+      ${
+        models.length === 0
+          ? NO_MODELS_DEFINED_COMMENT
+          : models.map(renderTypeScriptDeclarationForModel).join('\n\n')
+      }
+
+      // Enums
+
+      ${
+        enums.length === 0
+          ? NO_ENUMS_DEFINED_COMMENT
+          : enums.map(renderTypeScriptDeclarationForEnum).join('\n\n')
+      }
     }
 
 
     //
-    // Exports
+    //
+    // EXPORTS
+    // EXPORTS
+    // EXPORTS
+    // EXPORTS
+    //
     //
 
-    ${models
-      .map((model) => {
-        return endent`
-          ${jsDocForModel(model)}
-          export const ${model.name}: $Types.${model.name}
-        `
-      })
-      .join('\n\n')}
+    //
+    //
+    // EXPORTS: PRISMA MODELS
+    // EXPORTS: PRISMA MODELS
+    // EXPORTS: PRISMA MODELS
+    // EXPORTS: PRISMA MODELS
+    //
+    //
+
+    ${
+      models.length === 0
+        ? NO_MODELS_DEFINED_COMMENT
+        : models
+            .map((model) => {
+              return endent`
+                ${jsDocForModel(model)}
+                export const ${model.name}: $Types.${model.name}
+              `
+            })
+            .join('\n\n')
+    }
+
+    //
+    //
+    // EXPORTS: PRISMA ENUMS
+    // EXPORTS: PRISMA ENUMS
+    // EXPORTS: PRISMA ENUMS
+    // EXPORTS: PRISMA ENUMS
+    //
+    //
+
+    ${
+      enums.length === 0
+        ? NO_ENUMS_DEFINED_COMMENT
+        : enums
+            .map((enum_) => {
+              return endent`
+                ${jsDocForEnum(enum_)}
+                export const ${enum_.name}: $Types.${enum_.name}
+              `
+            })
+            .join('\n\n')
+    }
+
+  `
+}
+
+function renderTypeScriptDeclarationForEnum(enum_: DMMF.DatamodelEnum): string {
+  return endent`
+    ${jsDocForEnum(enum_)}
+    interface ${enum_.name} {
+      name: '${enum_.name}'
+      description: ${enum_.documentation ? `'${enum_.documentation}'` : 'null'}
+      members: [${enum_.values.map((value) => `'${value.name}'`).join(', ')}]
+    }
   `
 }
 

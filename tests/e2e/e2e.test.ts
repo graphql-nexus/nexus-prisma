@@ -1,6 +1,7 @@
 import * as Execa from 'execa'
 import stripAnsi from 'strip-ansi'
-import { assertBuildPresent, createSchema, setupTestProject, TestProject } from '../__helpers__'
+import { dump } from '../../src/helpers/utils'
+import { assertBuildPresent, createPrismaSchema, setupTestProject, TestProject } from '../__helpers__'
 
 function setupTestProjectCase({
   prismaSchema,
@@ -83,24 +84,44 @@ beforeAll(() => {
 it('When bundled custom scalars are used the project type checks and generates expected GraphQL schema', () => {
   setupTestProjectCase({
     testProject,
+    prismaSchema: createPrismaSchema(`
+      model M1 {
+        id                String   @id
+        someJsonField     Json
+        someDateTimeField DateTime
+      }
+
+      enum E1 {
+        a
+        b
+        c
+      }
+    `),
     main: `
-      import { makeSchema, objectType } from 'nexus'
-      import { M1 } from 'nexus-prisma'
+      import { makeSchema, objectType, enumType } from 'nexus'
+      import { M1, E1 } from 'nexus-prisma'
       import * as customScalars from 'nexus-prisma/scalars'
       import * as Path from 'path'
       
-      const SomeObject = objectType({
-        name: 'SomeObject',
-        definition(t) {
-          t.json('JsonManually')
-          t.dateTime('DateTimeManually')
-          t.field(M1.someJsonField.name, M1.someJsonField)
-          t.field(M1.someDateTimeField.name, M1.someDateTimeField)
-        },
-      })
+      const types = [
+        customScalars,
+        enumType(E1),
+        objectType({
+          name: M1.$name,
+          definition(t) {
+            t.field('e1', {
+              type: 'E1'
+            })
+            t.json('JsonManually')
+            t.dateTime('DateTimeManually')
+            t.field(M1.someJsonField.name, M1.someJsonField)
+            t.field(M1.someDateTimeField.name, M1.someDateTimeField)
+          },
+        }),
+      ]
       
       makeSchema({
-        types: [customScalars, SomeObject],
+        types,
         shouldGenerateArtifacts: true,
         shouldExitAfterGenerateArtifacts: true,
         outputs: {
@@ -112,22 +133,15 @@ it('When bundled custom scalars are used the project type checks and generates e
       // wait for output generation
       setTimeout(() => {}, 1000)
     `,
-    prismaSchema: createSchema(`
-      model M1 {
-        id                String   @id
-        someJsonField     Json
-        someDateTimeField DateTime
-      }
-    `),
   })
 
   // uncomment this to see dir (helpful to go there yourself and manually debug)
-  // console.log(testProject.tmpdir.cwd())
+  console.log(testProject.tmpdir.cwd())
 
   const results = runTestProject(testProject)
 
   // uncomment this to see the raw results (helpful for debugging)
-  // dump(results)
+  dump(results)
 
   expect(results.runFirstBuild.exitCode).toBe(2)
 
@@ -135,10 +149,10 @@ it('When bundled custom scalars are used the project type checks and generates e
     /.*error TS2305: Module '"nexus-prisma"' has no exported member 'M1'.*/
   )
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2339: Property 'json' does not exist on type 'ObjectDefinitionBlock<"SomeObject">'.*/
+    /.*error TS2339: Property 'json' does not exist on type 'ObjectDefinitionBlock<any>'.*/
   )
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2339: Property 'dateTime' does not exist on type 'ObjectDefinitionBlock<"SomeObject">'.*/
+    /.*error TS2339: Property 'dateTime' does not exist on type 'ObjectDefinitionBlock<any>'.*/
   )
 
   expect(results.runReflectPrisma.exitCode).toBe(0)

@@ -3,12 +3,16 @@ import endent from 'endent'
 import execa from 'execa'
 import * as fs from 'fs-jetpack'
 import { FSJetpack } from 'fs-jetpack/types'
+import { printSchema } from 'graphql'
 import { merge } from 'lodash'
+import { core } from 'nexus'
+import { AllNexusTypeDefs } from 'nexus/dist/core'
 import { PackageJson, TsConfigJson } from 'type-fest'
 import { generateRuntime } from '../src/generator/generate'
+import * as ModelsGenerator from '../src/generator/models'
 import { ModuleSpec } from '../src/generator/types'
 
-export function createSchema(content: string): string {
+export function createPrismaSchema(content: string): string {
   return endent`
     datasource db {
       provider = "postgresql"
@@ -27,8 +31,56 @@ export function createSchema(content: string): string {
   `
 }
 
-export async function generate(content: string): Promise<{ indexjs: string; indexdts: string }> {
-  const schema = createSchema(content)
+/**
+ * Given a Prisma schema and Nexus type definitions return a GraphQL schema.
+ */
+export async function generateSchema({
+  prismaSchema,
+  nexus,
+}: {
+  /**
+   * Define a Prisma schema file
+   *
+   * Note datasource and generator blocks are taken care of automatically for you.
+   */
+  prismaSchema: string
+  /**
+   * Define Nexus type definitions based on the Nexus Prisma configurations
+   *
+   * The configurations are typed as `any` to make them easy to work with. They ae not typesafe. Be careful.
+   */
+  nexus(configurations: any): AllNexusTypeDefs[]
+}) {
+  const dmmf = await PrismaSDK.getDMMF({
+    datamodel: createPrismaSchema(prismaSchema),
+  })
+
+  const configurations = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf) as any
+
+  const { schema } = await core.generateSchema.withArtifacts({
+    types: nexus(configurations),
+  })
+
+  const printedSchema = printSchema(schema)
+
+  return (
+    '\n' +
+    printedSchema
+      .replace(
+        endent`
+          type Query {
+            ok: Boolean!
+          }
+        `,
+        ''
+      )
+      .trim() +
+    '\n'
+  )
+}
+
+export async function generateModules(content: string): Promise<{ indexjs: string; indexdts: string }> {
+  const schema = createPrismaSchema(content)
 
   const dmmf = await PrismaSDK.getDMMF({
     datamodel: schema,

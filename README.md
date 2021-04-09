@@ -94,7 +94,7 @@ export const schema = makeSchema({
 
 ##### Shortterm
 
-- [ ] Support for Prisma Model field types of remaiming scalars (`Byes`, etc.)
+- [ ] Support for Prisma Model field types of remaining scalars (`Bytes`, etc.)
 
 ##### Midterm
 
@@ -290,7 +290,7 @@ These are finer points that aren't perhaps worth a top-level point but none the 
 
 Fields and models that you do not document will result in a helpful default JSDoc that teaches you about this.
 
-##### Defualt Runtime
+##### Default Runtime
 
 When your project is in a state where the generated Nexus Prisma part is missing (new repo clone, reinstalled deps, etc.) Nexus Prisma gives you a default runtime export named `PleaseRunPrismaGenerate` and will error with a clear message.
 

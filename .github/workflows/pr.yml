@@ -41,4 +41,9 @@ jobs:
       - run: yarn global add yalc
       - run: yarn --frozen-lockfile
       - run: yarn -s build
-      - run: yarn -s test
+      - run: yarn -s test:ci
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        if: matrix.os == 'ubuntu-latest' && matrix.node-version == '10.x'
+        with:
+          directory: ./coverage

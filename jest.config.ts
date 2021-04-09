@@ -11,6 +11,8 @@ const config: InitialOptionsTsJest = {
       tsconfig: '<rootDir>/tests/tsconfig.json',
     },
   },
+  collectCoverageFrom: ['src/**/*'],
+  coverageReporters: ['lcov', 'text', 'html'],
 }
 
 export default config

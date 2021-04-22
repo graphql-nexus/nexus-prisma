@@ -121,7 +121,7 @@ function renderTypeScriptDeclarationForEnum(enum_: DMMF.DatamodelEnum): string {
     ${jsDocForEnum(enum_)}
     interface ${enum_.name} {
       name: '${enum_.name}'
-      description: ${enum_.documentation ? `'${enum_.documentation}'` : 'null'}
+      description: ${enum_.documentation ? `'${enum_.documentation}'` : 'undefined'}
       members: [${enum_.values.map((value) => `'${value.name}'`).join(', ')}]
     }
   `
@@ -132,7 +132,7 @@ function renderTypeScriptDeclarationForModel(model: DMMF.Model): string {
     ${jsDocForModel(model)}
     interface ${model.name} {
       $name: '${model.name}'
-      $description: ${model.documentation ? `'${model.documentation}'` : 'null'}
+      $description: ${model.documentation ? `'${model.documentation}'` : 'undefined'}
       ${renderTypeScriptDeclarationForModelFields(model)}
     }
   `

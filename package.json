@@ -28,6 +28,7 @@
     "build:module-facades": "ts-node scripts/build-module-facades",
     "build": "yarn clean && yarn build:module-facades && tsc",
     "test": "jest",
+    "test:ci": "jest --coverage",
     "tdd": "jest --watch",
     "clean": "rm -rf dist && rm -rf node_modules/.cache",
     "release:pr": "dripip pr",

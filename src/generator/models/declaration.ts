@@ -200,7 +200,7 @@ export function fieldTypeToGraphQLType(field: DMMF.Field): LiteralUnion<Standard
     case 'scalar': {
       const typeName = field.type as PrismaScalarType
 
-      if (field.isId) {
+      if (field.isId && field.type === 'String') {
         return StandardgraphQLScalarTypes.ID
       }
 

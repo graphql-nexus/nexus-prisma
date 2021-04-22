@@ -1,10 +1,15 @@
 import { DMMF } from '@prisma/client/runtime'
 import endent from 'endent'
-import { chain } from 'lodash'
+import { chain, lowerFirst } from 'lodash'
 import * as Nexus from 'nexus'
 import { NexusEnumTypeConfig, NexusListDef, NexusNonNullDef, NexusNullDef } from 'nexus/dist/core'
 import { ModuleSpec } from '../types'
 import { fieldTypeToGraphQLType } from './declaration'
+import {
+  buildWhereUniqueInput,
+  resolveUniqueIdentifiers,
+  findMissingUniqueIdentifiers,
+} from '../helpers/constraints'
 
 type PrismaEnumName = string
 
@@ -97,6 +102,29 @@ export function prismaFieldToNexusType(field: DMMF.Field) {
   } else {
     return Nexus.nullable(graphqlType)
   }
+}
+
+export function prismaFieldToNexusResolver(model: DMMF.Model, field: DMMF.Field) {
+  if (field.kind === 'object') {
+    return (root: any, _args: any, ctx: any) => {
+      const uniqueIdentifiers = resolveUniqueIdentifiers(model)
+      const missingIdentifiers = findMissingUniqueIdentifiers(root, uniqueIdentifiers)
+
+      if (missingIdentifiers !== null) {
+        throw new Error(
+          `Resolver ${model.name}.${
+            field.name
+          } is missing the following unique identifiers: ${missingIdentifiers.join(', ')}`
+        )
+      }
+
+      return ctx.prisma[lowerFirst(model.name)]
+        .findUnique({
+          where: buildWhereUniqueInput(root, uniqueIdentifiers),
+        })
+        [field.name]()
+    }
+  } else return undefined
 }
 
 type AnyNexusEnumTypeConfig = NexusEnumTypeConfig<string>

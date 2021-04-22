@@ -166,6 +166,11 @@ function renderTypeScriptDeclarationForField({
        * The documentation of this field.
        */
       description: ${field.documentation ? `string` : `undefined`}
+
+      /**
+       * The resolver of this field
+       */
+      resolve: ${renderNexusResolve(model, field)}
     }
   `
 }
@@ -249,4 +254,13 @@ export function fieldTypeToGraphQLType(field: DMMF.Field): LiteralUnion<Standard
     default:
       allCasesHandled(fieldKind)
   }
+}
+
+function renderNexusResolve(model: DMMF.Model, field: DMMF.Field): string {
+  //console.log(model)
+  if (field.kind === 'object') {
+    return endent`
+      NexusCore.FieldResolver<'${model.name}', '${field.name}'>
+    `
+  } else return 'undefined'
 }

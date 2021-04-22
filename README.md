@@ -11,15 +11,15 @@ Official Prisma plugin for Nexus.
 - [Usage](#usage)
 - [Roadmap](#roadmap)
 - [Features](#features)
-  * [Type-safe Generated Library Code](#type-safe-generated-library-code)
-  * [Project Enums](#project-enums)
-  * [Project Scalars](#project-scalars)
-  * [Prisma ID field to GraphQL ID scalar type mapping](#prisma-id-field-to-graphql-id-scalar-type-mapping)
-  * [Prisma Schema docs re-used for GraphQL schema doc](#prisma-schema-docs-re-used-for-graphql-schema-doc)
-  * [Prisma Schema docs re-used for JSDoc](#prisma-schema-docs-re-used-for-jsdoc)
-  * [Refined DX](#refined-dx)
+  - [Type-safe Generated Library Code](#type-safe-generated-library-code)
+  - [Project Enums](#project-enums)
+  - [Project Scalars](#project-scalars)
+  - [Prisma ID field to GraphQL ID scalar type mapping](#prisma-id-field-to-graphql-id-scalar-type-mapping)
+  - [Prisma Schema docs re-used for GraphQL schema doc](#prisma-schema-docs-re-used-for-graphql-schema-doc)
+  - [Prisma Schema docs re-used for JSDoc](#prisma-schema-docs-re-used-for-jsdoc)
+  - [Refined DX](#refined-dx)
 - [Recipes](#recipes)
-  * [Supply custom custom scalars to your GraphQL schema](#supply-custom-custom-scalars-to-your-graphql-schema)
+  - [Supply custom custom scalars to your GraphQL schema](#supply-custom-custom-scalars-to-your-graphql-schema)
 - [Notes](#notes)
 
 <!-- tocstop -->
@@ -94,7 +94,7 @@ export const schema = makeSchema({
 
 ##### Shortterm
 
-- [ ] Support for Prisma Model field types of remaiming scalars (`Byes`, etc.)
+- [ ] Support for Prisma Model field types of remaining scalars (`Bytes`, etc.)
 
 ##### Midterm
 
@@ -290,7 +290,7 @@ These are finer points that aren't perhaps worth a top-level point but none the 
 
 Fields and models that you do not document will result in a helpful default JSDoc that teaches you about this.
 
-##### Defualt Runtime
+##### Default Runtime
 
 When your project is in a state where the generated Nexus Prisma part is missing (new repo clone, reinstalled deps, etc.) Nexus Prisma gives you a default runtime export named `PleaseRunPrismaGenerate` and will error with a clear message.
 

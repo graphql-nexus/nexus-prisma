@@ -47,7 +47,7 @@ declare namespace $Types {
     */
   interface Foo {
     name: 'Foo'
-    description: null
+    description: undefined
     members: ['a']
   }
 }

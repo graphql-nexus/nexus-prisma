@@ -105,26 +105,29 @@ export function prismaFieldToNexusType(field: DMMF.Field) {
 }
 
 export function prismaFieldToNexusResolver(model: DMMF.Model, field: DMMF.Field) {
-  if (field.kind === 'object') {
-    return (root: any, _args: any, ctx: any) => {
-      const uniqueIdentifiers = resolveUniqueIdentifiers(model)
-      const missingIdentifiers = findMissingUniqueIdentifiers(root, uniqueIdentifiers)
+  if (field.kind !== 'object') {
+    return undefined
+  }
 
-      if (missingIdentifiers !== null) {
-        throw new Error(
-          `Resolver ${model.name}.${
-            field.name
-          } is missing the following unique identifiers: ${missingIdentifiers.join(', ')}`
-        )
-      }
+  return (root: any, _args: any, ctx: any) => {
+    const uniqueIdentifiers = resolveUniqueIdentifiers(model)
+    const missingIdentifiers = findMissingUniqueIdentifiers(root, uniqueIdentifiers)
 
-      return ctx.prisma[lowerFirst(model.name)]
-        .findUnique({
-          where: buildWhereUniqueInput(root, uniqueIdentifiers),
-        })
-        [field.name]()
+    if (missingIdentifiers !== null) {
+      // TODO rich errors
+      throw new Error(
+        `Resolver ${model.name}.${
+          field.name
+        } is missing the following unique identifiers: ${missingIdentifiers.join(', ')}`
+      )
     }
-  } else return undefined
+
+    return ctx.prisma[lowerFirst(model.name)]
+      .findUnique({
+        where: buildWhereUniqueInput(root, uniqueIdentifiers),
+      })
+      [field.name]()
+  }
 }
 
 type AnyNexusEnumTypeConfig = NexusEnumTypeConfig<string>

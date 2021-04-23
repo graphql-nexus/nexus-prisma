@@ -200,7 +200,8 @@ export function fieldTypeToGraphQLType(field: DMMF.Field): LiteralUnion<Standard
     case 'scalar': {
       const typeName = field.type as PrismaScalarType
 
-      if (field.isId) {
+      // TODO Allow user to configure this. Maybe some users want Prisma `Int @id` to be GraphQL `ID`.
+      if (field.isId && field.type === 'String') {
         return StandardgraphQLScalarTypes.ID
       }
 

@@ -852,7 +852,7 @@ export const SomeModel: $Types.SomeModel
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
 
-exports[`A model field with type Int, attribute @id, maps to GraphQL ID scalar 1`] = `
+exports[`A model field with type Int, attribute @id, maps to GraphQL Int scalar 1`] = `
 "import * as Nexus from 'nexus'
 import * as NexusCore from 'nexus/dist/core'
 
@@ -941,7 +941,7 @@ declare namespace $Types {
       /**
        * The type of this field.
        */
-      type: NexusCore.NexusNonNullDef<'ID'>
+      type: NexusCore.NexusNonNullDef<'Int'>
     
       /**
        * The documentation of this field.

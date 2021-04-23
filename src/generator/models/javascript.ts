@@ -80,6 +80,7 @@ function createNexusObjectTypeDefConfigurations(dmmf: DMMF.Document): NexusObjec
               name: field.name,
               type: prismaFieldToNexusType(field),
               description: field.documentation ?? null,
+              resolve: prismaFieldToNexusResolver(model, field),
             }
           })
           .keyBy('name')
@@ -110,6 +111,13 @@ export function prismaFieldToNexusResolver(model: DMMF.Model, field: DMMF.Field)
   }
 
   return (root: any, _args: any, ctx: any) => {
+    if (!ctx.prisma) {
+      // TODO rich errors
+      throw new Error(
+        'Prisma client not found in context. Set a Prisma client instance to `prisma` field of Nexus context'
+      )
+    }
+
     const uniqueIdentifiers = resolveUniqueIdentifiers(model)
     const missingIdentifiers = findMissingUniqueIdentifiers(root, uniqueIdentifiers)
 

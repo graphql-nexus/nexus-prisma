@@ -257,7 +257,6 @@ export function fieldTypeToGraphQLType(field: DMMF.Field): LiteralUnion<Standard
 }
 
 function renderNexusResolve(model: DMMF.Model, field: DMMF.Field): string {
-  //console.log(model)
   if (field.kind === 'object') {
     return endent`
       NexusCore.FieldResolver<'${model.name}', '${field.name}'>

@@ -95,6 +95,11 @@ declare namespace $Types {
        * The documentation of this field.
        */
       description: undefined
+    
+      /**
+       * The resolver of this field
+       */
+      resolve: undefined
     }
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
@@ -141,6 +146,11 @@ declare namespace $Types {
        * The documentation of this field.
        */
       description: undefined
+    
+      /**
+       * The resolver of this field
+       */
+      resolve: undefined
     }
   }
 
@@ -308,6 +318,11 @@ declare namespace $Types {
        * The documentation of this field.
        */
       description: undefined
+    
+      /**
+       * The resolver of this field
+       */
+      resolve: undefined
     }
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
@@ -354,6 +369,11 @@ declare namespace $Types {
        * The documentation of this field.
        */
       description: undefined
+    
+      /**
+       * The resolver of this field
+       */
+      resolve: undefined
     }
   }
 
@@ -521,6 +541,11 @@ declare namespace $Types {
        * The documentation of this field.
        */
       description: undefined
+    
+      /**
+       * The resolver of this field
+       */
+      resolve: undefined
     }
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
@@ -567,6 +592,11 @@ declare namespace $Types {
        * The documentation of this field.
        */
       description: undefined
+    
+      /**
+       * The resolver of this field
+       */
+      resolve: undefined
     }
   }
 
@@ -734,6 +764,11 @@ declare namespace $Types {
        * The documentation of this field.
        */
       description: undefined
+    
+      /**
+       * The resolver of this field
+       */
+      resolve: undefined
     }
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
@@ -780,6 +815,11 @@ declare namespace $Types {
        * The documentation of this field.
        */
       description: undefined
+    
+      /**
+       * The resolver of this field
+       */
+      resolve: undefined
     }
   }
 
@@ -947,6 +987,11 @@ declare namespace $Types {
        * The documentation of this field.
        */
       description: undefined
+    
+      /**
+       * The resolver of this field
+       */
+      resolve: undefined
     }
   }
 
@@ -1114,6 +1159,11 @@ declare namespace $Types {
        * The documentation of this field.
        */
       description: undefined
+    
+      /**
+       * The resolver of this field
+       */
+      resolve: undefined
     }
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
@@ -1160,6 +1210,11 @@ declare namespace $Types {
        * The documentation of this field.
        */
       description: undefined
+    
+      /**
+       * The resolver of this field
+       */
+      resolve: undefined
     }
   }
 
@@ -1327,6 +1382,11 @@ declare namespace $Types {
        * The documentation of this field.
        */
       description: undefined
+    
+      /**
+       * The resolver of this field
+       */
+      resolve: undefined
     }
   }
 

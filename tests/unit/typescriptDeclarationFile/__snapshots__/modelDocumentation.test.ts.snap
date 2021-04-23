@@ -83,6 +83,11 @@ declare namespace $Types {
        * The documentation of this field.
        */
       description: string
+    
+      /**
+       * The resolver of this field
+       */
+      resolve: undefined
     }
   }
 
@@ -250,6 +255,11 @@ declare namespace $Types {
        * The documentation of this field.
        */
       description: undefined
+    
+      /**
+       * The resolver of this field
+       */
+      resolve: undefined
     }
   }
 
@@ -404,6 +414,11 @@ declare namespace $Types {
        * The documentation of this field.
        */
       description: undefined
+    
+      /**
+       * The resolver of this field
+       */
+      resolve: undefined
     }
   }
 
@@ -558,6 +573,11 @@ declare namespace $Types {
        * The documentation of this field.
        */
       description: undefined
+    
+      /**
+       * The resolver of this field
+       */
+      resolve: undefined
     }
   }
 

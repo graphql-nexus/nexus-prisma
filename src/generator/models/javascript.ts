@@ -62,7 +62,7 @@ type NexusObjectTypeDefConfiguration = Record<
     }
   // Metadata fields can be any of these
   | string
-  | null
+  | undefined
 >
 
 /**
@@ -73,13 +73,13 @@ function createNexusObjectTypeDefConfigurations(dmmf: DMMF.Document): NexusObjec
     .map((model) => {
       return {
         $name: model.name,
-        $description: model.documentation ?? null,
+        $description: model.documentation ?? undefined,
         ...chain(model.fields)
           .map((field) => {
             return {
               name: field.name,
               type: prismaFieldToNexusType(field),
-              description: field.documentation ?? null,
+              description: field.documentation ?? undefined,
               resolve: prismaFieldToNexusResolver(model, field),
             }
           })

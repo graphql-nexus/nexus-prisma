@@ -10,7 +10,7 @@ it('A model field with type String, attribute @id, maps to GraphQL ID scalar', a
   expect(indexdts).toMatchSnapshot()
 })
 
-it('A model field with type Int, attribute @id, maps to GraphQL ID scalar', async () => {
+it('A model field with type Int, attribute @id, maps to GraphQL Int scalar', async () => {
   const { indexdts } = await generateModules(`
     model SomeModel {
       id Int @id

@@ -49,7 +49,7 @@ declare namespace $Types {
     */
   interface SomeModel {
     $name: 'SomeModel'
-    $description: null
+    $description: undefined
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
       *
@@ -272,7 +272,7 @@ declare namespace $Types {
     */
   interface SomeModel {
     $name: 'SomeModel'
-    $description: null
+    $description: undefined
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
       *
@@ -495,7 +495,7 @@ declare namespace $Types {
     */
   interface SomeModel {
     $name: 'SomeModel'
-    $description: null
+    $description: undefined
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
       *
@@ -718,7 +718,7 @@ declare namespace $Types {
     */
   interface SomeModel {
     $name: 'SomeModel'
-    $description: null
+    $description: undefined
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
       *
@@ -892,7 +892,7 @@ export const SomeModel: $Types.SomeModel
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
 
-exports[`A model field with type Int, attribute @id, maps to GraphQL ID scalar 1`] = `
+exports[`A model field with type Int, attribute @id, maps to GraphQL Int scalar 1`] = `
 "import * as Nexus from 'nexus'
 import * as NexusCore from 'nexus/dist/core'
 
@@ -941,7 +941,7 @@ declare namespace $Types {
     */
   interface SomeModel {
     $name: 'SomeModel'
-    $description: null
+    $description: undefined
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
       *
@@ -981,7 +981,7 @@ declare namespace $Types {
       /**
        * The type of this field.
        */
-      type: NexusCore.NexusNonNullDef<'ID'>
+      type: NexusCore.NexusNonNullDef<'Int'>
     
       /**
        * The documentation of this field.
@@ -1113,7 +1113,7 @@ declare namespace $Types {
     */
   interface SomeModel {
     $name: 'SomeModel'
-    $description: null
+    $description: undefined
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
       *
@@ -1336,7 +1336,7 @@ declare namespace $Types {
     */
   interface SomeModel {
     $name: 'SomeModel'
-    $description: null
+    $description: undefined
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
       *

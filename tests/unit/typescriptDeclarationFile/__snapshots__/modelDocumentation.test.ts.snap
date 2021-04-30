@@ -49,7 +49,7 @@ declare namespace $Types {
     */
   interface SomeModel {
     $name: 'SomeModel'
-    $description: null
+    $description: undefined
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
       *
@@ -209,7 +209,7 @@ declare namespace $Types {
     */
   interface SomeModel {
     $name: 'SomeModel'
-    $description: null
+    $description: undefined
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
       *
@@ -527,7 +527,7 @@ declare namespace $Types {
     */
   interface SomeModel {
     $name: 'SomeModel'
-    $description: null
+    $description: undefined
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
       *

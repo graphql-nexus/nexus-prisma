@@ -170,7 +170,7 @@ function renderTypeScriptDeclarationForField({
       /**
        * The resolver of this field
        */
-      resolve: ${renderNexusResolve(model, field)}
+      resolve: NexusCore.FieldResolver<'${model.name}', '${field.name}'>
     }
   `
 }
@@ -255,12 +255,4 @@ export function fieldTypeToGraphQLType(field: DMMF.Field): LiteralUnion<Standard
     default:
       allCasesHandled(fieldKind)
   }
-}
-
-function renderNexusResolve(model: DMMF.Model, field: DMMF.Field): string {
-  if (field.kind === 'object') {
-    return endent`
-      NexusCore.FieldResolver<'${model.name}', '${field.name}'>
-    `
-  } else return 'undefined'
 }

@@ -87,7 +87,7 @@ declare namespace $Types {
       /**
        * The resolver of this field
        */
-      resolve: undefined
+      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
     }
   }
 
@@ -259,7 +259,7 @@ declare namespace $Types {
       /**
        * The resolver of this field
        */
-      resolve: undefined
+      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
     }
   }
 
@@ -418,7 +418,7 @@ declare namespace $Types {
       /**
        * The resolver of this field
        */
-      resolve: undefined
+      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
     }
   }
 
@@ -577,7 +577,7 @@ declare namespace $Types {
       /**
        * The resolver of this field
        */
-      resolve: undefined
+      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
     }
   }
 

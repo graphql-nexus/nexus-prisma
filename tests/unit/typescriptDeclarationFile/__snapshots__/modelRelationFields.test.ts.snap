@@ -99,7 +99,7 @@ declare namespace $Types {
       /**
        * The resolver of this field
        */
-      resolve: undefined
+      resolve: NexusCore.FieldResolver<'User', 'id'>
     }
     /**
      * Nexus \`t.field\` related configuration based on the \`User.posts\` field in your Prisma schema.
@@ -237,7 +237,7 @@ declare namespace $Types {
       /**
        * The resolver of this field
        */
-      resolve: undefined
+      resolve: NexusCore.FieldResolver<'Post', 'id'>
     }
     /**
      * Nexus \`t.field\` related configuration based on the \`Post.author\` field in your Prisma schema.
@@ -339,7 +339,7 @@ declare namespace $Types {
       /**
        * The resolver of this field
        */
-      resolve: undefined
+      resolve: NexusCore.FieldResolver<'Post', 'authorId'>
     }
   }
 

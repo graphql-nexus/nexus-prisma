@@ -106,8 +106,11 @@ export function prismaFieldToNexusType(field: DMMF.Field) {
 }
 
 export function prismaFieldToNexusResolver(model: DMMF.Model, field: DMMF.Field) {
+  // Return default scalar resolver
   if (field.kind !== 'object') {
-    return undefined
+    return (root: any, _args: any, ctx: any) => {
+      return root[field.name]
+    }
   }
 
   return (root: any, _args: any, ctx: any) => {

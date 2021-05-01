@@ -99,7 +99,7 @@ declare namespace $Types {
       /**
        * The resolver of this field
        */
-      resolve: undefined
+      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
     }
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
@@ -150,7 +150,7 @@ declare namespace $Types {
       /**
        * The resolver of this field
        */
-      resolve: undefined
+      resolve: NexusCore.FieldResolver<'SomeModel', 'foo'>
     }
   }
 
@@ -322,7 +322,7 @@ declare namespace $Types {
       /**
        * The resolver of this field
        */
-      resolve: undefined
+      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
     }
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
@@ -373,7 +373,7 @@ declare namespace $Types {
       /**
        * The resolver of this field
        */
-      resolve: undefined
+      resolve: NexusCore.FieldResolver<'SomeModel', 'foo'>
     }
   }
 
@@ -545,7 +545,7 @@ declare namespace $Types {
       /**
        * The resolver of this field
        */
-      resolve: undefined
+      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
     }
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
@@ -596,7 +596,7 @@ declare namespace $Types {
       /**
        * The resolver of this field
        */
-      resolve: undefined
+      resolve: NexusCore.FieldResolver<'SomeModel', 'foo'>
     }
   }
 
@@ -768,7 +768,7 @@ declare namespace $Types {
       /**
        * The resolver of this field
        */
-      resolve: undefined
+      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
     }
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
@@ -819,7 +819,7 @@ declare namespace $Types {
       /**
        * The resolver of this field
        */
-      resolve: undefined
+      resolve: NexusCore.FieldResolver<'SomeModel', 'foo'>
     }
   }
 
@@ -991,7 +991,7 @@ declare namespace $Types {
       /**
        * The resolver of this field
        */
-      resolve: undefined
+      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
     }
   }
 
@@ -1163,7 +1163,7 @@ declare namespace $Types {
       /**
        * The resolver of this field
        */
-      resolve: undefined
+      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
     }
     /**
      * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
@@ -1214,7 +1214,7 @@ declare namespace $Types {
       /**
        * The resolver of this field
        */
-      resolve: undefined
+      resolve: NexusCore.FieldResolver<'SomeModel', 'foo'>
     }
   }
 
@@ -1386,7 +1386,7 @@ declare namespace $Types {
       /**
        * The resolver of this field
        */
-      resolve: undefined
+      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
     }
   }
 

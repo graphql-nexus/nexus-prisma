@@ -6,7 +6,7 @@
     {
       "label": "dev:link",
       "problemMatcher": [],
-      "dependsOn": ["dev:yalc", "dev:ts"]
+      "dependsOn": ["__dev:yalc", "__dev:ts"]
     },
     {
       "label": "tdd",
@@ -24,7 +24,7 @@
     // Lower level task building blocks
 
     {
-      "label": "dev:yalc",
+      "label": "__dev:yalc",
       "type": "shell",
       "command": "yarn -s dev:yalc",
       "problemMatcher": [],
@@ -36,7 +36,7 @@
       }
     },
     {
-      "label": "dev:ts",
+      "label": "__dev:ts",
       "type": "shell",
       "command": "yarn -s dev:ts",
       "problemMatcher": [],

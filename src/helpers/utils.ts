@@ -1,5 +1,11 @@
 import { inspect } from 'util'
 
+export type Resolver = (root: RecordUnknown, args: RecordUnknown, ctx: RecordUnknown) => MaybePromise<unknown>
+
+export type MaybePromise<T> = T | Promise<T>
+
+export type RecordUnknown<T = unknown> = Record<string, T>
+
 export function allCasesHandled(x: never): never {
   // Should never happen, but in case it does :)
   // eslint-disable-next-line

@@ -5,12 +5,14 @@
   "tasks": [
     {
       "label": "dev:link",
+      "problemMatcher": [],
       "dependsOn": ["dev:yalc", "dev:ts"]
     },
     {
       "label": "tdd",
       "type": "shell",
       "command": "yarn -s tdd",
+      "problemMatcher": [],
       "presentation": {
         "group": "test",
         "focus": true,
@@ -25,6 +27,7 @@
       "label": "dev:yalc",
       "type": "shell",
       "command": "yarn -s dev:yalc",
+      "problemMatcher": [],
       "presentation": {
         "group": "dev",
         "focus": false,
@@ -36,6 +39,7 @@
       "label": "dev:ts",
       "type": "shell",
       "command": "yarn -s dev:ts",
+      "problemMatcher": [],
       "presentation": {
         "group": "dev",
         "focus": false,

@@ -1,4 +1,5 @@
 import { DMMF } from '@prisma/client/runtime'
+import { RecordUnknown } from '../../helpers/utils'
 
 /**
  * Find the unique identifiers necessary to indentify a field
@@ -38,7 +39,7 @@ export function resolveUniqueIdentifiers(model: DMMF.Model): string[] {
 }
 
 export function findMissingUniqueIdentifiers(
-  data: Record<string, any>,
+  data: RecordUnknown,
   uniqueIdentifiers: string[]
 ): string[] | null {
   const missingIdentifiers: string[] = []
@@ -56,7 +57,7 @@ export function findMissingUniqueIdentifiers(
   return null
 }
 
-export function buildWhereUniqueInput(data: Record<string, any>, uniqueIdentifiers: string[]) {
+export function buildWhereUniqueInput(data: RecordUnknown, uniqueIdentifiers: string[]): RecordUnknown {
   if (uniqueIdentifiers.length === 1) {
     return pickFromRecord(data, uniqueIdentifiers)
   }
@@ -68,8 +69,8 @@ export function buildWhereUniqueInput(data: Record<string, any>, uniqueIdentifie
   }
 }
 
-function pickFromRecord(record: Record<string, any>, keys: string[]) {
-  const output: Record<string, any> = {}
+function pickFromRecord(record: RecordUnknown, keys: string[]) {
+  const output: Record<string, unknown> = {}
 
   for (const identifier of keys) {
     if (record[identifier]) {

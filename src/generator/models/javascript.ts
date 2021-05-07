@@ -1,15 +1,17 @@
+import { PrismaClient } from '.prisma/client'
 import { DMMF } from '@prisma/client/runtime'
 import endent from 'endent'
 import { chain, lowerFirst } from 'lodash'
 import * as Nexus from 'nexus'
 import { NexusEnumTypeConfig, NexusListDef, NexusNonNullDef, NexusNullDef } from 'nexus/dist/core'
-import { ModuleSpec } from '../types'
-import { fieldTypeToGraphQLType } from './declaration'
+import { MaybePromise, RecordUnknown, Resolver } from '../../helpers/utils'
 import {
   buildWhereUniqueInput,
-  resolveUniqueIdentifiers,
   findMissingUniqueIdentifiers,
+  resolveUniqueIdentifiers,
 } from '../helpers/constraints'
+import { ModuleSpec } from '../types'
+import { fieldTypeToGraphQLType } from './declaration'
 
 type PrismaEnumName = string
 
@@ -73,13 +75,13 @@ function createNexusObjectTypeDefConfigurations(dmmf: DMMF.Document): NexusObjec
     .map((model) => {
       return {
         $name: model.name,
-        $description: model.documentation ?? undefined,
+        $description: model.documentation,
         ...chain(model.fields)
           .map((field) => {
             return {
               name: field.name,
               type: prismaFieldToNexusType(field),
-              description: field.documentation ?? undefined,
+              description: field.documentation,
               resolve: prismaFieldToNexusResolver(model, field),
             }
           })
@@ -105,15 +107,15 @@ export function prismaFieldToNexusType(field: DMMF.Field) {
   }
 }
 
-export function prismaFieldToNexusResolver(model: DMMF.Model, field: DMMF.Field) {
+export function prismaFieldToNexusResolver(model: DMMF.Model, field: DMMF.Field): Resolver {
   // Return default scalar resolver
   if (field.kind !== 'object') {
-    return (root: any, _args: any, ctx: any) => {
+    return (root: RecordUnknown, _args: RecordUnknown, _ctx: RecordUnknown): MaybePromise<unknown> => {
       return root[field.name]
     }
   }
 
-  return (root: any, _args: any, ctx: any) => {
+  return (root: RecordUnknown, _args: RecordUnknown, ctx: RecordUnknown): MaybePromise<unknown> => {
     if (!ctx.prisma) {
       // TODO rich errors
       throw new Error(
@@ -133,11 +135,33 @@ export function prismaFieldToNexusResolver(model: DMMF.Model, field: DMMF.Field)
       )
     }
 
-    return ctx.prisma[lowerFirst(model.name)]
-      .findUnique({
-        where: buildWhereUniqueInput(root, uniqueIdentifiers),
-      })
-      [field.name]()
+    if (!(ctx.prisma instanceof PrismaClient)) {
+      // TODO rich errors
+      throw new Error(`todo`)
+    }
+
+    const methodName = lowerFirst(model.name)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const prisma: any = ctx.prisma
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+    const prismaModel = prisma[methodName]
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    if (typeof prismaModel.findUnique !== 'function') {
+      // TODO rich errors
+      throw new Error(`todo`)
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const findUnique = prismaModel.findUnique as (query: unknown) => MaybePromise<unknown>
+
+    const result: unknown = findUnique({
+      where: buildWhereUniqueInput(root, uniqueIdentifiers),
+    })
+
+    // @ts-expect-error Only known at runtime
+    // eslint-disable-next-line
+    return result[field.name]()
   }
 }
 

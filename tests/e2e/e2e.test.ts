@@ -1,4 +1,5 @@
 import * as Execa from 'execa'
+import { dump } from 'nexus/dist/utils'
 import stripAnsi from 'strip-ansi'
 import { assertBuildPresent, createPrismaSchema, setupTestProject, TestProject } from '../__helpers__'
 
@@ -148,7 +149,7 @@ it('When bundled custom scalars are used the project type checks and generates e
   const results = runTestProject(testProject)
 
   // uncomment this to see the raw results (helpful for debugging)
-  // dump(results)
+  dump(results)
 
   expect(results.runFirstBuild.exitCode).toBe(2)
 

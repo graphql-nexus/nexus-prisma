@@ -107,12 +107,31 @@ export function prismaFieldToNexusType(field: DMMF.Field) {
   }
 }
 
-export function prismaFieldToNexusResolver(model: DMMF.Model, field: DMMF.Field): Resolver {
-  // Return default scalar resolver
+export function prismaFieldToNexusResolver(model: DMMF.Model, field: DMMF.Field): undefined | Resolver {
+  /**
+   * Allow Nexus default resolver to handle resolving scalars.
+   *
+   * By using Nexus default we also affect its generated types, assuming there are not explicit source types setup
+   * which actually for Nexus Prisma projects there usually will be (the Prisma model types). Still, using the Nexus
+   * default is a bit more idiomatic and provides the better _default_ type generation experience of scalars being
+   * expected to come down from the source type (aka. parent).
+   *
+   * So:
+   *
+   *     t.field(M1.Foo.bar.$name, M1.Foo.bar)
+   *
+   * where `bar` is a scalar prisma field would have NO resolve generated and thus default Nexus as mentioned would
+   * think that `bar` field WILL be present on the source type. This is, again, mostly moot since most Nexus Prisma
+   * users WILL setup the Prisma source types e.g.:
+   *
+   *     sourceTypes: {
+   *       modules: [{ module: '.prisma/client', alias: 'PrismaClient' }],
+   *     },
+   *
+   * but this is overall the better way to handle this detail it seems.
+   */
   if (field.kind !== 'object') {
-    return (root: RecordUnknown, _args: RecordUnknown, _ctx: RecordUnknown): MaybePromise<unknown> => {
-      return root[field.name]
-    }
+    return undefined
   }
 
   return (root: RecordUnknown, _args: RecordUnknown, ctx: RecordUnknown): MaybePromise<unknown> => {

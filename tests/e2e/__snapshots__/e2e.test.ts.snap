@@ -41,7 +41,7 @@ exports[`When bundled custom scalars are used the project type checks and genera
  * Do not make changes to this file directly
  */
 
-
+import * as PrismaClient from \\".prisma/client\\"
 import { core } from \\"nexus\\"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
@@ -91,13 +91,7 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  M1: { // root type
-    DateTimeManually?: NexusGenScalars['DateTime'] | null; // DateTime
-    JsonManually?: NexusGenScalars['Json'] | null; // Json
-    e1?: NexusGenEnums['E1'] | null; // E1
-    someDateTimeField: NexusGenScalars['DateTime']; // DateTime!
-    someJsonField: NexusGenScalars['Json']; // Json!
-  }
+  M1: PrismaClient.M1;
   Query: {};
 }
 

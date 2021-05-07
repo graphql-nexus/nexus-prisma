@@ -49,9 +49,12 @@ function runTestProject(testProject: TestProject): ProjectResult {
 function setupTestNexusPrismaProject(): TestProject {
   const testProject = setupTestProject({
     packageJson: {
+      license: 'MIT',
       scripts: {
         'reflect:prisma': 'prisma generate',
-        'reflect:nexus': 'ts-node --transpile-only main',
+        // peer dependency check will fail since we're using yalc, e.g.:
+        // " ... nexus-prisma@0.0.0-dripip+c2653557 does not officially support @prisma/client@2.22.1 ... "
+        'reflect:nexus': 'NO_PEER_DEPENDENCY_CHECK=true ts-node --transpile-only main',
         build: 'tsc',
       },
       dependencies: {
@@ -96,7 +99,7 @@ it('When bundled custom scalars are used the project type checks and generates e
         c
       }
     `),
-    main: `
+    main: /*ts*/ `
       import { makeSchema, objectType, enumType } from 'nexus'
       import { M1, E1 } from 'nexus-prisma'
       import * as customScalars from 'nexus-prisma/scalars'
@@ -127,12 +130,17 @@ it('When bundled custom scalars are used the project type checks and generates e
           schema: true,
           typegen: Path.join(__dirname, 'typegen.ts'),
         },
+        sourceTypes: {
+          modules: [{ module: '.prisma/client', alias: 'PrismaClient' }],
+        },
       })
 
       // wait for output generation
       setTimeout(() => {}, 1000)
     `,
   })
+
+  // todo api server & database & seed that allows for testing that prisma runtime usage works
 
   // uncomment this to see dir (helpful to go there yourself and manually debug)
   console.log(testProject.tmpdir.cwd())

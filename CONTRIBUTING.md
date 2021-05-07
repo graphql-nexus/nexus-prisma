@@ -39,7 +39,7 @@ With all this in place, the chain reaction goes like this:
 1. `Project` `nodemon` reacts to this, runs `prisma generate`
 1. You try things out with newly generated Nexus Prisma in `Project`!
 
-One issues are being worked out related to `bin` and `chmod`: https://github.com/wclr/yalc/issues/156
+One issue is being worked out related to `bin` and `chmod`: https://github.com/wclr/yalc/issues/156
 
 If you change a dependency in `Nexus Prisma` while working (especially adding a new one) you will need to remove the `node_modules` in `Project` and re-install e.g. `yarn install`.
 

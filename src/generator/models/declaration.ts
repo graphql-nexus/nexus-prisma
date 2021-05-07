@@ -166,6 +166,11 @@ function renderTypeScriptDeclarationForField({
        * The documentation of this field.
        */
       description: ${field.documentation ? `string` : `undefined`}
+
+      /**
+       * The resolver of this field
+       */
+      resolve: NexusCore.FieldResolver<'${model.name}', '${field.name}'>
     }
   `
 }

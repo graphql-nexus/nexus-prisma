@@ -5,12 +5,14 @@
   "tasks": [
     {
       "label": "dev:link",
-      "dependsOn": ["dev:yalc", "dev:ts"]
+      "problemMatcher": [],
+      "dependsOn": ["__dev:yalc", "__dev:ts"]
     },
     {
       "label": "tdd",
       "type": "shell",
       "command": "yarn -s tdd",
+      "problemMatcher": [],
       "presentation": {
         "group": "test",
         "focus": true,
@@ -22,9 +24,10 @@
     // Lower level task building blocks
 
     {
-      "label": "dev:yalc",
+      "label": "__dev:yalc",
       "type": "shell",
       "command": "yarn -s dev:yalc",
+      "problemMatcher": [],
       "presentation": {
         "group": "dev",
         "focus": false,
@@ -33,9 +36,10 @@
       }
     },
     {
-      "label": "dev:ts",
+      "label": "__dev:ts",
       "type": "shell",
       "command": "yarn -s dev:ts",
+      "problemMatcher": [],
       "presentation": {
         "group": "dev",
         "focus": false,

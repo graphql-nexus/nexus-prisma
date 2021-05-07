@@ -63,10 +63,10 @@ import { Json } from './Json'
  *     types: [asNexusMethod(jsonScalar, 'json'), asNexusMethod(dateTimeScalar, 'dateTime')],
  *   })
  *
- * @remarks Some  Of the Prisma scalars do not have a natural standard representation in GraphQL. For these
- *                cases Nexus Prisma generates code that references type names matching those scalar names
- *                in Prisma. Then, you are expected to define those custom scalar types in your GraphQL
- *                API. For convenience you can use these ones.
+ * @remarks Some Of the Prisma scalars do not have a natural standard representation in GraphQL. For
+ *          these cases Nexus Prisma generates code that references type names matching those scalar
+ *          names in Prisma. Then, you are expected to define those custom scalar types in your GraphQL
+ *          API. For convenience you can use these ones.
  */
 const NexusPrismaScalars = {
   DateTime,

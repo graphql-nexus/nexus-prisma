@@ -75,7 +75,9 @@
     "nexus": "^1.0.0"
   },
   "dependencies": {
+    "@endemolshinegroup/cosmiconfig-typescript-loader": "^3.0.2",
     "@prisma/generator-helper": "^2.22.1",
+    "cosmiconfig": "^7.0.0",
     "debug": "^4.3.1",
     "endent": "^2.0.1",
     "fs-jetpack": "^4.1.0",

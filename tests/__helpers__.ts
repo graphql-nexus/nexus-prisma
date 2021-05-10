@@ -128,10 +128,6 @@ export class TestProjectInfo {
   }
 }
 
-export function isReuseMode(): boolean {
-  return Boolean(process.env.test_project_reuse)
-}
-
 export function setupTestProject({
   packageJson,
   tsconfigJson,
@@ -166,15 +162,18 @@ export function setupTestProject({
           noEmit: true,
           target: 'ES2018',
           module: 'CommonJS',
-          moduleResolution: 'Node',
+          moduleResolution: 'node',
+          rootDir: 'src',
+          esModuleInterop: true, // for ApolloServer b/c ws dep  :(
         },
-      },
+        include: ['src'],
+      } as TsConfigJson,
       tsconfigJson
     )
   )
 
   const api: TestProject = {
-    fs,
+    fs: fs_,
     info: tpi,
     run(command, options) {
       return execa.commandSync(command, {

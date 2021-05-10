@@ -13,12 +13,17 @@ interface ProjectResult {
   runFirstBuild: Execa.ExecaSyncReturnValue<string>
   runReflectPrisma: Execa.ExecaSyncReturnValue<string>
   runReflectNexus: Execa.ExecaSyncReturnValue<string>
-  runSecondBuildStdout: Execa.ExecaSyncReturnValue<string>
-  graphqlSchema?: string
-  typegen?: string
+  runSecondBuild: Execa.ExecaSyncReturnValue<string>
+  fileGraphqlSchema?: string
+  fileTypegen?: string
 }
 
-function runTestProject(testProject: TestProject): ProjectResult {
+const TYPEGEN_FILE_NAME = `typegen.ts`
+const TYPEGEN_FILE_PATH = `src/${TYPEGEN_FILE_NAME}`
+
+const GRAPHQL_SCHEMA_FILE_PATH = `schema.graphql`
+
+function runTestProjectBuild(testProject: TestProject): ProjectResult {
   const commandConfig: Execa.SyncOptions = {
     reject: false,
     cwd: testProject.fs.cwd(),
@@ -26,22 +31,23 @@ function runTestProject(testProject: TestProject): ProjectResult {
   const runFirstBuild = Execa.commandSync(`npm run build`, commandConfig)
   const runReflectPrisma = Execa.commandSync(`npm run reflect:prisma`, commandConfig)
   const runReflectNexus = Execa.commandSync(`npm run reflect:nexus`, commandConfig)
-  const runSecondBuildStdout = Execa.commandSync(`npm run build`, commandConfig)
-  const graphqlSchema = testProject.fs.read('schema.graphql')
-  const typegen = testProject.fs.read('typegen.ts')
+  const runSecondBuild = Execa.commandSync(`npm run build`, commandConfig)
+  const fileGraphqlSchema = testProject.fs.read(GRAPHQL_SCHEMA_FILE_PATH)
+  const fileTypegen = testProject.fs.read(TYPEGEN_FILE_PATH)
 
   return {
     runFirstBuild,
     runReflectPrisma,
     runReflectNexus,
-    runSecondBuildStdout,
-    graphqlSchema,
-    typegen,
+    runSecondBuild,
+    fileGraphqlSchema,
+    fileTypegen,
   }
 }
 
 function setupTestNexusPrismaProject(): TestProject {
   const testProject = setupTestProject({
+    tsconfigJson: {},
     packageJson: {
       license: 'MIT',
       scripts: {
@@ -49,7 +55,7 @@ function setupTestNexusPrismaProject(): TestProject {
         'reflect:prisma': 'prisma generate',
         // peer dependency check will fail since we're using yalc, e.g.:
         // " ... nexus-prisma@0.0.0-dripip+c2653557 does not officially support @prisma/client@2.22.1 ... "
-        'reflect:nexus': 'cross-env REFLECTION=true ts-node --transpile-only main',
+        'reflect:nexus': 'cross-env REFLECTION=true ts-node --transpile-only src/schema',
         build: 'tsc',
         'dev:server': 'yarn ts-node-dev --transpile-only server',
         'db:migrate': 'prisma db push --force-reset && ts-node prisma/seed',
@@ -71,10 +77,14 @@ function setupTestNexusPrismaProject(): TestProject {
     },
   })
 
-  if (!testProject.info.isReusing) {
+  if (testProject.info.isReusing) {
+    testProject.fs.remove(TYPEGEN_FILE_PATH)
+    testProject.fs.remove('node_modules/nexus-prisma')
+    testProject.run(`yalc add nexus-prisma`)
+  } else {
+    testProject.run(`npm install`)
     Execa.commandSync(`yalc publish --no-scripts`)
     testProject.run(`yalc add nexus-prisma`)
-    testProject.run(`npm install`)
     testProject.run(`yarn -s db:up`)
   }
 
@@ -93,10 +103,17 @@ it('When bundled custom scalars are used the project type checks and generates e
     {
       filePath: `prisma/schema.prisma`,
       content: createPrismaSchema(endent`
-        model M1 {
+        model Foo {
           id                String   @id
           someJsonField     Json
           someDateTimeField DateTime
+          bar               Bar?
+        }
+
+        model Bar {
+          id    String  @id
+          foo   Foo?    @relation(fields: [fooId], references: [id])
+          fooId String?
         }
 
         enum E1 {
@@ -135,37 +152,55 @@ it('When bundled custom scalars are used the project type checks and generates e
       `,
     },
     {
-      filePath: `schema.ts`,
+      filePath: `src/schema.ts`,
       content: endent/*ts*/ `
-        import { makeSchema, objectType, enumType } from 'nexus'
-        import { M1, E1 } from 'nexus-prisma'
+        require('dotenv').config()
+
+        import { makeSchema, objectType, enumType, queryType } from 'nexus'
+        import { Bar, Foo, E1 } from 'nexus-prisma'
         import * as customScalars from 'nexus-prisma/scalars'
         import * as Path from 'path'
         
         const types = [
           customScalars,
           enumType(E1),
+          queryType({
+            definition(t) {
+              t.list.field('bars', {
+                type: 'Bar',
+                resolve(_, __, ctx) {
+                  return ctx.prisma.bar.findMany()
+                },
+              })
+            },
+          }),
           objectType({
-            name: M1.$name,
+            name: Bar.$name,
+            definition(t) {
+              t.field(Bar.foo.name, Bar.foo)
+            },
+          }),
+          objectType({
+            name: Foo.$name,
             definition(t) {
               t.field('e1', {
-                type: 'E1'
+                type: 'E1',
               })
               t.json('JsonManually')
               t.dateTime('DateTimeManually')
-              t.field(M1.someJsonField.name, M1.someJsonField)
-              t.field(M1.someDateTimeField.name, M1.someDateTimeField)
+              t.field(Foo.someJsonField.name, Foo.someJsonField)
+              t.field(Foo.someDateTimeField.name, Foo.someDateTimeField)
             },
           }),
         ]
         
-        makeSchema({
+        const schema = makeSchema({
           types,
           shouldGenerateArtifacts: true,
           shouldExitAfterGenerateArtifacts: true,
           outputs: {
             schema: true,
-            typegen: Path.join(__dirname, 'typegen.ts'),
+            typegen: Path.join(__dirname, '${TYPEGEN_FILE_NAME}'),
           },
           sourceTypes: {
             modules: [{ module: '.prisma/client', alias: 'PrismaClient' }],
@@ -174,30 +209,39 @@ it('When bundled custom scalars are used the project type checks and generates e
 
         // wait for output generation
         setTimeout(() => {}, 1000)
+
+        export default schema
       `,
     },
     {
-      filePath: `context.ts`,
+      filePath: `src/context.ts`,
       content: endent/*ts*/ `
+        import { PrismaClient } from '@prisma/client'
 
         const prisma = new PrismaClient()
         
-        export type Context = {
+        type Context = {
           prisma: PrismaClient
         }
         
-        export function context() {
+        function context() {
           return {
             prisma,
           }
         }
+
+        export default context
+        export { Context }
       `,
     },
     {
-      filePath: `server.ts`,
+      filePath: `src/server.ts`,
       content: endent/*ts*/ `
         require('dotenv').config()
 
+        import { ApolloServer } from 'apollo-server'
+        import context from './context'
+        import schema from './schema'
 
         const apollo = new ApolloServer({
           schema,
@@ -242,7 +286,7 @@ it('When bundled custom scalars are used the project type checks and generates e
   // uncomment this to see dir (helpful to go there yourself and manually debug)
   console.log(testProject.fs.cwd())
 
-  const results = runTestProject(testProject)
+  const results = runTestProjectBuild(testProject)
 
   // uncomment this to see the raw results (helpful for debugging)
   dump(results)
@@ -254,7 +298,13 @@ it('When bundled custom scalars are used the project type checks and generates e
   expect(results.runFirstBuild.exitCode).toBe(2)
 
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'M1'.*/
+    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'Bar'.*/
+  )
+  expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
+    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'Foo'.*/
+  )
+  expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
+    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'E1'.*/
   )
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
     /.*error TS2339: Property 'json' does not exist on type 'ObjectDefinitionBlock<any>'.*/
@@ -271,11 +321,11 @@ it('When bundled custom scalars are used the project type checks and generates e
 
   expect(stripAnsi(results.runReflectNexus.stdout)).toMatch(/.*Generated Artifacts.*/)
 
-  expect(results.runSecondBuildStdout.exitCode).toBe(0)
+  expect(results.runSecondBuild.exitCode).toBe(0)
 
-  expect(results.graphqlSchema).toMatchSnapshot()
+  expect(results.fileGraphqlSchema).toMatchSnapshot('graphql schema')
 
-  expect(results.typegen).toMatchSnapshot()
+  expect(results.fileTypegen).toMatchSnapshot('nexus typegen')
 
   /**
    * Sanity checks around runtime

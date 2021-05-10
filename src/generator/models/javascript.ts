@@ -1,4 +1,3 @@
-import { PrismaClient } from '.prisma/client'
 import { DMMF } from '@prisma/client/runtime'
 import endent from 'endent'
 import { chain, lowerFirst } from 'lodash'
@@ -154,7 +153,11 @@ export function prismaFieldToNexusResolver(model: DMMF.Model, field: DMMF.Field)
       )
     }
 
-    if (!(ctx.prisma instanceof PrismaClient)) {
+    // eslint-disable-next-line
+    const PrismaClientPackage = require('@prisma/client')
+
+    // eslint-disable-next-line
+    if (!(ctx.prisma instanceof PrismaClientPackage.PrismaClient)) {
       // TODO rich errors
       throw new Error(`todo`)
     }

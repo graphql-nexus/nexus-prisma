@@ -6,7 +6,7 @@
 
 #### E2E
 
-- Will look for a Postgres server running on port `5700`. Use docker-compose file in this repo for easy setup. Default public database will be used. Each run of the test e2e test will reset all data in that database. In CI we do not use `docker-compose` because [it is not available on the macOS docker images](https://github.com/actions/virtual-environments/issues/17#issuecomment-614726536).
+- Runs against a [Heroku Postgres database](https://data.heroku.com/datastores/6e28e827-3dec-4181-b7a1-b219c5016437). Each run of the test e2e test will reset all data in that database. We do not use `docker-compose` because [it is not available on the macOS docker images](https://github.com/actions/virtual-environments/issues/17#issuecomment-614726536) and it is not possible to run Postgres in Windows GitHub actions machines either. Our CI runs against all OS's.
 
 ## Link-Like Development
 

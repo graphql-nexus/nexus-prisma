@@ -94,6 +94,40 @@ export async function generateModules(content: string): Promise<{ indexjs: strin
   }
 }
 
+export class TestProjectInfo {
+  isReusing: boolean
+  isReusingEnabled: boolean
+
+  private settings = {
+    infoFilPath: 'node_modules/.testProject/data.json',
+  }
+
+  constructor() {
+    this.isReusingEnabled = Boolean(process.env.test_project_reuse)
+    this.isReusing = this.isReusingEnabled && fs.exists(this.settings.infoFilPath) !== false
+  }
+
+  get(): { dir: string } | null {
+    if (!process.env.test_project_reuse) return null
+    return fs.read(this.settings.infoFilPath, 'json') ?? null
+  }
+
+  getOrSetGet(): { dir: string } {
+    const testProjectInfo = this.get()
+    if (testProjectInfo) {
+      return testProjectInfo
+    } else {
+      const info = { dir: fs.tmpDir().cwd() }
+      this.set(info)
+      return info
+    }
+  }
+
+  set(info: { dir: string }): void {
+    fs.write(this.settings.infoFilPath, info, { jsonIndent: 2 })
+  }
+}
+
 export function setupTestProject({
   packageJson,
   tsconfigJson,
@@ -101,9 +135,14 @@ export function setupTestProject({
   packageJson?: PackageJson
   tsconfigJson?: TsConfigJson
 } = {}): TestProject {
-  const tmpdir = fs.tmpDir()
+  const tpi = new TestProjectInfo()
 
-  tmpdir.write(
+  /**
+   * Allow reusing a test project directory. This can be helpful when debugging things.
+   */
+  let fs_ = tpi.isReusingEnabled ? fs.cwd(tpi.getOrSetGet().dir) : fs.tmpDir()
+
+  fs_.write(
     'package.json',
     merge(
       {
@@ -114,7 +153,7 @@ export function setupTestProject({
     )
   )
 
-  tmpdir.write(
+  fs_.write(
     'tsconfig.json',
     merge(
       {
@@ -123,20 +162,30 @@ export function setupTestProject({
           noEmit: true,
           target: 'ES2018',
           module: 'CommonJS',
-          moduleResolution: 'Node',
+          moduleResolution: 'node',
+          rootDir: 'src',
+          esModuleInterop: true, // for ApolloServer b/c ws dep  :(
         },
-      },
+        include: ['src'],
+      } as TsConfigJson,
       tsconfigJson
     )
   )
 
   const api: TestProject = {
-    tmpdir,
+    fs: fs_,
+    info: tpi,
+    runOrThrow(command, options) {
+      return execa.commandSync(command, {
+        ...options,
+        cwd: fs_.cwd(),
+      })
+    },
     run(command, options) {
       return execa.commandSync(command, {
         reject: false,
         ...options,
-        cwd: tmpdir.cwd(),
+        cwd: fs_.cwd(),
       })
     },
   }
@@ -145,8 +194,10 @@ export function setupTestProject({
 }
 
 export interface TestProject {
-  tmpdir: FSJetpack
+  fs: FSJetpack
+  info: TestProjectInfo
   run(command: string, options?: execa.SyncOptions): execa.ExecaSyncReturnValue
+  runOrThrow(command: string, options?: execa.SyncOptions): execa.ExecaSyncReturnValue
 }
 
 export function assertBuildPresent() {

@@ -1,7 +1,7 @@
 import endent from 'endent'
 import * as Execa from 'execa'
-import { dump } from 'nexus/dist/utils'
 import stripAnsi from 'strip-ansi'
+import { inspect } from 'util'
 import { assertBuildPresent, createPrismaSchema, setupTestProject, TestProject } from '../__helpers__'
 
 interface FileSpec {
@@ -284,12 +284,12 @@ it('When bundled custom scalars are used the project type checks and generates e
   // todo api server & database & seed that allows for testing that prisma runtime usage works
 
   // uncomment this to see dir (helpful to go there yourself and manually debug)
-  console.log(testProject.fs.cwd())
+  console.log(`e2e test project at: ${testProject.fs.cwd()}`)
 
   const results = runTestProjectBuild(testProject)
 
   // uncomment this to see the raw results (helpful for debugging)
-  dump(results)
+  console.log(`e2e output:\n`, inspect(results, { depth: 10, colors: true }))
 
   /**
    * Sanity checks around buildtime

@@ -25,7 +25,7 @@ jobs:
           --health-retries 5
         ports:
           - 5700:5432
- 
+
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}

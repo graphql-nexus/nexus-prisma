@@ -78,14 +78,17 @@ function setupTestNexusPrismaProject(): TestProject {
   })
 
   if (testProject.info.isReusing) {
+    console.log(`e2e starting project setup cleanup for reuse`)
     testProject.fs.remove(TYPEGEN_FILE_PATH)
     testProject.fs.remove('node_modules/nexus-prisma')
-    testProject.run(`yalc add nexus-prisma`)
+    testProject.runOrThrow(`yalc add nexus-prisma`)
+    console.log(`e2e done project setup cleanup for reuse`)
   } else {
-    testProject.run(`npm install`)
-    Execa.commandSync(`yalc publish --no-scripts`)
-    testProject.run(`yalc add nexus-prisma`)
-    testProject.run(`yarn -s db:up`)
+    console.log(`e2e starting project setup`)
+    Execa.commandSync(`yalc publish --no-scripts`, { stdio: 'inherit' })
+    testProject.runOrThrow(`yalc add nexus-prisma`, { stdio: 'inherit' })
+    testProject.runOrThrow(`npm install`, { stdio: 'inherit' })
+    console.log(`e2e done project setup`)
   }
 
   return testProject
@@ -331,6 +334,7 @@ it('When bundled custom scalars are used the project type checks and generates e
    * Sanity checks around runtime
    */
   // todo
+  // todo start db     testProject.runOrThrow(`yarn -s db:up`, { stdio: 'inherit' })
   // todo start server
   // todo run queries
   // todo snapshot results

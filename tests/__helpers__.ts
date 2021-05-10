@@ -104,7 +104,7 @@ export class TestProjectInfo {
 
   constructor() {
     this.isReusingEnabled = Boolean(process.env.test_project_reuse)
-    this.isReusing = fs.exists(this.settings.infoFilPath) !== false
+    this.isReusing = this.isReusingEnabled && fs.exists(this.settings.infoFilPath) !== false
   }
 
   get(): { dir: string } | null {
@@ -175,6 +175,12 @@ export function setupTestProject({
   const api: TestProject = {
     fs: fs_,
     info: tpi,
+    runOrThrow(command, options) {
+      return execa.commandSync(command, {
+        ...options,
+        cwd: fs_.cwd(),
+      })
+    },
     run(command, options) {
       return execa.commandSync(command, {
         reject: false,
@@ -191,6 +197,7 @@ export interface TestProject {
   fs: FSJetpack
   info: TestProjectInfo
   run(command: string, options?: execa.SyncOptions): execa.ExecaSyncReturnValue
+  runOrThrow(command: string, options?: execa.SyncOptions): execa.ExecaSyncReturnValue
 }
 
 export function assertBuildPresent() {

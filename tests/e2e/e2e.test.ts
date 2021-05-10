@@ -58,11 +58,11 @@ function setupTestNexusPrismaProject(): TestProject {
         'reflect:prisma': 'prisma generate',
         // peer dependency check will fail since we're using yalc, e.g.:
         // " ... nexus-prisma@0.0.0-dripip+c2653557 does not officially support @prisma/client@2.22.1 ... "
-        'reflect:nexus': 'cross-env REFLECTION=true ts-node --transpile-only src/schema',
+        'reflect:nexus': 'cross-env REFLECT=true ts-node --transpile-only src/schema',
         build: 'tsc',
+        start: 'node build/server',
         'dev:server': 'yarn ts-node-dev --transpile-only server',
         'db:migrate': 'prisma db push --force-reset && ts-node prisma/seed',
-        'db:up': 'docker-compose up -d && sleep 3 && yarn db:migrate',
       },
       dependencies: {
         dotenv: '^9.0.0',
@@ -104,7 +104,7 @@ beforeAll(() => {
   testProject = setupTestNexusPrismaProject()
 })
 
-it('When bundled custom scalars are used the project type checks and generates expected GraphQL schema', () => {
+it('When bundled custom scalars are used the project type checks and generates expected GraphQL schema', async () => {
   const files: FileSpec[] = [
     {
       filePath: `prisma/schema.prisma`,
@@ -203,7 +203,7 @@ it('When bundled custom scalars are used the project type checks and generates e
         const schema = makeSchema({
           types,
           shouldGenerateArtifacts: true,
-          shouldExitAfterGenerateArtifacts: true,
+          shouldExitAfterGenerateArtifacts: Boolean(process.env.REFLECT),
           outputs: {
             schema: true,
             typegen: Path.join(__dirname, '${TYPEGEN_FILE_NAME}'),
@@ -212,9 +212,6 @@ it('When bundled custom scalars are used the project type checks and generates e
             modules: [{ module: '.prisma/client', alias: 'PrismaClient' }],
           },
         })
-
-        // wait for output generation
-        setTimeout(() => {}, 1000)
 
         export default schema
       `,
@@ -264,23 +261,6 @@ it('When bundled custom scalars are used the project type checks and generates e
       content: endent`
         DB_URL="postgres://prisma:prisma@localhost:5700"
         NO_PEER_DEPENDENCY_CHECK="true"
-      `,
-    },
-    {
-      filePath: 'docker-compose.yml',
-      content: endent/*yml*/ `
-        version: '3.8'
-        services:
-          # postgres://prisma:prisma@localhost:5700
-          postgres:
-            image: postgres:10
-            container_name: nexus-prisma-test
-            restart: always
-            environment:
-              - POSTGRES_USER=prisma
-              - POSTGRES_PASSWORD=prisma
-            ports:
-              - '5700:5432'
       `,
     },
   ]
@@ -334,13 +314,23 @@ it('When bundled custom scalars are used the project type checks and generates e
   expect(results.fileTypegen).toMatchSnapshot('nexus typegen')
 
   /**
-   * Sanity checks around runtime
+   * Sanity check the runtime
    */
-  // todo
-  // todo start db     testProject.runOrThrow(`yarn -s db:up`, { stdio: 'inherit' })
-  // todo start server
+  testProject.runOrThrow(`npm run db:migrate`)
+
+  const serverProcess = testProject.runAsync(`node build/server`, { reject: false })
+
+  await new Promise((res) =>
+    serverProcess.stdout!.on('data', (data: Buffer) => {
+      if (data.toString().match(/GraphQL API ready at http:\/\/localhost:4000\/graphql/)) {
+        res(undefined)
+      }
+    })
+  )
+
   // todo run queries
   // todo snapshot results
-  // todo shutdown server
-  // todo shutdown db server if preserve off
+
+  serverProcess.cancel()
+  await serverProcess
 })

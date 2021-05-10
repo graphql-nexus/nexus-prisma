@@ -40,6 +40,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: yarn global add yalc
       - run: yarn --frozen-lockfile
+      - run: docker-compose up --detach
       - run: yarn -s build
       - run: yarn -s test:ci
       - name: Upload coverage to Codecov

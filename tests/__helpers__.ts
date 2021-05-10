@@ -159,11 +159,11 @@ export function setupTestProject({
       {
         compilerOptions: {
           strict: true,
-          noEmit: true,
           target: 'ES2018',
           module: 'CommonJS',
           moduleResolution: 'node',
           rootDir: 'src',
+          outDir: 'build',
           esModuleInterop: true, // for ApolloServer b/c ws dep  :(
         },
         include: ['src'],
@@ -175,15 +175,21 @@ export function setupTestProject({
   const api: TestProject = {
     fs: fs_,
     info: tpi,
+    run(command, options) {
+      return execa.commandSync(command, {
+        reject: false,
+        ...options,
+        cwd: fs_.cwd(),
+      })
+    },
     runOrThrow(command, options) {
       return execa.commandSync(command, {
         ...options,
         cwd: fs_.cwd(),
       })
     },
-    run(command, options) {
-      return execa.commandSync(command, {
-        reject: false,
+    runAsync(command, options) {
+      return execa.command(command, {
         ...options,
         cwd: fs_.cwd(),
       })
@@ -197,6 +203,7 @@ export interface TestProject {
   fs: FSJetpack
   info: TestProjectInfo
   run(command: string, options?: execa.SyncOptions): execa.ExecaSyncReturnValue
+  runAsync(command: string, options?: execa.SyncOptions): execa.ExecaChildProcess
   runOrThrow(command: string, options?: execa.SyncOptions): execa.ExecaSyncReturnValue
 }
 

@@ -1,6 +1,12 @@
 ## Tests
 
+#### General
+
 - We disable `kleur` colors so snapshots do not have them. It would be nice to put the DX of colors into tests but needs some work. Node 12/14 results in different codes, [thus different snapshots](https://github.com/prisma/nexus-prisma/pull/3#issuecomment-782432471). See test-mode feature request here: https://github.com/lukeed/kleur/issues/47#issue-812419257.
+
+#### E2E
+
+- Will look for a Postgres server running on port `5700`. Use docker-compose file in this repo for easy setup. Default public database will be used. Each run of the test e2e test will reset all data in that database.
 
 ## Link-Like Development
 

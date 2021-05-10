@@ -6,7 +6,7 @@
 
 #### E2E
 
-- Will look for a Postgres server running on port `5700`. Use docker-compose file in this repo for easy setup. Default public database will be used. Each run of the test e2e test will reset all data in that database.
+- Will look for a Postgres server running on port `5700`. Use docker-compose file in this repo for easy setup. Default public database will be used. Each run of the test e2e test will reset all data in that database. In CI we do not use `docker-compose` because [it is not available on the macOS docker images](https://github.com/actions/virtual-environments/issues/17#issuecomment-614726536).
 
 ## Link-Like Development
 

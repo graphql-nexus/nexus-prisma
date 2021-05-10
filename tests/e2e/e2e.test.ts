@@ -145,7 +145,7 @@ it('When bundled custom scalars are used the project type checks and generates e
           await prisma.foo.create({
             data: {
               id: 'foo1',
-              someDateTimeField: new Date(),
+              someDateTimeField: new Date("2021-05-10T20:42:46.609Z"),
               someJsonField: JSON.stringify({}),
               someEnumA: 'alpha',
               bar: {
@@ -262,7 +262,7 @@ it('When bundled custom scalars are used the project type checks and generates e
     {
       filePath: `.env`,
       content: endent`
-        DB_URL="postgres://prisma:prisma@localhost:5700"
+        DB_URL="postgres://bcnfshogmxsukp:e31b6ddc8b9d85f8964b6671e4b578c58f0d13e15f637513207d44268eabc950@ec2-54-196-33-23.compute-1.amazonaws.com:5432/d17vadgam0dtao"
         NO_PEER_DEPENDENCY_CHECK="true"
       `,
     },
@@ -335,9 +335,9 @@ it('When bundled custom scalars are used the project type checks and generates e
     query {
       bars {
         foo {
-          someEnumA
           JsonManually
           DateTimeManually
+          someEnumA
           someDateTimeField
         }
       }

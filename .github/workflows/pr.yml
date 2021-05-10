@@ -32,20 +32,7 @@ jobs:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
         node-version: [12.x, 14.x]
     runs-on: ${{ matrix.os }}
-    services:
-      postgres:
-        image: postgres
-        env:
-          # https://hub.docker.com/_/postgres
-          POSTGRES_USER: prisma
-          POSTGRES_PASSWORD: prisma
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5700:5432
+  
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}

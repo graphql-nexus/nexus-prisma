@@ -1,8 +1,11 @@
+import debug from 'debug'
 import endent from 'endent'
 import * as Execa from 'execa'
 import stripAnsi from 'strip-ansi'
 import { inspect } from 'util'
 import { assertBuildPresent, createPrismaSchema, setupTestProject, TestProject } from '../__helpers__'
+
+const d = debug('e2e')
 
 interface FileSpec {
   filePath: string
@@ -78,17 +81,17 @@ function setupTestNexusPrismaProject(): TestProject {
   })
 
   if (testProject.info.isReusing) {
-    console.log(`e2e starting project setup cleanup for reuse`)
+    d(`starting project setup cleanup for reuse`)
     testProject.fs.remove(TYPEGEN_FILE_PATH)
     testProject.fs.remove('node_modules/nexus-prisma')
     testProject.runOrThrow(`yalc add nexus-prisma`)
-    console.log(`e2e done project setup cleanup for reuse`)
+    d(`done project setup cleanup for reuse`)
   } else {
-    console.log(`e2e starting project setup`)
+    d(`starting project setup`)
     Execa.commandSync(`yalc publish --no-scripts`, { stdio: 'inherit' })
     testProject.runOrThrow(`yalc add nexus-prisma`, { stdio: 'inherit' })
     testProject.runOrThrow(`npm install`, { stdio: 'inherit' })
-    console.log(`e2e done project setup`)
+    d(`done project setup`)
   }
 
   return testProject

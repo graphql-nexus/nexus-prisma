@@ -181,8 +181,6 @@ export function prismaFieldToNexusResolver(model: DMMF.Model, field: DMMF.Field)
       where: buildWhereUniqueInput(root, uniqueIdentifiers),
     })
 
-    console.log(result)
-
     // @ts-expect-error Only known at runtime
     // eslint-disable-next-line
     return result[field.name]()

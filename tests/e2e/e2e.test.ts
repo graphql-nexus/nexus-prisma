@@ -1,6 +1,7 @@
 import debug from 'debug'
 import endent from 'endent'
 import * as Execa from 'execa'
+import { gql } from 'graphql-request'
 import stripAnsi from 'strip-ansi'
 import { inspect } from 'util'
 import { assertBuildPresent, createPrismaSchema, setupTestProject, TestProject } from '../__helpers__'
@@ -113,6 +114,7 @@ it('When bundled custom scalars are used the project type checks and generates e
           id                String   @id
           someJsonField     Json
           someDateTimeField DateTime
+          someEnumA         SomeEnumA
           bar               Bar?
         }
 
@@ -122,10 +124,10 @@ it('When bundled custom scalars are used the project type checks and generates e
           fooId String?
         }
 
-        enum E1 {
-          a
-          b
-          c
+        enum SomeEnumA {
+          alpha
+          bravo
+          charlie
         }
       `),
     },
@@ -145,6 +147,7 @@ it('When bundled custom scalars are used the project type checks and generates e
               id: 'foo1',
               someDateTimeField: new Date(),
               someJsonField: JSON.stringify({}),
+              someEnumA: 'alpha',
               bar: {
                 create: {
                   id: 'bar1',
@@ -163,13 +166,13 @@ it('When bundled custom scalars are used the project type checks and generates e
         require('dotenv').config()
 
         import { makeSchema, objectType, enumType, queryType } from 'nexus'
-        import { Bar, Foo, E1 } from 'nexus-prisma'
+        import { Bar, Foo, SomeEnumA } from 'nexus-prisma'
         import * as customScalars from 'nexus-prisma/scalars'
         import * as Path from 'path'
         
         const types = [
           customScalars,
-          enumType(E1),
+          enumType(SomeEnumA),
           queryType({
             definition(t) {
               t.list.field('bars', {
@@ -189,8 +192,8 @@ it('When bundled custom scalars are used the project type checks and generates e
           objectType({
             name: Foo.$name,
             definition(t) {
-              t.field('e1', {
-                type: 'E1',
+              t.field('someEnumA', {
+                type: 'SomeEnumA',
               })
               t.json('JsonManually')
               t.dateTime('DateTimeManually')
@@ -290,7 +293,7 @@ it('When bundled custom scalars are used the project type checks and generates e
     /.*error TS2305: Module '"nexus-prisma"' has no exported member 'Foo'.*/
   )
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'E1'.*/
+    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'SomeEnumA'.*/
   )
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
     /.*error TS2339: Property 'json' does not exist on type 'ObjectDefinitionBlock<any>'.*/
@@ -328,9 +331,21 @@ it('When bundled custom scalars are used the project type checks and generates e
     })
   )
 
-  // todo run queries
-  // todo snapshot results
+  const data = await testProject.client.request(gql`
+    query {
+      bars {
+        foo {
+          someEnumA
+          JsonManually
+          DateTimeManually
+          someDateTimeField
+        }
+      }
+    }
+  `)
+
+  expect(data).toMatchSnapshot('client request 1')
 
   serverProcess.cancel()
   await serverProcess
-})
+}, 30_000)

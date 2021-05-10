@@ -4,6 +4,7 @@ import execa from 'execa'
 import * as fs from 'fs-jetpack'
 import { FSJetpack } from 'fs-jetpack/types'
 import { printSchema } from 'graphql'
+import { GraphQLClient } from 'graphql-request'
 import { merge } from 'lodash'
 import { core } from 'nexus'
 import { AllNexusTypeDefs } from 'nexus/dist/core'
@@ -194,6 +195,7 @@ export function setupTestProject({
         cwd: fs_.cwd(),
       })
     },
+    client: new GraphQLClient('http://localhost:4000'),
   }
 
   return api
@@ -205,6 +207,7 @@ export interface TestProject {
   run(command: string, options?: execa.SyncOptions): execa.ExecaSyncReturnValue
   runAsync(command: string, options?: execa.SyncOptions): execa.ExecaChildProcess
   runOrThrow(command: string, options?: execa.SyncOptions): execa.ExecaSyncReturnValue
+  client: GraphQLClient
 }
 
 export function assertBuildPresent() {

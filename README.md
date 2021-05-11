@@ -14,7 +14,12 @@ Official Prisma plugin for Nexus.
   - [Type-safe Generated Library Code](#type-safe-generated-library-code)
   - [Project Enums](#project-enums)
   - [Project Scalars](#project-scalars)
+  - [Project Relations](#project-relations)
+    - [Limitation: Hardcoded key for Prisma Client on GraphQL Context](#limitation-hardcoded-key-for-prisma-client-on-graphql-context)
+    - [Example: Exposing Prisma Client on GraphQL Context with Apollo Server](#example-exposing-prisma-client-on-graphql-context-with-apollo-server)
   - [Project 1:1 Relation](#project-11-relation)
+    - [Example: Full 1:1](#example-full-11)
+    - [Limitation: Nullable on Without-Relation-Scalar Side](#limitation-nullable-on-without-relation-scalar-side)
   - [Prisma ID field to GraphQL ID scalar type mapping](#prisma-id-field-to-graphql-id-scalar-type-mapping)
   - [Prisma Schema docs re-used for GraphQL schema doc](#prisma-schema-docs-re-used-for-graphql-schema-doc)
   - [Prisma Schema docs re-used for JSDoc](#prisma-schema-docs-re-used-for-jsdoc)
@@ -99,7 +104,7 @@ export const schema = makeSchema({
 
 ##### Midterm
 
-- [ ] Support for Prisma Model field types relating to other Models 1:1
+- [x] ([#25](https://github.com/prisma/nexus-prisma/pull/25), []())Support for Prisma Model field types relating to other Models 1:1
 - [ ] Support for Prisma Model field types relating to other Models 1:n
 - [ ] Support for Prisma Model field types relating to other Models n:n
 
@@ -199,22 +204,53 @@ makeSchema({
 
 There is a [recipe below](#Supply-custom-custom-scalars-to-your-GraphQL-schema) showing how to add your own custom scalars if you want.
 
+### Project Relations
+
+You can project [relations](https://www.prisma.io/docs/concepts/components/prisma-schema/relations) into your API with Nexus Prisma. Nexus Prisma even includes the resolver you'll need at runtime to fulfill the projection by automating use of your Prisma Client instance.
+
+Please note that not all kinds of relationships are supported yet. Details about projecting each kind of relation are documented in their respective sections. This section only contains general documentation common to all.
+
+#### Limitation: Hardcoded key for Prisma Client on GraphQL Context
+
+To project relations you must expose an instance of Prisma Client on the GraphQL context under the key name `prisma`. This limitation may be a problem for your project. There is an [issue tracking this](https://github.com/prisma/nexus-prisma/issues/35) that you can subscribe to if interested. The only workaround is to write your own resolvers.
+
+#### Example: Exposing Prisma Client on GraphQL Context with Apollo Server
+
+```ts
+import { ApolloServer } from 'apollo-server'
+import { PrismaClient } from '@prisma/client'
+import schema from './your/schema/somewhere'
+
+const prisma = new PrismaClient()
+
+new ApolloServer({
+  schema,
+  context() {
+    return {
+      prisma,
+    }
+  },
+})
+```
+
 ### Project 1:1 Relation
 
-You can project 1:1 relationships into your API. Nexus Prisma includes even the resolver you'll need at runtime to fulfill the projection.
+You can project [1:1 relationships](https://www.prisma.io/docs/concepts/components/prisma-schema/relations#one-to-one-relations) into your API.
+
+#### Example: Full 1:1
 
 ```prisma
 // Database Schema
 
 model User {
-  id      String  @id
-  profile Profile?
+  id         String  @id
+  profile    Profile @relation(fields: [profileId], references: [id])
+  profileId  String
 }
 
 model Profile {
   id      String  @id
-  user    User    @relation(fields: [userId], references: [id])
-  userId  String
+  user    User?
 }
 ```
 
@@ -235,7 +271,6 @@ objectType({
   name: Profile.$name,
   definition(t) {
     t.field(Profile.id.name, Profile.id)
-    t.field(Profile.user.name, Profile.user)
   },
 })
 
@@ -261,7 +296,6 @@ type User {
 
 type Profile {
   id: ID
-  user: User!
 }
 ```
 
@@ -288,10 +322,6 @@ query {
     id
     profile {
       id
-      user {
-        # Showing off the graph
-        id
-      }
     }
   }
 }
@@ -304,15 +334,78 @@ query {
       {
         "id": "user1",
         "profile": {
-          "id": "profile1",
-          "user": {
-            "id": "user1"
-          }
+          "id": "profile1"
         }
       }
     ]
   }
 }
+```
+
+#### Limitation: Nullable on Without-Relation-Scalar Side
+
+Prisma requires that a 1:1 relationship has one side that is optional. For example in the following it is **not** possible for `Profile` to have a required relationship to `User`. For more detail you can read the Prisma docs abuot this [here](https://www.prisma.io/docs/concepts/components/prisma-schema/relations#one-to-one-relations).
+
+```prisma
+model User {
+  id         String  @id
+  profile    Profile @relation(fields: [profileId], references: [id])
+  profileId  String
+}
+
+model Profile {
+  id      String  @id
+  user    User?  // <--  "?" required
+}
+```
+
+Prisma inherits this limitation from databases. In turn Nexus Prisma inherits this limitation from Prisma. For example consider this projection and then look at the resulting GraphQL SDL representation.
+
+```ts
+import { User, Profile } from 'nexus-prisma'
+
+objectType({
+  name: User.$name,
+  definition(t) {
+    t.field(User.id.name, User.id)
+    t.field(User.profile.name, User.profile)
+  },
+})
+
+objectType({
+  name: Profile.$name,
+  definition(t) {
+    t.field(Profile.id.name, Profile.id)
+    t.field(User.profile.name, User.profile)
+  },
+})
+```
+
+```graphql
+type User {
+  id: ID
+  profile: Profile!
+}
+
+type Profile {
+  id: ID
+  user: User # <-- Nullable!
+}
+```
+
+This limitation may be a problem for your API. There is an [issue track this that you can subscribe to](https://github.com/prisma/nexus-prisma/issues/34) if interested. As a workaround for now you can do this:
+
+```ts
+objectType({
+  name: Profile.$name,
+  definition(t) {
+    t.field(Profile.id.name, Profile.id)
+    t.field(User.profile.name, {
+      ...User.profile,
+      type: nonNull(User.profile.type),
+    })
+  },
+})
 ```
 
 ### Prisma ID field to GraphQL ID scalar type mapping

@@ -1,4 +1,5 @@
 import arg from 'arg'
+import fs from 'fs-jetpack'
 import { z } from 'zod'
 
 type ComboCase =
@@ -25,11 +26,16 @@ const connectionStringMapping: Record<ComboCase, string> = {
 const args = arg({
   '--os': String,
   '--node-version': String,
+  '--github-env': String,
 })
 
 const comboCase = parseComboCase(args['--node-version'] ?? '', args['--os'] ?? '')
 
-process.stdout.write(connectionStringMapping[comboCase])
+if (args['--github-env']) {
+  fs.append(args['--github-env'], `E2E_DB_SCHEMA=${connectionStringMapping[comboCase]}`)
+} else {
+  process.stdout.write(connectionStringMapping[comboCase])
+}
 
 //
 // Helpers

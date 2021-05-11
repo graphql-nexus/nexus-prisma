@@ -357,7 +357,11 @@ it('When bundled custom scalars are used the project type checks and generates e
   d(`stopping server`)
 
   serverProcess.cancel()
-  await serverProcess
+  // On Windows the serverProcess never completes the promise so we do an ugly timeout here
+  // and rely on jest --forceExit to terminate the process
+  await Promise.race([serverProcess, new Promise((res) => setTimeout(res, 2000))])
+
+  d(`stopped server`)
 
   expect(data).toMatchSnapshot('client request 1')
 }, 30_000)

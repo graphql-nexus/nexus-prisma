@@ -323,15 +323,23 @@ it('When bundled custom scalars are used the project type checks and generates e
   /**
    * Sanity check the runtime
    */
+
+  d(`migrating database`)
+
   testProject.runOrThrow(`npm run db:migrate`)
 
+  d(`starting server`)
+
   const serverProcess = testProject.runAsync(`node build/server`, { reject: false })
+  serverProcess.stdout!.pipe(process.stdout)
 
   await new Promise((res) =>
     serverProcess.stdout!.on('data', (data: Buffer) => {
       if (data.toString().match(SERVER_READY_MESSAGE)) res(undefined)
     })
   )
+
+  d(`starting client queries`)
 
   const data = await testProject.client.request(gql`
     query {
@@ -346,8 +354,14 @@ it('When bundled custom scalars are used the project type checks and generates e
     }
   `)
 
-  expect(data).toMatchSnapshot('client request 1')
+  d(`stopping server`)
 
   serverProcess.cancel()
-  await serverProcess
+  // On Windows the serverProcess never completes the promise so we do an ugly timeout here
+  // and rely on jest --forceExit to terminate the process
+  await Promise.race([serverProcess, new Promise((res) => setTimeout(res, 2000))])
+
+  d(`stopped server`)
+
+  expect(data).toMatchSnapshot('client request 1')
 }, 30_000)

@@ -323,7 +323,12 @@ it('When bundled custom scalars are used the project type checks and generates e
   /**
    * Sanity check the runtime
    */
+
+  d(`migrating database`)
+
   testProject.runOrThrow(`npm run db:migrate`)
+
+  d(`starting server`)
 
   const serverProcess = testProject.runAsync(`node build/server`, { reject: false })
   serverProcess.stdout!.pipe(process.stdout)
@@ -333,6 +338,8 @@ it('When bundled custom scalars are used the project type checks and generates e
       if (data.toString().match(SERVER_READY_MESSAGE)) res(undefined)
     })
   )
+
+  d(`starting client queries`)
 
   const data = await testProject.client.request(gql`
     query {
@@ -347,8 +354,10 @@ it('When bundled custom scalars are used the project type checks and generates e
     }
   `)
 
-  expect(data).toMatchSnapshot('client request 1')
+  d(`stopping server`)
 
   serverProcess.cancel()
   await serverProcess
+
+  expect(data).toMatchSnapshot('client request 1')
 }, 30_000)

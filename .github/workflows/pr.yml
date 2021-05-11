@@ -40,6 +40,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: yarn global add yalc
       - run: yarn --frozen-lockfile
+      - name: Set E2E DB Schema
+        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --github-env $env:GITHUB_ENV
+        if: ${{ matrix.os == 'windows-latest' }}
+      - name: Set E2E DB Schema
+        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --github-env $GITHUB_ENV
+        if: ${{ matrix.os != 'windows-latest' }}
       - run: yarn -s build
       - run: yarn -s test:ci
       - name: Upload coverage to Codecov

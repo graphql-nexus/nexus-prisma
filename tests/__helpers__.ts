@@ -4,6 +4,7 @@ import execa from 'execa'
 import * as fs from 'fs-jetpack'
 import { FSJetpack } from 'fs-jetpack/types'
 import { printSchema } from 'graphql'
+import { GraphQLClient } from 'graphql-request'
 import { merge } from 'lodash'
 import { core } from 'nexus'
 import { AllNexusTypeDefs } from 'nexus/dist/core'
@@ -159,11 +160,11 @@ export function setupTestProject({
       {
         compilerOptions: {
           strict: true,
-          noEmit: true,
           target: 'ES2018',
           module: 'CommonJS',
           moduleResolution: 'node',
           rootDir: 'src',
+          outDir: 'build',
           esModuleInterop: true, // for ApolloServer b/c ws dep  :(
         },
         include: ['src'],
@@ -175,12 +176,6 @@ export function setupTestProject({
   const api: TestProject = {
     fs: fs_,
     info: tpi,
-    runOrThrow(command, options) {
-      return execa.commandSync(command, {
-        ...options,
-        cwd: fs_.cwd(),
-      })
-    },
     run(command, options) {
       return execa.commandSync(command, {
         reject: false,
@@ -188,6 +183,19 @@ export function setupTestProject({
         cwd: fs_.cwd(),
       })
     },
+    runOrThrow(command, options) {
+      return execa.commandSync(command, {
+        ...options,
+        cwd: fs_.cwd(),
+      })
+    },
+    runAsync(command, options) {
+      return execa.command(command, {
+        ...options,
+        cwd: fs_.cwd(),
+      })
+    },
+    client: new GraphQLClient('http://localhost:4000'),
   }
 
   return api
@@ -197,7 +205,9 @@ export interface TestProject {
   fs: FSJetpack
   info: TestProjectInfo
   run(command: string, options?: execa.SyncOptions): execa.ExecaSyncReturnValue
+  runAsync(command: string, options?: execa.SyncOptions): execa.ExecaChildProcess
   runOrThrow(command: string, options?: execa.SyncOptions): execa.ExecaSyncReturnValue
+  client: GraphQLClient
 }
 
 export function assertBuildPresent() {

@@ -1,6 +1,7 @@
 import debug from 'debug'
 import endent from 'endent'
 import * as Execa from 'execa'
+import { gql } from 'graphql-request'
 import stripAnsi from 'strip-ansi'
 import { inspect } from 'util'
 import { assertBuildPresent, createPrismaSchema, setupTestProject, TestProject } from '../__helpers__'
@@ -25,6 +26,8 @@ const TYPEGEN_FILE_NAME = `typegen.ts`
 const TYPEGEN_FILE_PATH = `src/${TYPEGEN_FILE_NAME}`
 
 const GRAPHQL_SCHEMA_FILE_PATH = `schema.graphql`
+
+const SERVER_READY_MESSAGE = `GraphQL API ready at http://localhost:4000/graphql`
 
 function runTestProjectBuild(testProject: TestProject): ProjectResult {
   const commandConfig: Execa.SyncOptions = {
@@ -58,11 +61,11 @@ function setupTestNexusPrismaProject(): TestProject {
         'reflect:prisma': 'prisma generate',
         // peer dependency check will fail since we're using yalc, e.g.:
         // " ... nexus-prisma@0.0.0-dripip+c2653557 does not officially support @prisma/client@2.22.1 ... "
-        'reflect:nexus': 'cross-env REFLECTION=true ts-node --transpile-only src/schema',
+        'reflect:nexus': 'cross-env REFLECT=true ts-node --transpile-only src/schema',
         build: 'tsc',
+        start: 'node build/server',
         'dev:server': 'yarn ts-node-dev --transpile-only server',
         'db:migrate': 'prisma db push --force-reset && ts-node prisma/seed',
-        'db:up': 'docker-compose up -d && sleep 3 && yarn db:migrate',
       },
       dependencies: {
         dotenv: '^9.0.0',
@@ -104,7 +107,7 @@ beforeAll(() => {
   testProject = setupTestNexusPrismaProject()
 })
 
-it('When bundled custom scalars are used the project type checks and generates expected GraphQL schema', () => {
+it('When bundled custom scalars are used the project type checks and generates expected GraphQL schema', async () => {
   const files: FileSpec[] = [
     {
       filePath: `prisma/schema.prisma`,
@@ -113,6 +116,7 @@ it('When bundled custom scalars are used the project type checks and generates e
           id                String   @id
           someJsonField     Json
           someDateTimeField DateTime
+          someEnumA         SomeEnumA
           bar               Bar?
         }
 
@@ -122,10 +126,10 @@ it('When bundled custom scalars are used the project type checks and generates e
           fooId String?
         }
 
-        enum E1 {
-          a
-          b
-          c
+        enum SomeEnumA {
+          alpha
+          bravo
+          charlie
         }
       `),
     },
@@ -143,8 +147,9 @@ it('When bundled custom scalars are used the project type checks and generates e
           await prisma.foo.create({
             data: {
               id: 'foo1',
-              someDateTimeField: new Date(),
+              someDateTimeField: new Date("2021-05-10T20:42:46.609Z"),
               someJsonField: JSON.stringify({}),
+              someEnumA: 'alpha',
               bar: {
                 create: {
                   id: 'bar1',
@@ -163,13 +168,13 @@ it('When bundled custom scalars are used the project type checks and generates e
         require('dotenv').config()
 
         import { makeSchema, objectType, enumType, queryType } from 'nexus'
-        import { Bar, Foo, E1 } from 'nexus-prisma'
+        import { Bar, Foo, SomeEnumA } from 'nexus-prisma'
         import * as customScalars from 'nexus-prisma/scalars'
         import * as Path from 'path'
         
         const types = [
           customScalars,
-          enumType(E1),
+          enumType(SomeEnumA),
           queryType({
             definition(t) {
               t.list.field('bars', {
@@ -189,8 +194,8 @@ it('When bundled custom scalars are used the project type checks and generates e
           objectType({
             name: Foo.$name,
             definition(t) {
-              t.field('e1', {
-                type: 'E1',
+              t.field('someEnumA', {
+                type: 'SomeEnumA',
               })
               t.json('JsonManually')
               t.dateTime('DateTimeManually')
@@ -203,7 +208,7 @@ it('When bundled custom scalars are used the project type checks and generates e
         const schema = makeSchema({
           types,
           shouldGenerateArtifacts: true,
-          shouldExitAfterGenerateArtifacts: true,
+          shouldExitAfterGenerateArtifacts: Boolean(process.env.REFLECT),
           outputs: {
             schema: true,
             typegen: Path.join(__dirname, '${TYPEGEN_FILE_NAME}'),
@@ -212,9 +217,6 @@ it('When bundled custom scalars are used the project type checks and generates e
             modules: [{ module: '.prisma/client', alias: 'PrismaClient' }],
           },
         })
-
-        // wait for output generation
-        setTimeout(() => {}, 1000)
 
         export default schema
       `,
@@ -255,32 +257,17 @@ it('When bundled custom scalars are used the project type checks and generates e
         })
 
         apollo.listen(4000, () => {
-          console.log(\`🚀 GraphQL API ready at http://localhost:4000/graphql\`)
+          console.log('${SERVER_READY_MESSAGE}')
         })
       `,
     },
     {
       filePath: `.env`,
       content: endent`
-        DB_URL="postgres://prisma:prisma@localhost:5700"
+        DB_URL="postgres://bcnfshogmxsukp:e31b6ddc8b9d85f8964b6671e4b578c58f0d13e15f637513207d44268eabc950@ec2-54-196-33-23.compute-1.amazonaws.com:5432/d17vadgam0dtao?schema=${
+          process.env.E2E_DB_SCHEMA ?? 'local'
+        }"
         NO_PEER_DEPENDENCY_CHECK="true"
-      `,
-    },
-    {
-      filePath: 'docker-compose.yml',
-      content: endent/*yml*/ `
-        version: '3.8'
-        services:
-          # postgres://prisma:prisma@localhost:5700
-          postgres:
-            image: postgres:10
-            container_name: nexus-prisma-test
-            restart: always
-            environment:
-              - POSTGRES_USER=prisma
-              - POSTGRES_PASSWORD=prisma
-            ports:
-              - '5700:5432'
       `,
     },
   ]
@@ -310,7 +297,7 @@ it('When bundled custom scalars are used the project type checks and generates e
     /.*error TS2305: Module '"nexus-prisma"' has no exported member 'Foo'.*/
   )
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'E1'.*/
+    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'SomeEnumA'.*/
   )
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
     /.*error TS2339: Property 'json' does not exist on type 'ObjectDefinitionBlock<any>'.*/
@@ -334,13 +321,33 @@ it('When bundled custom scalars are used the project type checks and generates e
   expect(results.fileTypegen).toMatchSnapshot('nexus typegen')
 
   /**
-   * Sanity checks around runtime
+   * Sanity check the runtime
    */
-  // todo
-  // todo start db     testProject.runOrThrow(`yarn -s db:up`, { stdio: 'inherit' })
-  // todo start server
-  // todo run queries
-  // todo snapshot results
-  // todo shutdown server
-  // todo shutdown db server if preserve off
-})
+  testProject.runOrThrow(`npm run db:migrate`)
+
+  const serverProcess = testProject.runAsync(`node build/server`, { reject: false })
+
+  await new Promise((res) =>
+    serverProcess.stdout!.on('data', (data: Buffer) => {
+      if (data.toString().match(SERVER_READY_MESSAGE)) res(undefined)
+    })
+  )
+
+  const data = await testProject.client.request(gql`
+    query {
+      bars {
+        foo {
+          JsonManually
+          DateTimeManually
+          someEnumA
+          someDateTimeField
+        }
+      }
+    }
+  `)
+
+  expect(data).toMatchSnapshot('client request 1')
+
+  serverProcess.cancel()
+  await serverProcess
+}, 30_000)

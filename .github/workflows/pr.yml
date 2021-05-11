@@ -34,30 +34,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
-      - run: >
-          if [ "${{ matrix.node-version }}" == "12.x" ] && [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
-            echo "E2E_DB_URL=TODO" >> $GITHUB_ENV
-          elif [ "${{ matrix.node-version }}" == "12.x" ] && [ "${{ matrix.os }}" == "macos-latest" ]; then
-            echo "E2E_DB_URL=TODO" >> $GITHUB_ENV
-          elif [ "${{ matrix.node-version }}" == "12.x" ] && [ "${{ matrix.os }}" == "windows-latest" ]; then
-            echo "E2E_DB_URL=TODO" >> $GITHUB_ENV
-          elif [ "${{ matrix.node-version }}" == "14.x" ] && [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
-            echo "E2E_DB_URL=TODO" >> $GITHUB_ENV
-          elif [ "${{ matrix.node-version }}" == "14.x" ] && [ "${{ matrix.os }}" == "macos-latest" ]; then
-            echo "E2E_DB_URL=TODO" >> $GITHUB_ENV
-          elif [ "${{ matrix.node-version }}" == "14.x" ] && [ "${{ matrix.os }}" == "windows-latest" ]; then
-            echo "E2E_DB_URL=TODO" >> $GITHUB_ENV
-          else
-            exho "Unknown combination of OS/Node version: ${{ matrix.os }}/${{ matrix.node-version }}"
-            exit 1
-          fi
-
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn global add yalc
       - run: yarn --frozen-lockfile
+      - name: Set E2E DB Schema
+        run: echo "$(yarn ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }})" >> $GITHUB_ENV
       - run: yarn -s build
       - run: yarn -s test:ci
       - name: Upload coverage to Codecov

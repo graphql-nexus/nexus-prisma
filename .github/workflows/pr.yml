@@ -42,7 +42,7 @@ jobs:
       - run: yarn --frozen-lockfile
       - name: Set E2E DB Schema
         run: >
-          E2E_DB_SCHEMA=$(yarn ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }})
+          E2E_DB_SCHEMA=$(yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }})
           echo "E2E_DB_SCHEMA=${E2E_DB_SCHEMA}" >> $GITHUB_ENV
       - run: yarn -s build
       - run: yarn -s test:ci

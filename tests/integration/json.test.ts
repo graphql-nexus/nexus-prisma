@@ -1,10 +1,10 @@
 import endent from 'endent'
 import { objectType } from 'nexus'
 import NexusPrismaScalars from '../../scalars'
-import { generateSchema } from '../__helpers__'
+import { generateGraphqlSchemaSDL } from '../__helpers__'
 
 it('When a JSON field is defined in the Prisma schema it can be projected into the GraphQL API', async () => {
-  const graphqlSchema = await generateSchema({
+  const graphqlSchema = await generateGraphqlSchemaSDL({
     prismaSchema: endent`
       model Foo {
         id   String @id

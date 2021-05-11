@@ -45,11 +45,34 @@ export function createModuleSpec(): ModuleSpec {
   }
 }
 
-export function createNexusTypeDefConfigurations(dmmf: DMMF.Document): NexusTypeDefConfigurations {
+export function createNexusTypeDefConfigurations(
+  dmmf: DMMF.Document,
+  settings: Settings = {}
+): NexusTypeDefConfigurations {
+  const configuration = resolveSettings(settings)
   return {
-    ...createNexusObjectTypeDefConfigurations(dmmf),
+    ...createNexusObjectTypeDefConfigurations(dmmf, configuration),
     ...createNexusEnumTypeDefConfigurations(dmmf),
   }
+}
+
+function resolveSettings(settings: Settings): Configuration {
+  return {
+    prismaClientImport: settings.prismaClientImport ?? '@prisma/client',
+  }
+}
+
+type Settings = {
+  /**
+   * The import ID of prisma client.
+   *
+   * @default @prisma/client
+   */
+  prismaClientImport?: string
+}
+
+type Configuration = {
+  prismaClientImport: string
 }
 
 type NexusObjectTypeDefConfigurations = Record<PrismaModelName, NexusObjectTypeDefConfiguration>
@@ -69,7 +92,10 @@ type NexusObjectTypeDefConfiguration = Record<
 /**
  * Create Nexus object type definition configurations for Prisma models found in the given DMMF.
  */
-function createNexusObjectTypeDefConfigurations(dmmf: DMMF.Document): NexusObjectTypeDefConfigurations {
+function createNexusObjectTypeDefConfigurations(
+  dmmf: DMMF.Document,
+  configuration: Configuration
+): NexusObjectTypeDefConfigurations {
   return chain(dmmf.datamodel.models)
     .map((model) => {
       return {
@@ -81,7 +107,7 @@ function createNexusObjectTypeDefConfigurations(dmmf: DMMF.Document): NexusObjec
               name: field.name,
               type: prismaFieldToNexusType(field),
               description: field.documentation,
-              resolve: prismaFieldToNexusResolver(model, field),
+              resolve: prismaFieldToNexusResolver(model, field, configuration),
             }
           })
           .keyBy('name')
@@ -106,7 +132,11 @@ export function prismaFieldToNexusType(field: DMMF.Field) {
   }
 }
 
-export function prismaFieldToNexusResolver(model: DMMF.Model, field: DMMF.Field): undefined | Resolver {
+export function prismaFieldToNexusResolver(
+  model: DMMF.Model,
+  field: DMMF.Field,
+  configuration: Configuration
+): undefined | Resolver {
   /**
    * Allow Nexus default resolver to handle resolving scalars.
    *
@@ -154,24 +184,26 @@ export function prismaFieldToNexusResolver(model: DMMF.Model, field: DMMF.Field)
     }
 
     // eslint-disable-next-line
-    const PrismaClientPackage = require('@prisma/client')
+    const PrismaClientPackage = require(configuration.prismaClientImport)
 
     // eslint-disable-next-line
     if (!(ctx.prisma instanceof PrismaClientPackage.PrismaClient)) {
       // TODO rich errors
-      throw new Error(`todo`)
+      throw new Error(
+        `The GraphQL context.prisma value is not an instance of the Prisma Client (imported from ${configuration.prismaClientImport}).`
+      )
     }
 
-    const methodName = lowerFirst(model.name)
+    const propertyModelName = lowerFirst(model.name)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const prisma: any = ctx.prisma
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    const prismaModel = prisma[methodName]
+    const prismaModel = prisma[propertyModelName]
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (typeof prismaModel.findUnique !== 'function') {
       // TODO rich errors
-      throw new Error(`todo`)
+      throw new Error(`The prisma model ${model.name} does not have a findUnique method available.`)
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

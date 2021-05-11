@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Nullable on Without-Relation-Scalar Side limitation can be worked around by wrapping type in an explicit nonNull 1`] = `
+Object {
+  "graphqlSchemaSDL": "
+type Query {
+  users: [User]
+}
+
+type User {
+  id: ID!
+  profile: Profile!
+}
+
+type Profile {
+  id: ID!
+  user: User!
+}
+",
+  "resolution": Object {
+    "data": Object {
+      "users": Array [
+        Object {
+          "id": "user1",
+          "profile": Object {
+            "id": "profile1",
+            "user": Object {
+              "id": "user1",
+            },
+          },
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`can project relationship in opposite direction of where @relation is defined, but the field will be nullable 1`] = `
+Object {
+  "graphqlSchemaSDL": "
+type Query {
+  users: [User]
+}
+
+type User {
+  id: ID!
+  profile: Profile!
+}
+
+type Profile {
+  id: ID!
+  user: User
+}
+",
+  "resolution": Object {
+    "data": Object {
+      "users": Array [
+        Object {
+          "id": "user1",
+          "profile": Object {
+            "id": "profile1",
+            "user": Object {
+              "id": "user1",
+            },
+          },
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`can project user-to-profile relationship 1`] = `
+Object {
+  "graphqlSchemaSDL": "
+type Query {
+  users: [User]
+}
+
+type User {
+  id: ID!
+  profile: Profile!
+}
+
+type Profile {
+  id: ID!
+}
+",
+  "resolution": Object {
+    "data": Object {
+      "users": Array [
+        Object {
+          "id": "user1",
+          "profile": Object {
+            "id": "profile1",
+          },
+        },
+      ],
+    },
+  },
+}
+`;

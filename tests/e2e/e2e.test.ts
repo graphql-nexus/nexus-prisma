@@ -111,27 +111,29 @@ it('When bundled custom scalars are used the project type checks and generates e
   const files: FileSpec[] = [
     {
       filePath: `prisma/schema.prisma`,
-      content: createPrismaSchema(endent`
-        model Foo {
-          id                String   @id
-          someJsonField     Json
-          someDateTimeField DateTime
-          someEnumA         SomeEnumA
-          bar               Bar?
-        }
+      content: createPrismaSchema({
+        content: endent`
+          model Foo {
+            id                String   @id
+            someJsonField     Json
+            someDateTimeField DateTime
+            someEnumA         SomeEnumA
+            bar               Bar?
+          }
 
-        model Bar {
-          id    String  @id
-          foo   Foo?    @relation(fields: [fooId], references: [id])
-          fooId String?
-        }
+          model Bar {
+            id    String  @id
+            foo   Foo?    @relation(fields: [fooId], references: [id])
+            fooId String?
+          }
 
-        enum SomeEnumA {
-          alpha
-          bravo
-          charlie
-        }
-      `),
+          enum SomeEnumA {
+            alpha
+            bravo
+            charlie
+          }
+        `,
+      }),
     },
     {
       filePath: `prisma/seed.ts`,

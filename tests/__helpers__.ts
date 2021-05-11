@@ -3,7 +3,7 @@ import endent from 'endent'
 import execa from 'execa'
 import * as fs from 'fs-jetpack'
 import { FSJetpack } from 'fs-jetpack/types'
-import { printSchema } from 'graphql'
+import { DocumentNode, execute, printSchema } from 'graphql'
 import { GraphQLClient } from 'graphql-request'
 import { merge } from 'lodash'
 import { core } from 'nexus'
@@ -13,19 +13,38 @@ import { generateRuntime } from '../src/generator/generate'
 import * as ModelsGenerator from '../src/generator/models'
 import { ModuleSpec } from '../src/generator/types'
 
-export function createPrismaSchema(content: string): string {
+export function createPrismaSchema({
+  content,
+  datasourceProvider = {
+    provider: 'postgres',
+    url: 'env("DB_URL")',
+  },
+  clientOutput,
+  nexusPrisma = true,
+}: {
+  content: string
+  datasourceProvider?: { provider: 'sqlite'; url: string } | { provider: 'postgres'; url: string }
+  clientOutput?: string
+  nexusPrisma?: boolean
+}): string {
   return endent`
     datasource db {
-      provider = "postgresql"
-      url      = env("DB_URL")
+      provider = "${datasourceProvider.provider}"
+      url      = ${datasourceProvider.url}
     }
 
     generator client {
-      provider = "prisma-client-js"
+      provider = "prisma-client-js"${clientOutput ? `\noutput = ${clientOutput}` : ''}
     }
 
-    generator nexusPrisma {
-      provider = "nexus-prisma"
+    ${
+      nexusPrisma
+        ? endent`
+            generator nexusPrisma {
+              provider = "nexus-prisma"
+            }
+          `
+        : ``
     }
 
     ${content}
@@ -35,7 +54,100 @@ export function createPrismaSchema(content: string): string {
 /**
  * Given a Prisma schema and Nexus type definitions return a GraphQL schema.
  */
-export async function generateSchema({
+export async function integrationTest({
+  name,
+  datasourceSchema,
+  apiSchema,
+  datasourceSeed,
+  apiClientQuery,
+}: {
+  name: string
+  /**
+   * Define a Prisma schema file
+   *
+   * Note datasource and generator blocks are taken care of automatically for you.
+   */
+  datasourceSchema: string
+  /**
+   * Define Nexus type definitions based on the Nexus Prisma configurations
+   *
+   * The configurations are typed as `any` to make them easy to work with. They ae not typesafe. Be careful.
+   */
+  apiSchema(nexusPrisma: any): AllNexusTypeDefs[]
+  datasourceSeed: (prismaClient: any) => Promise<void>
+  apiClientQuery: DocumentNode
+}) {
+  const dir = fs.tmpDir().cwd()
+  const prismaClientImportId = `${dir}/client`
+  const prismaSchemaContents = createPrismaSchema({
+    content: datasourceSchema,
+    datasourceProvider: {
+      provider: 'sqlite',
+      url: `"file:./db.sqlite"`,
+    },
+    nexusPrisma: false,
+    clientOutput: `"./client"`,
+  })
+
+  fs.write(`${dir}/schema.prisma`, prismaSchemaContents)
+
+  execa.commandSync(`yarn -s prisma db push --force-reset --schema ${dir}/schema.prisma`)
+
+  const prismaClientPackage = require(prismaClientImportId)
+  const prismaClient = new prismaClientPackage.PrismaClient()
+  await datasourceSeed(prismaClient)
+
+  const dmmf = await PrismaSDK.getDMMF({
+    datamodel: prismaSchemaContents,
+  })
+
+  const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {
+    prismaClientImport: prismaClientImportId,
+  }) as any
+
+  const { schema } = await core.generateSchema.withArtifacts({
+    types: apiSchema(nexusPrisma),
+  })
+
+  const resolution = await execute({
+    contextValue: {
+      prisma: prismaClient,
+    },
+    schema: schema,
+    document: apiClientQuery,
+  })
+
+  await prismaClient.$disconnect()
+
+  if (resolution.errors) {
+    throw new Error(`GraphQL operation failed:\n\n  - ${resolution.errors.join('\n  - ')}`)
+  }
+
+  return {
+    graphqlSchemaSDL: prepareGraphQLSDLForSnapshot(printSchema(schema)),
+    resolution,
+  }
+}
+
+function prepareGraphQLSDLForSnapshot(sdl: string): string {
+  return '\n' + stripNexusQueryOk(sdl).trim() + '\n'
+}
+
+function stripNexusQueryOk(sdl: string): string {
+  return sdl.replace(
+    endent`
+      type Query {
+        ok: Boolean!
+      }
+    `,
+    ''
+  )
+}
+
+/**
+ * Given a Prisma schema and Nexus type definitions return a GraphQL schema.
+ */
+export async function generateGraphqlSchemaSDL({
   prismaSchema,
   nexus,
 }: {
@@ -50,41 +162,29 @@ export async function generateSchema({
    *
    * The configurations are typed as `any` to make them easy to work with. They ae not typesafe. Be careful.
    */
-  nexus(configurations: any): AllNexusTypeDefs[]
+  nexus(nexusPrisma: any): AllNexusTypeDefs[]
 }) {
   const dmmf = await PrismaSDK.getDMMF({
-    datamodel: createPrismaSchema(prismaSchema),
+    datamodel: createPrismaSchema({ content: prismaSchema }),
   })
 
-  const configurations = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf) as any
+  const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf) as any
 
   const { schema } = await core.generateSchema.withArtifacts({
-    types: nexus(configurations),
+    types: nexus(nexusPrisma),
   })
 
-  const printedSchema = printSchema(schema)
-
-  return (
-    '\n' +
-    printedSchema
-      .replace(
-        endent`
-          type Query {
-            ok: Boolean!
-          }
-        `,
-        ''
-      )
-      .trim() +
-    '\n'
-  )
+  return prepareGraphQLSDLForSnapshot(printSchema(schema))
 }
 
+/**
+ * TODO
+ */
 export async function generateModules(content: string): Promise<{ indexjs: string; indexdts: string }> {
-  const schema = createPrismaSchema(content)
+  const prismaSchemaContents = createPrismaSchema({ content })
 
   const dmmf = await PrismaSDK.getDMMF({
-    datamodel: schema,
+    datamodel: prismaSchemaContents,
   })
 
   const [indexjs, indexdts] = generateRuntime(dmmf) as [ModuleSpec, ModuleSpec]

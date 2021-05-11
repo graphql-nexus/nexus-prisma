@@ -4,6 +4,7 @@ const config: InitialOptionsTsJest = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
+  testPathIgnorePatterns: process.env.CI ? [] : ['.*e2e.*'],
   globals: {
     'ts-jest': {
       diagnostics: Boolean(process.env.CI),

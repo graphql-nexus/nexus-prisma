@@ -201,7 +201,7 @@ There is a [recipe below](#Supply-custom-custom-scalars-to-your-GraphQL-schema) 
 
 ### Project 1:1 Relation
 
-You can project a 1:1 relationships into your API including even the resolver.
+You can project 1:1 relationships into your API. Nexus Prisma includes even the resolver you'll need at runtime to fulfill the projection.
 
 ```prisma
 // Database Schema
@@ -288,8 +288,9 @@ query {
     id
     profile {
       id
-      user { # Showing off the graph
-        id {
+      user {
+        # Showing off the graph
+        id
       }
     }
   }

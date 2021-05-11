@@ -326,6 +326,7 @@ it('When bundled custom scalars are used the project type checks and generates e
   testProject.runOrThrow(`npm run db:migrate`)
 
   const serverProcess = testProject.runAsync(`node build/server`, { reject: false })
+  serverProcess.stdout!.pipe(process.stdout)
 
   await new Promise((res) =>
     serverProcess.stdout!.on('data', (data: Buffer) => {

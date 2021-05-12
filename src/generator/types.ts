@@ -3,4 +3,5 @@ export type ModuleSpec = {
   content: string
 }
 
-export type Configuration = unknown
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type Configuration = {}

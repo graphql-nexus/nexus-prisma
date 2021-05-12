@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import type { PrismaClient } from '@prisma/client'
 import * as Setset from 'setset'
 
 export type SettingsInput = {
@@ -7,15 +7,12 @@ export type SettingsInput = {
 
 export type SettingsData = Setset.InferDataFromInput<SettingsInput>
 
+export type Settings = Setset.Manager<SettingsInput, SettingsData>
+
 export const settings = Setset.create<SettingsInput, SettingsData>({
-  fields: {
-    prisma: {
-      initial() {
-        // Any type expected here because Prisma Client not generated
-        // Would have a type in a user's project, following prisma generate
-        // eslint-disable-next-line
-        return new PrismaClient()
-      },
-    },
-  },
+  fields: {},
 })
+
+export const change = (input: Setset.UserInput<SettingsInput>): Settings => {
+  return settings.change(input)
+}

@@ -1,0 +1,4 @@
+{
+  "main": "../dist/settings.js",
+  "types": "../dist/settings.d.ts"
+}

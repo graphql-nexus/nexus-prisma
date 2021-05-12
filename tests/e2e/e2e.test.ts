@@ -1,65 +1,75 @@
+import debug from 'debug'
 import endent from 'endent'
 import * as Execa from 'execa'
-import { dump } from 'nexus/dist/utils'
+import { gql } from 'graphql-request'
 import stripAnsi from 'strip-ansi'
+import { inspect } from 'util'
 import { assertBuildPresent, createPrismaSchema, setupTestProject, TestProject } from '../__helpers__'
 
-function setupTestProjectCase({
-  prismaSchema,
-  main,
-  testProject,
-}: {
-  testProject: TestProject
-  prismaSchema: string
-  main: string
-}) {
-  testProject.tmpdir.write('main.ts', main)
-  testProject.tmpdir.write('prisma/schema.prisma', prismaSchema)
+const d = debug('e2e')
+
+interface FileSpec {
+  filePath: string
+  content: string
 }
 
 interface ProjectResult {
   runFirstBuild: Execa.ExecaSyncReturnValue<string>
   runReflectPrisma: Execa.ExecaSyncReturnValue<string>
   runReflectNexus: Execa.ExecaSyncReturnValue<string>
-  runSecondBuildStdout: Execa.ExecaSyncReturnValue<string>
-  graphqlSchema?: string
-  typegen?: string
+  runSecondBuild: Execa.ExecaSyncReturnValue<string>
+  fileGraphqlSchema?: string
+  fileTypegen?: string
 }
 
-function runTestProject(testProject: TestProject): ProjectResult {
+const TYPEGEN_FILE_NAME = `typegen.ts`
+const TYPEGEN_FILE_PATH = `src/${TYPEGEN_FILE_NAME}`
+
+const GRAPHQL_SCHEMA_FILE_PATH = `schema.graphql`
+
+const SERVER_READY_MESSAGE = `GraphQL API ready at http://localhost:4000/graphql`
+
+function runTestProjectBuild(testProject: TestProject): ProjectResult {
   const commandConfig: Execa.SyncOptions = {
     reject: false,
-    cwd: testProject.tmpdir.cwd(),
+    cwd: testProject.fs.cwd(),
   }
   const runFirstBuild = Execa.commandSync(`npm run build`, commandConfig)
   const runReflectPrisma = Execa.commandSync(`npm run reflect:prisma`, commandConfig)
   const runReflectNexus = Execa.commandSync(`npm run reflect:nexus`, commandConfig)
-  const runSecondBuildStdout = Execa.commandSync(`npm run build`, commandConfig)
-  const graphqlSchema = testProject.tmpdir.read('schema.graphql')
-  const typegen = testProject.tmpdir.read('typegen.ts')
+  const runSecondBuild = Execa.commandSync(`npm run build`, commandConfig)
+  const fileGraphqlSchema = testProject.fs.read(GRAPHQL_SCHEMA_FILE_PATH)
+  const fileTypegen = testProject.fs.read(TYPEGEN_FILE_PATH)
 
   return {
     runFirstBuild,
     runReflectPrisma,
     runReflectNexus,
-    runSecondBuildStdout,
-    graphqlSchema,
-    typegen,
+    runSecondBuild,
+    fileGraphqlSchema,
+    fileTypegen,
   }
 }
 
 function setupTestNexusPrismaProject(): TestProject {
   const testProject = setupTestProject({
+    tsconfigJson: {},
     packageJson: {
       license: 'MIT',
       scripts: {
+        reflect: 'yarn -s reflect:prisma && yarn -s reflect:nexus',
         'reflect:prisma': 'prisma generate',
         // peer dependency check will fail since we're using yalc, e.g.:
         // " ... nexus-prisma@0.0.0-dripip+c2653557 does not officially support @prisma/client@2.22.1 ... "
-        'reflect:nexus': 'cross-env NO_PEER_DEPENDENCY_CHECK=true ts-node --transpile-only main',
+        'reflect:nexus': 'cross-env REFLECT=true ts-node --transpile-only src/schema',
         build: 'tsc',
+        start: 'node build/server',
+        'dev:server': 'yarn ts-node-dev --transpile-only server',
+        'db:migrate': 'prisma db push --force-reset && ts-node prisma/seed',
       },
       dependencies: {
+        dotenv: '^9.0.0',
+        'apollo-server': '^2.24.0',
         'cross-env': '^7.0.1',
         '@prisma/client': '^2.18.0',
         '@types/node': '^14.14.32',
@@ -67,14 +77,25 @@ function setupTestNexusPrismaProject(): TestProject {
         nexus: '^1.0.0',
         prisma: '^2.18.0',
         'ts-node': '^9.1.1',
+        'ts-node-dev': '^1.1.6',
         typescript: '^4.2.3',
       },
     },
   })
 
-  Execa.commandSync(`yalc publish --no-scripts`)
-  testProject.run(`yalc add nexus-prisma`)
-  testProject.run(`npm install`)
+  if (testProject.info.isReusing) {
+    d(`starting project setup cleanup for reuse`)
+    testProject.fs.remove(TYPEGEN_FILE_PATH)
+    testProject.fs.remove('node_modules/nexus-prisma')
+    testProject.runOrThrow(`yalc add nexus-prisma`)
+    d(`done project setup cleanup for reuse`)
+  } else {
+    d(`starting project setup`)
+    Execa.commandSync(`yalc publish --no-scripts`, { stdio: 'inherit' })
+    testProject.runOrThrow(`yalc add nexus-prisma`, { stdio: 'inherit' })
+    testProject.runOrThrow(`npm install`, { stdio: 'inherit' })
+    d(`done project setup`)
+  }
 
   return testProject
 }
@@ -86,77 +107,199 @@ beforeAll(() => {
   testProject = setupTestNexusPrismaProject()
 })
 
-it('When bundled custom scalars are used the project type checks and generates expected GraphQL schema', () => {
-  setupTestProjectCase({
-    testProject,
-    prismaSchema: createPrismaSchema(endent`
-      model M1 {
-        id                String   @id
-        someJsonField     Json
-        someDateTimeField DateTime
-      }
+it('When bundled custom scalars are used the project type checks and generates expected GraphQL schema', async () => {
+  const files: FileSpec[] = [
+    {
+      filePath: `prisma/schema.prisma`,
+      content: createPrismaSchema({
+        content: endent`
+          model Foo {
+            id                String   @id
+            someJsonField     Json
+            someDateTimeField DateTime
+            someEnumA         SomeEnumA
+            bar               Bar?
+          }
 
-      enum E1 {
-        a
-        b
-        c
-      }
-    `),
-    main: /*ts*/ endent`
-      import { makeSchema, objectType, enumType } from 'nexus'
-      import { M1, E1 } from 'nexus-prisma'
-      import * as customScalars from 'nexus-prisma/scalars'
-      import * as Path from 'path'
-      
-      const types = [
-        customScalars,
-        enumType(E1),
-        objectType({
-          name: M1.$name,
-          definition(t) {
-            t.field('e1', {
-              type: 'E1'
-            })
-            t.json('JsonManually')
-            t.dateTime('DateTimeManually')
-            t.field(M1.someJsonField.name, M1.someJsonField)
-            t.field(M1.someDateTimeField.name, M1.someDateTimeField)
+          model Bar {
+            id    String  @id
+            foo   Foo?    @relation(fields: [fooId], references: [id])
+            fooId String?
+          }
+
+          enum SomeEnumA {
+            alpha
+            bravo
+            charlie
+          }
+        `,
+      }),
+    },
+    {
+      filePath: `prisma/seed.ts`,
+      content: endent/*ts*/ `
+        import { PrismaClient } from '@prisma/client'
+
+        main()
+
+        async function main() {
+          const prisma = new PrismaClient()
+
+          await prisma.$executeRaw('TRUNCATE "Foo", "Bar"')
+          await prisma.foo.create({
+            data: {
+              id: 'foo1',
+              someDateTimeField: new Date("2021-05-10T20:42:46.609Z"),
+              someJsonField: JSON.stringify({}),
+              someEnumA: 'alpha',
+              bar: {
+                create: {
+                  id: 'bar1',
+                },
+              },
+            },
+          })
+
+          await prisma.$disconnect()
+        }
+      `,
+    },
+    {
+      filePath: `src/schema.ts`,
+      content: endent/*ts*/ `
+        require('dotenv').config()
+
+        import { makeSchema, objectType, enumType, queryType } from 'nexus'
+        import { Bar, Foo, SomeEnumA } from 'nexus-prisma'
+        import * as customScalars from 'nexus-prisma/scalars'
+        import * as Path from 'path'
+        
+        const types = [
+          customScalars,
+          enumType(SomeEnumA),
+          queryType({
+            definition(t) {
+              t.list.field('bars', {
+                type: 'Bar',
+                resolve(_, __, ctx) {
+                  return ctx.prisma.bar.findMany()
+                },
+              })
+            },
+          }),
+          objectType({
+            name: Bar.$name,
+            definition(t) {
+              t.field(Bar.foo.name, Bar.foo)
+            },
+          }),
+          objectType({
+            name: Foo.$name,
+            definition(t) {
+              t.field('someEnumA', {
+                type: 'SomeEnumA',
+              })
+              t.json('JsonManually')
+              t.dateTime('DateTimeManually')
+              t.field(Foo.someJsonField.name, Foo.someJsonField)
+              t.field(Foo.someDateTimeField.name, Foo.someDateTimeField)
+            },
+          }),
+        ]
+        
+        const schema = makeSchema({
+          types,
+          shouldGenerateArtifacts: true,
+          shouldExitAfterGenerateArtifacts: Boolean(process.env.REFLECT),
+          outputs: {
+            schema: true,
+            typegen: Path.join(__dirname, '${TYPEGEN_FILE_NAME}'),
           },
-        }),
-      ]
-      
-      makeSchema({
-        types,
-        shouldGenerateArtifacts: true,
-        shouldExitAfterGenerateArtifacts: true,
-        outputs: {
-          schema: true,
-          typegen: Path.join(__dirname, 'typegen.ts'),
-        },
-        sourceTypes: {
-          modules: [{ module: '.prisma/client', alias: 'PrismaClient' }],
-        },
-      })
+          sourceTypes: {
+            modules: [{ module: '.prisma/client', alias: 'PrismaClient' }],
+          },
+        })
 
-      // wait for output generation
-      setTimeout(() => {}, 1000)
-    `,
-  })
+        export default schema
+      `,
+    },
+    {
+      filePath: `src/context.ts`,
+      content: endent/*ts*/ `
+        import { PrismaClient } from '@prisma/client'
+
+        const prisma = new PrismaClient()
+        
+        type Context = {
+          prisma: PrismaClient
+        }
+        
+        function context() {
+          return {
+            prisma,
+          }
+        }
+
+        export default context
+        export { Context }
+      `,
+    },
+    {
+      filePath: `src/server.ts`,
+      content: endent/*ts*/ `
+        require('dotenv').config()
+
+        import { ApolloServer } from 'apollo-server'
+        import context from './context'
+        import schema from './schema'
+
+        const apollo = new ApolloServer({
+          schema,
+          context,
+        })
+
+        apollo.listen(4000, () => {
+          console.log('${SERVER_READY_MESSAGE}')
+        })
+      `,
+    },
+    {
+      filePath: `.env`,
+      content: endent`
+        DB_URL="postgres://bcnfshogmxsukp:e31b6ddc8b9d85f8964b6671e4b578c58f0d13e15f637513207d44268eabc950@ec2-54-196-33-23.compute-1.amazonaws.com:5432/d17vadgam0dtao?schema=${
+          process.env.E2E_DB_SCHEMA ?? 'local'
+        }"
+        NO_PEER_DEPENDENCY_CHECK="true"
+      `,
+    },
+  ]
+
+  files.forEach((fileSpec) => testProject.fs.write(fileSpec.filePath, fileSpec.content))
 
   // todo api server & database & seed that allows for testing that prisma runtime usage works
 
   // uncomment this to see dir (helpful to go there yourself and manually debug)
-  console.log(testProject.tmpdir.cwd())
+  console.log(`e2e test project at: ${testProject.fs.cwd()}`)
 
-  const results = runTestProject(testProject)
+  const results = runTestProjectBuild(testProject)
 
   // uncomment this to see the raw results (helpful for debugging)
-  dump(results)
+  console.log(`e2e output:\n`, inspect(results, { depth: 10, colors: true }))
+
+  /**
+   * Sanity checks around buildtime
+   */
 
   expect(results.runFirstBuild.exitCode).toBe(2)
 
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'M1'.*/
+    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'Bar'.*/
+  )
+  expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
+    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'Foo'.*/
+  )
+  expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
+    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'SomeEnumA'.*/
   )
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
     /.*error TS2339: Property 'json' does not exist on type 'ObjectDefinitionBlock<any>'.*/
@@ -173,9 +316,54 @@ it('When bundled custom scalars are used the project type checks and generates e
 
   expect(stripAnsi(results.runReflectNexus.stdout)).toMatch(/.*Generated Artifacts.*/)
 
-  expect(results.runSecondBuildStdout.exitCode).toBe(0)
+  expect(results.runSecondBuild.exitCode).toBe(0)
 
-  expect(results.graphqlSchema).toMatchSnapshot()
+  expect(results.fileGraphqlSchema).toMatchSnapshot('graphql schema')
 
-  expect(results.typegen).toMatchSnapshot()
-})
+  expect(results.fileTypegen).toMatchSnapshot('nexus typegen')
+
+  /**
+   * Sanity check the runtime
+   */
+
+  d(`migrating database`)
+
+  testProject.runOrThrow(`npm run db:migrate`)
+
+  d(`starting server`)
+
+  const serverProcess = testProject.runAsync(`node build/server`, { reject: false })
+  serverProcess.stdout!.pipe(process.stdout)
+
+  await new Promise((res) =>
+    serverProcess.stdout!.on('data', (data: Buffer) => {
+      if (data.toString().match(SERVER_READY_MESSAGE)) res(undefined)
+    })
+  )
+
+  d(`starting client queries`)
+
+  const data = await testProject.client.request(gql`
+    query {
+      bars {
+        foo {
+          JsonManually
+          DateTimeManually
+          someEnumA
+          someDateTimeField
+        }
+      }
+    }
+  `)
+
+  d(`stopping server`)
+
+  serverProcess.cancel()
+  // On Windows the serverProcess never completes the promise so we do an ugly timeout here
+  // and rely on jest --forceExit to terminate the process
+  await Promise.race([serverProcess, new Promise((res) => setTimeout(res, 2000))])
+
+  d(`stopped server`)
+
+  expect(data).toMatchSnapshot('client request 1')
+}, 30_000)

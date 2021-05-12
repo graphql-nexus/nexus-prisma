@@ -22,21 +22,21 @@ beforeAll(() => {
   assertBuildPresent()
   testProject = setupTestProject()
 
-  const { tmpdir } = testProject
-
   // setup alpha dep that has peer dep requirements
 
-  Execa.commandSync(`yarn add kleur semver tslib endent debug fs-jetpack --production`, { cwd: tmpdir.cwd() })
+  Execa.commandSync(`yarn add kleur semver tslib endent debug fs-jetpack --production`, {
+    cwd: testProject.fs.cwd(),
+  })
 
-  tmpdir.write(`node_modules/${requireer.name}/package.json`, {
+  testProject.fs.write(`node_modules/${requireer.name}/package.json`, {
     name: requireer.name,
     version: '1.0.0',
     main: 'dist/index.js',
   })
 
-  tmpdir.copy(`${process.cwd()}/dist`, `${tmpdir.cwd()}/node_modules/${requireer.name}/dist`)
+  testProject.fs.copy(`${process.cwd()}/dist`, `${testProject.fs.cwd()}/node_modules/${requireer.name}/dist`)
 
-  tmpdir.write(
+  testProject.fs.write(
     'validatePeerDependencies.js',
     endent`
       const assert = require('assert')
@@ -53,7 +53,7 @@ beforeAll(() => {
     `
   )
 
-  tmpdir.write(
+  testProject.fs.write(
     'enforceValidPeerDependencies.js',
     endent`
       const assert = require('assert')
@@ -75,7 +75,7 @@ beforeAll(() => {
 })
 
 beforeEach(() => {
-  testProject.tmpdir.remove(`node_modules/${peerDep.name}`)
+  testProject.fs.remove(`node_modules/${peerDep.name}`)
 })
 
 /** Helpers */
@@ -92,13 +92,13 @@ function setupDep({
   packageJson?: (defaultPackageJson: PackageJson) => PackageJson | string
 }): void {
   const depdir = `node_modules/${name}`
-  testProject.tmpdir.write(`${depdir}/package.json`, packageJson({ name, version, main: './index.js' }))
-  testProject.tmpdir.write(`${depdir}/index.js`, main)
+  testProject.fs.write(`${depdir}/package.json`, packageJson({ name, version, main: './index.js' }))
+  testProject.fs.write(`${depdir}/index.js`, main)
 }
 
 function setupPeerDepRequirement({ name, range }: { name: string; range: string }) {
-  const old = testProject.tmpdir.read(`node_modules/${requireer.name}/package.json`, 'json')
-  testProject.tmpdir.write(
+  const old = testProject.fs.read(`node_modules/${requireer.name}/package.json`, 'json')
+  testProject.fs.write(
     `node_modules/${requireer.name}/package.json`,
     merge(old, { peerDependencies: { [name]: range } })
   )

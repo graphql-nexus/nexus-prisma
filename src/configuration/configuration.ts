@@ -24,6 +24,7 @@ export async function getConfiguration(): Promise<Configuration | null> {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       '.ts': TypeScriptLoader,
     },
+    packageProp: [],
   })
   const result = await explorer.search()
   if (!result) {

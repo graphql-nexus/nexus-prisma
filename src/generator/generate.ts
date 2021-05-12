@@ -10,7 +10,7 @@ const OUTPUT_SOURCE_DIR = getOutputSourceDir()
 
 /** Generate the Nexus Prisma runtime files and emit them into a "hole" in the internal package source tree. */
 export function generateRuntimeAndEmit(dmmf: DMMF.Document, configuration: Configuration): void {
-  console.log(configuration)
+  d('start generateRuntime with configuration %j', configuration)
 
   d('start generateRuntime')
 

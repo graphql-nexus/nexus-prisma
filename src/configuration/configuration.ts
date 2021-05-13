@@ -10,15 +10,9 @@ export async function getConfiguration(): Promise<Configuration | null> {
       'nexus-prisma.ts',
       'nexusPrisma.ts',
       'nexusPrisma.ts',
-      'nexus-prisma.js',
-      'nexusPrisma.js',
-      'nexusPrisma.js',
       'prisma/nexus-prisma.ts',
       'prisma/nexusPrisma.ts',
       'prisma/nexusPrisma.ts',
-      'prisma/nexus-prisma.js',
-      'prisma/nexusPrisma.js',
-      'prisma/nexusPrisma.js',
     ],
     loaders: {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

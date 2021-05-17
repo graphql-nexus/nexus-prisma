@@ -1,5 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Can project User-to-Profile where Profile is using composite ID: graphqlOperationExecutionResult 1`] = `
+Object {
+  "data": Object {
+    "users": Array [
+      Object {
+        "id": "user1",
+        "profile": Object {
+          "id1": "profile1",
+          "user": Object {
+            "id": "user1",
+          },
+        },
+      },
+    ],
+  },
+}
+`;
+
+exports[`Can project User-to-Profile where Profile is using composite ID: graphqlSchemaSDL 1`] = `
+"
+type Query {
+  users: [User!]!
+}
+
+type User {
+  id: ID!
+  profile: Profile!
+}
+
+type Profile {
+  id1: String!
+  user: User!
+}
+"
+`;
+
 exports[`Nullable on Without-Relation-Scalar Side limitation can be worked around by wrapping type in an explicit nonNull: graphqlOperationExecutionResult 1`] = `
 Object {
   "data": Object {

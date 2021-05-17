@@ -1,5 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Nullable on Without-Relation-Scalar Side limitation can be worked around by wrapping type in an explicit nonNull: graphqlOperationExecutionResult 1`] = `
+Object {
+  "data": Object {
+    "users": Array [
+      Object {
+        "id": "user1",
+        "profile": Object {
+          "id": "profile1",
+          "user": Object {
+            "id": "user1",
+          },
+        },
+      },
+    ],
+  },
+}
+`;
+
+exports[`Nullable on Without-Relation-Scalar Side limitation can be worked around by wrapping type in an explicit nonNull: graphqlSchemaSDL 1`] = `
+"
+type Query {
+  users: [User!]!
+}
+
+type User {
+  id: ID!
+  profile: Profile!
+}
+
+type Profile {
+  id: ID!
+  user: User!
+}
+"
+`;
+
 exports[`can project relationship in opposite direction of where @relation is defined, but the field will be nullable: graphqlOperationExecutionResult 1`] = `
 Object {
   "data": Object {
@@ -21,7 +57,7 @@ Object {
 exports[`can project relationship in opposite direction of where @relation is defined, but the field will be nullable: graphqlSchemaSDL 1`] = `
 "
 type Query {
-  users: [User]
+  users: [User!]!
 }
 
 type User {
@@ -54,7 +90,7 @@ Object {
 exports[`can project user-to-profile relationship: graphqlSchemaSDL 1`] = `
 "
 type Query {
-  users: [User]
+  users: [User!]!
 }
 
 type User {

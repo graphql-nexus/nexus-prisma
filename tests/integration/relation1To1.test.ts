@@ -16,23 +16,11 @@ testIntegration({
       user    User?
     }
   `,
-  datasourceSeed(prisma) {
-    return prisma.user.create({
-      data: {
-        id: 'user1',
-        profile: {
-          create: {
-            id: 'profile1',
-          },
-        },
-      },
-    })
-  },
   apiSchema({ User, Profile }) {
     return [
       queryType({
         definition(t) {
-          t.list.field('users', {
+          t.nonNull.list.nonNull.field('users', {
             type: 'User',
             resolve(_, __, ctx) {
               return ctx.prisma.user.findMany()
@@ -54,6 +42,18 @@ testIntegration({
         },
       }),
     ]
+  },
+  async datasourceSeed(prisma) {
+    await prisma.user.create({
+      data: {
+        id: 'user1',
+        profile: {
+          create: {
+            id: 'profile1',
+          },
+        },
+      },
+    })
   },
   apiClientQuery: gql`
     query {
@@ -82,23 +82,11 @@ testIntegration({
       user    User?
     }
   `,
-  datasourceSeed(prisma) {
-    return prisma.user.create({
-      data: {
-        id: 'user1',
-        profile: {
-          create: {
-            id: 'profile1',
-          },
-        },
-      },
-    })
-  },
   apiSchema({ User, Profile }) {
     return [
       queryType({
         definition(t) {
-          t.list.field('users', {
+          t.nonNull.list.nonNull.field('users', {
             type: 'User',
             resolve(_, __, ctx) {
               return ctx.prisma.user.findMany()
@@ -121,6 +109,18 @@ testIntegration({
         },
       }),
     ]
+  },
+  async datasourceSeed(prisma) {
+    await prisma.user.create({
+      data: {
+        id: 'user1',
+        profile: {
+          create: {
+            id: 'profile1',
+          },
+        },
+      },
+    })
   },
   apiClientQuery: gql`
     query {
@@ -151,23 +151,11 @@ testIntegration({
         user    User?
       }
     `,
-  datasourceSeed(prisma) {
-    return prisma.user.create({
-      data: {
-        id: 'user1',
-        profile: {
-          create: {
-            id: 'profile1',
-          },
-        },
-      },
-    })
-  },
   apiSchema({ User, Profile }) {
     return [
       queryType({
         definition(t) {
-          t.list.field('users', {
+          t.nonNull.list.nonNull.field('users', {
             type: 'User',
             resolve(_, __, ctx) {
               return ctx.prisma.user.findMany()
@@ -193,6 +181,18 @@ testIntegration({
         },
       }),
     ]
+  },
+  async datasourceSeed(prisma) {
+    await prisma.user.create({
+      data: {
+        id: 'user1',
+        profile: {
+          create: {
+            id: 'profile1',
+          },
+        },
+      },
+    })
   },
   apiClientQuery: gql`
     query {

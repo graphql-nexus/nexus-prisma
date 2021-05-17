@@ -21,7 +21,18 @@ import { ModuleSpec } from '../src/generator/types'
 type APISchemaSpec = (nexusPrisma: any) => AllNexusTypeDefs[]
 
 type IntegrationTestParams = {
+  /**
+   * Name of this test
+   */
   description: string
+  /**
+   * Proxy for it.only
+   */
+  only?: boolean
+  /**
+   * Proxy for it.skip
+   */
+  skip?: boolean
   /**
    * Define a Prisma schema file
    *
@@ -48,7 +59,12 @@ export function testGeneratedModules(params: { databaseSchema: string; descripti
  * GraphQL schema and execution result.
  */
 export function testIntegration(params: IntegrationTestParams) {
-  it(params.description, async () => {
+  if (params.skip && params.only)
+    throw new Error(`Cannot specify to skip this test AND only run this test at the same time.`)
+
+  const itOrItOnlyOrItSkip = params.only ? it.only : params.skip ? it.skip : it
+
+  itOrItOnlyOrItSkip(params.description, async () => {
     const result = await integrationTest(params)
     expect(result.graphqlSchemaSDL).toMatchSnapshot(`graphqlSchemaSDL`)
     expect(result.graphqlOperationExecutionResult).toMatchSnapshot(`graphqlOperationExecutionResult`)

@@ -1,5 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`can project user-to-posts relationship in reverse (access use via post author field): graphqlOperationExecutionResult 1`] = `
+Object {
+  "data": Object {
+    "posts": Array [
+      Object {
+        "author": Object {
+          "id": "user1",
+        },
+        "id": "post1",
+      },
+      Object {
+        "author": Object {
+          "id": "user1",
+        },
+        "id": "post2",
+      },
+    ],
+  },
+}
+`;
+
+exports[`can project user-to-posts relationship in reverse (access use via post author field): graphqlSchemaSDL 1`] = `
+"
+type Query {
+  posts: [Post!]!
+}
+
+type User {
+  id: ID!
+}
+
+type Post {
+  id: ID!
+  author: User
+}
+"
+`;
+
 exports[`can project user-to-posts relationship: graphqlOperationExecutionResult 1`] = `
 Object {
   "data": Object {

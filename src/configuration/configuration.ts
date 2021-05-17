@@ -1,5 +1,5 @@
-import { cosmiconfig } from 'cosmiconfig'
 import TypeScriptLoader from '@endemolshinegroup/cosmiconfig-typescript-loader'
+import { cosmiconfig } from 'cosmiconfig'
 import { Configuration } from '../generator'
 
 const CONFIGURATION_NAME = 'nexus-prisma'
@@ -20,11 +20,15 @@ export async function getConfiguration(): Promise<Configuration | null> {
     },
     packageProp: [],
   })
+
   const result = await explorer.search()
+
   if (!result) {
     return null
   }
+
   console.log(`Loaded configuration from ${result.filepath}`)
+
   // TODO runtime validation with zod
   return result.config as Configuration
 }

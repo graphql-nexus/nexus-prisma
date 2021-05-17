@@ -51,17 +51,16 @@ export function createPrismaSchema({
   `
 }
 
-/**
- * Given a Prisma schema and Nexus type definitions return a GraphQL schema.
- */
-export async function integrationTest({
-  name,
-  datasourceSchema,
-  apiSchema,
-  datasourceSeed,
-  apiClientQuery,
-}: {
-  name: string
+export function testIntegration(params: IntegrationTestParams) {
+  it(params.description, async () => {
+    const result = await integrationTest(params)
+    expect(result.graphqlSchemaSDL).toMatchSnapshot(`graphqlSchemaSDL`)
+    expect(result.graphqlOperationExecutionResult).toMatchSnapshot(`graphqlOperationExecutionResult`)
+  })
+}
+
+type IntegrationTestParams = {
+  description: string
   /**
    * Define a Prisma schema file
    *
@@ -76,7 +75,18 @@ export async function integrationTest({
   apiSchema(nexusPrisma: any): AllNexusTypeDefs[]
   datasourceSeed: (prismaClient: any) => Promise<void>
   apiClientQuery: DocumentNode
-}) {
+}
+
+/**
+ * Given a Prisma schema and Nexus type definitions return a GraphQL schema.
+ */
+export async function integrationTest({
+  description,
+  datasourceSchema,
+  apiSchema,
+  datasourceSeed,
+  apiClientQuery,
+}: IntegrationTestParams) {
   const dir = fs.tmpDir().cwd()
   const prismaClientImportId = `${dir}/client`
   const prismaSchemaContents = createPrismaSchema({
@@ -109,7 +119,7 @@ export async function integrationTest({
     types: apiSchema(nexusPrisma),
   })
 
-  const resolution = await execute({
+  const graphqlOperationExecutionResult = await execute({
     contextValue: {
       prisma: prismaClient,
     },
@@ -119,13 +129,15 @@ export async function integrationTest({
 
   await prismaClient.$disconnect()
 
-  if (resolution.errors) {
-    throw new Error(`GraphQL operation failed:\n\n  - ${resolution.errors.join('\n  - ')}`)
+  if (graphqlOperationExecutionResult.errors) {
+    throw new Error(
+      `GraphQL operation failed:\n\n  - ${graphqlOperationExecutionResult.errors.join('\n  - ')}`
+    )
   }
 
   return {
     graphqlSchemaSDL: prepareGraphQLSDLForSnapshot(printSchema(schema)),
-    resolution,
+    graphqlOperationExecutionResult,
   }
 }
 

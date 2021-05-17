@@ -1,5 +1,6 @@
 import { gql } from 'graphql-tag'
 import { objectType, queryType } from 'nexus'
+import { Specs } from '../specs'
 import { testIntegration } from '../__helpers__'
 
 testIntegration({
@@ -64,67 +65,9 @@ testIntegration({
   `,
 })
 
-testIntegration({
-  description: 'can project user-to-posts relationship in reverse (access use via post author field)',
-  datasourceSchema: `
-    model User {
-      id         String    @id
-      posts      Post[]
-    }
-    model Post {
-      id        String  @id
-      author    User?   @relation(fields: [authorId], references: [id])
-      authorId  String
-    }
-  `,
-  apiSchema({ User, Post }) {
-    return [
-      queryType({
-        definition(t) {
-          t.nonNull.list.nonNull.field('posts', {
-            type: Post.$name,
-            resolve(_, __, ctx) {
-              return ctx.prisma.post.findMany()
-            },
-          })
-        },
-      }),
-      objectType({
-        name: User.$name,
-        definition(t) {
-          t.field(User.id.name, User.id)
-        },
-      }),
-      objectType({
-        name: Post.$name,
-        definition(t) {
-          t.field(Post.id.name, Post.id)
-          t.field(Post.author.name, Post.author)
-        },
-      }),
-    ]
-  },
-  async datasourceSeed(prisma) {
-    await prisma.user.create({
-      data: {
-        id: 'user1',
-        posts: {
-          create: [{ id: 'post1' }, { id: 'post2' }],
-        },
-      },
-    })
-  },
-  apiClientQuery: gql`
-    query {
-      posts {
-        id
-        author {
-          id
-        }
-      }
-    }
-  `,
-})
+testIntegration(Specs.relation1ToNReverseAndOptional)
+
+testIntegration(Specs.relation1ToNReverse)
 
 testIntegration({
   description: 'can project user-to-posts relation where user has composite ID',

@@ -34,7 +34,7 @@ type Post {
 "
 `;
 
-exports[`can project user-to-posts relationship in reverse (access use via post author field): graphqlOperationExecutionResult 1`] = `
+exports[`can project user-to-posts relationship in reverse (access use via post author field). If Post.author IS optional than it IS nullable in the GraphQL API.: graphqlOperationExecutionResult 1`] = `
 Object {
   "data": Object {
     "posts": Array [
@@ -55,7 +55,7 @@ Object {
 }
 `;
 
-exports[`can project user-to-posts relationship in reverse (access use via post author field): graphqlSchemaSDL 1`] = `
+exports[`can project user-to-posts relationship in reverse (access use via post author field). If Post.author IS optional than it IS nullable in the GraphQL API.: graphqlSchemaSDL 1`] = `
 "
 type Query {
   posts: [Post!]!
@@ -68,6 +68,44 @@ type User {
 type Post {
   id: ID!
   author: User
+}
+"
+`;
+
+exports[`can project user-to-posts relationship in reverse (access use via post author field). If Post.author is NOT optional than it is NOT nullable in the GraphQL API.: graphqlOperationExecutionResult 1`] = `
+Object {
+  "data": Object {
+    "posts": Array [
+      Object {
+        "author": Object {
+          "id": "user1",
+        },
+        "id": "post1",
+      },
+      Object {
+        "author": Object {
+          "id": "user1",
+        },
+        "id": "post2",
+      },
+    ],
+  },
+}
+`;
+
+exports[`can project user-to-posts relationship in reverse (access use via post author field). If Post.author is NOT optional than it is NOT nullable in the GraphQL API.: graphqlSchemaSDL 1`] = `
+"
+type Query {
+  posts: [Post!]!
+}
+
+type User {
+  id: ID!
+}
+
+type Post {
+  id: ID!
+  author: User!
 }
 "
 `;

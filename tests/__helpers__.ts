@@ -20,19 +20,11 @@ import { ModuleSpec } from '../src/generator/types'
  */
 type APISchemaSpec = (nexusPrisma: any) => AllNexusTypeDefs[]
 
-type IntegrationTestParams = {
+export type IntegrationTestSpec = {
   /**
    * Name of this test
    */
   description: string
-  /**
-   * Proxy for it.only
-   */
-  only?: boolean
-  /**
-   * Proxy for it.skip
-   */
-  skip?: boolean
   /**
    * Define a Prisma schema file
    *
@@ -42,6 +34,17 @@ type IntegrationTestParams = {
   apiSchema: APISchemaSpec
   datasourceSeed: (prismaClient: any) => Promise<void>
   apiClientQuery: DocumentNode
+}
+
+type IntegrationTestParams = IntegrationTestSpec & {
+  /**
+   * Proxy for it.only
+   */
+  only?: boolean
+  /**
+   * Proxy for it.skip
+   */
+  skip?: boolean
 }
 
 /**

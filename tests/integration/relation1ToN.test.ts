@@ -16,21 +16,11 @@ testIntegration({
       authorId  String
     }
   `,
-  datasourceSeed(prisma) {
-    return prisma.user.create({
-      data: {
-        id: 'user1',
-        posts: {
-          create: [{ id: 'post1' }, { id: 'post2' }],
-        },
-      },
-    })
-  },
   apiSchema({ User, Post }) {
     return [
       queryType({
         definition(t) {
-          t.list.field('users', {
+          t.nonNull.list.nonNull.field('users', {
             type: 'User',
             resolve(_, __, ctx) {
               return ctx.prisma.user.findMany()
@@ -52,6 +42,16 @@ testIntegration({
         },
       }),
     ]
+  },
+  async datasourceSeed(prisma) {
+    await prisma.user.create({
+      data: {
+        id: 'user1',
+        posts: {
+          create: [{ id: 'post1' }, { id: 'post2' }],
+        },
+      },
+    })
   },
   apiClientQuery: gql`
     query {

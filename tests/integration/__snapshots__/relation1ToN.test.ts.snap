@@ -23,7 +23,7 @@ Object {
 exports[`can project user-to-posts relationship: graphqlSchemaSDL 1`] = `
 "
 type Query {
-  users: [User]
+  users: [User!]!
 }
 
 type User {

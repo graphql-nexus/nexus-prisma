@@ -1,5 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`can project user-to-posts relation where user has composite ID: graphqlOperationExecutionResult 1`] = `
+Object {
+  "data": Object {
+    "users": Array [
+      Object {
+        "id1": "user1",
+        "posts": Array [
+          Object {
+            "id": "post1",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`can project user-to-posts relation where user has composite ID: graphqlSchemaSDL 1`] = `
+"
+type Query {
+  users: [User!]!
+}
+
+type User {
+  id1: String!
+  posts: [Post!]!
+}
+
+type Post {
+  id: ID!
+}
+"
+`;
+
 exports[`can project user-to-posts relationship in reverse (access use via post author field): graphqlOperationExecutionResult 1`] = `
 Object {
   "data": Object {

@@ -4,12 +4,14 @@ import * as Path from 'path'
 import * as pkgup from 'pkg-up'
 import { d } from '../helpers/debugNexusPrisma'
 import * as ModelsGenerator from './models'
-import { ModuleSpec } from './types'
+import { ModuleSpec, Configuration } from './types'
 
 const OUTPUT_SOURCE_DIR = getOutputSourceDir()
 
 /** Generate the Nexus Prisma runtime files and emit them into a "hole" in the internal package source tree. */
-export function generateRuntimeAndEmit(dmmf: DMMF.Document): void {
+export function generateRuntimeAndEmit(dmmf: DMMF.Document, configuration: Configuration | null): void {
+  d('start generateRuntime with configuration %j', configuration)
+
   d('start generateRuntime')
 
   if (process.env.NP_DEBUG) {

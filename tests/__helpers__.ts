@@ -11,7 +11,12 @@ import { AllNexusTypeDefs } from 'nexus/dist/core'
 import { PackageJson, TsConfigJson } from 'type-fest'
 import { generateRuntime } from '../src/generator/generate'
 import * as ModelsGenerator from '../src/generator/models'
+import { SettingsData } from '../src/generator/settingsManager'
 import { ModuleSpec } from '../src/generator/types'
+
+const settingsDefaults: SettingsData = {
+  prismaClientContextField: 'prisma',
+}
 
 /**
  * Define Nexus type definitions based on the Nexus Prisma configurations
@@ -87,7 +92,7 @@ export function testGraphqlSchema(params: {
       datamodel: createPrismaSchema({ content: params.datasourceSchema }),
     })
 
-    const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf) as any
+    const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, settingsDefaults) as any
 
     const { schema } = await core.generateSchema.withArtifacts({
       types: params.apiSchema(nexusPrisma),
@@ -173,6 +178,7 @@ export async function integrationTest({
   })
 
   const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {
+    ...settingsDefaults,
     prismaClientImport: prismaClientImportId,
   }) as any
 
@@ -227,7 +233,7 @@ export async function generateModules(content: string): Promise<{ indexjs: strin
     datamodel: prismaSchemaContents,
   })
 
-  const [indexjs, indexdts] = generateRuntime(dmmf) as [ModuleSpec, ModuleSpec]
+  const [indexjs, indexdts] = generateRuntime(dmmf, settingsDefaults) as [ModuleSpec, ModuleSpec]
 
   return {
     indexdts: indexdts.content,

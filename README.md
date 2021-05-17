@@ -29,6 +29,7 @@ Official Prisma plugin for Nexus.
   - [Prisma Schema docs re-used for JSDoc](#prisma-schema-docs-re-used-for-jsdoc)
   - [Refined DX](#refined-dx)
 - [Recipes](#recipes)
+  - [Project relation with custom resolver logic](#project-relation-with-custom-resolver-logic)
   - [Supply custom custom scalars to your GraphQL schema](#supply-custom-custom-scalars-to-your-graphql-schema)
 - [Notes](#notes)
 
@@ -658,6 +659,47 @@ PEER_DEPENDENCY_CHECK=false|0
 - `nexus-prisma/scalars` offers a default export you can easily auto-import by name: `NexusPrismaScalars`.
 
 ## Recipes
+
+### Project relation with custom resolver logic
+
+Nexus Prisma generates default GraphQL resolvers for your model _relation fields_. However you may want to run custom logic in the resolver. This is easy to do. The following show a few ways.
+
+1. **Wrap Style** You can access the default resolver within your own custom resolver.
+
+   ```ts
+   objectType({
+     name: User.$name,
+     definition(t) {
+       t.field(User.id.name, User.id)
+       t.field(User.posts.name, {
+         ...User.posts,
+         resolve(...args) {
+           // Your custom before-logic here
+           const result = await User.posts.resolve(...args)
+           // Your custom afer-logic here
+           return result
+         },
+       })
+     },
+   })
+   ```
+
+2. **Replace Style** You can simply opt out of using the default resolver completely:
+
+   ```ts
+   objectType({
+     name: User.$name,
+     definition(t) {
+       t.field(User.id.name, User.id)
+       t.field(User.posts.name, {
+         ...User.posts,
+         resolve(...args) {
+           // Your custom logic here
+         },
+       })
+     },
+   })
+   ```
 
 ### Supply custom custom scalars to your GraphQL schema
 

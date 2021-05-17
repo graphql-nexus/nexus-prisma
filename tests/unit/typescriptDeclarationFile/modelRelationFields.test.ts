@@ -1,18 +1,17 @@
-import { generateModules } from '../../__helpers__'
+import { testGeneratedModules } from '../../__helpers__'
 
-it('A model relation field projects a default resolve function', async () => {
-  const { indexdts } = await generateModules(`
-  model User {
-    id    Int     @id
-    posts Post[]
-  }
-  
-  model Post {
-    id        Int      @id
-    author    User?    @relation(fields: [authorId], references: [id])
-    authorId  Int?
-  }
-  `)
-
-  expect(indexdts).toMatchSnapshot()
+testGeneratedModules({
+  description: 'A model relation field projects a default resolve function',
+  databaseSchema: `
+    model User {
+      id    Int     @id
+      posts Post[]
+    }
+    
+    model Post {
+      id        Int      @id
+      author    User?    @relation(fields: [authorId], references: [id])
+      authorId  Int?
+    }
+  `,
 })

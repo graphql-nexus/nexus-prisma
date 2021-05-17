@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`When a model field has a documentation comment, then it is used for the JSDoc of that field and its $description field 1`] = `
+exports[`When a model field has a documentation comment, then it is used for the JSDoc of that field and its $description field: index.d.ts 1`] = `
 "import * as Nexus from 'nexus'
 import * as NexusCore from 'nexus/dist/core'
 
@@ -160,7 +160,7 @@ export const SomeModel: $Types.SomeModel
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
 
-exports[`When a model field has no documentation comment, then it gets the default JSDoc and its description field is null 1`] = `
+exports[`When a model field has no documentation comment, then it gets the default JSDoc and its description field is null: index.d.ts 1`] = `
 "import * as Nexus from 'nexus'
 import * as NexusCore from 'nexus/dist/core'
 
@@ -332,7 +332,7 @@ export const SomeModel: $Types.SomeModel
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
 
-exports[`When a model has a documentation comment, then it is used for the JSDoc of that model and its $description field 1`] = `
+exports[`When a model has a documentation comment, then it is used for the JSDoc of that model and its $description field: index.d.ts 1`] = `
 "import * as Nexus from 'nexus'
 import * as NexusCore from 'nexus/dist/core'
 
@@ -478,7 +478,7 @@ export const SomeModel: $Types.SomeModel
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
 
-exports[`When a model has no documentation comment, then it gets the default JSDoc and its description field is null 1`] = `
+exports[`When a model has no documentation comment, then it gets the default JSDoc and its description field is null: index.d.ts 1`] = `
 "import * as Nexus from 'nexus'
 import * as NexusCore from 'nexus/dist/core'
 

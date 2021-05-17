@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`An enum maps to a Nexus enum type definition 1`] = `
+exports[`An enum maps to a Nexus enum type definition: index.d.ts 1`] = `
 "import * as Nexus from 'nexus'
 import * as NexusCore from 'nexus/dist/core'
 
@@ -110,7 +110,7 @@ declare namespace $Types {
 export const Foo: $Types.Foo"
 `;
 
-exports[`When prisma enum has documentation then it is used for JSDoc and GraphQL enum description 1`] = `
+exports[`When prisma enum has documentation then it is used for JSDoc and GraphQL enum description: index.d.ts 1`] = `
 "import * as Nexus from 'nexus'
 import * as NexusCore from 'nexus/dist/core'
 

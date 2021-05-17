@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`A model field with type Boolean maps to GraphQL Boolean scalar 1`] = `
+exports[`A model field with type Boolean maps to GraphQL Boolean scalar: index.d.ts 1`] = `
 "import * as Nexus from 'nexus'
 import * as NexusCore from 'nexus/dist/core'
 
@@ -223,7 +223,7 @@ export const SomeModel: $Types.SomeModel
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
 
-exports[`A model field with type DateTime maps to GraphQL DateTime custom scalar 1`] = `
+exports[`A model field with type DateTime maps to GraphQL DateTime custom scalar: index.d.ts 1`] = `
 "import * as Nexus from 'nexus'
 import * as NexusCore from 'nexus/dist/core'
 
@@ -446,7 +446,7 @@ export const SomeModel: $Types.SomeModel
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
 
-exports[`A model field with type Float maps to GraphQL Float scalar 1`] = `
+exports[`A model field with type Float maps to GraphQL Float scalar: index.d.ts 1`] = `
 "import * as Nexus from 'nexus'
 import * as NexusCore from 'nexus/dist/core'
 
@@ -669,7 +669,7 @@ export const SomeModel: $Types.SomeModel
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
 
-exports[`A model field with type Int maps to GraphQL Int scalar 1`] = `
+exports[`A model field with type Int maps to GraphQL Int scalar: index.d.ts 1`] = `
 "import * as Nexus from 'nexus'
 import * as NexusCore from 'nexus/dist/core'
 
@@ -892,7 +892,7 @@ export const SomeModel: $Types.SomeModel
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
 
-exports[`A model field with type Int, attribute @id, maps to GraphQL Int scalar 1`] = `
+exports[`A model field with type Int, attribute @id, maps to GraphQL Int scalar: index.d.ts 1`] = `
 "import * as Nexus from 'nexus'
 import * as NexusCore from 'nexus/dist/core'
 
@@ -1064,7 +1064,7 @@ export const SomeModel: $Types.SomeModel
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
 
-exports[`A model field with type Json maps to GraphQL Json custom scalar 1`] = `
+exports[`A model field with type Json maps to GraphQL Json custom scalar: index.d.ts 1`] = `
 "import * as Nexus from 'nexus'
 import * as NexusCore from 'nexus/dist/core'
 
@@ -1287,7 +1287,7 @@ export const SomeModel: $Types.SomeModel
 // N/A –– You have not defined any models in your Prisma schema file."
 `;
 
-exports[`A model field with type String, attribute @id, maps to GraphQL ID scalar 1`] = `
+exports[`A model field with type String, attribute @id, maps to GraphQL ID scalar: index.d.ts 1`] = `
 "import * as Nexus from 'nexus'
 import * as NexusCore from 'nexus/dist/core'
 

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`When an enum has a documentation comment, then it is used for the JSDoc of that enum and its $description field 1`] = `
+exports[`When an enum has a documentation comment, then it is used for the JSDoc of that enum and its $description field: index.d.ts 1`] = `
 "import * as Nexus from 'nexus'
 import * as NexusCore from 'nexus/dist/core'
 
@@ -84,7 +84,7 @@ declare namespace $Types {
 export const Foo: $Types.Foo"
 `;
 
-exports[`When an enum has no documentation comment, then it gets the default JSDoc and its description field is null 1`] = `
+exports[`When an enum has no documentation comment, then it gets the default JSDoc and its description field is null: index.d.ts 1`] = `
 "import * as Nexus from 'nexus'
 import * as NexusCore from 'nexus/dist/core'
 

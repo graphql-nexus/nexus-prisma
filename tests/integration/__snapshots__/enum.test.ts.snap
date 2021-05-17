@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`When an enum is defined in the Prisma schema it can be projected into the GraphQL API 1`] = `
+exports[`When an enum is defined in the Prisma schema it can be projected into the GraphQL API: graphqlSchema 1`] = `
 "
 enum Foo {
   a
@@ -8,7 +8,7 @@ enum Foo {
 "
 `;
 
-exports[`When an enum is defined with documentation in the Prisma schema it can be projected into the GraphQL API with that documentation 1`] = `
+exports[`When an enum is defined with documentation in the Prisma schema it can be projected into the GraphQL API with that documentation: graphqlSchema 1`] = `
 "
 \\"\\"\\"Some documentation\\"\\"\\"
 enum Foo {
@@ -17,7 +17,7 @@ enum Foo {
 "
 `;
 
-exports[`When an enum with multiple members is defined in the Prisma schema it and all its members can be projected into the GraphQL API 1`] = `
+exports[`When an enum with multiple members is defined in the Prisma schema it and all its members can be projected into the GraphQL API: graphqlSchema 1`] = `
 "
 enum Foo {
   a

@@ -13,6 +13,75 @@ import { generateRuntime } from '../src/generator/generate'
 import * as ModelsGenerator from '../src/generator/models'
 import { ModuleSpec } from '../src/generator/types'
 
+/**
+ * Define Nexus type definitions based on the Nexus Prisma configurations
+ *
+ * The configurations are typed as `any` to make them easy to work with. They ae not typesafe. Be careful.
+ */
+type APISchemaSpec = (nexusPrisma: any) => AllNexusTypeDefs[]
+
+type IntegrationTestParams = {
+  description: string
+  /**
+   * Define a Prisma schema file
+   *
+   * Note datasource and generator blocks are taken care of automatically for you.
+   */
+  datasourceSchema: string
+  apiSchema: APISchemaSpec
+  datasourceSeed: (prismaClient: any) => Promise<void>
+  apiClientQuery: DocumentNode
+}
+
+/**
+ * Test that the given Prisma schema generates the expected generated source code.
+ */
+export function testGeneratedModules(params: { databaseSchema: string; description: string }) {
+  it(params.description, async () => {
+    const { indexdts } = await generateModules(params.databaseSchema)
+    expect(indexdts).toMatchSnapshot('index.d.ts')
+  })
+}
+
+/**
+ * Test that the given Prisma schema + API Schema + data seed + GraphQL document lead to the expected
+ * GraphQL schema and execution result.
+ */
+export function testIntegration(params: IntegrationTestParams) {
+  it(params.description, async () => {
+    const result = await integrationTest(params)
+    expect(result.graphqlSchemaSDL).toMatchSnapshot(`graphqlSchemaSDL`)
+    expect(result.graphqlOperationExecutionResult).toMatchSnapshot(`graphqlOperationExecutionResult`)
+  })
+}
+
+/**
+ * Test that the given Prisma schema + API Scheam lead to the expected GraphQL schema.
+ */
+export function testGraphqlSchema(params: {
+  datasourceSchema: string
+  description: string
+  apiSchema: APISchemaSpec
+}) {
+  it(params.description, async () => {
+    const dmmf = await PrismaSDK.getDMMF({
+      datamodel: createPrismaSchema({ content: params.datasourceSchema }),
+    })
+
+    const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf) as any
+
+    const { schema } = await core.generateSchema.withArtifacts({
+      types: params.apiSchema(nexusPrisma),
+    })
+
+    expect(prepareGraphQLSDLForSnapshot(printSchema(schema))).toMatchSnapshot('graphqlSchema')
+  })
+}
+
+/**
+ * Low Level
+ */
+
 export function createPrismaSchema({
   content,
   datasourceProvider = {
@@ -51,37 +120,10 @@ export function createPrismaSchema({
   `
 }
 
-export function testIntegration(params: IntegrationTestParams) {
-  it(params.description, async () => {
-    const result = await integrationTest(params)
-    expect(result.graphqlSchemaSDL).toMatchSnapshot(`graphqlSchemaSDL`)
-    expect(result.graphqlOperationExecutionResult).toMatchSnapshot(`graphqlOperationExecutionResult`)
-  })
-}
-
-type IntegrationTestParams = {
-  description: string
-  /**
-   * Define a Prisma schema file
-   *
-   * Note datasource and generator blocks are taken care of automatically for you.
-   */
-  datasourceSchema: string
-  /**
-   * Define Nexus type definitions based on the Nexus Prisma configurations
-   *
-   * The configurations are typed as `any` to make them easy to work with. They ae not typesafe. Be careful.
-   */
-  apiSchema(nexusPrisma: any): AllNexusTypeDefs[]
-  datasourceSeed: (prismaClient: any) => Promise<void>
-  apiClientQuery: DocumentNode
-}
-
 /**
  * Given a Prisma schema and Nexus type definitions return a GraphQL schema.
  */
 export async function integrationTest({
-  description,
   datasourceSchema,
   apiSchema,
   datasourceSeed,
@@ -157,40 +199,7 @@ function stripNexusQueryOk(sdl: string): string {
 }
 
 /**
- * Given a Prisma schema and Nexus type definitions return a GraphQL schema.
- */
-export async function generateGraphqlSchemaSDL({
-  prismaSchema,
-  nexus,
-}: {
-  /**
-   * Define a Prisma schema file
-   *
-   * Note datasource and generator blocks are taken care of automatically for you.
-   */
-  prismaSchema: string
-  /**
-   * Define Nexus type definitions based on the Nexus Prisma configurations
-   *
-   * The configurations are typed as `any` to make them easy to work with. They ae not typesafe. Be careful.
-   */
-  nexus(nexusPrisma: any): AllNexusTypeDefs[]
-}) {
-  const dmmf = await PrismaSDK.getDMMF({
-    datamodel: createPrismaSchema({ content: prismaSchema }),
-  })
-
-  const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf) as any
-
-  const { schema } = await core.generateSchema.withArtifacts({
-    types: nexus(nexusPrisma),
-  })
-
-  return prepareGraphQLSDLForSnapshot(printSchema(schema))
-}
-
-/**
- * TODO
+ * For the given Prisma Schema generate the derived source code.
  */
 export async function generateModules(content: string): Promise<{ indexjs: string; indexdts: string }> {
   const prismaSchemaContents = createPrismaSchema({ content })

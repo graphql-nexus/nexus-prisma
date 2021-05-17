@@ -1,29 +1,26 @@
 import endent from 'endent'
 import { objectType } from 'nexus'
 import NexusPrismaScalars from '../../scalars'
-import { generateGraphqlSchemaSDL } from '../__helpers__'
+import { testGraphqlSchema } from '../__helpers__'
 
-it('When a JSON field is defined in the Prisma schema it can be projected into the GraphQL API', async () => {
-  const graphqlSchema = await generateGraphqlSchemaSDL({
-    prismaSchema: endent`
-      model Foo {
-        id   String @id
-        json Json
-      }
-    `,
-    nexus(configurations) {
-      return [
-        NexusPrismaScalars.DateTime,
-        NexusPrismaScalars.Json,
-        objectType({
-          name: configurations.Foo.$name,
-          definition(t) {
-            t.field(configurations.Foo.json.$name, configurations.Foo.json)
-          },
-        }),
-      ]
-    },
-  })
-
-  expect(graphqlSchema).toMatchSnapshot()
+testGraphqlSchema({
+  description: 'When a JSON field is defined in the Prisma schema it can be projected into the GraphQL API',
+  datasourceSchema: endent`
+    model Foo {
+      id   String @id
+      json Json
+    }
+  `,
+  apiSchema({ Foo }) {
+    return [
+      NexusPrismaScalars.DateTime,
+      NexusPrismaScalars.Json,
+      objectType({
+        name: Foo.$name,
+        definition(t) {
+          t.field(Foo.json.$name, Foo.json)
+        },
+      }),
+    ]
+  },
 })

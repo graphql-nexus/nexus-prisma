@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`A model relation field projects a default resolve function 1`] = `
+exports[`A model relation field projects a default resolve function: index.d.ts 1`] = `
 "import * as Nexus from 'nexus'
 import * as NexusCore from 'nexus/dist/core'
 

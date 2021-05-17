@@ -102,6 +102,8 @@ export const schema = makeSchema({
 - [x] ([#4](https://github.com/prisma/nexus-prisma/issues/4)) Support for Prisma Model field types that map to standard GraphQL scalars
 - [x] ([#8](https://github.com/prisma/nexus-prisma/issues/8)) Support for Prisma Model field types of `DateTime` & `Json`
 - [x] ([#16](https://github.com/prisma/nexus-prisma/issues/16)) Support for Prisma enums
+- [x] ([#25](https://github.com/prisma/nexus-prisma/pull/25), [#36](https://github.com/prisma/nexus-prisma/issues/36)) Basic support for Prisma Model field types relating to other Models 1:1
+- [x] ([#38](https://github.com/prisma/nexus-prisma/pull/38)) Basic support for Prisma Model field types relating to other Models 1:n
 
 ##### Shortterm
 
@@ -109,8 +111,6 @@ export const schema = makeSchema({
 
 ##### Midterm
 
-- [x] ([#25](https://github.com/prisma/nexus-prisma/pull/25), [#36](https://github.com/prisma/nexus-prisma/issues/36)) Support for Prisma Model field types relating to other Models 1:1
-- [x] ([#38](https://github.com/prisma/nexus-prisma/pull/38)) Support for Prisma Model field types relating to other Models 1:n
 - [ ] Support for Prisma Model field types relating to other Models n:n
 
 ##### Longterm

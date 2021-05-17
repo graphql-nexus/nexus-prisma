@@ -21,7 +21,14 @@ import { ModuleSpec } from '../src/generator/types'
 type APISchemaSpec = (nexusPrisma: any) => AllNexusTypeDefs[]
 
 type IntegrationTestParams = {
+  /**
+   * Name of this test
+   */
   description: string
+  /**
+   * Proxy for it.only
+   */
+  only?: boolean
   /**
    * Define a Prisma schema file
    *
@@ -48,7 +55,8 @@ export function testGeneratedModules(params: { databaseSchema: string; descripti
  * GraphQL schema and execution result.
  */
 export function testIntegration(params: IntegrationTestParams) {
-  it(params.description, async () => {
+  const itOrItOnly = params.only ? it.only : it
+  itOrItOnly(params.description, async () => {
     const result = await integrationTest(params)
     expect(result.graphqlSchemaSDL).toMatchSnapshot(`graphqlSchemaSDL`)
     expect(result.graphqlOperationExecutionResult).toMatchSnapshot(`graphqlOperationExecutionResult`)

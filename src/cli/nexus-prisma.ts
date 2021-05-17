@@ -7,10 +7,9 @@ process.env.DEBUG_HIDE_DATE = 'true'
 
 import { generatorHandler } from '@prisma/generator-helper'
 import * as Path from 'path'
-
 import { generateRuntimeAndEmit } from '../generator'
+import { getSettings } from '../generator/settingsGetter'
 import { externalToInternalDmmf } from '../helpers/prismaExternalToInternalDMMF'
-import { getConfiguration } from '../configuration'
 
 // todo by default error in ci and warn in local
 // enforceValidPeerDependencies({
@@ -25,10 +24,10 @@ generatorHandler({
     }
   },
   // async required by interface
+  // eslint-disable-next-line
   async onGenerate({ dmmf }) {
     const internalDMMF = externalToInternalDmmf(dmmf)
-    console.log('created internal dmmf')
-    const configuration = await getConfiguration()
-    generateRuntimeAndEmit(internalDMMF, configuration)
+    const settings = getSettings()
+    generateRuntimeAndEmit(internalDMMF, settings)
   },
 })

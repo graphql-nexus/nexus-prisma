@@ -10,7 +10,9 @@
     "plugin.js",
     "plugin.d.ts",
     "scalars.js",
-    "scalars.d.ts"
+    "scalars.d.ts",
+    "settings.d.ts",
+    "settings.js"
   ],
   "bin": {
     "nexus-prisma": "./dist/cli/nexus-prisma.js",

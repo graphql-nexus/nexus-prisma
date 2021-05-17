@@ -9,6 +9,7 @@ import {
   findMissingUniqueIdentifiers,
   resolveUniqueIdentifiers,
 } from '../helpers/constraints'
+import { SettingsData } from '../settingsManager'
 import { ModuleSpec } from '../types'
 import { fieldTypeToGraphQLType } from './declaration'
 
@@ -30,15 +31,17 @@ type NexusTypeDefConfigurations = Record<
 /**
  * Create the module specification for the JavaScript runtime.
  */
-export function createModuleSpec(): ModuleSpec {
+export function createModuleSpec(settings: SettingsData): ModuleSpec {
   return {
     fileName: 'index.js',
     content: endent`
+      const settingsRaw = ${JSON.stringify(settings, null, 2)}
+      const settings = JSON.parse(settingsRaw)
       const { getPrismaClientDmmf } = require('../helpers/prisma')
       const ModelsGenerator = require('../generator/models')
 
       const dmmf = getPrismaClientDmmf()
-      const models = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf)
+      const models = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, settings)
 
       module.exports = models
     `,
@@ -47,7 +50,7 @@ export function createModuleSpec(): ModuleSpec {
 
 export function createNexusTypeDefConfigurations(
   dmmf: DMMF.Document,
-  settings: Settings = {}
+  settings: InternalSettingsInput
 ): NexusTypeDefConfigurations {
   const configuration = resolveSettings(settings)
   return {
@@ -56,22 +59,24 @@ export function createNexusTypeDefConfigurations(
   }
 }
 
-function resolveSettings(settings: Settings): Configuration {
+function resolveSettings(settings: InternalSettingsInput): InternalSettings {
   return {
+    ...settings,
     prismaClientImport: settings.prismaClientImport ?? '@prisma/client',
   }
 }
 
-type Settings = {
+type InternalSettingsInput = SettingsData & {
   /**
    * The import ID of prisma client.
    *
+   * @remarks Used to get a class reference to do an instance check for runtime validation reasons.
    * @default @prisma/client
    */
   prismaClientImport?: string
 }
 
-type Configuration = {
+type InternalSettings = SettingsData & {
   prismaClientImport: string
 }
 
@@ -94,7 +99,7 @@ type NexusObjectTypeDefConfiguration = Record<
  */
 function createNexusObjectTypeDefConfigurations(
   dmmf: DMMF.Document,
-  configuration: Configuration
+  configuration: InternalSettings
 ): NexusObjectTypeDefConfigurations {
   return chain(dmmf.datamodel.models)
     .map((model) => {
@@ -135,7 +140,7 @@ export function prismaFieldToNexusType(field: DMMF.Field) {
 export function prismaFieldToNexusResolver(
   model: DMMF.Model,
   field: DMMF.Field,
-  configuration: Configuration
+  settings: InternalSettings
 ): undefined | Resolver {
   /**
    * Allow Nexus default resolver to handle resolving scalars.
@@ -184,19 +189,19 @@ export function prismaFieldToNexusResolver(
     }
 
     // eslint-disable-next-line
-    const PrismaClientPackage = require(configuration.prismaClientImport)
+    const PrismaClientPackage = require(settings.prismaClientImport)
 
     // eslint-disable-next-line
-    if (!(ctx.prisma instanceof PrismaClientPackage.PrismaClient)) {
+    if (!(ctx[settings.prismaClientContextField] instanceof PrismaClientPackage.PrismaClient)) {
       // TODO rich errors
       throw new Error(
-        `The GraphQL context.prisma value is not an instance of the Prisma Client (imported from ${configuration.prismaClientImport}).`
+        `The GraphQL context.${settings.prismaClientContextField} value is not an instance of the Prisma Client (class reference for check imported from ${settings.prismaClientImport}).`
       )
     }
 
     const propertyModelName = lowerFirst(model.name)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const prisma: any = ctx.prisma
+    const prisma: any = ctx[settings.prismaClientContextField]
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const prismaModel = prisma[propertyModelName]
 

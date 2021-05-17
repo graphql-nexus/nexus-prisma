@@ -1,2 +1,2 @@
 export { generateRuntimeAndEmit } from './generate'
-export { Configuration } from './types'
+export { settings } from './settingsSingleton'

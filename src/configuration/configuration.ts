@@ -9,10 +9,10 @@ export async function getConfiguration(): Promise<Configuration | null> {
     searchPlaces: [
       'nexus-prisma.ts',
       'nexusPrisma.ts',
-      'nexusPrisma.ts',
+      'nexus_prisma.ts',
       'prisma/nexus-prisma.ts',
       'prisma/nexusPrisma.ts',
-      'prisma/nexusPrisma.ts',
+      'prisma/nexus_prisma.ts',
     ],
     loaders: {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -25,5 +25,6 @@ export async function getConfiguration(): Promise<Configuration | null> {
     return null
   }
   console.log(`Loaded configuration from ${result.filepath}`)
+  // TODO runtime validation with zod
   return result.config as Configuration
 }

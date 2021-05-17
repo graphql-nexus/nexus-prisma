@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`can project user-to-posts relationship: graphqlOperationExecutionResult 1`] = `
+Object {
+  "data": Object {
+    "users": Array [
+      Object {
+        "id": "user1",
+        "posts": Array [
+          Object {
+            "id": "post1",
+          },
+          Object {
+            "id": "post2",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`can project user-to-posts relationship: graphqlSchemaSDL 1`] = `
+"
+type Query {
+  users: [User]
+}
+
+type User {
+  id: ID!
+  posts: [Post!]!
+}
+
+type Post {
+  id: ID!
+}
+"
+`;

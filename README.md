@@ -105,7 +105,7 @@ export const schema = makeSchema({
 ##### Midterm
 
 - [x] ([#25](https://github.com/prisma/nexus-prisma/pull/25), [#36](https://github.com/prisma/nexus-prisma/issues/36)) Support for Prisma Model field types relating to other Models 1:1
-- [ ] Support for Prisma Model field types relating to other Models 1:n
+- [x] () Support for Prisma Model field types relating to other Models 1:n
 - [ ] Support for Prisma Model field types relating to other Models n:n
 
 ##### Longterm

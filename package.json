@@ -17,7 +17,7 @@
     "nexus_prisma": "./dist/cli/nexus-prisma.js"
   },
   "scripts": {
-    "reflect:toc": "markdown-toc README.md -i --maxdepth 4",
+    "reflect:toc": "markdown-toc README.md -i --maxdepth 4 && prettier --write README.md",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint . --ext .ts,.tsx --fix",

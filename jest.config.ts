@@ -7,7 +7,7 @@ const config: InitialOptionsTsJest = {
   testPathIgnorePatterns: process.env.CI ? [] : ['.*e2e.*'],
   globals: {
     'ts-jest': {
-      diagnostics: Boolean(process.env.CI),
+      diagnostics: Boolean(process.env.CI) ? { ignoreCodes: [7006, 7031] } : false,
       babelConfig: false,
       tsconfig: '<rootDir>/tests/tsconfig.json',
     },

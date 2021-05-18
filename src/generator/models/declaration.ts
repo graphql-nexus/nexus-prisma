@@ -225,7 +225,10 @@ export function fieldTypeToGraphQLType(
       const typeName = field.type as PrismaScalarType
 
       if (field.isId) {
-        if (field.type === 'String' || (field.type === 'Int' && settings.data.mapIdIntToGraphQL === 'ID')) {
+        if (
+          field.type === 'String' ||
+          (field.type === 'Int' && settings.data.projectIdIntToGraphQL === 'ID')
+        ) {
           return StandardgraphQLScalarTypes.ID
         }
       }

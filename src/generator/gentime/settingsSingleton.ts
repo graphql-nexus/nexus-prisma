@@ -5,7 +5,7 @@ export namespace Gentime {
     /**
      * TODO
      */
-    mapIdIntToGraphQL?: 'ID' | 'Int'
+    projectIdIntToGraphQL?: 'ID' | 'Int'
     /**
      * TODO
      */
@@ -29,7 +29,7 @@ export namespace Gentime {
 
   export const settings = Setset.create<SettingsInput, SettingsData>({
     fields: {
-      mapIdIntToGraphQL: {
+      projectIdIntToGraphQL: {
         initial: () => 'Int',
       },
       docPropagation: {

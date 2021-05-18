@@ -622,13 +622,13 @@ You are able to control certain aspects of the Nexus Prisma code generation.
    import { settings } from 'nexus-prisma/generator'
 
    settings({
-     mapIdIntToGraphQL: 'ID',
+     projectIdIntToGraphQL: 'ID',
    })
    ```
 
 #### Reference
 
-##### `mapIdIntToGraphQL: 'ID' | 'Int'`
+##### `projectIdIntToGraphQL: 'ID' | 'Int'`
 
 - **`@summary`** Map Prisma model fields of type `Int` with attribute `@id` to `ID` or `Int`.
 - **`@default`** `Int`
@@ -644,9 +644,9 @@ You are able to control certain aspects of the Nexus Prisma code generation.
 - **`@remarks`** When this is disabled it will force `.description` property to be `undefined`. This is for convenience, allowing you to avoid post-generation data manipulation or consumption contortions.
 - **`@default`** `true`
 
-### Prisma ID field to GraphQL ID scalar type mapping
+### Prisma String @id fields project as GraphQL ID fields
 
-All `@id` fields in your Prisma Schema get projected as `ID` types, not `String` types.
+All `String` fields with `@id` attribute in your Prisma Schema get projected as GraphQL `ID` types rather than `String` types.
 
 ```prisma
 model User {

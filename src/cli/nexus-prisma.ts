@@ -31,7 +31,7 @@ generatorHandler({
     loadUserGentimeSettings()
     generateRuntimeAndEmit(internalDMMF, Gentime.settings)
     process.stdout.write(
-      `You can now start using Prisma Client in your code. Reference: https://pris.ly/d/nexus-prisma\n`
+      `You can now start using Nexus Prisma in your code. Reference: https://pris.ly/d/nexus-prisma\n`
     )
   },
 })

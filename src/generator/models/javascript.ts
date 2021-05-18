@@ -52,10 +52,9 @@ export function createModuleSpec(gentimeSettings: Gentime.Settings): ModuleSpec 
     content: endent`
       const { getPrismaClientDmmf } = require('../helpers/prisma')
       const ModelsGenerator = require('../generator/models')
-      const { Runtime } = require('../generator/runtime/settingsSingleton)
+      const { Runtime } = require('../generator/runtime/settingsSingleton')
 
-      const gentimeSettingsRaw = \`${JSON.stringify(gentimeSettings, null, 2)}\`
-      const gentimeSettings = JSON.parse(gentimeSettingsRaw)
+      const gentimeSettings = ${JSON.stringify(gentimeSettings, null, 2)}
 
       const dmmf = getPrismaClientDmmf()
       const models = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {

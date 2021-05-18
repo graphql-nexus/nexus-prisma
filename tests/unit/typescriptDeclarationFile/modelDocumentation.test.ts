@@ -1,4 +1,4 @@
-import { testGeneratedModules } from '../../__helpers__'
+import { testGeneratedModules } from '../../__helpers__/testers'
 
 testGeneratedModules({
   description:

@@ -10,7 +10,11 @@
     "plugin.js",
     "plugin.d.ts",
     "scalars.js",
-    "scalars.d.ts"
+    "scalars.d.ts",
+    "settings.d.ts",
+    "settings.js",
+    "generator.d.ts",
+    "generator.js"
   ],
   "bin": {
     "nexus-prisma": "./dist/cli/nexus-prisma.js",
@@ -24,7 +28,7 @@
     "lint:check": "eslint . --ext .ts,.tsx --max-warnings 0",
     "dev": "tsc --build --watch",
     "dev:ts": "yarn dev",
-    "dev:yalc": "nodemon --exec 'yalc push --no-scripts' --watch 'dist/**/*'",
+    "dev:yalc": "nodemon --delay 1.5 --exec 'yalc push --no-scripts' --watch 'dist/**/*'",
     "build:module-facades": "ts-node scripts/build-module-facades",
     "build": "yarn clean && yarn build:module-facades && tsc",
     "test": "cross-env DEBUG=e2e jest",
@@ -81,9 +85,7 @@
     "nexus": "^1.0.0"
   },
   "dependencies": {
-    "@endemolshinegroup/cosmiconfig-typescript-loader": "^3.0.2",
     "@prisma/generator-helper": "^2.22.1",
-    "cosmiconfig": "^7.0.0",
     "debug": "^4.3.1",
     "endent": "^2.0.1",
     "fs-jetpack": "^4.1.0",

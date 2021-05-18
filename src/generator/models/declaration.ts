@@ -4,14 +4,15 @@ import { LiteralUnion } from 'type-fest'
 import { StandardGraphQLScalarType, StandardgraphQLScalarTypes } from '../../helpers/graphql'
 import { PrismaScalarType } from '../../helpers/prisma'
 import { allCasesHandled } from '../../helpers/utils'
+import { Gentime } from '../gentime/settingsSingleton'
 import { jsDocForEnum, jsDocForField, jsDocForModel } from '../helpers/JSDocTemplates'
 import { ModuleSpec } from '../types'
 
-export function createModuleSpec(dmmf: DMMF.Document): ModuleSpec {
+export function createModuleSpec(dmmf: DMMF.Document, settings: Gentime.Settings): ModuleSpec {
   return {
     fileName: 'index.d.ts',
     content: endent`
-        ${renderTypeScriptDeclarationForDocumentModels(dmmf)}
+        ${renderTypeScriptDeclarationForDocumentModels(dmmf, settings)}
       `,
   }
 }
@@ -24,7 +25,10 @@ const NO_MODELS_DEFINED_COMMENT = endent`
   // N/A –– You have not defined any enums in your Prisma schema file.
 `
 
-export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document): string {
+export function renderTypeScriptDeclarationForDocumentModels(
+  dmmf: DMMF.Document,
+  settings: Gentime.Settings
+): string {
   const models = dmmf.datamodel.models
   const enums = dmmf.datamodel.enums
 
@@ -47,7 +51,7 @@ export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document
       ${
         models.length === 0
           ? NO_MODELS_DEFINED_COMMENT
-          : models.map(renderTypeScriptDeclarationForModel).join('\n\n')
+          : models.map((model) => renderTypeScriptDeclarationForModel(model, settings)).join('\n\n')
       }
 
       // Enums
@@ -55,7 +59,7 @@ export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document
       ${
         enums.length === 0
           ? NO_ENUMS_DEFINED_COMMENT
-          : enums.map(renderTypeScriptDeclarationForEnum).join('\n\n')
+          : enums.map((enum_) => renderTypeScriptDeclarationForEnum(enum_, settings)).join('\n\n')
       }
     }
 
@@ -83,9 +87,9 @@ export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document
         ? NO_MODELS_DEFINED_COMMENT
         : models
             .map((model) => {
+              const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForModel(model) + '\n' : ''
               return endent`
-                ${jsDocForModel(model)}
-                export const ${model.name}: $Types.${model.name}
+                ${jsdoc}export const ${model.name}: $Types.${model.name}
               `
             })
             .join('\n\n')
@@ -105,53 +109,65 @@ export function renderTypeScriptDeclarationForDocumentModels(dmmf: DMMF.Document
         ? NO_ENUMS_DEFINED_COMMENT
         : enums
             .map((enum_) => {
+              const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForEnum(enum_) + '\n' : ''
               return endent`
-                ${jsDocForEnum(enum_)}
-                export const ${enum_.name}: $Types.${enum_.name}
+                ${jsdoc}export const ${enum_.name}: $Types.${enum_.name}
               `
             })
             .join('\n\n')
     }
-
   `
 }
 
-function renderTypeScriptDeclarationForEnum(enum_: DMMF.DatamodelEnum): string {
+function renderTypeScriptDeclarationForEnum(enum_: DMMF.DatamodelEnum, settings: Gentime.Settings): string {
+  const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForEnum(enum_) + '\n' : ''
+  const description = `${
+    enum_.documentation && settings.data.docPropagation.GraphQLDocs ? `'${enum_.documentation}'` : 'undefined'
+  }`
   return endent`
-    ${jsDocForEnum(enum_)}
-    interface ${enum_.name} {
+    ${jsdoc}interface ${enum_.name} {
       name: '${enum_.name}'
-      description: ${enum_.documentation ? `'${enum_.documentation}'` : 'undefined'}
+      description: ${description}
       members: [${enum_.values.map((value) => `'${value.name}'`).join(', ')}]
     }
   `
 }
 
-function renderTypeScriptDeclarationForModel(model: DMMF.Model): string {
+function renderTypeScriptDeclarationForModel(model: DMMF.Model, settings: Gentime.Settings): string {
+  const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForModel(model) + '\n' : ''
+  const description = `${
+    model.documentation && settings.data.docPropagation.GraphQLDocs ? `'${model.documentation}'` : 'undefined'
+  }`
   return endent`
-    ${jsDocForModel(model)}
-    interface ${model.name} {
+    ${jsdoc}interface ${model.name} {
       $name: '${model.name}'
-      $description: ${model.documentation ? `'${model.documentation}'` : 'undefined'}
-      ${renderTypeScriptDeclarationForModelFields(model)}
+      $description: ${description}
+      ${renderTypeScriptDeclarationForModelFields(model, settings)}
     }
   `
 }
 
-function renderTypeScriptDeclarationForModelFields(model: DMMF.Model): string {
-  return model.fields.map((field) => renderTypeScriptDeclarationForField({ field, model })).join('\n')
+function renderTypeScriptDeclarationForModelFields(model: DMMF.Model, settings: Gentime.Settings): string {
+  return model.fields
+    .map((field) => renderTypeScriptDeclarationForField({ field, model, settings }))
+    .join('\n')
 }
 
 function renderTypeScriptDeclarationForField({
   field,
   model,
+  settings,
 }: {
   field: DMMF.Field
   model: DMMF.Model
+  settings: Gentime.Settings
 }): string {
+  const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForField({ field, model }) + '\n' : ''
+  const description = `${
+    field.documentation && settings.data.docPropagation.GraphQLDocs ? `string` : `undefined`
+  }`
   return endent`
-    ${jsDocForField({ field, model })}
-    ${field.name}: {
+    ${jsdoc}${field.name}: {
       /**
        * The name of this field.
        */
@@ -160,12 +176,12 @@ function renderTypeScriptDeclarationForField({
       /**
        * The type of this field.
        */
-      type: ${renderNexusType2(field)}
+      type: ${renderNexusType2(field, settings)}
 
       /**
        * The documentation of this field.
        */
-      description: ${field.documentation ? `string` : `undefined`}
+      description: ${description}
 
       /**
        * The resolver of this field
@@ -175,8 +191,8 @@ function renderTypeScriptDeclarationForField({
   `
 }
 
-function renderNexusType2(field: DMMF.Field): string {
-  const graphqlType = fieldTypeToGraphQLType(field)
+function renderNexusType2(field: DMMF.Field, settings: Gentime.Settings): string {
+  const graphqlType = fieldTypeToGraphQLType(field, settings.data)
 
   if (field.isList && field.isRequired) {
     return endent`
@@ -197,17 +213,26 @@ function renderNexusType2(field: DMMF.Field): string {
   }
 }
 
-/** Map the fields type to a GraphQL type */
-export function fieldTypeToGraphQLType(field: DMMF.Field): LiteralUnion<StandardGraphQLScalarType, string> {
+/**
+ * Map the fields type to a GraphQL type.
+ *
+ * @remarks The `settings` param type uses settings data instead of setset instance because this helper
+ *          is used at runtime too where we don't have a Setset instane for gentime.
+ */
+export function fieldTypeToGraphQLType(
+  field: DMMF.Field,
+  settings: Gentime.SettingsData
+): LiteralUnion<StandardGraphQLScalarType, string> {
   const fieldKind = field.kind
 
   switch (fieldKind) {
     case 'scalar': {
       const typeName = field.type as PrismaScalarType
 
-      // TODO Allow user to configure this. Maybe some users want Prisma `Int @id` to be GraphQL `ID`.
-      if (field.isId && field.type === 'String') {
-        return StandardgraphQLScalarTypes.ID
+      if (field.isId) {
+        if (field.type === 'String' || (field.type === 'Int' && settings.projectIdIntToGraphQL === 'ID')) {
+          return StandardgraphQLScalarTypes.ID
+        }
       }
 
       switch (typeName) {

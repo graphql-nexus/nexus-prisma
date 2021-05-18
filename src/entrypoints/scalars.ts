@@ -1,5 +1,5 @@
-import { DateTime } from './DateTime'
-import { Json } from './Json'
+import { DateTime } from '../scalars/DateTime'
+import { Json } from '../scalars/Json'
 
 /**
  * Predefined Nexus scalar type definitions to satisfy all custom scalars needed in GraphQL to map to the

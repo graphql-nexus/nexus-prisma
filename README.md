@@ -24,9 +24,15 @@ Official Prisma plugin for Nexus.
   - [Project 1:n Relation](#project-1n-relation)
     - [Example: Tests](#example-tests-1)
     - [Example: Full 1:n](#example-full-1n)
-  - [Prisma ID field to GraphQL ID scalar type mapping](#prisma-id-field-to-graphql-id-scalar-type-mapping)
-  - [Prisma Schema docs re-used for GraphQL schema doc](#prisma-schema-docs-re-used-for-graphql-schema-doc)
-  - [Prisma Schema docs re-used for JSDoc](#prisma-schema-docs-re-used-for-jsdoc)
+  - [Runtime Settings](#runtime-settings)
+    - [Reference](#reference)
+  - [Generator Settings](#generator-settings)
+    - [Usage](#usage-1)
+    - [Reference](#reference-1)
+  - [Prisma String @id fields project as GraphQL ID fields](#prisma-string-id-fields-project-as-graphql-id-fields)
+  - [Prisma Schema Docs Propagation](#prisma-schema-docs-propagation)
+    - [As GraphQL schema doc](#as-graphql-schema-doc)
+    - [As JSDoc](#as-jsdoc)
   - [Refined DX](#refined-dx)
 - [Recipes](#recipes)
   - [Project relation with custom resolver logic](#project-relation-with-custom-resolver-logic)
@@ -120,7 +126,7 @@ export const schema = makeSchema({
 
 ## Features
 
-> **Note**: ⛑ The following use abbreviated examples that skip a complete setup of passing Nexus type definition to Nexus' `makeSchema`. If you are new to Nexus, Consider reading the [official Nexus tutorial](https://nxs.li/tutorial) before jumping into Nexus Prisma.
+> **Note**: ⛑ The following use abbreviated examples that skip a complete setup of passing Nexus type definition to Nexus' `makeSchema`. If you are new to Nexus, consider reading the [official Nexus tutorial](https://nxs.li/tutorial) before jumping into Nexus Prisma.
 
 ### Type-safe Generated Library Code
 
@@ -547,9 +553,100 @@ query {
 }
 ```
 
-### Prisma ID field to GraphQL ID scalar type mapping
+### Runtime Settings
 
-All `@id` fields in your Prisma Schema get projected as `ID` types, not `String` types.
+#### Reference
+
+##### `prismaClientContextField: string`
+
+- **@summary** The name of the GraphQL context field to get an instance of Prisma Client from.
+- **@remarks** The instance of Prisma Client found here is accessed in the default resolvers for relational fields.
+- **@default** `"prisma"`
+- **@example**
+
+  ```ts
+  // src/main.ts
+
+  import { PrismaClient } from '@prisma/client'
+  import { ApolloServer } from 'apollo-server'
+  import { makeSchema } from 'nexus'
+  import { User, Post, $settings } from 'nexus-prisma'
+
+  new ApolloServer({
+    schema: makeSchema({
+      types: [],
+    }),
+    context() {
+      return {
+        db: new PrismaClient(), // <-- You put Prisma client on the "db" context property
+      }
+    },
+  })
+
+  $settings({
+    prismaClientContextField = 'db', // <-- Tell Nexus Prisma
+  })
+  ```
+
+### Generator Settings
+
+You are able to control certain aspects of the Nexus Prisma code generation.
+
+#### Usage
+
+1. Create a configuration file named any of:
+
+   ```
+   nexusPrisma.ts  /  nexus-prisma.ts  /  nexus_prisma.ts
+   ```
+
+   In one of the following directories:
+
+   1. **Project Root** – The directory containing your project's package.json. Example:
+
+      ```
+        ├── nexus-prisma.ts
+        └── package.json
+      ```
+
+   2. **Primsa Directory** – The directory containing your Prisma schema. Example:
+
+      ```
+        ├── prisma/nexus-prisma.ts
+        └── package.json
+      ```
+
+2. Import the settings singleton and make your desired changes. Example:
+
+   ```ts
+   import { settings } from 'nexus-prisma/generator'
+
+   settings({
+     projectIdIntToGraphQL: 'ID',
+   })
+   ```
+
+#### Reference
+
+##### `projectIdIntToGraphQL: 'ID' | 'Int'`
+
+- **`@summary`** Map Prisma model fields of type `Int` with attribute `@id` to `ID` or `Int`.
+- **`@default`** `Int`
+
+##### `docPropagation.JSDoc: boolean`
+
+- **`@summary`** Should Prisma Schema docs propagate as JSdoc?
+- **`@default`** `true`
+
+##### `docPropagation.GraphQLDocs: boolean`
+
+- **`@summary`** Should Prisma Schema docs propagate as GraphQL docs?
+- **`@remarks`** When this is disabled it will force `.description` property to be `undefined`. This is for convenience, allowing you to avoid post-generation data manipulation or consumption contortions.
+- **`@default`** `true`
+
+### Prisma String @id fields project as GraphQL ID fields
+
+All `String` fields with `@id` attribute in your Prisma Schema get projected as GraphQL `ID` types rather than `String` types.
 
 ```prisma
 model User {
@@ -576,7 +673,9 @@ type User {
 }
 ```
 
-### Prisma Schema docs re-used for GraphQL schema doc
+### Prisma Schema Docs Propagation
+
+#### As GraphQL schema doc
 
 ```prisma
 /// A user.
@@ -614,7 +713,7 @@ type User {
 }
 ```
 
-### Prisma Schema docs re-used for JSDoc
+#### As JSDoc
 
 ```prisma
 /// A user.
@@ -676,7 +775,7 @@ Nexus Prisma generates default GraphQL resolvers for your model _relation fields
          resolve(...args) {
            // Your custom before-logic here
            const result = await User.posts.resolve(...args)
-           // Your custom afer-logic here
+           // Your custom after-logic here
            return result
          },
        })

@@ -23,11 +23,11 @@ import * as path from 'path'
 import { PackageJson } from 'type-fest'
 
 generateModuleFacades([
-  ['scalars.d.ts', "export * from './dist/scalars'"],
-  ['scalars.js', "module.exports = require('./dist/scalars')"],
+  ['scalars.d.ts', "export * from './dist/entrypoints/scalars'"],
+  ['scalars.js', "module.exports = require('./dist/entrypoints/scalars')"],
 
-  ['plugin.d.ts', "export * from './dist/plugin'"],
-  ['plugin.js', "exports.plugin = reuqire('./dist/plugin')"],
+  ['generator.d.ts', "export * from './dist/entrypoints/generator'"],
+  ['generator.js', "module.exports = require('./dist/entrypoints/generator')"],
 ])
 
 function generateModuleFacades(facades: ModuleFacade[]) {

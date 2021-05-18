@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 import { objectType, queryType } from 'nexus'
-import { IntegrationTestSpec } from './__helpers__'
+import { IntegrationTestSpec } from './__helpers__/testers'
 
 export namespace Specs {
   export const relation1ToNReverse: IntegrationTestSpec = {

@@ -3,14 +3,15 @@ import * as fs from 'fs-jetpack'
 import * as Path from 'path'
 import * as pkgup from 'pkg-up'
 import { d } from '../helpers/debugNexusPrisma'
+import { Gentime } from './gentime/settingsSingleton'
 import * as ModelsGenerator from './models'
-import { ModuleSpec, Configuration } from './types'
+import { ModuleSpec } from './types'
 
 const OUTPUT_SOURCE_DIR = getOutputSourceDir()
 
 /** Generate the Nexus Prisma runtime files and emit them into a "hole" in the internal package source tree. */
-export function generateRuntimeAndEmit(dmmf: DMMF.Document, configuration: Configuration | null): void {
-  d('start generateRuntime with configuration %j', configuration)
+export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Settings): void {
+  d('start generateRuntime with configuration %j', settings)
 
   d('start generateRuntime')
 
@@ -19,8 +20,8 @@ export function generateRuntimeAndEmit(dmmf: DMMF.Document, configuration: Confi
   }
 
   const sourceFiles: ModuleSpec[] = [
-    ModelsGenerator.JS.createModuleSpec(),
-    ModelsGenerator.TS.createModuleSpec(dmmf),
+    ModelsGenerator.JS.createModuleSpec(settings),
+    ModelsGenerator.TS.createModuleSpec(dmmf, settings),
   ]
 
   fs.remove(OUTPUT_SOURCE_DIR)
@@ -36,10 +37,10 @@ export function generateRuntimeAndEmit(dmmf: DMMF.Document, configuration: Confi
 }
 
 /** Transform the given DMMF into JS source code with accompanying TS declarations. */
-export function generateRuntime(dmmf: DMMF.Document): ModuleSpec[] {
+export function generateRuntime(dmmf: DMMF.Document, settings: Gentime.Settings): ModuleSpec[] {
   const sourceFiles: ModuleSpec[] = [
-    ModelsGenerator.JS.createModuleSpec(),
-    ModelsGenerator.TS.createModuleSpec(dmmf),
+    ModelsGenerator.JS.createModuleSpec(settings),
+    ModelsGenerator.TS.createModuleSpec(dmmf, settings),
   ]
 
   return sourceFiles

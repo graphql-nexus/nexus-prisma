@@ -106,5 +106,5 @@ dist
 # Facades
 scalars.d.ts
 scalars.js
-plugin.js
-plugin.d.ts
+generator.d.ts
+generator.js

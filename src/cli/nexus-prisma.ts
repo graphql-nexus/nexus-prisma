@@ -7,10 +7,10 @@ process.env.DEBUG_HIDE_DATE = 'true'
 
 import { generatorHandler } from '@prisma/generator-helper'
 import * as Path from 'path'
-
 import { generateRuntimeAndEmit } from '../generator'
+import { loadUserGentimeSettings } from '../generator/gentime/settingsLoader'
+import { Gentime } from '../generator/gentime/settingsSingleton'
 import { externalToInternalDmmf } from '../helpers/prismaExternalToInternalDMMF'
-import { getConfiguration } from '../configuration'
 
 // todo by default error in ci and warn in local
 // enforceValidPeerDependencies({
@@ -25,10 +25,13 @@ generatorHandler({
     }
   },
   // async required by interface
+  // eslint-disable-next-line
   async onGenerate({ dmmf }) {
     const internalDMMF = externalToInternalDmmf(dmmf)
-    console.log('created internal dmmf')
-    const configuration = await getConfiguration()
-    generateRuntimeAndEmit(internalDMMF, configuration)
+    loadUserGentimeSettings()
+    generateRuntimeAndEmit(internalDMMF, Gentime.settings)
+    process.stdout.write(
+      `You can now start using Nexus Prisma in your code. Reference: https://pris.ly/d/nexus-prisma\n`
+    )
   },
 })

@@ -2,7 +2,7 @@ import endent from 'endent'
 import gql from 'graphql-tag'
 import { list, objectType, queryType } from 'nexus'
 import NexusPrismaScalars from '../../scalars'
-import { testIntegration } from '../__helpers__'
+import { testIntegration } from '../__helpers__/testers'
 
 testIntegration({
   skip: true, // integration test currently only works against SQLite which doesn't support JSON

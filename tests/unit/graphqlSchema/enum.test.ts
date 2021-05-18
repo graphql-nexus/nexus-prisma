@@ -1,6 +1,6 @@
 import endent from 'endent'
 import { enumType } from 'nexus'
-import { testGraphqlSchema } from '../../__helpers__'
+import { testGraphqlSchema } from '../../__helpers__/testers'
 
 testGraphqlSchema({
   description: 'When an enum is defined in the Prisma schema it can be projected into the GraphQL API',

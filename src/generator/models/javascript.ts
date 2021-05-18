@@ -29,7 +29,7 @@ type NexusTypeDefConfigurations = Record<
   NexusObjectTypeDefConfiguration | NexusEnumTypeDefConfiguration
 >
 
-type Settings = {
+export type Settings = {
   runtime: Runtime.Settings
   gentime: Gentime.SettingsData
   internal: {
@@ -111,7 +111,7 @@ function createNexusObjectTypeDefConfigurations(
           .map((field) => {
             return {
               name: field.name,
-              type: prismaFieldToNexusType(field),
+              type: prismaFieldToNexusType(field, settings),
               description: settings.gentime.docPropagation.GraphQLDocs ? field.documentation : undefined,
               resolve: prismaFieldToNexusResolver(model, field, settings),
             }
@@ -126,8 +126,8 @@ function createNexusObjectTypeDefConfigurations(
 
 // Complex return type I don't really understand how to easily work with manually.
 // eslint-disable-next-line
-export function prismaFieldToNexusType(field: DMMF.Field) {
-  const graphqlType = fieldTypeToGraphQLType(field)
+export function prismaFieldToNexusType(field: DMMF.Field, settings: Settings) {
+  const graphqlType = fieldTypeToGraphQLType(field, settings.gentime)
 
   if (field.isList) {
     return Nexus.nonNull(Nexus.list(Nexus.nonNull(graphqlType)))

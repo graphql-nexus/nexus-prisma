@@ -1,4 +1,4 @@
-import { testGeneratedModules } from '../../__helpers__'
+import { testGeneratedModules } from '../../__helpers__/testers'
 
 testGeneratedModules({
   description: 'A model field with type String, attribute @id, maps to GraphQL ID scalar',

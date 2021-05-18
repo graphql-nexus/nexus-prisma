@@ -1,7 +1,7 @@
 import endent from 'endent'
 import { objectType } from 'nexus'
 import NexusPrismaScalars from '../../../scalars'
-import { testGraphqlSchema } from '../../__helpers__'
+import { testGraphqlSchema } from '../../__helpers__/testers'
 
 testGraphqlSchema({
   description: 'When a JSON field is defined in the Prisma schema it can be projected into the GraphQL API',

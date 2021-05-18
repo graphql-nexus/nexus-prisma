@@ -192,7 +192,7 @@ function renderTypeScriptDeclarationForField({
 }
 
 function renderNexusType2(field: DMMF.Field, settings: Gentime.Settings): string {
-  const graphqlType = fieldTypeToGraphQLType(field, settings)
+  const graphqlType = fieldTypeToGraphQLType(field, settings.data)
 
   if (field.isList && field.isRequired) {
     return endent`
@@ -213,10 +213,15 @@ function renderNexusType2(field: DMMF.Field, settings: Gentime.Settings): string
   }
 }
 
-/** Map the fields type to a GraphQL type */
+/**
+ * Map the fields type to a GraphQL type.
+ *
+ * @remarks The `settings` param type uses settings data instead of setset instance because this helper
+ *          is used at runtime too where we don't have a Setset instane for gentime.
+ */
 export function fieldTypeToGraphQLType(
   field: DMMF.Field,
-  settings: Gentime.Settings
+  settings: Gentime.SettingsData
 ): LiteralUnion<StandardGraphQLScalarType, string> {
   const fieldKind = field.kind
 
@@ -225,10 +230,7 @@ export function fieldTypeToGraphQLType(
       const typeName = field.type as PrismaScalarType
 
       if (field.isId) {
-        if (
-          field.type === 'String' ||
-          (field.type === 'Int' && settings.data.projectIdIntToGraphQL === 'ID')
-        ) {
+        if (field.type === 'String' || (field.type === 'Int' && settings.projectIdIntToGraphQL === 'ID')) {
           return StandardgraphQLScalarTypes.ID
         }
       }

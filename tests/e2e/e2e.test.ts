@@ -4,7 +4,9 @@ import * as Execa from 'execa'
 import { gql } from 'graphql-request'
 import stripAnsi from 'strip-ansi'
 import { inspect } from 'util'
-import { assertBuildPresent, createPrismaSchema, setupTestProject, TestProject } from '../__helpers__'
+import { assertBuildPresent } from '../__helpers__/helpers'
+import { createPrismaSchema } from '../__helpers__/testers'
+import { setupTestProject, TestProject } from '../__helpers__/testProject'
 
 const d = debug('e2e')
 

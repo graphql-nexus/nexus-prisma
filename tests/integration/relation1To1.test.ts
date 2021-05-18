@@ -1,6 +1,6 @@
 import { gql } from 'graphql-tag'
 import { nonNull, objectType, queryType } from 'nexus'
-import { testIntegration } from '../__helpers__'
+import { testIntegration } from '../__helpers__/testers'
 
 testIntegration({
   description: 'can project user-to-profile relationship',

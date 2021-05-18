@@ -2,7 +2,8 @@ import endent from 'endent'
 import * as Execa from 'execa'
 import { merge, omit } from 'lodash'
 import { PackageJson } from 'type-fest'
-import { assertBuildPresent, setupTestProject, TestProject } from '../__helpers__'
+import { assertBuildPresent } from '../__helpers__/helpers'
+import { setupTestProject, TestProject } from '../__helpers__/testProject'
 
 /** Setup */
 

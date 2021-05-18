@@ -10,6 +10,7 @@ Official Prisma plugin for Nexus.
 
 - [Usage](#usage)
 - [Roadmap](#roadmap)
+- [Architecture](#architecture)
 - [Features](#features)
   - [Type-safe Generated Library Code](#type-safe-generated-library-code)
   - [Project Enums](#project-enums)
@@ -110,19 +111,34 @@ export const schema = makeSchema({
 - [x] ([#16](https://github.com/prisma/nexus-prisma/issues/16)) Support for Prisma enums
 - [x] ([#25](https://github.com/prisma/nexus-prisma/pull/25), [#36](https://github.com/prisma/nexus-prisma/issues/36)) Basic support for Prisma Model field types relating to other Models 1:1
 - [x] ([#38](https://github.com/prisma/nexus-prisma/pull/38)) Basic support for Prisma Model field types relating to other Models 1:n
+- [x] ([#43](https://github.com/prisma/nexus-prisma/issues/43)) Support for runtime and gentime settings
 
 ##### Shortterm
 
-- [ ] Support for Prisma Model field types of remaining scalars (`Bytes`, etc.)
+- [ ] Improved JSDoc for relation 1:1 & 1:n fields
 
 ##### Midterm
 
+- [ ] Support for Prisma Model field types of remaining scalars (`Bytes`, etc.)
 - [ ] Support for Prisma Model field types relating to other Models n:n
+- [ ] Support for relation field ordering parameters
 
 ##### Longterm
 
 - [ ] Nexus Plugin? `t.model`? `t.crud`?
 - [ ] ...
+
+## Architecture
+
+![nexus-prisma-architecture](https://user-images.githubusercontent.com/284476/118728589-70fce780-b802-11eb-8c8b-4328ef5d6fb5.png)
+
+1. You or a script (CI, programmatic, etc.) run `$ prisma generate`.
+2. Prisma generator system reads your Prisma schema file
+3. Prisma generator system runs the Nexus Prisma generator passing it the "DMMF", a structured representation of your Prisma schema.
+4. Nexus Prisma generator reads your Nexus Prisma generator configuration if present.
+5. Nexus Prisma generator writes generated source code into its own package space in your node_modules.
+6. Later when you run your code it imports `nexus-prisma` which hits the generated entrypoint.
+7. The generated runtime is actually thin, making use of a larger static runtime.
 
 ## Features
 

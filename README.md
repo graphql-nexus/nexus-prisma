@@ -29,7 +29,7 @@ Official Prisma plugin for Nexus.
   - [Generator Settings](#generator-settings)
     - [Usage](#usage-1)
     - [Reference](#reference-1)
-  - [Prisma ID field to GraphQL ID scalar type mapping](#prisma-id-field-to-graphql-id-scalar-type-mapping)
+  - [Prisma String @id fields project as GraphQL ID fields](#prisma-string-id-fields-project-as-graphql-id-fields)
   - [Prisma Schema Docs Propagation](#prisma-schema-docs-propagation)
     - [As GraphQL schema doc](#as-graphql-schema-doc)
     - [As JSDoc](#as-jsdoc)

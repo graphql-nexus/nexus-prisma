@@ -619,17 +619,19 @@ You are able to control certain aspects of the Nexus Prisma code generation.
 2. Import the settings singleton and make your desired changes. Example:
 
    ```ts
-   import settings from 'nexus-prisma/settings'
+   import { settings } from 'nexus-prisma/generator'
 
-   settings.prismaClientContextField = 'db'
+   settings({
+     mapIdIntToGraphQL: 'ID',
+   })
    ```
 
 #### Reference
 
-##### `mapIdIntToGraphQLInt: boolean`
+##### `mapIdIntToGraphQL: 'ID' | 'Int'`
 
-- **`@summary`** Should Prisma model fields of type `Int` with attribute `@id` be mapped to GraphQL `Int` types? If false then maps to GraphQL `ID` type.
-- **`@default`** `true`
+- **`@summary`** Map Prisma model fields of type `Int` with attribute `@id` to `ID` or `Int`.
+- **`@default`** `Int`
 
 ##### `docPropagation.JSDoc: boolean`
 

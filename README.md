@@ -126,7 +126,7 @@ export const schema = makeSchema({
 
 ## Features
 
-> **Note**: ⛑ The following use abbreviated examples that skip a complete setup of passing Nexus type definition to Nexus' `makeSchema`. If you are new to Nexus, Consider reading the [official Nexus tutorial](https://nxs.li/tutorial) before jumping into Nexus Prisma.
+> **Note**: ⛑ The following use abbreviated examples that skip a complete setup of passing Nexus type definition to Nexus' `makeSchema`. If you are new to Nexus, consider reading the [official Nexus tutorial](https://nxs.li/tutorial) before jumping into Nexus Prisma.
 
 ### Type-safe Generated Library Code
 
@@ -775,7 +775,7 @@ Nexus Prisma generates default GraphQL resolvers for your model _relation fields
          resolve(...args) {
            // Your custom before-logic here
            const result = await User.posts.resolve(...args)
-           // Your custom afer-logic here
+           // Your custom after-logic here
            return result
          },
        })

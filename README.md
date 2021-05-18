@@ -584,7 +584,7 @@ query {
   })
 
   $settings({
-    prismaClientContextField = 'db', // <-- Tell prisma about it
+    prismaClientContextField = 'db', // <-- Tell Nexus Prisma
   })
   ```
 

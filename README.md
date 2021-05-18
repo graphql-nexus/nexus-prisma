@@ -24,9 +24,15 @@ Official Prisma plugin for Nexus.
   - [Project 1:n Relation](#project-1n-relation)
     - [Example: Tests](#example-tests-1)
     - [Example: Full 1:n](#example-full-1n)
+  - [Runtime Settings](#runtime-settings)
+    - [Reference](#reference)
+  - [Generator Settings](#generator-settings)
+    - [Usage](#usage-1)
+    - [Reference](#reference-1)
   - [Prisma ID field to GraphQL ID scalar type mapping](#prisma-id-field-to-graphql-id-scalar-type-mapping)
-  - [Prisma Schema docs re-used for GraphQL schema doc](#prisma-schema-docs-re-used-for-graphql-schema-doc)
-  - [Prisma Schema docs re-used for JSDoc](#prisma-schema-docs-re-used-for-jsdoc)
+  - [Prisma Schema Docs Propagation](#prisma-schema-docs-propagation)
+    - [As GraphQL schema doc](#as-graphql-schema-doc)
+    - [As JSDoc](#as-jsdoc)
   - [Refined DX](#refined-dx)
 - [Recipes](#recipes)
   - [Project relation with custom resolver logic](#project-relation-with-custom-resolver-logic)
@@ -547,6 +553,90 @@ query {
 }
 ```
 
+### Runtime Settings
+
+#### Reference
+
+##### `prismaClientContextField: string`
+
+- **@summary** The name of the GraphQL context field to get an instance of Prisma Client from.
+- **@remarks** The instance of Prisma Client found here is accessed in the default resolvers for relational fields.
+- **@default** `"prisma"`
+- **@example**
+
+  ```ts
+  // src/main.ts
+
+  import { PrismaClient } from '@prisma/client'
+  import { ApolloServer } from 'apollo-server'
+  import { makeSchema } from 'nexus'
+  import { User, Post, $settings } from 'nexus-prisma'
+
+  new ApolloServer({
+    schema: makeSchema({
+      types: [],
+    }),
+    context() {
+      return {
+        db: new PrismaClient(), // <-- You put Prisma client on the "db" context property
+      }
+    },
+  })
+
+  $settings({
+    prismaClientContextField = 'db', // <-- Tell prisma about it
+  })
+  ```
+
+### Generator Settings
+
+You are able to control certain aspects of the Nexus Prisma code generation.
+
+#### Usage
+
+1. Create a configuration file named any of:
+
+   ```
+   nexusPrisma.ts  /  nexus-prisma.ts  /  nexus_prisma.ts
+   ```
+
+   In one of the following directories:
+
+   1. **Project Root** – The directory containing your project's package.json. Example:
+
+      ```
+        ├── nexus-prisma.ts
+        └── package.json
+      ```
+
+   2. **Primsa Directory** – The directory containing your Prisma schema. Example:
+
+      ```
+        ├── prisma/nexus-prisma.ts
+        └── package.json
+      ```
+
+2. Import the settings singleton and make your desired changes. Example:
+
+   ```ts
+   import settings from 'nexus-prisma/settings'
+
+   settings.prismaClientContextField = 'db'
+   ```
+
+#### Reference
+
+##### `docPropagation.JSDoc: boolean`
+
+- **`@summary`** Should Prisma Schema docs propagate as JSdoc?
+- **`@default`** `true`
+
+##### `docPropagation.GraphQLDocs: boolean`
+
+- **`@summary`** Should Prisma Schema docs propagate as GraphQL docs?
+- **`@remarks`** When this is disabled it will force `.description` property to be `undefined`. This is for convenience, allowing you to avoid post-generation data manipulation or consumption contortions.
+- **`@default`** `true`
+
 ### Prisma ID field to GraphQL ID scalar type mapping
 
 All `@id` fields in your Prisma Schema get projected as `ID` types, not `String` types.
@@ -576,7 +666,9 @@ type User {
 }
 ```
 
-### Prisma Schema docs re-used for GraphQL schema doc
+### Prisma Schema Docs Propagation
+
+#### As GraphQL schema doc
 
 ```prisma
 /// A user.
@@ -614,7 +706,7 @@ type User {
 }
 ```
 
-### Prisma Schema docs re-used for JSDoc
+#### As JSDoc
 
 ```prisma
 /// A user.

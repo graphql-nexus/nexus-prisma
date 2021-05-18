@@ -626,6 +626,11 @@ You are able to control certain aspects of the Nexus Prisma code generation.
 
 #### Reference
 
+##### `mapIdIntToGraphQLInt: boolean`
+
+- **`@summary`** Should Prisma model fields of type `Int` with attribute `@id` be mapped to GraphQL `Int` types? If false then maps to GraphQL `ID` type.
+- **`@default`** `true`
+
 ##### `docPropagation.JSDoc: boolean`
 
 - **`@summary`** Should Prisma Schema docs propagate as JSdoc?

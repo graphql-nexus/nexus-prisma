@@ -54,7 +54,7 @@ export function createModuleSpec(gentimeSettings: Gentime.Settings): ModuleSpec 
       const ModelsGenerator = require('../generator/models')
       const { Runtime } = require('../generator/runtime/settingsSingleton')
 
-      const gentimeSettings = ${JSON.stringify(gentimeSettings, null, 2)}
+      const gentimeSettings = ${JSON.stringify(gentimeSettings.data, null, 2)}
 
       const dmmf = getPrismaClientDmmf()
       const models = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {

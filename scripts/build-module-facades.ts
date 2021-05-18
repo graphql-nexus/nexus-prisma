@@ -26,8 +26,8 @@ generateModuleFacades([
   ['scalars.d.ts', "export * from './dist/scalars'"],
   ['scalars.js', "module.exports = require('./dist/scalars')"],
 
-  ['settings.d.ts', "export * from './dist/settings'"],
-  ['settings.js', "module.exports = require('./dist/settings')"],
+  ['generator.d.ts', "export * from './dist/entrypoints/generator'"],
+  ['generator.js', "module.exports = require('./dist/entrypoints/generator')"],
 ])
 
 function generateModuleFacades(facades: ModuleFacade[]) {

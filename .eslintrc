@@ -14,6 +14,8 @@
   ],
   "overrides": [],
   "rules": {
+    // They are great actually
+    "@typescript-eslint/no-namespace": "off",
     // TypeScript makes these safe & effective
     "no-case-declarations": "off",
     // Same approach used by TypeScript noUnusedLocals

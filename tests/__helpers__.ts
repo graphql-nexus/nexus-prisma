@@ -10,12 +10,15 @@ import { core } from 'nexus'
 import { AllNexusTypeDefs } from 'nexus/dist/core'
 import { PackageJson, TsConfigJson } from 'type-fest'
 import { generateRuntime } from '../src/generator/generate'
+import { GentimeSettingsData } from '../src/generator/gentime/settingsSingleton'
 import * as ModelsGenerator from '../src/generator/models'
-import { SettingsData } from '../src/generator/settingsManager'
 import { ModuleSpec } from '../src/generator/types'
 
-const settingsDefaults: SettingsData = {
-  prismaClientContextField: 'prisma',
+const settingsDefaults: GentimeSettingsData = {
+  docPropagation: {
+    GraphQLDocs: true,
+    JSDoc: true,
+  },
 }
 
 /**

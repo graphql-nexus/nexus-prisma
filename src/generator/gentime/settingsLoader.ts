@@ -1,8 +1,6 @@
 import * as fs from 'fs'
-import { settings } from '.'
-import { SettingsData } from './settingsManager'
 
-export function getSettings(): SettingsData {
+export function loadUserGentimeSettings(): void {
   // eslint-disable-next-line
   const tsNode = require('ts-node')
 
@@ -23,16 +21,13 @@ export function getSettings(): SettingsData {
   )
 
   /**
-   * Load the user's settings module for side-effects against the settings manager.
+   * Load the user's settings module for side-effects against the setset instance.
    */
 
   if (userSettingsModulePath) {
     console.log(`Loaded configuration from ${userSettingsModulePath}`)
     require(userSettingsModulePath)
   }
-
-  // eslint-disable-next-line
-  return (settings as any).data
 }
 
 function pickFirstExisting(paths: string[]): null | string {

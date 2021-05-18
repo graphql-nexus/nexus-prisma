@@ -8,7 +8,8 @@ process.env.DEBUG_HIDE_DATE = 'true'
 import { generatorHandler } from '@prisma/generator-helper'
 import * as Path from 'path'
 import { generateRuntimeAndEmit } from '../generator'
-import { getSettings } from '../generator/settingsGetter'
+import { loadUserGentimeSettings } from '../generator/gentime/settingsLoader'
+import { Gentime } from '../generator/gentime/settingsSingleton'
 import { externalToInternalDmmf } from '../helpers/prismaExternalToInternalDMMF'
 
 // todo by default error in ci and warn in local
@@ -27,7 +28,7 @@ generatorHandler({
   // eslint-disable-next-line
   async onGenerate({ dmmf }) {
     const internalDMMF = externalToInternalDmmf(dmmf)
-    const settings = getSettings()
-    generateRuntimeAndEmit(internalDMMF, settings)
+    loadUserGentimeSettings()
+    generateRuntimeAndEmit(internalDMMF, Gentime.settings)
   },
 })

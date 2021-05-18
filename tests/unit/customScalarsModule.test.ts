@@ -1,4 +1,4 @@
-import NexusPrismaScalars, * as NexusPrismaScalarsNS from '../../scalars'
+import NexusPrismaScalars, * as NexusPrismaScalarsNS from '../../src/entrypoints/scalars'
 import { assertBuildPresent } from '../__helpers__'
 
 assertBuildPresent()

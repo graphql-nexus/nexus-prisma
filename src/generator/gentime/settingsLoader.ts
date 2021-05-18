@@ -1,4 +1,5 @@
 import * as fs from 'fs'
+import { d } from '../../helpers/debugNexusPrisma'
 
 export function loadUserGentimeSettings(): void {
   // eslint-disable-next-line
@@ -25,7 +26,7 @@ export function loadUserGentimeSettings(): void {
    */
 
   if (userSettingsModulePath) {
-    console.log(`Loaded configuration from ${userSettingsModulePath}`)
+    d(`Loaded configuration from ${userSettingsModulePath}`)
     require(userSettingsModulePath)
   }
 }

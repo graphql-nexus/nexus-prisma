@@ -28,7 +28,7 @@
     "lint:check": "eslint . --ext .ts,.tsx --max-warnings 0",
     "dev": "tsc --build --watch",
     "dev:ts": "yarn dev",
-    "dev:yalc": "nodemon --exec 'yalc push --no-scripts' --watch 'dist/**/*'",
+    "dev:yalc": "nodemon --delay 1.5 --exec 'yalc push --no-scripts' --watch 'dist/**/*'",
     "build:module-facades": "ts-node scripts/build-module-facades",
     "build": "yarn clean && yarn build:module-facades && tsc",
     "test": "cross-env DEBUG=e2e jest",

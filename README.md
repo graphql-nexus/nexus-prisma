@@ -1,4 +1,4 @@
-**⚠️ Currently in development - _not to be used in Production_.** Follow progress from [here](https://github.com/graphql-nexus/nexus-plugin-prisma/issues/1039).
+**⚠️ Currently in early preview - _not to be used in Production unless you're willing to live on the bleeding edge and give us feedback, which we would welcome!_.** Follow progress [here](https://github.com/graphql-nexus/nexus-plugin-prisma/issues/1039).
 
 # nexus-prisma
 
@@ -115,6 +115,7 @@ export const schema = makeSchema({
 ##### Shortterm
 
 - [ ] Improved JSDoc for relation 1:1 & 1:n fields
+- [ ] Improved JSDoc for settings
 
 ##### Midterm
 

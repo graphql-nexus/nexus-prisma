@@ -28,9 +28,9 @@ generatorHandler({
   async onGenerate({ dmmf, otherGenerators }) {
     const prismaClientGenerator = otherGenerators.find((g) => g.provider.value === 'prisma-client-js')
 
-    if (!Gentime.settings.data.prismaClientLocation && prismaClientGenerator?.output?.value) {
+    if (!Gentime.settings.data.prismaClientLocation) {
       Gentime.changeSettings({
-        prismaClientLocation: prismaClientGenerator?.output?.value,
+        prismaClientLocation: prismaClientGenerator?.output?.value || '@prisma/client',
       })
     }
 

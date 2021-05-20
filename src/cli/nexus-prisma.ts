@@ -28,11 +28,11 @@ generatorHandler({
   async onGenerate({ dmmf, otherGenerators }) {
     const prismaClientGenerator = otherGenerators.find((g) => g.provider.value === 'prisma-client-js')
 
-    // WARNING: Make sure this logic comes before `loadUserGentimeSettings` below 
+    // WARNING: Make sure this logic comes before `loadUserGentimeSettings` below
     // otherwise we will overwrite the user's choice for this setting if they have set it.
     if (prismaClientGenerator?.output?.value) {
       Gentime.settings.change({
-        prismaClientImportId: prismaClientGenerator.output.value
+        prismaClientImportId: prismaClientGenerator.output.value,
       })
     }
 

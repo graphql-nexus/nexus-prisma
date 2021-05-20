@@ -1,5 +1,5 @@
-import dedent from 'dedent'
 import { objectType } from 'nexus'
+import dedent from 'ts-dedent'
 import NexusPrismaScalars from '../../../scalars'
 import { testGraphqlSchema } from '../../__helpers__/testers'
 

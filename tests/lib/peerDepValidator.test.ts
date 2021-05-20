@@ -1,6 +1,6 @@
-import dedent from 'dedent'
 import * as Execa from 'execa'
 import { merge, omit } from 'lodash'
+import dedent from 'ts-dedent'
 import { PackageJson } from 'type-fest'
 import { assertBuildPresent } from '../__helpers__/helpers'
 import { setupTestProject, TestProject } from '../__helpers__/testProject'

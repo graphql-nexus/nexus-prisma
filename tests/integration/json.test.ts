@@ -1,6 +1,6 @@
-import dedent from 'dedent'
 import gql from 'graphql-tag'
 import { list, objectType, queryType } from 'nexus'
+import dedent from 'ts-dedent'
 import NexusPrismaScalars from '../../scalars'
 import { testIntegration } from '../__helpers__/testers'
 

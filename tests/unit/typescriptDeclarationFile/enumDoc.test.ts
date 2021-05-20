@@ -1,4 +1,4 @@
-import dedent from 'dedent'
+import dedent from 'ts-dedent'
 import { testGeneratedModules } from '../../__helpers__/testers'
 
 testGeneratedModules({

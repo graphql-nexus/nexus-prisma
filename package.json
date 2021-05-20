@@ -86,6 +86,7 @@
   },
   "dependencies": {
     "@prisma/generator-helper": "^2.22.1",
+    "charlie": "^0.0.5",
     "debug": "^4.3.1",
     "endent": "^2.0.1",
     "fs-jetpack": "^4.1.0",

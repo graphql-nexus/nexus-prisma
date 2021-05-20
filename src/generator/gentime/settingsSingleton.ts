@@ -21,6 +21,10 @@ export namespace Gentime {
            */
           GraphQLDocs?: boolean
         }
+    /**
+     * Location of your generated prisma client.
+     */
+    prismaClientLocation?: string | null
   }
 
   export type SettingsData = Setset.InferDataFromInput<SettingsInput>
@@ -45,6 +49,9 @@ export namespace Gentime {
             initial: () => true,
           },
         },
+      },
+      prismaClientLocation: {
+        initial: () => null,
       },
     },
   })

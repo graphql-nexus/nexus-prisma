@@ -16,7 +16,6 @@ Official Prisma plugin for Nexus.
   - [Project Enums](#project-enums)
   - [Project Scalars](#project-scalars)
   - [Project Relations](#project-relations)
-    - [Limitation: Hardcoded key for Prisma Client on GraphQL Context](#limitation-hardcoded-key-for-prisma-client-on-graphql-context)
     - [Example: Exposing Prisma Client on GraphQL Context with Apollo Server](#example-exposing-prisma-client-on-graphql-context-with-apollo-server)
   - [Project 1:1 Relation](#project-11-relation)
     - [Example: Tests](#example-tests)
@@ -237,9 +236,7 @@ You can project [relations](https://www.prisma.io/docs/concepts/components/prism
 
 Please note that not all kinds of relationships are supported yet. Details about projecting each kind of relation are documented in their respective sections. This section only contains general documentation common to all.
 
-#### Limitation: Hardcoded key for Prisma Client on GraphQL Context
-
-To project relations you must expose an instance of Prisma Client on the GraphQL context under the key name `prisma`. This limitation may be a problem for your project. There is an [issue tracking this](https://github.com/prisma/nexus-prisma/issues/35) that you can subscribe to if interested. The only workaround is to write your own resolvers.
+To project relations you must by default expose an instance of Prisma Client on the GraphQL context under the key name `prisma`. You can [customize which context property Nexus Prisma should look for your Prisma Client](#prismaclientcontextfield-string).
 
 #### Example: Exposing Prisma Client on GraphQL Context with Apollo Server
 

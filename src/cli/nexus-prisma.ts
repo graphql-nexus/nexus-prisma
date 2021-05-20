@@ -32,7 +32,7 @@ generatorHandler({
     // otherwise we will overwrite the user's choice for this setting if they have set it.
     if (prismaClientGenerator?.output?.value) {
       Gentime.settings.change({
-        prismaClientLocation: prismaClientGenerator.output.value
+        prismaClientImportId: prismaClientGenerator.output.value
       })
     }
 

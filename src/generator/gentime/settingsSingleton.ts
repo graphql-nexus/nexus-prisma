@@ -37,7 +37,7 @@ export namespace Gentime {
      * @remarks Nexus Prisma imports Prisma client internally for two reasons: 1) validation wherein a class reference to Prisma Client is needed for some `instanceof` checks and 2) for acquiring the DMMF as Nexus Prisma relies on some post-processing done by Prisma Client generator.
      * 
      */
-    prismaClientLocation?: string | null
+     prismaClientImportId?: string | null
   }
 
   export type SettingsData = Setset.InferDataFromInput<SettingsInput>

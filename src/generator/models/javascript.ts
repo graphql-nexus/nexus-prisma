@@ -56,7 +56,7 @@ export function createModuleSpec(gentimeSettings: Gentime.Settings): ModuleSpec 
 
       const gentimeSettings = ${JSON.stringify(gentimeSettings.data, null, 2)}
 
-      const dmmf = getPrismaClientDmmf(gentimeSettings.prismaClientLocation)
+      const dmmf = getPrismaClientDmmf(gentimeSettings.prismaClientImportId)
 
       const models = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {
         runtime: Runtime.settings,

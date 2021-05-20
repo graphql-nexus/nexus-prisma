@@ -4,7 +4,6 @@
 
 process.env.DEBUG_COLORS = 'true'
 process.env.DEBUG_HIDE_DATE = 'true'
-
 import { generatorHandler } from '@prisma/generator-helper'
 import * as Path from 'path'
 import { generateRuntimeAndEmit } from '../generator'
@@ -26,7 +25,15 @@ generatorHandler({
   },
   // async required by interface
   // eslint-disable-next-line
-  async onGenerate({ dmmf }) {
+  async onGenerate({ dmmf, otherGenerators }) {
+    const prismaClientGenerator = otherGenerators.find((g) => g.provider.value === 'prisma-client-js')
+
+    if (!Gentime.settings.data.prismaClientLocation && prismaClientGenerator?.output?.value) {
+      Gentime.changeSettings({
+        prismaClientLocation: prismaClientGenerator?.output?.value,
+      })
+    }
+
     const internalDMMF = externalToInternalDmmf(dmmf)
     loadUserGentimeSettings()
     generateRuntimeAndEmit(internalDMMF, Gentime.settings)

@@ -1,5 +1,5 @@
 import debug from 'debug'
-import endent from 'endent'
+import dedent from 'dedent'
 import * as Execa from 'execa'
 import { gql } from 'graphql-request'
 import stripAnsi from 'strip-ansi'
@@ -114,7 +114,7 @@ it('When bundled custom scalars are used the project type checks and generates e
     {
       filePath: `prisma/schema.prisma`,
       content: createPrismaSchema({
-        content: endent`
+        content: dedent`
           model Foo {
             id                String   @id
             someJsonField     Json
@@ -139,7 +139,7 @@ it('When bundled custom scalars are used the project type checks and generates e
     },
     {
       filePath: `prisma/seed.ts`,
-      content: endent/*ts*/ `
+      content: dedent/*ts*/ `
         import { PrismaClient } from '@prisma/client'
 
         main()
@@ -168,7 +168,7 @@ it('When bundled custom scalars are used the project type checks and generates e
     },
     {
       filePath: `src/schema.ts`,
-      content: endent/*ts*/ `
+      content: dedent/*ts*/ `
         require('dotenv').config()
 
         import { makeSchema, objectType, enumType, queryType } from 'nexus'
@@ -227,7 +227,7 @@ it('When bundled custom scalars are used the project type checks and generates e
     },
     {
       filePath: `src/context.ts`,
-      content: endent/*ts*/ `
+      content: dedent/*ts*/ `
         import { PrismaClient } from '@prisma/client'
 
         const prisma = new PrismaClient()
@@ -248,7 +248,7 @@ it('When bundled custom scalars are used the project type checks and generates e
     },
     {
       filePath: `src/server.ts`,
-      content: endent/*ts*/ `
+      content: dedent/*ts*/ `
         require('dotenv').config()
 
         import { ApolloServer } from 'apollo-server'
@@ -267,7 +267,7 @@ it('When bundled custom scalars are used the project type checks and generates e
     },
     {
       filePath: `.env`,
-      content: endent`
+      content: dedent`
         DB_URL="postgres://bcnfshogmxsukp:e31b6ddc8b9d85f8964b6671e4b578c58f0d13e15f637513207d44268eabc950@ec2-54-196-33-23.compute-1.amazonaws.com:5432/d17vadgam0dtao?schema=${
           process.env.E2E_DB_SCHEMA ?? 'local'
         }"

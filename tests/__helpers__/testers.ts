@@ -1,5 +1,5 @@
 import * as PrismaSDK from '@prisma/sdk'
-import endent from 'endent'
+import dedent from 'dedent'
 import execa from 'execa'
 import * as fs from 'fs-jetpack'
 import { DocumentNode, execute, printSchema } from 'graphql'
@@ -120,7 +120,7 @@ export function createPrismaSchema({
   clientOutput?: string
   nexusPrisma?: boolean
 }): string {
-  return endent`
+  return dedent`
     datasource db {
       provider = "${datasourceProvider.provider}"
       url      = ${datasourceProvider.url}
@@ -132,7 +132,7 @@ export function createPrismaSchema({
 
     ${
       nexusPrisma
-        ? endent`
+        ? dedent`
             generator nexusPrisma {
               provider = "nexus-prisma"
             }
@@ -216,7 +216,7 @@ function prepareGraphQLSDLForSnapshot(sdl: string): string {
 
 function stripNexusQueryOk(sdl: string): string {
   return sdl.replace(
-    endent`
+    dedent`
       type Query {
         ok: Boolean!
       }

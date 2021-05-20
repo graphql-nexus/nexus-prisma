@@ -1,4 +1,4 @@
-import endent from 'endent'
+import dedent from 'dedent'
 import * as Execa from 'execa'
 import { merge, omit } from 'lodash'
 import { PackageJson } from 'type-fest'
@@ -25,7 +25,7 @@ beforeAll(() => {
 
   // setup alpha dep that has peer dep requirements
 
-  Execa.commandSync(`yarn add kleur semver tslib endent debug fs-jetpack --production`, {
+  Execa.commandSync(`yarn add kleur semver tslib dedent debug fs-jetpack --production`, {
     cwd: testProject.fs.cwd(),
   })
 
@@ -39,7 +39,7 @@ beforeAll(() => {
 
   testProject.fs.write(
     'validatePeerDependencies.js',
-    endent`
+    dedent`
       const assert = require('assert')
       const { validatePeerDependencies } = require('${requireer.name}/dist/lib/peerDepValidator')
 
@@ -56,7 +56,7 @@ beforeAll(() => {
 
   testProject.fs.write(
     'enforceValidPeerDependencies.js',
-    endent`
+    dedent`
       const assert = require('assert')
       const { enforceValidPeerDependencies } = require('${requireer.name}/dist/lib/peerDepValidator')
 

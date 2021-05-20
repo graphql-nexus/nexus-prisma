@@ -87,7 +87,6 @@
   "dependencies": {
     "@prisma/generator-helper": "^2.22.1",
     "debug": "^4.3.1",
-    "endent": "^2.0.1",
     "fs-jetpack": "^4.1.0",
     "graphql-scalars": "^1.9.3",
     "kleur": "^4.1.4",
@@ -96,6 +95,7 @@
     "pluralize": "^8.0.0",
     "semver": "^7.3.5",
     "setset": "^0.0.7",
+    "ts-dedent": "^2.1.1",
     "tslib": "^2.2.0"
   },
   "nodemonConfig": {

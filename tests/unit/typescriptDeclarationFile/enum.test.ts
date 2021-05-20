@@ -1,9 +1,9 @@
-import endent from 'endent'
+import dedent from 'dedent'
 import { testGeneratedModules } from '../../__helpers__/testers'
 
 testGeneratedModules({
   description: 'An enum maps to a Nexus enum type definition',
-  databaseSchema: endent`
+  databaseSchema: dedent`
     enum Foo {
       a
     }
@@ -12,7 +12,7 @@ testGeneratedModules({
 
 testGeneratedModules({
   description: 'When prisma enum has documentation then it is used for JSDoc and GraphQL enum description',
-  databaseSchema: endent`
+  databaseSchema: dedent`
     /// Some documentation
     enum Foo {
       a

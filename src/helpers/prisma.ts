@@ -1,6 +1,6 @@
 import { DMMF } from '@prisma/client/runtime'
-import endent from 'endent'
 import ono from 'ono'
+import dedent from 'ts-dedent'
 import { detectProjectPackageManager, renderRunBin } from '../lib/packageManager'
 import { d } from './debugNexusPrisma'
 import { GITHUB_NEW_DISCUSSION_LINK } from './errorMessages'
@@ -17,14 +17,14 @@ export const getPrismaClientDmmf = (importId = '@prisma/client'): DMMF.Document 
     maybeDmmf = require(importId).dmmf
   } catch (error) {
     // prettier-ignore
-    throw ono(error, endent`
+    throw ono(error, dedent`
       Failed to get Prisma Client DMMF. An error occured while trying to import it from ${kleur.yellow(importId)}.
     `)
   }
 
   if (maybeDmmf === undefined) {
     // prettier-ignore
-    throw new Error(endent`
+    throw new Error(dedent`
       Failed to get Prisma Client DMMF. It was imported from ${kleur.yellow(importId)} but was \`undefined\`.
       This usually means that you need to run Prisma Client generation. Please run ${renderRunBin(detectProjectPackageManager(), `prisma generate`)}.
       If that does not solve your problem, you can get community help by opening a discussion at ${kleur.yellow(GITHUB_NEW_DISCUSSION_LINK)}.
@@ -37,7 +37,7 @@ export const getPrismaClientDmmf = (importId = '@prisma/client'): DMMF.Document 
   const expectedFields = ['datamodel', 'schema', 'mappings'] as const
 
   if (expectedFields.find((fieldName) => dmmf[fieldName] && typeof dmmf[fieldName] !== 'object')) {
-    throw new Error(endent`
+    throw new Error(dedent`
       The DMMF imported from ${importId} appears to be invalid. Missing one/all of expected fields: 
     `)
   }

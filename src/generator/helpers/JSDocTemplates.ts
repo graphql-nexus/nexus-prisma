@@ -1,5 +1,5 @@
 import { DMMF } from '@prisma/client/runtime'
-import endent from 'endent'
+import dedent from 'dindist'
 import { upperFirst } from 'lodash'
 
 type JSDoc = string
@@ -15,7 +15,7 @@ type FieldModelParams = {
 
 export function jsDocForEnum(enum_: DMMF.DatamodelEnum): JSDoc {
   const enumDoc = enum_.documentation ? `* ${enum_.documentation}` : enumMissingDoc(enum_)
-  return endent`
+  return dedent`
     /**
       ${enumIntro(enum_)}
       *
@@ -27,13 +27,13 @@ export function jsDocForEnum(enum_: DMMF.DatamodelEnum): JSDoc {
 }
 
 function enumIntro(enum_: DMMF.DatamodelEnum): string {
-  return endent`
+  return dedent`
     * Nexus \`enumType\` configuration based on the \`${enum_.name}\` enum in your Prisma schema.
   `
 }
 
 function enumExample(enum_: DMMF.DatamodelEnum): string {
-  return endent`
+  return dedent`
     * @example
     *
     * import { enumType } from 'nexus'
@@ -44,7 +44,7 @@ function enumExample(enum_: DMMF.DatamodelEnum): string {
 }
 
 function enumMissingDoc(enum_: DMMF.DatamodelEnum): string {
-  return endent`
+  return dedent`
     ${missingDocsIntro('enum')}
     *
     * \`\`\`prisma
@@ -64,7 +64,7 @@ function enumMissingDoc(enum_: DMMF.DatamodelEnum): string {
 
 export function jsDocForModel(model: DMMF.Model): JSDoc {
   const modelDoc = model.documentation ? `* ${model.documentation}` : modelMissingDoc(model)
-  return endent`
+  return dedent`
     /**
       ${modelIntro(model)}
       *
@@ -76,7 +76,7 @@ export function jsDocForModel(model: DMMF.Model): JSDoc {
 }
 
 function modelIntro(model: DMMF.Model): string {
-  return endent`
+  return dedent`
     * Nexus \`objectType\` related configuration based on the \`${model.name}\` model in your Prisma schema.
   `
 }
@@ -84,7 +84,7 @@ function modelIntro(model: DMMF.Model): string {
 function modelMissingDoc(model: DMMF.Model): string {
   // TODO once https://stackoverflow.com/questions/61893953/how-to-escape-symbol-in-jsdoc-for-vscode
   // is resolved then we can write better examples below like: id String @id
-  return endent`
+  return dedent`
     ${missingDocsIntro('model')}
     * 
     * \`\`\`prisma
@@ -99,7 +99,7 @@ function modelMissingDoc(model: DMMF.Model): string {
 }
 
 function modelExample(model: DMMF.Model): string {
-  return endent`
+  return dedent`
     * @example
     *
     * import { objectType } from 'nexus'
@@ -121,7 +121,7 @@ function modelExample(model: DMMF.Model): string {
 
 export function jsDocForField({ field, model }: FieldModelParams): JSDoc {
   const fieldDocs = field.documentation ? `* ${field.documentation}` : fieldMissingDoc({ field, model })
-  return endent`
+  return dedent`
     /**
      ${fieldIntro({ field, model })}
       *
@@ -133,13 +133,13 @@ export function jsDocForField({ field, model }: FieldModelParams): JSDoc {
 }
 
 function fieldIntro({ model, field }: FieldModelParams): string {
-  return endent`
+  return dedent`
     * Nexus \`t.field\` related configuration based on the \`${model.name}.${field.name}\` field in your Prisma schema.
   `
 }
 
 function fieldMissingDoc({ model, field }: FieldModelParams): string {
-  return endent`
+  return dedent`
     ${missingDocsIntro('model')}
     * \`\`\`prisma
     * model ${model.name} {
@@ -153,7 +153,7 @@ function fieldMissingDoc({ model, field }: FieldModelParams): string {
 }
 
 function fieldExample({ model, field }: FieldModelParams): string {
-  return endent`
+  return dedent`
     * @example
     *
     * import { objectType } from 'nexus'
@@ -174,7 +174,7 @@ function fieldExample({ model, field }: FieldModelParams): string {
  */
 
 function missingDocsIntro(kind: 'model' | 'enum' | 'field'): string {
-  return endent`
+  return dedent`
      * ### ️⚠️ Missing Documentation for this ${upperFirst(kind)}
      * 
      * Automatically ✨ enrich this JSDoc with information about your enum

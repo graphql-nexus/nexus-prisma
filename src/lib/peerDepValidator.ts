@@ -1,4 +1,4 @@
-import endent from 'endent'
+import dedent from 'dindist'
 import * as Semver from 'semver'
 import { PackageJson } from 'type-fest'
 import { d } from '../helpers/debugNexusPrisma'
@@ -95,7 +95,7 @@ export function validatePeerDependencyRangeSatisfied({
       kind: 'peer_dep_not_installed',
       message: renderError(
         // prettier-ignore
-        endent`
+        dedent`
           ${kleur.green(peerDependencyName)} is a peer dependency required by ${renderPackageJsonField(requireer,'name')}. But you have not installed it into this project yet. Please run \`${kleur.green(renderAddDeps(detectProjectPackageManager(),[peerDependencyName]))}\`.
         `
       ),

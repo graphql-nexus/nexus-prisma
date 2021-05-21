@@ -1,6 +1,6 @@
 import { DMMF } from '@prisma/client/runtime'
+import dedent from 'dindist'
 import { upperFirst } from 'lodash'
-import dedent from 'ts-dedent'
 
 type JSDoc = string
 

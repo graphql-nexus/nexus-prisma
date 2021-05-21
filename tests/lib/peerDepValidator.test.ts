@@ -1,6 +1,6 @@
+import dedent from 'dindist'
 import * as Execa from 'execa'
 import { merge, omit } from 'lodash'
-import dedent from 'ts-dedent'
 import { PackageJson } from 'type-fest'
 import { assertBuildPresent } from '../__helpers__/helpers'
 import { setupTestProject, TestProject } from '../__helpers__/testProject'
@@ -25,7 +25,7 @@ beforeAll(() => {
 
   // setup alpha dep that has peer dep requirements
 
-  Execa.commandSync(`yarn add kleur semver tslib dedent debug fs-jetpack --production`, {
+  Execa.commandSync(`yarn add kleur semver tslib debug fs-jetpack dindist --production`, {
     cwd: testProject.fs.cwd(),
   })
 

@@ -1,6 +1,6 @@
 import { DMMF } from '@prisma/client/runtime'
+import dedent from 'dindist'
 import ono from 'ono'
-import dedent from 'ts-dedent'
 import { detectProjectPackageManager, renderRunBin } from '../lib/packageManager'
 import { d } from './debugNexusPrisma'
 import { GITHUB_NEW_DISCUSSION_LINK } from './errorMessages'

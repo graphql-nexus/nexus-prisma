@@ -1,8 +1,8 @@
 import { DMMF } from '@prisma/client/runtime'
+import dedent from 'dindist'
 import { chain, lowerFirst } from 'lodash'
 import * as Nexus from 'nexus'
 import { NexusEnumTypeConfig, NexusListDef, NexusNonNullDef, NexusNullDef } from 'nexus/dist/core'
-import dedent from 'ts-dedent'
 import { MaybePromise, RecordUnknown, Resolver } from '../../helpers/utils'
 import { Gentime } from '../gentime/settingsSingleton'
 import {

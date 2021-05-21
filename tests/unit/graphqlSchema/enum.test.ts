@@ -1,5 +1,5 @@
+import dedent from 'dindist'
 import { enumType } from 'nexus'
-import dedent from 'ts-dedent'
 import { testGraphqlSchema } from '../../__helpers__/testers'
 
 testGraphqlSchema({

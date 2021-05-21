@@ -1,5 +1,5 @@
+import dedent from 'dindist'
 import * as Semver from 'semver'
-import dedent from 'ts-dedent'
 import { PackageJson } from 'type-fest'
 import { d } from '../helpers/debugNexusPrisma'
 import { detectProjectPackageManager, renderAddDeps } from './packageManager'

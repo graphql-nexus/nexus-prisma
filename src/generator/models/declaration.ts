@@ -1,5 +1,5 @@
 import { DMMF } from '@prisma/generator-helper'
-import dedent from 'ts-dedent'
+import dedent from 'dindist'
 import { LiteralUnion } from 'type-fest'
 import { StandardGraphQLScalarType, StandardgraphQLScalarTypes } from '../../helpers/graphql'
 import { PrismaScalarType } from '../../helpers/prisma'

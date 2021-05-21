@@ -1,5 +1,5 @@
 import { DMMF } from '@prisma/generator-helper'
-import endent from 'endent'
+import dedent from 'dindist'
 import { LiteralUnion } from 'type-fest'
 import { StandardGraphQLScalarType, StandardgraphQLScalarTypes } from '../../helpers/graphql'
 import { PrismaScalarType } from '../../helpers/prisma'
@@ -11,17 +11,17 @@ import { ModuleSpec } from '../types'
 export function createModuleSpec(dmmf: DMMF.Document, settings: Gentime.Settings): ModuleSpec {
   return {
     fileName: 'index.d.ts',
-    content: endent`
-        ${renderTypeScriptDeclarationForDocumentModels(dmmf, settings)}
-      `,
+    content: dedent`
+      ${renderTypeScriptDeclarationForDocumentModels(dmmf, settings)}
+    `,
   }
 }
 
-const NO_ENUMS_DEFINED_COMMENT = endent`
+const NO_ENUMS_DEFINED_COMMENT = dedent`
   // N/A –– You have not defined any models in your Prisma schema file.
 `
 
-const NO_MODELS_DEFINED_COMMENT = endent`
+const NO_MODELS_DEFINED_COMMENT = dedent`
   // N/A –– You have not defined any enums in your Prisma schema file.
 `
 
@@ -32,7 +32,7 @@ export function renderTypeScriptDeclarationForDocumentModels(
   const models = dmmf.datamodel.models
   const enums = dmmf.datamodel.enums
 
-  return endent`
+  return dedent`
     import * as Nexus from 'nexus'
     import * as NexusCore from 'nexus/dist/core'
 
@@ -88,7 +88,7 @@ export function renderTypeScriptDeclarationForDocumentModels(
         : models
             .map((model) => {
               const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForModel(model) + '\n' : ''
-              return endent`
+              return dedent`
                 ${jsdoc}export const ${model.name}: $Types.${model.name}
               `
             })
@@ -110,7 +110,7 @@ export function renderTypeScriptDeclarationForDocumentModels(
         : enums
             .map((enum_) => {
               const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForEnum(enum_) + '\n' : ''
-              return endent`
+              return dedent`
                 ${jsdoc}export const ${enum_.name}: $Types.${enum_.name}
               `
             })
@@ -124,7 +124,7 @@ function renderTypeScriptDeclarationForEnum(enum_: DMMF.DatamodelEnum, settings:
   const description = `${
     enum_.documentation && settings.data.docPropagation.GraphQLDocs ? `'${enum_.documentation}'` : 'undefined'
   }`
-  return endent`
+  return dedent`
     ${jsdoc}interface ${enum_.name} {
       name: '${enum_.name}'
       description: ${description}
@@ -138,7 +138,7 @@ function renderTypeScriptDeclarationForModel(model: DMMF.Model, settings: Gentim
   const description = `${
     model.documentation && settings.data.docPropagation.GraphQLDocs ? `'${model.documentation}'` : 'undefined'
   }`
-  return endent`
+  return dedent`
     ${jsdoc}interface ${model.name} {
       $name: '${model.name}'
       $description: ${description}
@@ -166,7 +166,7 @@ function renderTypeScriptDeclarationForField({
   const description = `${
     field.documentation && settings.data.docPropagation.GraphQLDocs ? `string` : `undefined`
   }`
-  return endent`
+  return dedent`
     ${jsdoc}${field.name}: {
       /**
        * The name of this field.
@@ -195,19 +195,19 @@ function renderNexusType2(field: DMMF.Field, settings: Gentime.Settings): string
   const graphqlType = fieldTypeToGraphQLType(field, settings.data)
 
   if (field.isList && field.isRequired) {
-    return endent`
+    return dedent`
       NexusCore.ListDef<${graphqlType}> | NexusCore.NexusNonNullDef<${graphqlType}>
     `
   } else if (field.isList && !field.isRequired) {
-    return endent`
+    return dedent`
       NexusCore.ListDef<${graphqlType}> | NexusCore.NexusNullDef<${graphqlType}>
     `
   } else if (field.isRequired) {
-    return endent`
+    return dedent`
       NexusCore.NexusNonNullDef<'${graphqlType}'>
     `
   } else {
-    return endent`
+    return dedent`
       NexusCore.NexusNullDef<'${graphqlType}'>
     `
   }

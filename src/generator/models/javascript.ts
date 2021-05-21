@@ -1,5 +1,5 @@
 import { DMMF } from '@prisma/client/runtime'
-import endent from 'endent'
+import dedent from 'dindist'
 import { chain, lowerFirst } from 'lodash'
 import * as Nexus from 'nexus'
 import { NexusEnumTypeConfig, NexusListDef, NexusNonNullDef, NexusNullDef } from 'nexus/dist/core'
@@ -49,7 +49,7 @@ export type Settings = {
 export function createModuleSpec(gentimeSettings: Gentime.Settings): ModuleSpec {
   return {
     fileName: 'index.js',
-    content: endent`
+    content: dedent`
       const { getPrismaClientDmmf } = require('../helpers/prisma')
       const ModelsGenerator = require('../generator/models')
       const { Runtime } = require('../generator/runtime/settingsSingleton')

@@ -1,4 +1,4 @@
-import endent from 'endent'
+import dedent from 'dindist'
 import gql from 'graphql-tag'
 import { list, objectType, queryType } from 'nexus'
 import NexusPrismaScalars from '../../scalars'
@@ -7,7 +7,7 @@ import { testIntegration } from '../__helpers__/testers'
 testIntegration({
   skip: true, // integration test currently only works against SQLite which doesn't support JSON
   description: 'When a JSON field is defined in the Prisma schema it can be projected into the GraphQL API',
-  datasourceSchema: endent`
+  datasourceSchema: dedent`
     model Foo {
       id   String @id
       json Json

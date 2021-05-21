@@ -598,7 +598,7 @@ query {
   })
 
   $settings({
-    prismaClientContextField = 'db', // <-- Tell Nexus Prisma
+    prismaClientContextField: 'db', // <-- Tell Nexus Prisma
   })
   ```
 
@@ -617,6 +617,27 @@ Prisma source files (you probably don't want this).
   class reference to Prisma Client is needed for some `instanceof` checks and 2) for
   acquiring the DMMF as Nexus Prisma relies on some post-processing done by Prisma Client
   generator.
+
+- **@example**
+
+```ts
+// src/main.ts
+
+import { PrismaClient } from '@prisma/client'
+import { ApolloServer } from 'apollo-server'
+import { makeSchema } from 'nexus'
+import { User, Post, $settings } from 'nexus-prisma'
+
+new ApolloServer({
+  schema: makeSchema({
+    types: [],
+  }),
+})
+
+$settings({
+  prismaClientImportId: '@my/custom/thing', // <-- Tell Nexus Prisma
+})
+```
 
 ### Generator Settings
 

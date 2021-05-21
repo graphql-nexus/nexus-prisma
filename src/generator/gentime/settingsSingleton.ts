@@ -3,7 +3,9 @@ import * as Setset from 'setset'
 export namespace Gentime {
   export type SettingsInput = {
     /**
-     * Which GraphQL type should Nexus Prisma use for Prisma Int ID fields.
+     * Map Prisma model fields of type `Int` with attribute `@id` to `ID` or `Int`.
+     *
+     * @default `Int`
      */
     projectIdIntToGraphQL?: 'ID' | 'Int'
     /**

@@ -9,7 +9,7 @@ export namespace Gentime {
     /**
      * Should Prisma Schema docs propagate as docs?
      *
-     * @default `true`
+     * @default true
      */
     docPropagation?:
       | boolean

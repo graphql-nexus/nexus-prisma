@@ -627,6 +627,7 @@ query {
   $settings({
     prismaClientImportId: '@my/custom/thing',
   })
+  ```
 
 ### Generator Settings
 

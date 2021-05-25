@@ -5,7 +5,7 @@ export namespace Gentime {
     /**
      * Map Prisma model fields of type `Int` with attribute `@id` to `ID` or `Int`.
      *
-     * @default `Int`
+     * @default 'Int'
      */
     projectIdIntToGraphQL?: 'ID' | 'Int'
     /**

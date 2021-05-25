@@ -3,7 +3,9 @@ import * as Setset from 'setset'
 export namespace Gentime {
   export type SettingsInput = {
     /**
-     * TODO
+     * Map Prisma model fields of type `Int` with attribute `@id` to `ID` or `Int`.
+     *
+     * @default 'Int'
      */
     projectIdIntToGraphQL?: 'ID' | 'Int'
 	// TODO add some examples

@@ -455,6 +455,6 @@ export const Post: $Types.Post
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
-export const $settings = Runtime.changeSettings
+export const $settings: typeof Runtime.changeSettings
 "
 `;

@@ -120,7 +120,7 @@ export const Foo: $Types.Foo
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
-export const $settings = Runtime.changeSettings
+export const $settings: typeof Runtime.changeSettings
 "
 `;
 
@@ -218,6 +218,6 @@ export const Foo: $Types.Foo
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
-export const $settings = Runtime.changeSettings
+export const $settings: typeof Runtime.changeSettings
 "
 `;

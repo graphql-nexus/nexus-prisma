@@ -233,7 +233,7 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
-export const $settings = Runtime.changeSettings
+export const $settings: typeof Runtime.changeSettings
 "
 `;
 
@@ -470,7 +470,7 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
-export const $settings = Runtime.changeSettings
+export const $settings: typeof Runtime.changeSettings
 "
 `;
 
@@ -707,7 +707,7 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
-export const $settings = Runtime.changeSettings
+export const $settings: typeof Runtime.changeSettings
 "
 `;
 
@@ -944,7 +944,7 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
-export const $settings = Runtime.changeSettings
+export const $settings: typeof Runtime.changeSettings
 "
 `;
 
@@ -1130,7 +1130,7 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
-export const $settings = Runtime.changeSettings
+export const $settings: typeof Runtime.changeSettings
 "
 `;
 
@@ -1367,7 +1367,7 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
-export const $settings = Runtime.changeSettings
+export const $settings: typeof Runtime.changeSettings
 "
 `;
 
@@ -1553,6 +1553,6 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
-export const $settings = Runtime.changeSettings
+export const $settings: typeof Runtime.changeSettings
 "
 `;

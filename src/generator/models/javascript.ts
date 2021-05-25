@@ -66,7 +66,12 @@ export function createModuleSpec(gentimeSettings: Gentime.Settings): ModuleSpec 
         }
       })
 
-      module.exports = models
+      const moduleExports = {
+        ...models,
+        $settings: Runtime.settings.change,
+      }
+
+      module.exports = moduleExports
     `,
   }
 }

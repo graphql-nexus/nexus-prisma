@@ -6,6 +6,7 @@ export namespace Gentime {
      * TODO
      */
     projectIdIntToGraphQL?: 'ID' | 'Int'
+	// TODO add some examples
     /**
      * Should Prisma Schema docs propagate as docs?
      *

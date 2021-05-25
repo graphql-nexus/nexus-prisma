@@ -116,6 +116,19 @@ export function renderTypeScriptDeclarationForDocumentModels(
             })
             .join('\n\n')
     }
+
+    //
+    //
+    // EXPORTS: OTHER
+    // EXPORTS: OTHER
+    // EXPORTS: OTHER
+    // EXPORTS: OTHER
+    //
+    //
+
+    import { Runtime } from '../generator/runtime/settingsSingleton'
+
+    export const $settings = Runtime.changeSettings
   `
 }
 

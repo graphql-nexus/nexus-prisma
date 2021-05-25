@@ -649,7 +649,7 @@ You are able to control certain aspects of the Nexus Prisma code generation.
 
 ##### `docPropagation.JSDoc: boolean`
 
-- **`@summary`** Should Prisma Schema docs propagate as JSdoc?
+- **`@summary`** Should Prisma Schema docs propagate as JSDoc?
 - **`@default`** `true`
 
 ##### `docPropagation.GraphQLDocs: boolean`

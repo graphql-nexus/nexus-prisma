@@ -6,18 +6,28 @@ export namespace Gentime {
      * TODO
      */
     projectIdIntToGraphQL?: 'ID' | 'Int'
+	// TODO add some examples
     /**
-     * TODO
+     * Should Prisma Schema docs propagate as docs?
+     *
+     * @default true
      */
     docPropagation?:
       | boolean
       | {
           /**
-           * TODO
+           * Should Prisma Schema docs propagate as JSDoc?
+           *
+           * @default true
            */
           JSDoc?: boolean
           /**
-           * TODO
+           * Should Prisma Schema docs propagate as GraphQL docs?
+           *
+           * @remarks When this is disabled it will force `.description` property to be `undefined`. This
+           *          is for convenience, allowing you to avoid post-generation data manipulation or
+           *          consumption contortions.
+           * @default true
            */
           GraphQLDocs?: boolean
         }

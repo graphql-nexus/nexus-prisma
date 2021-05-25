@@ -1,6 +1,6 @@
 import { DMMF } from '@prisma/generator-helper'
-import * as OS from 'os'
 import dedent from 'dindist'
+import * as OS from 'os'
 import { LiteralUnion } from 'type-fest'
 import { StandardGraphQLScalarType, StandardgraphQLScalarTypes } from '../../helpers/graphql'
 import { PrismaScalarType } from '../../helpers/prisma'
@@ -130,7 +130,7 @@ export function renderTypeScriptDeclarationForDocumentModels(
 
     import { Runtime } from '../generator/runtime/settingsSingleton'
 
-    export const $settings = Runtime.changeSettings
+    export const $settings: typeof Runtime.changeSettings
   ` + OS.EOL
   )
 }

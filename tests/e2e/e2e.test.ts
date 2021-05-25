@@ -172,9 +172,12 @@ it('When bundled custom scalars are used the project type checks and generates e
         require('dotenv').config()
 
         import { makeSchema, objectType, enumType, queryType } from 'nexus'
-        import { Bar, Foo, SomeEnumA } from 'nexus-prisma'
+        import { Bar, Foo, SomeEnumA, $settings } from 'nexus-prisma'
         import * as customScalars from 'nexus-prisma/scalars'
         import * as Path from 'path'
+
+        // Show that we can import and call settings as a NOOP
+        $settings({})
         
         const types = [
           customScalars,
@@ -294,6 +297,9 @@ it('When bundled custom scalars are used the project type checks and generates e
 
   expect(results.runFirstBuild.exitCode).toBe(2)
 
+  expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
+    /.*error TS2305: Module '"nexus-prisma"' has no exported member '\$settings'.*/
+  )
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
     /.*error TS2305: Module '"nexus-prisma"' has no exported member 'Bar'.*/
   )

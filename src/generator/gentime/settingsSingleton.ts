@@ -8,7 +8,7 @@ export namespace Gentime {
      * @default 'Int'
      */
     projectIdIntToGraphQL?: 'ID' | 'Int'
-	// TODO add some examples
+    // TODO add some examples
     /**
      * Should Prisma Schema docs propagate as docs?
      *
@@ -82,7 +82,7 @@ export namespace Gentime {
     },
   })
 
-  export function changeSettings(input: Setset.UserInput<SettingsInput>): Settings {
-    return settings.change(input)
+  export function changeSettings(input: Setset.UserInput<SettingsInput>): void {
+    settings.change(input)
   }
 }

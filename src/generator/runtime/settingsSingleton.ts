@@ -24,7 +24,7 @@ export namespace Runtime {
     },
   })
 
-  export function changeSettings(input: Setset.UserInput<SettingsInput>): Settings {
-    return settings.change(input)
+  export function changeSettings(input: Setset.UserInput<SettingsInput>): void {
+    settings.change(input)
   }
 }

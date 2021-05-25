@@ -32,15 +32,6 @@ type NexusTypeDefConfigurations = Record<
 export type Settings = {
   runtime: Runtime.Settings
   gentime: Gentime.SettingsData
-  internal: {
-    /**
-     * The import ID of prisma client.
-     *
-     * @remarks Used to get a class reference to do an instance check for runtime validation reasons.
-     * @default @prisma/client
-     */
-    prismaClientImport: string
-  }
 }
 
 /**
@@ -61,9 +52,6 @@ export function createModuleSpec(gentimeSettings: Gentime.Settings): ModuleSpec 
       const models = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {
         runtime: Runtime.settings,
         gentime: gentimeSettings,
-        internal: {
-          prismaClientImport: '@prisma/client',
-        }
       })
 
       const moduleExports = {
@@ -188,13 +176,13 @@ export function prismaFieldToNexusResolver(
     }
 
     // eslint-disable-next-line
-    const PrismaClientPackage = require(settings.internal.prismaClientImport)
+    const PrismaClientPackage = require(settings.gentime.prismaClientImportId)
 
     // eslint-disable-next-line
     if (!(ctx[settings.runtime.data.prismaClientContextField] instanceof PrismaClientPackage.PrismaClient)) {
       // TODO rich errors
       throw new Error(
-        `The GraphQL context.${settings.runtime.data.prismaClientContextField} value is not an instance of the Prisma Client (class reference for check imported from ${settings.internal.prismaClientImport}).`
+        `The GraphQL context.${settings.runtime.data.prismaClientContextField} value is not an instance of the Prisma Client (class reference for check imported from ${settings.gentime.prismaClientImportId}).`
       )
     }
 

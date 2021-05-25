@@ -14,7 +14,6 @@ import { ModuleSpec } from '../../src/generator/types'
 
 const settingsDefaults: Settings = {
   gentime: Gentime.settings.data,
-  internal: { prismaClientImport: '@prisma/client' },
   runtime: Runtime.settings,
 }
 
@@ -179,8 +178,9 @@ export async function integrationTest({
 
   const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {
     ...settingsDefaults,
-    internal: {
-      prismaClientImport: prismaClientImportId,
+    gentime: {
+      ...settingsDefaults.gentime,
+      prismaClientImportId: prismaClientImportId,
     },
   }) as any
 

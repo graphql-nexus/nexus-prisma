@@ -18,7 +18,7 @@ export namespace Gentime {
           /**
            * Should Prisma Schema docs propagate as JSDoc?
            *
-           * @default `true`
+           * @default true
            */
           JSDoc?: boolean
           /**
@@ -27,7 +27,7 @@ export namespace Gentime {
            * @remarks When this is disabled it will force `.description` property to be `undefined`. This
            *          is for convenience, allowing you to avoid post-generation data manipulation or
            *          consumption contortions.
-           * @default `true`
+           * @default true
            */
           GraphQLDocs?: boolean
         }

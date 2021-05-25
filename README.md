@@ -610,24 +610,23 @@ Where Nexus Prisma will try to import your generated Prisma Client from. You sho
 
 - **@example**
 
-```ts
-// src/main.ts
+  ```ts
+  // src/main.ts
 
-import { PrismaClient } from '@prisma/client'
-import { ApolloServer } from 'apollo-server'
-import { makeSchema } from 'nexus'
-import { User, Post, $settings } from 'nexus-prisma'
+  import { PrismaClient } from '@prisma/client'
+  import { ApolloServer } from 'apollo-server'
+  import { makeSchema } from 'nexus'
+  import { User, Post, $settings } from 'nexus-prisma'
 
-new ApolloServer({
-  schema: makeSchema({
-    types: [],
-  }),
-})
+  new ApolloServer({
+    schema: makeSchema({
+      types: [],
+    }),
+  })
 
-$settings({
-  prismaClientImportId: '@my/custom/thing',
-})
-```
+  $settings({
+    prismaClientImportId: '@my/custom/thing',
+  })
 
 ### Generator Settings
 

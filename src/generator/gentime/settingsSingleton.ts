@@ -49,8 +49,9 @@ export namespace Gentime {
      *          class reference to Prisma Client is needed for some `instanceof` checks and 2) for
      *          acquiring the DMMF as Nexus Prisma relies on some post-processing done by Prisma Client
      *          generator.
+     * @default '@prisma/client'
      */
-    prismaClientImportId?: string | null
+    prismaClientImportId?: string
   }
 
   export type SettingsData = Setset.InferDataFromInput<SettingsInput>

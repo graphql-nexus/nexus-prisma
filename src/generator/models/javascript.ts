@@ -170,13 +170,6 @@ export function prismaFieldToNexusResolver(
   }
 
   return (root: RecordUnknown, _args: RecordUnknown, ctx: RecordUnknown): MaybePromise<unknown> => {
-    if (!ctx.prisma) {
-      // TODO rich errors
-      throw new Error(
-        'Prisma client not found in context. Set a Prisma client instance to `prisma` field of Nexus context'
-      )
-    }
-
     const uniqueIdentifiers = resolveUniqueIdentifiers(model)
     const missingIdentifiers = findMissingUniqueIdentifiers(root, uniqueIdentifiers)
 

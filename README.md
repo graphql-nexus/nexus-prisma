@@ -602,7 +602,7 @@ query {
   })
   ```
 
-#### `prismaClientImportId: string`
+##### `prismaClientImportId: string`
 
 Where Nexus Prisma will try to import your generated Prisma Client from. You should not need to configure this normally because Nexus Prisma generator automatically reads the Prisma Client generator `output` setting if you have set it. The value here will be used in a dynamic import thus following Node's path resolution rules. You can pass a node_modules package like `foo` `@prisma/client`, `@my/custom/thing` etc. or you can pass an absolute module/file path `/my/custom/thing` / `/my/custom/thing/index.js` or finally a relative path to be resolved relative to the location of Nexus Prisma source files (you probably don't want this).
 

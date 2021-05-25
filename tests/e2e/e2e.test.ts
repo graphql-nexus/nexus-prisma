@@ -171,10 +171,13 @@ it('When bundled custom scalars are used the project type checks and generates e
       content: dedent/*ts*/ `
         require('dotenv').config()
 
-        import { makeSchema, objectType, enumType, queryType } from 'nexus'
+        import { makeSchema, objectType, enumType, queryType, $settings } from 'nexus'
         import { Bar, Foo, SomeEnumA } from 'nexus-prisma'
         import * as customScalars from 'nexus-prisma/scalars'
         import * as Path from 'path'
+
+        // Show that we can import and call settings as a NOOP
+        $settings({})
         
         const types = [
           customScalars,

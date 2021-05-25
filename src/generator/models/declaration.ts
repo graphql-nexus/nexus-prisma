@@ -1,4 +1,5 @@
 import { DMMF } from '@prisma/generator-helper'
+import * as OS from 'os'
 import dedent from 'dindist'
 import { LiteralUnion } from 'type-fest'
 import { StandardGraphQLScalarType, StandardgraphQLScalarTypes } from '../../helpers/graphql'
@@ -32,7 +33,8 @@ export function renderTypeScriptDeclarationForDocumentModels(
   const models = dmmf.datamodel.models
   const enums = dmmf.datamodel.enums
 
-  return dedent`
+  return (
+    dedent`
     import * as Nexus from 'nexus'
     import * as NexusCore from 'nexus/dist/core'
 
@@ -129,7 +131,8 @@ export function renderTypeScriptDeclarationForDocumentModels(
     import { Runtime } from '../generator/runtime/settingsSingleton'
 
     export const $settings = Runtime.changeSettings
-  `
+  ` + OS.EOL
+  )
 }
 
 function renderTypeScriptDeclarationForEnum(enum_: DMMF.DatamodelEnum, settings: Gentime.Settings): string {

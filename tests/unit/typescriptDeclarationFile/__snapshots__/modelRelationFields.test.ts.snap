@@ -442,5 +442,19 @@ export const Post: $Types.Post
 //
 //
 
-// N/A –– You have not defined any models in your Prisma schema file."
+// N/A –– You have not defined any models in your Prisma schema file.
+
+//
+//
+// EXPORTS: OTHER
+// EXPORTS: OTHER
+// EXPORTS: OTHER
+// EXPORTS: OTHER
+//
+//
+
+import { Runtime } from '../generator/runtime/settingsSingleton'
+
+export const $settings = Runtime.changeSettings
+"
 `;

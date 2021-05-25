@@ -107,7 +107,21 @@ declare namespace $Types {
   *
   * enumType(Foo)
   */
-export const Foo: $Types.Foo"
+export const Foo: $Types.Foo
+
+//
+//
+// EXPORTS: OTHER
+// EXPORTS: OTHER
+// EXPORTS: OTHER
+// EXPORTS: OTHER
+//
+//
+
+import { Runtime } from '../generator/runtime/settingsSingleton'
+
+export const $settings = Runtime.changeSettings
+"
 `;
 
 exports[`When prisma enum has documentation then it is used for JSDoc and GraphQL enum description: index.d.ts 1`] = `
@@ -191,5 +205,19 @@ declare namespace $Types {
   *
   * enumType(Foo)
   */
-export const Foo: $Types.Foo"
+export const Foo: $Types.Foo
+
+//
+//
+// EXPORTS: OTHER
+// EXPORTS: OTHER
+// EXPORTS: OTHER
+// EXPORTS: OTHER
+//
+//
+
+import { Runtime } from '../generator/runtime/settingsSingleton'
+
+export const $settings = Runtime.changeSettings
+"
 `;

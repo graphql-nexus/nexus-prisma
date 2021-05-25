@@ -81,7 +81,21 @@ declare namespace $Types {
   *
   * enumType(Foo)
   */
-export const Foo: $Types.Foo"
+export const Foo: $Types.Foo
+
+//
+//
+// EXPORTS: OTHER
+// EXPORTS: OTHER
+// EXPORTS: OTHER
+// EXPORTS: OTHER
+//
+//
+
+import { Runtime } from '../generator/runtime/settingsSingleton'
+
+export const $settings = Runtime.changeSettings
+"
 `;
 
 exports[`When an enum has no documentation comment, then it gets the default JSDoc and its description field is null: index.d.ts 1`] = `
@@ -191,5 +205,19 @@ declare namespace $Types {
   *
   * enumType(Foo)
   */
-export const Foo: $Types.Foo"
+export const Foo: $Types.Foo
+
+//
+//
+// EXPORTS: OTHER
+// EXPORTS: OTHER
+// EXPORTS: OTHER
+// EXPORTS: OTHER
+//
+//
+
+import { Runtime } from '../generator/runtime/settingsSingleton'
+
+export const $settings = Runtime.changeSettings
+"
 `;

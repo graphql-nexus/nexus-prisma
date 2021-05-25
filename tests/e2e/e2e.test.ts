@@ -298,7 +298,7 @@ it('When bundled custom scalars are used the project type checks and generates e
   expect(results.runFirstBuild.exitCode).toBe(2)
 
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2305: Module '"nexus-prisma"' has no exported member '$settings'.*/
+    /.*error TS2305: Module '"nexus-prisma"' has no exported member '\$settings'.*/
   )
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
     /.*error TS2305: Module '"nexus-prisma"' has no exported member 'Bar'.*/

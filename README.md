@@ -197,13 +197,14 @@ Like GraphQL, [Prisma has the concept of scalar types](https://www.prisma.io/doc
 
 **Prisma Standard Scalar to GraphQL Standard Scalar Mapping**
 
-| Prisma              | GraphQL   |
-| ------------------- | --------- |
-| `Boolean`           | `Boolean` |
-| `String`            | `String`  |
-| `Int`               | `Int`     |
-| `Float`             | `Float`   |
-| `String` with `@id` | `ID`      |
+| Prisma              | GraphQL                                                        |
+| ------------------- | -------------------------------------------------------------- |
+| `Boolean`           | `Boolean`                                                      |
+| `String`            | `String`                                                       |
+| `Int`               | `Int`                                                          |
+| `Float`             | `Float`                                                        |
+| `String` with `@id` | `ID`                                                           |
+| `Int` with `@id`    | `ID` \| `Int` ([configurable](#projectidinttographql-id--int)) |
 
 However some of the Prisma scalars do not have a natural standard representation in GraphQL. For these cases Nexus Prisma generates code that references type names matching those scalar names in Prisma. Then, you are expected to define those custom scalar types in your GraphQL API. Nexus Prisma ships with pre-defined mappings in `nexus-prisma/scalars` you _can_ use for convenience. The mapping is as follows:
 

@@ -81,7 +81,7 @@
   },
   "prettier": "@prisma-labs/prettier-config",
   "peerDependencies": {
-    "@prisma/client": "2.17.x || 2.18.x || 2.19.x || 2.20.x || 2.21.x || 2.22.x",
+    "@prisma/client": "2.17.x || 2.18.x || 2.19.x || 2.20.x || 2.21.x || 2.22.x || 2.23.x || 2.24.x",
     "nexus": "^1.0.0"
   },
   "dependencies": {

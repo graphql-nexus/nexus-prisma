@@ -225,15 +225,13 @@ function createNexusEnumTypeDefConfigurations(
   settings: Settings
 ): NexusEnumTypeDefConfigurations {
   return chain(dmmf.datamodel.enums)
-    .map(
-      (enum_): AnyNexusEnumTypeConfig => {
-        return {
-          name: enum_.name,
-          description: settings.gentime.docPropagation.GraphQLDocs ? enum_.documentation : undefined,
-          members: enum_.values.map((val) => val.name),
-        }
+    .map((enum_): AnyNexusEnumTypeConfig => {
+      return {
+        name: enum_.name,
+        description: settings.gentime.docPropagation.GraphQLDocs ? enum_.documentation : undefined,
+        members: enum_.values.map((val) => val.name),
       }
-    )
+    })
     .keyBy('name')
     .value()
 }

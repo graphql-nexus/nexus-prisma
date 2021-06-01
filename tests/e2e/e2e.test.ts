@@ -374,4 +374,4 @@ it('When bundled custom scalars are used the project type checks and generates e
   d(`stopped server`)
 
   expect(data).toMatchSnapshot('client request 1')
-}, 30_000)
+}, 60_000)

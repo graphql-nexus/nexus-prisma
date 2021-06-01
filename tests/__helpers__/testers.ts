@@ -71,11 +71,15 @@ export function testIntegration(params: IntegrationTestParams) {
 
   const itOrItOnlyOrItSkip = params.only ? it.only : params.skip ? it.skip : it
 
-  itOrItOnlyOrItSkip(params.description, async () => {
-    const result = await integrationTest(params)
-    expect(result.graphqlSchemaSDL).toMatchSnapshot(`graphqlSchemaSDL`)
-    expect(result.graphqlOperationExecutionResult).toMatchSnapshot(`graphqlOperationExecutionResult`)
-  })
+  itOrItOnlyOrItSkip(
+    params.description,
+    async () => {
+      const result = await integrationTest(params)
+      expect(result.graphqlSchemaSDL).toMatchSnapshot(`graphqlSchemaSDL`)
+      expect(result.graphqlOperationExecutionResult).toMatchSnapshot(`graphqlOperationExecutionResult`)
+    },
+    30_000
+  )
 }
 
 /**

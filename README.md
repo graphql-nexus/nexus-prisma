@@ -213,7 +213,7 @@ However some of the Prisma scalars do not have a natural standard representation
 | Prisma     | GraphQL    | Nexus `t` Helper | GraphQL Scalar Implementation                                     |
 | ---------- | ---------- | ---------------- | ----------------------------------------------------------------- |
 | `Json`     | `Json`     | `json`           | [JsonObject](https://github.com/Urigo/graphql-scalars#jsonobject) |
-| `DateTime` | `DateTime` | `datetime`       | [DateTime](https://github.com/Urigo/graphql-scalars#datetime)     |
+| `DateTime` | `DateTime` | `dateTime`       | [DateTime](https://github.com/Urigo/graphql-scalars#datetime)     |
 
 > **Note:** Not all Prisma scalar mappings are implemented yet: `Bytes`, `BigInt`, `Decimal`, `Unsupported`
 

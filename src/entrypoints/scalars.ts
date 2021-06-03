@@ -1,5 +1,6 @@
 import { DateTime } from '../scalars/DateTime'
 import { Json } from '../scalars/Json'
+import { Bytes } from '../scalars/Bytes'
 
 /**
  * Predefined Nexus scalar type definitions to satisfy all custom scalars needed in GraphQL to map to the
@@ -69,10 +70,11 @@ import { Json } from '../scalars/Json'
  *          API. For convenience you can use these ones.
  */
 const NexusPrismaScalars = {
+  Bytes,
   DateTime,
   Json,
 }
 
 export default NexusPrismaScalars
 
-export { DateTime, Json }
+export { Bytes, DateTime, Json }

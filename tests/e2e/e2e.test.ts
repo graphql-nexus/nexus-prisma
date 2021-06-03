@@ -119,6 +119,7 @@ it('When bundled custom scalars are used the project type checks and generates e
             id                String   @id
             someJsonField     Json
             someDateTimeField DateTime
+            someBytesField    Bytes
             someEnumA         SomeEnumA
             bar               Bar?
           }
@@ -152,6 +153,7 @@ it('When bundled custom scalars are used the project type checks and generates e
             data: {
               id: 'foo1',
               someDateTimeField: new Date("2021-05-10T20:42:46.609Z"),
+              someBytesField: Buffer.from([]),
               someJsonField: JSON.stringify({}),
               someEnumA: 'alpha',
               bar: {
@@ -206,8 +208,10 @@ it('When bundled custom scalars are used the project type checks and generates e
               })
               t.json('JsonManually')
               t.dateTime('DateTimeManually')
+              t.bytes('BytesManually')
               t.field(Foo.someJsonField.name, Foo.someJsonField)
               t.field(Foo.someDateTimeField.name, Foo.someDateTimeField)
+              t.field(Foo.someBytesField.name, Foo.someBytesField)
             },
           }),
         ]
@@ -357,8 +361,10 @@ it('When bundled custom scalars are used the project type checks and generates e
         foo {
           JsonManually
           DateTimeManually
+          BytesManually
           someEnumA
           someDateTimeField
+          someBytesField
         }
       }
     }

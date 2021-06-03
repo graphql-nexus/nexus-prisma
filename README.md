@@ -120,7 +120,7 @@ export const schema = makeSchema({
 
 ##### Midterm
 
-- [ ] Support for Prisma Model field types of remaining scalars (`Bytes`, etc.)
+- [ ] Support for Prisma Model field types of remaining scalars (`Decimal`, etc.)
 - [ ] Support for Prisma Model field types relating to other Models n:n
 - [ ] Support for relation field ordering parameters
 
@@ -215,8 +215,9 @@ However some of the Prisma scalars do not have a natural standard representation
 | ---------- | ---------- | ---------------- | ----------------------------------------------------------------- |
 | `Json`     | `Json`     | `json`           | [JsonObject](https://github.com/Urigo/graphql-scalars#jsonobject) |
 | `DateTime` | `DateTime` | `dateTime`       | [DateTime](https://github.com/Urigo/graphql-scalars#datetime)     |
+| `Bytes`    | `Bytes`    | `bytes`          | [Bytes](https://www.graphql-scalars.dev/docs/scalars/byte/)       |
 
-> **Note:** Not all Prisma scalar mappings are implemented yet: `Bytes`, `BigInt`, `Decimal`, `Unsupported`
+> **Note:** Not all Prisma scalar mappings are implemented yet: `BigInt`, `Decimal`, `Unsupported`
 
 While you are not required to use the implementations supplied by Nexus Prisma, you _are required to define custom scalars whose name matches the above mapping_.
 

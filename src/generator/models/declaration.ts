@@ -274,7 +274,7 @@ export function fieldTypeToGraphQLType(
           return 'Json'
         }
         case 'Bytes': {
-          return StandardgraphQLScalarTypes.String
+          return 'Bytes'
         }
         case 'Decimal': {
           return StandardgraphQLScalarTypes.String

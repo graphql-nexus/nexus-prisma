@@ -5,8 +5,13 @@ Object {
   "bars": Array [
     Object {
       "foo": Object {
+        "BytesManually": null,
         "DateTimeManually": null,
         "JsonManually": null,
+        "someBytesField": Object {
+          "data": Array [],
+          "type": "Buffer",
+        },
         "someDateTimeField": "2021-05-10T20:42:46.609Z",
         "someEnumA": "alpha",
       },
@@ -33,8 +38,10 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the \`da
 scalar DateTime
 
 type Foo {
+  BytesManually: Bytes
   DateTimeManually: DateTime
   JsonManually: Json
+  someBytesField: Bytes!
   someDateTimeField: DateTime!
   someEnumA: SomeEnumA
   someJsonField: Json!
@@ -142,8 +149,10 @@ export interface NexusGenFieldTypes {
     foo: NexusGenRootTypes['Foo'] | null; // Foo
   }
   Foo: { // field return type
+    BytesManually: NexusGenScalars['Bytes'] | null; // Bytes
     DateTimeManually: NexusGenScalars['DateTime'] | null; // DateTime
     JsonManually: NexusGenScalars['Json'] | null; // Json
+    someBytesField: NexusGenScalars['Bytes']; // Bytes!
     someDateTimeField: NexusGenScalars['DateTime']; // DateTime!
     someEnumA: NexusGenEnums['SomeEnumA'] | null; // SomeEnumA
     someJsonField: NexusGenScalars['Json']; // Json!
@@ -158,8 +167,10 @@ export interface NexusGenFieldTypeNames {
     foo: 'Foo'
   }
   Foo: { // field return type name
+    BytesManually: 'Bytes'
     DateTimeManually: 'DateTime'
     JsonManually: 'Json'
+    someBytesField: 'Bytes'
     someDateTimeField: 'DateTime'
     someEnumA: 'SomeEnumA'
     someJsonField: 'Json'

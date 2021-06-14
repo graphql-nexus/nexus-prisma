@@ -381,7 +381,7 @@ query {
 
 #### Limitation: Nullable on Without-Relation-Scalar Side
 
-Prisma requires that a 1:1 relationship has one side that is optional. For example in the following it is **not** possible for `Profile` to have a required relationship to `User`. For more detail you can read the Prisma docs abuot this [here](https://www.prisma.io/docs/concepts/components/prisma-schema/relations#one-to-one-relations).
+Prisma requires that a 1:1 relationship has one side that is optional. For example in the following it is **not** possible for `Profile` to have a required relationship to `User`. For more detail you can read the Prisma docs about this [here](https://www.prisma.io/docs/concepts/components/prisma-schema/relations#one-to-one-relations).
 
 ```prisma
 model User {
@@ -816,7 +816,7 @@ Nexus Prisma generates default GraphQL resolvers for your model _relation fields
        t.field(User.id.name, User.id)
        t.field(User.posts.name, {
          ...User.posts,
-         resolve(...args) {
+         async resolve(...args) {
            // Your custom before-logic here
            const result = await User.posts.resolve(...args)
            // Your custom after-logic here
@@ -836,7 +836,7 @@ Nexus Prisma generates default GraphQL resolvers for your model _relation fields
        t.field(User.id.name, User.id)
        t.field(User.posts.name, {
          ...User.posts,
-         resolve(...args) {
+         asyncresolve(...args) {
            // Your custom logic here
          },
        })

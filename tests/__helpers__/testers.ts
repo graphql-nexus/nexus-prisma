@@ -5,6 +5,7 @@ import * as fs from 'fs-jetpack'
 import { DocumentNode, execute, printSchema } from 'graphql'
 import { core } from 'nexus'
 import { AllNexusTypeDefs } from 'nexus/dist/core'
+import * as Path from 'path'
 import { generateRuntime } from '../../src/generator/generate'
 import { Gentime } from '../../src/generator/gentime/settingsSingleton'
 import * as ModelsGenerator from '../../src/generator/models'
@@ -109,44 +110,6 @@ export function testGraphqlSchema(params: {
  * Low Level
  */
 
-export function createPrismaSchema({
-  content,
-  datasourceProvider = {
-    provider: 'postgres',
-    url: 'env("DB_URL")',
-  },
-  clientOutput,
-  nexusPrisma = true,
-}: {
-  content: string
-  datasourceProvider?: { provider: 'sqlite'; url: string } | { provider: 'postgres'; url: string }
-  clientOutput?: string
-  nexusPrisma?: boolean
-}): string {
-  return dedent`
-    datasource db {
-      provider = "${datasourceProvider.provider}"
-      url      = ${datasourceProvider.url}
-    }
-
-    generator client {
-      provider = "prisma-client-js"${clientOutput ? `\noutput = ${clientOutput}` : ''}
-    }
-
-    ${
-      nexusPrisma
-        ? dedent`
-            generator nexusPrisma {
-              provider = "nexus-prisma"
-            }
-          `
-        : ``
-    }
-
-    ${content}
-  `
-}
-
 /**
  * Given a Prisma schema and Nexus type definitions return a GraphQL schema.
  */
@@ -157,22 +120,30 @@ export async function integrationTest({
   apiClientQuery,
 }: IntegrationTestParams) {
   const dir = fs.tmpDir().cwd()
-  const prismaClientImportId = `${dir}/client`
+  const dirToBinDirRelativePath = Path.relative(
+    Path.join(dir, '/force-dotdot'),
+    Path.join(process.cwd(), 'node_modules/.bin')
+  )
+  const dirClientOutput = Path.join(dir, 'client')
   const prismaSchemaContents = createPrismaSchema({
     content: datasourceSchema,
     datasourceProvider: {
       provider: 'sqlite',
-      url: `"file:./db.sqlite"`,
+      url: `file:./db.sqlite`,
     },
     nexusPrisma: false,
-    clientOutput: `"./client"`,
+    clientOutput: dirClientOutput.replace(/\\/g, '/').replace(/^[A-za-z]:/, ''),
+    // clientOutput: `./client`,
   })
 
   fs.write(`${dir}/schema.prisma`, prismaSchemaContents)
 
-  execa.commandSync(`yarn -s prisma db push --force-reset --schema ${dir}/schema.prisma`)
+  // This will run the prisma generators
+  execa.commandSync(`${dirToBinDirRelativePath}/prisma db push --force-reset --schema ${dir}/schema.prisma`, {
+    cwd: dir,
+  })
 
-  const prismaClientPackage = require(prismaClientImportId)
+  const prismaClientPackage = require(dirClientOutput)
   const prismaClient = new prismaClientPackage.PrismaClient()
   await datasourceSeed(prismaClient)
 
@@ -184,7 +155,7 @@ export async function integrationTest({
     ...settingsDefaults,
     gentime: {
       ...settingsDefaults.gentime,
-      prismaClientImportId: prismaClientImportId,
+      prismaClientImportId: dirClientOutput,
     },
   }) as any
 
@@ -227,6 +198,69 @@ function stripNexusQueryOk(sdl: string): string {
     `,
     ''
   )
+}
+
+/**
+ * Create the contents of a Prisma Schema file.
+ */
+export function createPrismaSchema({
+  content,
+  datasourceProvider,
+  clientOutput,
+  nexusPrisma,
+}: {
+  content: string
+  /**
+   * The datasource provider block. Defaults to postgres provider with DB_URL envar lookup.
+   */
+  datasourceProvider?: { provider: 'sqlite'; url: string } | { provider: 'postgres'; url: string }
+  /**
+   * Specify the prisma client generator block output configuration. By default is unspecified and uses the Prisma client generator default.
+   */
+  clientOutput?: string
+  /**
+   * Should the Nexus Prisma generator block be added.
+   *
+   * @default true
+   */
+  nexusPrisma?: boolean
+}): string {
+  const outputConfiguration = clientOutput ? `\n  output = "${clientOutput}"` : ''
+  const nexusPrisma_ = nexusPrisma ?? true
+  const datasourceProvider_ = datasourceProvider
+    ? {
+        ...datasourceProvider,
+        url: datasourceProvider.url.startsWith('env')
+          ? datasourceProvider.url
+          : `"${datasourceProvider.url}"`,
+      }
+    : {
+        provider: 'postgres',
+        url: 'env("DB_URL")',
+      }
+
+  return dedent`
+    datasource db {
+      provider = "${datasourceProvider_.provider}"
+      url      = ${datasourceProvider_.url}
+    }
+
+    generator client {
+      provider = "prisma-client-js"${outputConfiguration}
+    }
+
+    ${
+      nexusPrisma_
+        ? dedent`
+            generator nexusPrisma {
+              provider = "nexus-prisma"
+            }
+          `
+        : ``
+    }
+
+    ${content}
+  `
 }
 
 /**

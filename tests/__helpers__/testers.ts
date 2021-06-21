@@ -120,11 +120,8 @@ export async function integrationTest({
   apiClientQuery,
 }: IntegrationTestParams) {
   const dir = fs.tmpDir().cwd()
-  const dirToBinDirRelativePath = Path.relative(
-    Path.join(dir, '/force-dotdot'),
-    Path.join(process.cwd(), 'node_modules/.bin')
-  )
-  const dirClientOutput = Path.join(dir, 'client')
+  const dirRelativePrismaClientOutput = './client'
+  const prismaClientImportId = Path.posix.join(dir, dirRelativePrismaClientOutput)
   const prismaSchemaContents = createPrismaSchema({
     content: datasourceSchema,
     datasourceProvider: {
@@ -132,18 +129,15 @@ export async function integrationTest({
       url: `file:./db.sqlite`,
     },
     nexusPrisma: false,
-    clientOutput: dirClientOutput.replace(/\\/g, '/').replace(/^[A-za-z]:/, ''),
-    // clientOutput: `./client`,
+    clientOutput: dirRelativePrismaClientOutput,
   })
 
   fs.write(`${dir}/schema.prisma`, prismaSchemaContents)
 
   // This will run the prisma generators
-  execa.commandSync(`${dirToBinDirRelativePath}/prisma db push --force-reset --schema ${dir}/schema.prisma`, {
-    cwd: dir,
-  })
+  execa.commandSync(`yarn -s prisma db push --force-reset --schema ${dir}/schema.prisma`)
 
-  const prismaClientPackage = require(dirClientOutput)
+  const prismaClientPackage = require(prismaClientImportId)
   const prismaClient = new prismaClientPackage.PrismaClient()
   await datasourceSeed(prismaClient)
 
@@ -155,7 +149,7 @@ export async function integrationTest({
     ...settingsDefaults,
     gentime: {
       ...settingsDefaults.gentime,
-      prismaClientImportId: dirClientOutput,
+      prismaClientImportId: prismaClientImportId,
     },
   }) as any
 

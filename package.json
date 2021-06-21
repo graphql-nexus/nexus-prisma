@@ -96,7 +96,7 @@
     "pluralize": "^8.0.0",
     "semver": "^7.3.5",
     "setset": "^0.0.7",
-    "tslib": "^2.2.0"
+    "tslib": "^2.3.0"
   },
   "nodemonConfig": {
     "events": {

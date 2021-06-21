@@ -32,7 +32,7 @@
     "build:module-facades": "ts-node scripts/build-module-facades",
     "build": "yarn clean && yarn build:module-facades && tsc",
     "test": "cross-env DEBUG=e2e jest",
-    "test:ci": "cross-env DEBUG=e2e jest --coverage --forceExit --runInBand",
+    "test:ci": "cross-env DEBUG=e2e jest --coverage --forceExit",
     "tdd": "jest --watch",
     "tdd:e2e:debug": "cross-env test_project_reuse=true jest --watch e2e",
     "clean": "rm -rf dist && rm -rf node_modules/.cache",

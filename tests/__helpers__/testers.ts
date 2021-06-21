@@ -137,9 +137,7 @@ export async function integrationTest({
   fs.write(`${dir}/schema.prisma`, prismaSchemaContents)
 
   // This will run the prisma generators
-  execa.commandSync(`yarn -s prisma db push --force-reset --schema ${dir}/schema.prisma`, {
-    cwd: dir,
-  })
+  execa.commandSync(`yarn -s prisma db push --force-reset --schema ${dir}/schema.prisma`)
 
   const prismaClientPackage = require(prismaClientImportId)
   const prismaClient = new prismaClientPackage.PrismaClient()

@@ -129,7 +129,7 @@ export async function integrationTest({
     content: datasourceSchema,
     datasourceProvider: {
       provider: 'sqlite',
-      url: `"file:./db.sqlite"`,
+      url: `file:./db.sqlite`,
     },
     nexusPrisma: false,
     // clientOutput: dirClientOutput.replace('\\', '/').replace(/^[A-za-z]:/, ''),
@@ -225,12 +225,19 @@ export function createPrismaSchema({
    */
   nexusPrisma?: boolean
 }): string {
-  const outputConfiguration = clientOutput ? `\noutput = ${clientOutput}` : ''
+  const outputConfiguration = clientOutput ? `\n  output = "${clientOutput}"` : ''
   const nexusPrisma_ = nexusPrisma ?? true
-  const datasourceProvider_ = datasourceProvider ?? {
-    provider: 'postgres',
-    url: 'env("DB_URL")',
-  }
+  const datasourceProvider_ = datasourceProvider
+    ? {
+        ...datasourceProvider,
+        url: datasourceProvider.url.startsWith('env')
+          ? datasourceProvider.url
+          : `"${datasourceProvider.url}"`,
+      }
+    : {
+        provider: 'postgres',
+        url: 'env("DB_URL")',
+      }
 
   return dedent`
     datasource db {

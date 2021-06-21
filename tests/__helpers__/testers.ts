@@ -132,7 +132,7 @@ export async function integrationTest({
       url: `file:./db.sqlite`,
     },
     nexusPrisma: false,
-    clientOutput: dirClientOutput.replace('\\', '/').replace(/^[A-za-z]:/, ''),
+    clientOutput: dirClientOutput.replace(/\\/g, '/').replace(/^[A-za-z]:/, ''),
     // clientOutput: `./client`,
   })
 

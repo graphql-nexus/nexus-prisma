@@ -5,7 +5,6 @@ import * as fs from 'fs-jetpack'
 import { DocumentNode, execute, printSchema } from 'graphql'
 import { core } from 'nexus'
 import { AllNexusTypeDefs } from 'nexus/dist/core'
-import * as Path from 'path'
 import { generateRuntime } from '../../src/generator/generate'
 import { Gentime } from '../../src/generator/gentime/settingsSingleton'
 import * as ModelsGenerator from '../../src/generator/models'
@@ -120,10 +119,10 @@ export async function integrationTest({
   apiClientQuery,
 }: IntegrationTestParams) {
   const dir = fs.tmpDir().cwd()
-  const dirToBinDirRelativePath = Path.join(
-    '..',
-    Path.relative(dir, Path.join(process.cwd(), 'node_modules/.bin'))
-  )
+  // const dirToBinDirRelativePath = Path.join(
+  //   '..',
+  //   Path.relative(dir, Path.join(process.cwd(), 'node_modules/.bin'))
+  // )
   const prismaClientImportId = `${dir}/client`
   const prismaSchemaContents = createPrismaSchema({
     content: datasourceSchema,
@@ -132,13 +131,13 @@ export async function integrationTest({
       url: `"file:./db.sqlite"`,
     },
     nexusPrisma: false,
-    clientOutput: `"./client"`,
+    clientOutput: `"${dir}/client"`,
   })
 
   fs.write(`${dir}/schema.prisma`, prismaSchemaContents)
 
   // This will run the prisma generators
-  execa.commandSync(`${dirToBinDirRelativePath}/prisma db push --force-reset --schema ${dir}/schema.prisma`, {
+  execa.commandSync(`yarn -s prisma db push --force-reset --schema ${dir}/schema.prisma`, {
     cwd: dir,
   })
 

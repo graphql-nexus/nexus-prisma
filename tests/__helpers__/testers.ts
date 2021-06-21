@@ -124,7 +124,7 @@ export async function integrationTest({
     Path.join(dir, '/force-dotdot'),
     Path.join(process.cwd(), 'node_modules/.bin')
   )
-  const prismaClientImportId = `${dir}/client`
+  const dirClientOutput = Path.join(dir, 'client')
   const prismaSchemaContents = createPrismaSchema({
     content: datasourceSchema,
     datasourceProvider: {
@@ -132,7 +132,7 @@ export async function integrationTest({
       url: `"file:./db.sqlite"`,
     },
     nexusPrisma: false,
-    clientOutput: `"${dir}/client"`,
+    clientOutput: dirClientOutput.replace('\\', '/').replace(/^[A-za-z]:/, ''),
   })
 
   fs.write(`${dir}/schema.prisma`, prismaSchemaContents)
@@ -142,7 +142,7 @@ export async function integrationTest({
     cwd: dir,
   })
 
-  const prismaClientPackage = require(prismaClientImportId)
+  const prismaClientPackage = require(dirClientOutput)
   const prismaClient = new prismaClientPackage.PrismaClient()
   await datasourceSeed(prismaClient)
 
@@ -154,7 +154,7 @@ export async function integrationTest({
     ...settingsDefaults,
     gentime: {
       ...settingsDefaults.gentime,
-      prismaClientImportId: prismaClientImportId,
+      prismaClientImportId: dirClientOutput,
     },
   }) as any
 

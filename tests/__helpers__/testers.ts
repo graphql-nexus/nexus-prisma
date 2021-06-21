@@ -132,8 +132,8 @@ export async function integrationTest({
       url: `file:./db.sqlite`,
     },
     nexusPrisma: false,
-    // clientOutput: dirClientOutput.replace('\\', '/').replace(/^[A-za-z]:/, ''),
-    clientOutput: `./client`,
+    clientOutput: dirClientOutput.replace('\\', '/').replace(/^[A-za-z]:/, ''),
+    // clientOutput: `./client`,
   })
 
   fs.write(`${dir}/schema.prisma`, prismaSchemaContents)

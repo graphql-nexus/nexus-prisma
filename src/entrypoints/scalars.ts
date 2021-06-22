@@ -12,7 +12,7 @@ import { Json } from '../scalars/Json'
  * | `Json` | `Json` | `json` | [JsonObject](https://www.graphql-scalars.dev/docs/scalars/json-object) |
  * | `DateTime` | `DateTime` | `datetime` | [DateTime](https://www.graphql-scalars.dev/docs/scalars/date-time) |
  * | `BigInt` | `BigInt` | `bigInt` | [BigInt](https://www.graphql-scalars.dev/docs/scalars/big-int) |.
- * | `Bytes` | `Bytes` | `bytes` | [BigInt](https://www.graphql-scalars.dev/docs/scalars/byte) |.
+ * | `Bytes` | `Bytes` | `bytes` | [Byte](https://www.graphql-scalars.dev/docs/scalars/byte) |.
  *
  * @example
  *

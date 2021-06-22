@@ -1,6 +1,6 @@
 export type StandardGraphQLScalarType = 'ID' | 'String' | 'Int' | 'Float' | 'Boolean'
 
-export const StandardgraphQLScalarTypes = {
+export const StandardGraphQLScalarTypes = {
   ID: 'ID',
   String: 'String',
   Float: 'Float',

@@ -335,6 +335,12 @@ it('When bundled custom scalars are used the project type checks and generates e
   expect(results.fileTypegen).toMatchSnapshot('nexus typegen')
 
   /**
+   * Sanity check the Prisma Client import ID
+   */
+
+  expect(testProject.fs.read('node_modules/nexus-prisma/dist/runtime/index.js')).toMatch(/.*"prismaClientImportId": "@prisma\/client".*/)
+
+  /**
    * Sanity check the runtime
    */
 

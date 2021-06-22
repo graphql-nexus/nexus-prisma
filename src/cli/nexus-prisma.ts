@@ -67,13 +67,13 @@ function getPrismaClientImportIdForItsGeneratorOutputConfig(
   prismaClientGeneratorConfig: GeneratorConfig
 ): string {
   const prismaClientPackageMoniker = `@prisma/client`
-  const prismaClientPackagePath = Path.join(`@prisma`, `client`)
+  const prismaClientDefaultOutput = Path.join(`node_modules`, `@prisma`, `client`)
 
   if (!prismaClientGeneratorConfig.output || !prismaClientGeneratorConfig.output.value) {
     return prismaClientPackageMoniker
   }
 
-  if (prismaClientGeneratorConfig.output.value.endsWith(prismaClientPackagePath)) {
+  if (prismaClientGeneratorConfig.output.value.endsWith(prismaClientDefaultOutput)) {
     /**
      * Goal of this code:
      *
@@ -103,10 +103,7 @@ function getPrismaClientImportIdForItsGeneratorOutputConfig(
      * care.
      */
     const dirPrismaClientOutputWithoutTrailingNodeModulesMoniker =
-      prismaClientGeneratorConfig.output.value.replace(
-        new RegExp(`${Path.join('node_modules', prismaClientPackagePath)}$`),
-        ''
-      )
+      prismaClientGeneratorConfig.output.value.replace(prismaClientDefaultOutput, '')
     const dirProjectForThisNexusPrisma = Path.join(__dirname, '../../../..')
     const dirDiff = Path.relative(
       dirPrismaClientOutputWithoutTrailingNodeModulesMoniker,

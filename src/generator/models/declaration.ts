@@ -212,11 +212,11 @@ function renderNexusType2(field: DMMF.Field, settings: Gentime.Settings): string
 
   if (field.isList && field.isRequired) {
     return dedent`
-      NexusCore.ListDef<${graphqlType}> | NexusCore.NexusNonNullDef<${graphqlType}>
+      NexusCore.NexusListDef<${graphqlType}> | NexusCore.NexusNonNullDef<${graphqlType}>
     `
   } else if (field.isList && !field.isRequired) {
     return dedent`
-      NexusCore.ListDef<${graphqlType}> | NexusCore.NexusNullDef<${graphqlType}>
+      NexusCore.NexusListDef<${graphqlType}> | NexusCore.NexusNullDef<${graphqlType}>
     `
   } else if (field.isRequired) {
     return dedent`

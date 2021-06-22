@@ -170,6 +170,15 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
+/**
+ * Define runtime settings for Nexus Prisma.
+ * 
+ * 
+ * @example
+ *
+ *   $settings({ projectIdIntToGraphQL: 'Int' })
+ *
+ */
 export const $settings: typeof Runtime.changeSettings
 "
 `;
@@ -356,6 +365,15 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
+/**
+ * Define runtime settings for Nexus Prisma.
+ * 
+ * 
+ * @example
+ *
+ *   $settings({ projectIdIntToGraphQL: 'Int' })
+ *
+ */
 export const $settings: typeof Runtime.changeSettings
 "
 `;
@@ -516,6 +534,15 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
+/**
+ * Define runtime settings for Nexus Prisma.
+ * 
+ * 
+ * @example
+ *
+ *   $settings({ projectIdIntToGraphQL: 'Int' })
+ *
+ */
 export const $settings: typeof Runtime.changeSettings
 "
 `;
@@ -702,6 +729,15 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
+/**
+ * Define runtime settings for Nexus Prisma.
+ * 
+ * 
+ * @example
+ *
+ *   $settings({ projectIdIntToGraphQL: 'Int' })
+ *
+ */
 export const $settings: typeof Runtime.changeSettings
 "
 `;

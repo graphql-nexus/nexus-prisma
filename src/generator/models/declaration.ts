@@ -130,6 +130,15 @@ export function renderTypeScriptDeclarationForDocumentModels(
 
     import { Runtime } from '../generator/runtime/settingsSingleton'
 
+    /**
+     * Define runtime settings for Nexus Prisma.
+     * 
+     * 
+     * @example
+     *
+     *   $settings({ projectIdIntToGraphQL: 'Int' })
+     *
+     */
     export const $settings: typeof Runtime.changeSettings
   ` + OS.EOL
   )

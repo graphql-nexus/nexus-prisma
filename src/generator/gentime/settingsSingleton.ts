@@ -83,6 +83,14 @@ export namespace Gentime {
     },
   })
 
+  /**
+   * Define runtime settings for Nexus Prisma.
+   *
+   * @example
+   *
+   *   changeSettings({ projectIdIntToGraphQL: 'Int' })
+   *
+   */
   export function changeSettings(input: Setset.UserInput<SettingsInput>): void {
     settings.change(input)
   }

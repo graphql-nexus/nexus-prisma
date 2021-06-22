@@ -60,7 +60,7 @@ function setupTestNexusPrismaProject(): TestProject {
       license: 'MIT',
       scripts: {
         reflect: 'yarn -s reflect:prisma && yarn -s reflect:nexus',
-        'reflect:prisma': 'prisma generate',
+        'reflect:prisma': "cross-env DEBUG='*' prisma generate",
         // peer dependency check will fail since we're using yalc, e.g.:
         // " ... nexus-prisma@0.0.0-dripip+c2653557 does not officially support @prisma/client@2.22.1 ... "
         'reflect:nexus': 'cross-env REFLECT=true ts-node --transpile-only src/schema',
@@ -338,7 +338,9 @@ it('When bundled custom scalars are used the project type checks and generates e
    * Sanity check the Prisma Client import ID
    */
 
-  expect(testProject.fs.read('node_modules/nexus-prisma/dist/runtime/index.js')).toMatch(/.*"prismaClientImportId": "@prisma\/client".*/)
+  expect(testProject.fs.read('node_modules/nexus-prisma/dist/runtime/index.js')).toMatch(
+    /.*"prismaClientImportId": "@prisma\/client".*/
+  )
 
   /**
    * Sanity check the runtime

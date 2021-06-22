@@ -9,6 +9,7 @@ import * as Path from 'path'
 import { generateRuntimeAndEmit } from '../generator'
 import { loadUserGentimeSettings } from '../generator/gentime/settingsLoader'
 import { Gentime } from '../generator/gentime/settingsSingleton'
+import { d } from '../helpers/debugNexusPrisma'
 import { externalToInternalDmmf } from '../helpers/prismaExternalToInternalDMMF'
 
 // todo by default error in ci and warn in local
@@ -57,9 +58,9 @@ generatorHandler({
 
 /**
  * Get the appropiate import ID for Prisma Client.
- * 
+ *
  * When generator output is set to its default location within node_modules, then we return the import ID of just its npm moniker "@prisma/client".
- * 
+ *
  * Othewise we return an import ID as an absolute path to the output location.
  */
 function getPrismaClientImportIdForItsGeneratorOutputConfig(
@@ -72,15 +73,22 @@ function getPrismaClientImportIdForItsGeneratorOutputConfig(
   }
 
   if (prismaClientGeneratorConfig.output.value.endsWith(prismaClientPackageMoniker)) {
-    const dirPrismaClientOutputWithoutTrailingMoniker = prismaClientGeneratorConfig.output.value.replace(
-      new RegExp(`${prismaClientPackageMoniker}$`),
+    const dirPrismaClientOutputWithoutTrailingNodeModulesMoniker = prismaClientGeneratorConfig.output.value.replace(
+      new RegExp(`node_modules/${prismaClientPackageMoniker}$`),
       ''
     )
-    const dirNodeModulesForThisNexusPrisma = Path.join(__dirname, '../../..')
+    const dirProjectForThisNexusPrisma = Path.join(__dirname, '../../../..')
     const dirDiff = Path.relative(
-      dirPrismaClientOutputWithoutTrailingMoniker,
-      dirNodeModulesForThisNexusPrisma
+      dirPrismaClientOutputWithoutTrailingNodeModulesMoniker,
+      dirProjectForThisNexusPrisma
     )
+
+    d(`found prisma client/nexus prisma layout:`, {
+      dirPrismaClientOutputWithoutTrailingNodeModulesMoniker,
+      dirProjectForThisNexusPrisma,
+      dirDiff,
+    })
+
     if (dirDiff === '') {
       return prismaClientPackageMoniker
     }

@@ -1,6 +1,7 @@
+import { BigInt } from '../scalars/BigInt'
+import { Bytes } from '../scalars/Bytes'
 import { DateTime } from '../scalars/DateTime'
 import { Json } from '../scalars/Json'
-import { Bytes } from '../scalars/Bytes'
 
 /**
  * Predefined Nexus scalar type definitions to satisfy all custom scalars needed in GraphQL to map to the
@@ -8,12 +9,14 @@ import { Bytes } from '../scalars/Bytes'
  *
  * | Prisma | GraphQL | Nexus `t` Helper | GraphQL Scalar Implementation |
  * | ---------- | ---------- | ---- | ----------------------------------------------------------------- |
- * | `Json` | `Json` | `json` | [JsonObject](https://github.com/Urigo/graphql-scalars#jsonobject) |
- * | `DateTime` | `DateTime` | `datetime` | [DateTime](https://github.com/Urigo/graphql-scalars#datetime) |.
+ * | `Json` | `Json` | `json` | [JsonObject](https://www.graphql-scalars.dev/docs/scalars/json-object) |
+ * | `DateTime` | `DateTime` | `datetime` | [DateTime](https://www.graphql-scalars.dev/docs/scalars/date-time) |
+ * | `BigInt` | `BigInt` | `bigInt` | [BigInt](https://www.graphql-scalars.dev/docs/scalars/big-int) |.
+ * | `Bytes` | `Bytes` | `bytes` | [BigInt](https://www.graphql-scalars.dev/docs/scalars/byte) |.
  *
  * @example
  *
- *   // Use this defualt export
+ *   // Use this default export
  *
  *   import { makeSchema, objectType } from 'nexus'
  *   import NexusPrismaScalars from 'nexus-prisma/scalars'
@@ -35,7 +38,7 @@ import { Bytes } from '../scalars/Bytes'
  *
  * @example
  *
- *   // Use only select precefined custom scalars
+ *   // Use only select predefined custom scalars
  *
  *   import { makeSchema, objectType } from 'nexus'
  *   import { Json } from 'nexus-prisma/scalars'
@@ -70,6 +73,7 @@ import { Bytes } from '../scalars/Bytes'
  *          API. For convenience you can use these ones.
  */
 const NexusPrismaScalars = {
+  BigInt,
   Bytes,
   DateTime,
   Json,
@@ -77,4 +81,4 @@ const NexusPrismaScalars = {
 
 export default NexusPrismaScalars
 
-export { Bytes, DateTime, Json }
+export { BigInt, Bytes, DateTime, Json }

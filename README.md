@@ -211,13 +211,14 @@ However some of the Prisma scalars do not have a natural standard representation
 
 **Prisma Standard Scalar to GraphQL Custom Scalar Mapping**
 
-| Prisma     | GraphQL    | Nexus `t` Helper | GraphQL Scalar Implementation                                     |
-| ---------- | ---------- | ---------------- | ----------------------------------------------------------------- |
-| `Json`     | `Json`     | `json`           | [JsonObject](https://github.com/Urigo/graphql-scalars#jsonobject) |
-| `DateTime` | `DateTime` | `dateTime`       | [DateTime](https://github.com/Urigo/graphql-scalars#datetime)     |
-| `Bytes`    | `Bytes`    | `bytes`          | [Bytes](https://www.graphql-scalars.dev/docs/scalars/byte/)       |
+| Prisma     | GraphQL    | Nexus `t` Helper | GraphQL Scalar Implementation                                         |
+| ---------- | ---------- | ---------------- | --------------------------------------------------------------------- |
+| `Json`     | `Json`     | `json`           | [JsonObject](https://www.graphql-scalars.dev/docs/scalars/jsonobject) |
+| `DateTime` | `DateTime` | `dateTime`       | [DateTime](https://www.graphql-scalars.dev/docs/scalars/datetime)     |
+| `BigInt`   | `BigInt`   | `bigInt`         | [BigInt](https://www.graphql-scalars.dev/docs/scalars/big-int)        |
+| `Bytes`    | `Bytes`    | `bytes`          | [Bytes](https://www.graphql-scalars.dev/docs/scalars/byte/)           |
 
-> **Note:** Not all Prisma scalar mappings are implemented yet: `BigInt`, `Decimal`, `Unsupported`
+> **Note:** Not all Prisma scalar mappings are implemented yet: `Decimal`, `Unsupported`
 
 While you are not required to use the implementations supplied by Nexus Prisma, you _are required to define custom scalars whose name matches the above mapping_.
 

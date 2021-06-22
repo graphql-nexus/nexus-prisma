@@ -120,6 +120,7 @@ it('When bundled custom scalars are used the project type checks and generates e
             someJsonField     Json
             someDateTimeField DateTime
             someBytesField    Bytes
+            someBigIntField   BigInt
             someEnumA         SomeEnumA
             bar               Bar?
           }
@@ -155,6 +156,7 @@ it('When bundled custom scalars are used the project type checks and generates e
               someDateTimeField: new Date("2021-05-10T20:42:46.609Z"),
               someBytesField: Buffer.from([]),
               someJsonField: JSON.stringify({}),
+              someBigIntField: BigInt(9007199254740991),
               someEnumA: 'alpha',
               bar: {
                 create: {
@@ -209,9 +211,11 @@ it('When bundled custom scalars are used the project type checks and generates e
               t.json('JsonManually')
               t.dateTime('DateTimeManually')
               t.bytes('BytesManually')
+              t.bigInt('BigIntManually')
               t.field(Foo.someJsonField.name, Foo.someJsonField)
               t.field(Foo.someDateTimeField.name, Foo.someDateTimeField)
               t.field(Foo.someBytesField.name, Foo.someBytesField)
+              t.field(Foo.someBigIntField.name, Foo.someBigIntField)
             },
           }),
         ]
@@ -319,6 +323,9 @@ it('When bundled custom scalars are used the project type checks and generates e
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
     /.*error TS2339: Property 'dateTime' does not exist on type 'ObjectDefinitionBlock<any>'.*/
   )
+  expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
+    /.*error TS2339: Property 'bigInt' does not exist on type 'ObjectDefinitionBlock<any>'.*/
+  )
 
   expect(results.runReflectPrisma.exitCode).toBe(0)
 
@@ -362,9 +369,11 @@ it('When bundled custom scalars are used the project type checks and generates e
           JsonManually
           DateTimeManually
           BytesManually
+          BigIntManually
           someEnumA
           someDateTimeField
           someBytesField
+          someBigIntField
         }
       }
     }

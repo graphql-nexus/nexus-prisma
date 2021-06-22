@@ -265,7 +265,7 @@ export function fieldTypeToGraphQLType(
           return StandardgraphQLScalarTypes.Float
         }
         case 'BigInt': {
-          return StandardgraphQLScalarTypes.String
+          return 'BigInt'
         }
         case 'DateTime': {
           return 'DateTime'

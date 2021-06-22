@@ -1,6 +1,7 @@
 import { DateTime } from '../scalars/DateTime'
 import { Json } from '../scalars/Json'
 import { Bytes } from '../scalars/Bytes'
+import { Decimal } from '../scalars/Decimal'
 
 /**
  * Predefined Nexus scalar type definitions to satisfy all custom scalars needed in GraphQL to map to the
@@ -9,7 +10,8 @@ import { Bytes } from '../scalars/Bytes'
  * | Prisma | GraphQL | Nexus `t` Helper | GraphQL Scalar Implementation |
  * | ---------- | ---------- | ---- | ----------------------------------------------------------------- |
  * | `Json` | `Json` | `json` | [JsonObject](https://github.com/Urigo/graphql-scalars#jsonobject) |
- * | `DateTime` | `DateTime` | `datetime` | [DateTime](https://github.com/Urigo/graphql-scalars#datetime) |.
+ * | `DateTime` | `DateTime` | `datetime` | [DateTime](https://github.com/Urigo/graphql-scalars#datetime) |
+ * | `Decimal` | `Decimal` | `decimal` | |.
  *
  * @example
  *
@@ -72,9 +74,10 @@ import { Bytes } from '../scalars/Bytes'
 const NexusPrismaScalars = {
   Bytes,
   DateTime,
+  Decimal,
   Json,
 }
 
 export default NexusPrismaScalars
 
-export { Bytes, DateTime, Json }
+export { Bytes, DateTime, Decimal, Json }

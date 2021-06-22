@@ -17,6 +17,7 @@ testIntegration({
     return [
       NexusPrismaScalars.Bytes,
       NexusPrismaScalars.DateTime,
+      NexusPrismaScalars.Decimal,
       NexusPrismaScalars.Json,
       objectType({
         name: Foo.$name,

@@ -226,6 +226,7 @@ However some of the Prisma scalars do not have a natural standard representation
 | `Json`     | `Json`     | `json`           | [JsonObject](https://github.com/Urigo/graphql-scalars#jsonobject) |
 | `DateTime` | `DateTime` | `dateTime`       | [DateTime](https://github.com/Urigo/graphql-scalars#datetime)     |
 | `Bytes`    | `Bytes`    | `bytes`          | [Bytes](https://www.graphql-scalars.dev/docs/scalars/byte/)       |
+| `Decimal`  | `Decimal`  | `decimal`        |                                                                   |
 
 > **Note:** Not all Prisma scalar mappings are implemented yet: `BigInt`, `Decimal`, `Unsupported`
 

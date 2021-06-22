@@ -8,6 +8,7 @@ import kleur = require('kleur')
 
 export const getPrismaClientDmmf = (importId = '@prisma/client'): DMMF.Document => {
   d('get dmmf from @prisma/client')
+  console.log(importId)
 
   let maybeDmmf: DMMF.Document | undefined
 

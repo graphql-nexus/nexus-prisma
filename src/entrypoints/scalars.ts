@@ -7,12 +7,12 @@ import { Json } from '../scalars/Json'
  * Predefined Nexus scalar type definitions to satisfy all custom scalars needed in GraphQL to map to the
  * native scalars in Prisma. The mapping is as follows:
  *
- * | Prisma | GraphQL | Nexus `t` Helper | GraphQL Scalar Implementation |
- * | ---------- | ---------- | ---- | ----------------------------------------------------------------- |
- * | `Json` | `Json` | `json` | [JsonObject](https://www.graphql-scalars.dev/docs/scalars/json-object) |
- * | `DateTime` | `DateTime` | `datetime` | [DateTime](https://www.graphql-scalars.dev/docs/scalars/date-time) |
- * | `BigInt` | `BigInt` | `bigInt` | [BigInt](https://www.graphql-scalars.dev/docs/scalars/big-int) |.
- * | `Bytes` | `Bytes` | `bytes` | [Byte](https://www.graphql-scalars.dev/docs/scalars/byte) |.
+ * | Prisma     | GraphQL    | Nexus `t` Helper | GraphQL Scalar Implementation                                         | Additional Info                                                                                              |
+ * | ---------- | ---------- | ---------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+ * | `Json`     | `Json`     | `json`           | [JsonObject](https://www.graphql-scalars.dev/docs/scalars/jsonobject) |                                                                                                              |
+ * | `DateTime` | `DateTime` | `dateTime`       | [DateTime](https://www.graphql-scalars.dev/docs/scalars/datetime)     |                                                                                                              |
+ * | `BigInt`   | `BigInt`   | `bigInt`         | [BigInt](https://www.graphql-scalars.dev/docs/scalars/big-int)        | [JavaScript BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) |
+ * | `Bytes`    | `Bytes`    | `bytes`          | [Byte](https://www.graphql-scalars.dev/docs/scalars/byte/)            | [Node.js Buffer](https://nodejs.org/api/buffer.html#buffer_buffer)                                           |
  *
  * @example
  *

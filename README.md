@@ -838,7 +838,7 @@ Nexus Prisma generates default GraphQL resolvers for your model _relation fields
        t.field(User.id.name, User.id)
        t.field(User.posts.name, {
          ...User.posts,
-         asyncresolve(...args) {
+         async resolve(...args) {
            // Your custom logic here
          },
        })

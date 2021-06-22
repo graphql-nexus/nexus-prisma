@@ -3,9 +3,6 @@ import fs from 'fs-jetpack'
 import { z } from 'zod'
 
 type ComboCase =
-  | '12.x + windows-latest'
-  | '12.x + macos-latest'
-  | '12.x + ubuntu-latest'
   | '14.x + windows-latest'
   | '14.x + macos-latest'
   | '14.x + ubuntu-latest'
@@ -13,14 +10,11 @@ type ComboCase =
   | '16.x + macos-latest'
   | '16.x + ubuntu-latest'
 
-const nodeVersionParser = z.union([z.literal('12.x'), z.literal('14.x'), z.literal('16.x')])
+const nodeVersionParser = z.union([z.literal('14.x'), z.literal('16.x')])
 
 const osParser = z.union([z.literal('macos-latest'), z.literal('ubuntu-latest'), z.literal('windows-latest')])
 
 const connectionStringMapping: Record<ComboCase, string> = {
-  '12.x + macos-latest': 'node_12_macos_latest',
-  '12.x + windows-latest': 'node_12_windows_latest',
-  '12.x + ubuntu-latest': 'node_12_ubuntu_latest',
   '14.x + macos-latest': 'node_14_macos_latest',
   '14.x + windows-latest': 'node_14_windows_latest',
   '14.x + ubuntu-latest': 'node_14_ubuntu_latest',

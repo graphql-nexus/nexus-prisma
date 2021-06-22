@@ -38,6 +38,7 @@ Official Prisma plugin for Nexus.
   - [Project relation with custom resolver logic](#project-relation-with-custom-resolver-logic)
   - [Supply custom custom scalars to your GraphQL schema](#supply-custom-custom-scalars-to-your-graphql-schema)
 - [Notes](#notes)
+- [Supported Versions Of Node & Prisma](#supported-versions-of-node--prisma)
 
 <!-- tocstop -->
 
@@ -871,3 +872,13 @@ makeSchema({
 - Versions of `nexus-prisma` package prior to `0.20` were a completely different version of the API, and had also become deprecated at one point to migrate to `nexus-plugin-prisma` when Nexus Framework was being worked on. All of that is history.
 
 - If you are using `prisma@=<2.17.x` then you must use the Nexus Prisma Prisma generator name of `nexus_prisma` instead of `nexus-prisma`. This is because prior to `prisma@2.18.x` there was a hardcode check for `nexus-prisma` that would fail with an error message about a now-old migration.
+
+## Supported Versions Of Node & Prisma
+
+We only officially support what we test.
+
+We test Node versions that are `Active LTS` and `Current`. For which versions of Node that equals you can refer to our tests or look here: https://nodejs.org/en/about/releases.
+
+We test Prisma versions `2.25`. More Prisma versions are planned to be tested, refer to [#69](https://github.com/prisma/nexus-prisma/issues/69).
+
+We do not currently maintain a historical matrix of what past versions of Prisma supported what vesrions of Prisma and Node.

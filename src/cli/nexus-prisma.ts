@@ -73,10 +73,39 @@ function getPrismaClientImportIdForItsGeneratorOutputConfig(
   }
 
   if (prismaClientGeneratorConfig.output.value.endsWith(prismaClientPackageMoniker)) {
-    const dirPrismaClientOutputWithoutTrailingNodeModulesMoniker = prismaClientGeneratorConfig.output.value.replace(
-      new RegExp(`node_modules/${prismaClientPackageMoniker}$`),
-      ''
-    )
+    /**
+     * Goal of this code:
+     *
+     * Find out if we can import Prisma Client by simplify specifying its moniker (@prisma/client).
+     *
+     * Why do we want to import by Moniker? Because it is a good default because it is what a user would
+     * do in their own code. Also because not doing so has led to bugs https://github.com/prisma/nexus-prisma/issues/76.
+     *
+     * How this works:
+     *
+     * 1. Get the Prisma Client generatour output path minus the trailing node_moudles/@prisma/client (if present, it could be totally custom).
+     *
+     * Note that even if the user has not explicitly configured an output path in their PSL file by the time we get the geneator config from
+     * Prisma generator system the output default has been supplied so we always have a value here to work with.
+     *
+     * 2. Get the Nexus Prisma package path on the user's machine by starting from this module and going four directories up. Four directories
+     * up goes above the node_modules directory into their code.
+     *
+     * Note that we must go four up, not three up (which would be node_modules), because when using Yalc (used for development and E2E tests)
+     * Nexus Prisma is placed into <project>/.yalc rather than <project>/node_modules. And therefore, the check we want to achieve here would
+     * fail when it shouldn't.
+     *
+     * 3. With the two paths we check what the relative path between them is. If its an empty string, it means they are the same.
+     *
+     * Note this technique is better than string comparison because it guards against meaningless path difference details like windows vs posix.
+     * We're not certain what path standard we'll get from Prisma for example and ideally we don't care. Path.relative function should let us not
+     * care.
+     */
+    const dirPrismaClientOutputWithoutTrailingNodeModulesMoniker =
+      prismaClientGeneratorConfig.output.value.replace(
+        new RegExp(`node_modules/${prismaClientPackageMoniker}$`),
+        ''
+      )
     const dirProjectForThisNexusPrisma = Path.join(__dirname, '../../../..')
     const dirDiff = Path.relative(
       dirPrismaClientOutputWithoutTrailingNodeModulesMoniker,

@@ -67,3 +67,13 @@ testGeneratedModules({
     }
   `,
 })
+
+testGeneratedModules({
+  description: 'A model field with type Bytes maps to GraphQL Bytes custom scalar',
+  databaseSchema: `
+    model SomeModel {
+      id  String @id
+      foo Bytes
+    }
+  `,
+})

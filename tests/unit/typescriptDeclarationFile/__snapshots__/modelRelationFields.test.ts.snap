@@ -140,7 +140,7 @@ declare namespace $Types {
       /**
        * The type of this field.
        */
-      type: NexusCore.ListDef<Post> | NexusCore.NexusNonNullDef<Post>
+      type: NexusCore.NexusListDef<Post> | NexusCore.NexusNonNullDef<Post>
     
       /**
        * The documentation of this field.

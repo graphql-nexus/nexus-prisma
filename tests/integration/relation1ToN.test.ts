@@ -31,14 +31,14 @@ testIntegration({
       objectType({
         name: User.$name,
         definition(t) {
-          t.field(User.id.name, User.id)
-          t.field(User.posts.name, User.posts)
+          t.field(User.id)
+          t.field(User.posts)
         },
       }),
       objectType({
         name: Post.$name,
         definition(t) {
-          t.field(Post.id.name, Post.id)
+          t.field(Post.id)
         },
       }),
     ]
@@ -100,14 +100,14 @@ testIntegration({
       objectType({
         name: User.$name,
         definition(t) {
-          t.field(User.id1.name, User.id1)
-          t.field(User.posts.name, User.posts)
+          t.field(User.id1)
+          t.field(User.posts)
         },
       }),
       objectType({
         name: Post.$name,
         definition(t) {
-          t.field(Post.id.name, Post.id)
+          t.field(Post.id)
         },
       }),
     ]

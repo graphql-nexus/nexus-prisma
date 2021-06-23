@@ -43,7 +43,7 @@ declare namespace $Types {
     *   name: SomeModel.$name
     *   description: SomeModel.$description
     *   definition(t) {
-    *     t.field(SomeModel.id.name, SomeModel.id)
+    *     t.field(SomeModel.id)
     *   }
     * }) 
     */
@@ -64,7 +64,7 @@ declare namespace $Types {
       *   name: SomeModel.$name
       *   description: SomeModel.$description
       *   definition(t) {
-      *     t.field(SomeModel.id.name, SomeModel.id)
+      *     t.field(SomeModel.id)
       *   }
       * }) 
       */
@@ -142,7 +142,7 @@ declare namespace $Types {
   *   name: SomeModel.$name
   *   description: SomeModel.$description
   *   definition(t) {
-  *     t.field(SomeModel.id.name, SomeModel.id)
+  *     t.field(SomeModel.id)
   *   }
   * }) 
   */
@@ -246,7 +246,7 @@ declare namespace $Types {
     *   name: SomeModel.$name
     *   description: SomeModel.$description
     *   definition(t) {
-    *     t.field(SomeModel.id.name, SomeModel.id)
+    *     t.field(SomeModel.id)
     *   }
     * }) 
     */
@@ -279,7 +279,7 @@ declare namespace $Types {
       *   name: SomeModel.$name
       *   description: SomeModel.$description
       *   definition(t) {
-      *     t.field(SomeModel.id.name, SomeModel.id)
+      *     t.field(SomeModel.id)
       *   }
       * }) 
       */
@@ -357,7 +357,7 @@ declare namespace $Types {
   *   name: SomeModel.$name
   *   description: SomeModel.$description
   *   definition(t) {
-  *     t.field(SomeModel.id.name, SomeModel.id)
+  *     t.field(SomeModel.id)
   *   }
   * }) 
   */
@@ -448,7 +448,7 @@ declare namespace $Types {
     *   name: SomeModel.$name
     *   description: SomeModel.$description
     *   definition(t) {
-    *     t.field(SomeModel.id.name, SomeModel.id)
+    *     t.field(SomeModel.id)
     *   }
     * }) 
     */
@@ -481,7 +481,7 @@ declare namespace $Types {
       *   name: SomeModel.$name
       *   description: SomeModel.$description
       *   definition(t) {
-      *     t.field(SomeModel.id.name, SomeModel.id)
+      *     t.field(SomeModel.id)
       *   }
       * }) 
       */
@@ -546,7 +546,7 @@ declare namespace $Types {
   *   name: SomeModel.$name
   *   description: SomeModel.$description
   *   definition(t) {
-  *     t.field(SomeModel.id.name, SomeModel.id)
+  *     t.field(SomeModel.id)
   *   }
   * }) 
   */
@@ -650,7 +650,7 @@ declare namespace $Types {
     *   name: SomeModel.$name
     *   description: SomeModel.$description
     *   definition(t) {
-    *     t.field(SomeModel.id.name, SomeModel.id)
+    *     t.field(SomeModel.id)
     *   }
     * }) 
     */
@@ -683,7 +683,7 @@ declare namespace $Types {
       *   name: SomeModel.$name
       *   description: SomeModel.$description
       *   definition(t) {
-      *     t.field(SomeModel.id.name, SomeModel.id)
+      *     t.field(SomeModel.id)
       *   }
       * }) 
       */
@@ -761,7 +761,7 @@ declare namespace $Types {
   *   name: SomeModel.$name
   *   description: SomeModel.$description
   *   definition(t) {
-  *     t.field(SomeModel.id.name, SomeModel.id)
+  *     t.field(SomeModel.id)
   *   }
   * }) 
   */

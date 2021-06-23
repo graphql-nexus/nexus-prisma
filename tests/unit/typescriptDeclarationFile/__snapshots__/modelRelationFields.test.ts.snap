@@ -43,7 +43,7 @@ declare namespace $Types {
     *   name: User.$name
     *   description: User.$description
     *   definition(t) {
-    *     t.field(User.id.name, User.id)
+    *     t.field(User.id)
     *   }
     * }) 
     */
@@ -76,7 +76,7 @@ declare namespace $Types {
       *   name: User.$name
       *   description: User.$description
       *   definition(t) {
-      *     t.field(User.id.name, User.id)
+      *     t.field(User.id)
       *   }
       * }) 
       */
@@ -127,7 +127,7 @@ declare namespace $Types {
       *   name: User.$name
       *   description: User.$description
       *   definition(t) {
-      *     t.field(User.posts.name, User.posts)
+      *     t.field(User.posts)
       *   }
       * }) 
       */
@@ -181,7 +181,7 @@ declare namespace $Types {
     *   name: Post.$name
     *   description: Post.$description
     *   definition(t) {
-    *     t.field(Post.id.name, Post.id)
+    *     t.field(Post.id)
     *   }
     * }) 
     */
@@ -214,7 +214,7 @@ declare namespace $Types {
       *   name: Post.$name
       *   description: Post.$description
       *   definition(t) {
-      *     t.field(Post.id.name, Post.id)
+      *     t.field(Post.id)
       *   }
       * }) 
       */
@@ -265,7 +265,7 @@ declare namespace $Types {
       *   name: Post.$name
       *   description: Post.$description
       *   definition(t) {
-      *     t.field(Post.author.name, Post.author)
+      *     t.field(Post.author)
       *   }
       * }) 
       */
@@ -316,7 +316,7 @@ declare namespace $Types {
       *   name: Post.$name
       *   description: Post.$description
       *   definition(t) {
-      *     t.field(Post.authorId.name, Post.authorId)
+      *     t.field(Post.authorId)
       *   }
       * }) 
       */
@@ -394,7 +394,7 @@ declare namespace $Types {
   *   name: User.$name
   *   description: User.$description
   *   definition(t) {
-  *     t.field(User.id.name, User.id)
+  *     t.field(User.id)
   *   }
   * }) 
   */
@@ -427,7 +427,7 @@ export const User: $Types.User
   *   name: Post.$name
   *   description: Post.$description
   *   definition(t) {
-  *     t.field(Post.id.name, Post.id)
+  *     t.field(Post.id)
   *   }
   * }) 
   */

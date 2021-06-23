@@ -84,7 +84,9 @@ export namespace Gentime {
   })
 
   /**
-   * Define runtime settings for Nexus Prisma.
+   * Adjust Nexus Prisma's [runtime settings](https://github.com/prisma/nexus-prisma#runtime-settings). 
+   *
+   * @remarks These are different than Nexus Prisma's [_gentime_ settings](https://github.com/prisma/nexus-prisma#generator-settings).
    *
    * @example
    *

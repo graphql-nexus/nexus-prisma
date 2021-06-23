@@ -146,7 +146,7 @@ export function prismaFieldToNexusResolver(
    *
    * So:
    *
-   *     t.field(M1.Foo.bar.$name, M1.Foo.bar)
+   *     t.field(M1.Foo.bar)
    *
    * where `bar` is a scalar prisma field would have NO resolve generated and thus default Nexus as mentioned would
    * think that `bar` field WILL be present on the source type. This is, again, mostly moot since most Nexus Prisma

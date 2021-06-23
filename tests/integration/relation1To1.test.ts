@@ -30,14 +30,14 @@ testIntegration({
       objectType({
         name: User.$name,
         definition(t) {
-          t.field(User.id.name, User.id)
-          t.field(User.profile.name, User.profile)
+          t.field(User.id)
+          t.field(User.profile)
         },
       }),
       objectType({
         name: Profile.$name,
         definition(t) {
-          t.field(Profile.id.name, Profile.id)
+          t.field(Profile.id)
         },
       }),
     ]
@@ -96,15 +96,15 @@ testIntegration({
       objectType({
         name: User.$name,
         definition(t) {
-          t.field(User.id.name, User.id)
-          t.field(User.profile.name, User.profile)
+          t.field(User.id)
+          t.field(User.profile)
         },
       }),
       objectType({
         name: Profile.$name,
         definition(t) {
-          t.field(Profile.id.name, Profile.id)
-          t.field(Profile.user.name, Profile.user)
+          t.field(Profile.id)
+          t.field(Profile.user)
         },
       }),
     ]
@@ -165,15 +165,15 @@ testIntegration({
       objectType({
         name: User.$name,
         definition(t) {
-          t.field(User.id.name, User.id)
-          t.field(User.profile.name, User.profile)
+          t.field(User.id)
+          t.field(User.profile)
         },
       }),
       objectType({
         name: Profile.$name,
         definition(t) {
-          t.field(Profile.id.name, Profile.id)
-          t.field(Profile.user.name, {
+          t.field(Profile.id)
+          t.field({
             ...Profile.user,
             type: nonNull(Profile.user.type),
           })
@@ -239,15 +239,15 @@ testIntegration({
       objectType({
         name: User.$name,
         definition(t) {
-          t.field(User.id.name, User.id)
-          t.field(User.profile.name, User.profile)
+          t.field(User.id)
+          t.field(User.profile)
         },
       }),
       objectType({
         name: Profile.$name,
         definition(t) {
-          t.field(Profile.id1.name, Profile.id1)
-          t.field(Profile.user.name, {
+          t.field(Profile.id1)
+          t.field({
             ...Profile.user,
             type: nonNull(Profile.user.type),
           })

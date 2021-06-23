@@ -95,7 +95,7 @@ export const schema = makeSchema({
       name: User.$name
       description: User.$description
       definition(t) {
-        t.field(User.id.name, User.id)
+        t.field(User.id)
       }
     })
   ]
@@ -167,7 +167,7 @@ objectType({
   name: User.$name
   description: User.$description
   definition(t) {
-    t.field(User.id.name, {
+    t.field({
       type: User.id.type,
       description: User.id.description
     })
@@ -312,15 +312,15 @@ queryType({
 objectType({
   name: User.$name,
   definition(t) {
-    t.field(User.id.name, User.id)
-    t.field(User.profile.name, User.profile)
+    t.field(User.id)
+    t.field(User.profile)
   },
 })
 
 objectType({
   name: Profile.$name,
   definition(t) {
-    t.field(Profile.id.name, Profile.id)
+    t.field(Profile.id)
   },
 })
 ```
@@ -410,16 +410,16 @@ import { User, Profile } from 'nexus-prisma'
 objectType({
   name: User.$name,
   definition(t) {
-    t.field(User.id.name, User.id)
-    t.field(User.profile.name, User.profile)
+    t.field(User.id)
+    t.field(User.profile)
   },
 })
 
 objectType({
   name: Profile.$name,
   definition(t) {
-    t.field(Profile.id.name, Profile.id)
-    t.field(User.profile.name, User.profile)
+    t.field(Profile.id)
+    t.field(User.profile)
   },
 })
 ```
@@ -442,8 +442,8 @@ This limitation may be a problem for your API. There is an [issue track this tha
 objectType({
   name: Profile.$name,
   definition(t) {
-    t.field(Profile.id.name, Profile.id)
-    t.field(User.profile.name, {
+    t.field(Profile.id)
+    t.field({
       ...User.profile,
       type: nonNull(User.profile.type),
     })
@@ -498,15 +498,15 @@ queryType({
 objectType({
   name: User.$name,
   definition(t) {
-    t.field(User.id.name, User.id)
-    t.field(User.posts.name, User.posts)
+    t.field(User.id)
+    t.field(User.posts)
   },
 })
 
 objectType({
   name: Post.$name,
   definition(t) {
-    t.field(Post.id.name, Post.id)
+    t.field(Post.id)
   },
 })
 ```
@@ -712,7 +712,7 @@ objectType({
   name: User.$name
   description: User.$description
   definition(t) {
-    t.field(User.id.name, User.id)
+    t.field(User.id)
   }
 })
 ```
@@ -746,7 +746,7 @@ objectType({
   name: User.$name
   description: User.$description
   definition(t) {
-    t.field(User.id.name, User.id)
+    t.field(User.id)
   }
 })
 ```
@@ -822,8 +822,8 @@ Nexus Prisma generates default GraphQL resolvers for your model _relation fields
    objectType({
      name: User.$name,
      definition(t) {
-       t.field(User.id.name, User.id)
-       t.field(User.posts.name, {
+       t.field(User.id)
+       t.field({
          ...User.posts,
          async resolve(...args) {
            // Your custom before-logic here
@@ -842,8 +842,8 @@ Nexus Prisma generates default GraphQL resolvers for your model _relation fields
    objectType({
      name: User.$name,
      definition(t) {
-       t.field(User.id.name, User.id)
-       t.field(User.posts.name, {
+       t.field(User.id)
+       t.field({
          ...User.posts,
          async resolve(...args) {
            // Your custom logic here

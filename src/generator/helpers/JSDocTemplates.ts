@@ -110,7 +110,7 @@ function modelExample(model: DMMF.Model): string {
     *   name: ${model.name}.$name
     *   description: ${model.name}.$description
     *   definition(t) {
-    *     t.field(${model.name}.id.name, ${model.name}.id)
+    *     t.field(${model.name}.id)
     *   }
     * })
   `
@@ -164,7 +164,7 @@ function fieldExample({ model, field }: FieldModelParams): string {
     *   name: ${model.name}.$name
     *   description: ${model.name}.$description
     *   definition(t) {
-    *     t.field(${model.name}.${field.name}.name, ${model.name}.${field.name})
+    *     t.field(${model.name}.${field.name})
     *   }
     * })
   `

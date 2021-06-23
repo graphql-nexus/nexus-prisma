@@ -28,7 +28,9 @@ export function jsDocForEnum(enum_: DMMF.DatamodelEnum): JSDoc {
 
 function enumIntro(enum_: DMMF.DatamodelEnum): string {
   return dedent`
-    * Nexus \`enumType\` configuration based on the \`${enum_.name}\` enum in your Prisma schema.
+    * Nexus \`enumType\` configuration based on your Prisma schema's \`${enum_.name}\` enum.
+    *
+    * Has the following members: ${enum_.values.map((value) => value.name).join(', ')}
   `
 }
 

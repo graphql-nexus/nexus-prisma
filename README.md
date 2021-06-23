@@ -220,7 +220,7 @@ However some of the Prisma scalars do not have a natural standard representation
 
 > **Note:** Not all Prisma scalar mappings are implemented yet: `Decimal`, `Unsupported`
 
-> **Note:** `BigInt` is supported in Node.js since version [10.4.0](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt#browser_compatibility). However to support `BigInt` in `JSON.parse` and `JSON.stringify` you must use [`json-bigint-patch`](https://github.com/ardatan/json-bigint-patch) BigInt values will be serialized as strings.
+> **Note:** BigInt is supported in Node.js since version [10.4.0](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt#browser_compatibility) however to support BigInt in `JSON.parse`/`JSON.stringify` you must use [`json-bigint-patch`](https://github.com/ardatan/json-bigint-patch) otherwise BigInt values will be serialized as strings.
 
 While you are not required to use the implementations supplied by Nexus Prisma, you _are required to define custom scalars whose name matches the above mapping_.
 

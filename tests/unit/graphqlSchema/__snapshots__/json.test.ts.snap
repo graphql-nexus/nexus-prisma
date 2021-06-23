@@ -4,6 +4,7 @@ exports[`When a JSON field is defined in the Prisma schema it can be projected i
 "
 \\"\\"\\"
 The \`BigInt\` scalar type represents non-fractional signed whole numeric values.
+@see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt
 \\"\\"\\"
 scalar BigInt
 

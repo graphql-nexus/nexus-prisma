@@ -38,7 +38,10 @@ Official Prisma plugin for Nexus.
   - [Project relation with custom resolver logic](#project-relation-with-custom-resolver-logic)
   - [Supply custom custom scalars to your GraphQL schema](#supply-custom-custom-scalars-to-your-graphql-schema)
 - [Notes](#notes)
-- [Supported Versions Of Node & Prisma](#supported-versions-of-node--prisma)
+  - [For users of `nexus-prisma@=<0.20`](#for-users-of-nexus-prisma020)
+  - [For users of `prisma@=<2.17`](#for-users-of-prisma217)
+  - [For users of `nexus@=<1.0`](#for-users-of-nexus10)
+  - [Supported Versions Of Node & Prisma](#supported-versions-of-node--prisma)
 
 <!-- tocstop -->
 
@@ -47,15 +50,17 @@ Official Prisma plugin for Nexus.
 1. Install dependencies
 
    ```
-   npm add nexus-prisma graphql @prisma/client
+   npm add nexus-prisma nexus graphql @prisma/client
    npm add --dev prisma
    ```
 
-   > `graphql` and `@prisma/client` are peer dependencies. `prisma` is for the Prisma CLI which you'll probably want during development.
+   > `nexus` `graphql` and `@prisma/client` are peer dependencies. `prisma` is for the Prisma CLI which you'll probably want during development.
+
+   > If you use `nexus@=<1.0` then you must use `t.field(<NAME>, <CONFIG>)` instead of `t.field(<CONFIG>)`. The Nexus Prisma docs assume the latter form.
 
 1. Add a `nexus-prisma` generator block to your Prisma Schema.
 
-   > If you are using `prisma@=<2.17.x` then you must use the Nexus Prisma Prisma generator name of `nexus_prisma` instead of `nexus-prisma`. See [notes](#notes) for more detail.
+   > If you are using `prisma@=<2.17` then you must use the Nexus Prisma Prisma generator name of `nexus_prisma` instead of `nexus-prisma`. See [notes](#notes) for more detail.
 
 1. Run `prisma generate` in your terminal.
 
@@ -71,7 +76,7 @@ generator client {
 
 generator nexusPrisma {
    provider = "nexus-prisma"
-// provider = "nexus_prisma" <-- For prisma@=<2.17.x users
+// provider = "nexus_prisma"    <-- For prisma@=<2.17 users
 }
 
 /// This is a user!
@@ -96,6 +101,7 @@ export const schema = makeSchema({
       description: User.$description
       definition(t) {
         t.field(User.id)
+     // t.field(User.id.name, User.id)    <-- For nexus@=<1.0 users
       }
     })
   ]
@@ -877,11 +883,37 @@ makeSchema({
 
 ## Notes
 
-- Versions of `nexus-prisma` package prior to `0.20` were a completely different version of the API, and had also become deprecated at one point to migrate to `nexus-plugin-prisma` when Nexus Framework was being worked on. All of that is history.
+### For users of `nexus-prisma@=<0.20`
 
-- If you are using `prisma@=<2.17.x` then you must use the Nexus Prisma Prisma generator name of `nexus_prisma` instead of `nexus-prisma`. This is because prior to `prisma@2.18.x` there was a hardcode check for `nexus-prisma` that would fail with an error message about a now-old migration.
+Versions of `nexus-prisma` package prior to `0.20` were a completely different version of the API, and had also become deprecated at one point to migrate to `nexus-plugin-prisma` when Nexus Framework was being worked on. All of that is history.
 
-## Supported Versions Of Node & Prisma
+### For users of `prisma@=<2.17`
+
+If you are using `prisma@=<2.17` then you must use the Nexus Prisma Prisma generator name of `nexus_prisma` instead of `nexus-prisma`. This is because prior to `prisma@2.18` there was a hardcode check for `nexus-prisma` that would fail with an error message about a now-old migration.
+
+### For users of `nexus@=<1.0`
+
+The [release of Nexus 1.1](https://github.com/graphql-nexus/nexus/releases/tag/1.0.0) introduced an overload to `t.field` allowing improved usage of Nexus Prisma. The difference is as follows. Note if you prefer the older way that is and always will be supported too.
+
+```diff ts
+import { User } from 'nexus-prisma'
+import { makeSchema, objectType } from 'nexus'
+
+export const schema = makeSchema({
+  types: [
+    objectType({
+      name: User.$name
+      description: User.$description
+      definition(t) {
++        t.field(User.id) //                 <-- for nexus@>=1.1 users
+-        t.field(User.id.name, User.id) //   <-- For nexus@=<1.0 users
+      }
+    })
+  ]
+})
+```
+
+### Supported Versions Of Node & Prisma
 
 We only officially support what we test.
 

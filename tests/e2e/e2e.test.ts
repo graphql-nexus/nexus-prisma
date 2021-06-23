@@ -155,7 +155,7 @@ it('When bundled custom scalars are used the project type checks and generates e
               id: 'foo1',
               someDateTimeField: new Date("2021-05-10T20:42:46.609Z"),
               someBytesField: Buffer.from([]),
-              someJsonField: JSON.stringify({}),
+              someJsonField: {},
               someBigIntField: BigInt(9007199254740991),
               someEnumA: 'alpha',
               bar: {

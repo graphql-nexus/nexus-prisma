@@ -27,6 +27,7 @@ testIntegration({
       queryType({
         definition(t) {
           t.field({
+            name: 'foos',
             type: list(Foo.name),
             resolve(_, __, ctx) {
               return ctx.prisma.foo.findMany()

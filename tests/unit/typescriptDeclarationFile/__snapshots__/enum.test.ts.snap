@@ -21,12 +21,12 @@ declare namespace $Types {
   // Enums
 
   /**
-    * Nexus \`enumType\` configuration based on the \`Foo\` enum in your Prisma schema.
+    * Generated Nexus \`enumType\` configuration based on your Prisma schema's enum \`Foo\`.
     *
-    * ### ️⚠️ Missing Documentation for this Enum
+    * ### ️⚠️ You have not writen documentation for enum Foo
     * 
-    * Automatically ✨ enrich this JSDoc with information about your enum
-    * type by documenting it in your Prisma schema. For example:
+    * Replace this default advisory JSDoc with your own documentation about enum Foo
+    * by documenting it in your Prisma schema. For example:
     *
     *
     * \`\`\`prisma
@@ -36,7 +36,9 @@ declare namespace $Types {
     * }
     * \`\`\`
     * 
-    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * Contains these members: a
     *
     * @example
     *
@@ -83,12 +85,12 @@ declare namespace $Types {
 //
 
 /**
-  * Nexus \`enumType\` configuration based on the \`Foo\` enum in your Prisma schema.
+  * Generated Nexus \`enumType\` configuration based on your Prisma schema's enum \`Foo\`.
   *
-  * ### ️⚠️ Missing Documentation for this Enum
+  * ### ️⚠️ You have not writen documentation for enum Foo
   * 
-  * Automatically ✨ enrich this JSDoc with information about your enum
-  * type by documenting it in your Prisma schema. For example:
+  * Replace this default advisory JSDoc with your own documentation about enum Foo
+  * by documenting it in your Prisma schema. For example:
   *
   *
   * \`\`\`prisma
@@ -98,7 +100,9 @@ declare namespace $Types {
   * }
   * \`\`\`
   * 
-  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  *
+  * Contains these members: a
   *
   * @example
   *
@@ -174,9 +178,11 @@ declare namespace $Types {
   // Enums
 
   /**
-    * Nexus \`enumType\` configuration based on the \`Foo\` enum in your Prisma schema.
+    * Generated Nexus \`enumType\` configuration based on your Prisma schema's enum \`Foo\`.
     *
     * Some documentation
+    *
+    * Contains these members: a
     *
     * @example
     *
@@ -223,9 +229,11 @@ declare namespace $Types {
 //
 
 /**
-  * Nexus \`enumType\` configuration based on the \`Foo\` enum in your Prisma schema.
+  * Generated Nexus \`enumType\` configuration based on your Prisma schema's enum \`Foo\`.
   *
   * Some documentation
+  *
+  * Contains these members: a
   *
   * @example
   *

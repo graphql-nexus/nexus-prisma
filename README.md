@@ -761,6 +761,8 @@ type User {
 
 #### As JSDoc
 
+Can be disabled in [gentime settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+
 ```prisma
 /// A user.
 model User {
@@ -780,9 +782,10 @@ User.id // JSDoc: A stable identifier to find users by.
 
 These are finer points that aren't perhaps worth a top-level point but none the less add up toward a thoughtful developer experience.
 
-##### Default JSDoc
+##### JSDoc
 
-Fields and models that you do not document will result in a helpful default JSDoc that teaches you about this.
+- Generated Nexus configuration for fields and models that you _have not_ documented in your PSL get default JSDoc that teaches you how to do so.
+- JSDoc for Enums have their members embedded
 
 ##### Default Runtime
 

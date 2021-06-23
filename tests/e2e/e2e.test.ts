@@ -371,6 +371,7 @@ it('When bundled custom scalars are used the project type checks and generates e
           BytesManually
           BigIntManually
           someEnumA
+          someJsonField
           someDateTimeField
           someBytesField
           someBigIntField
@@ -389,4 +390,16 @@ it('When bundled custom scalars are used the project type checks and generates e
   d(`stopped server`)
 
   expect(data).toMatchSnapshot('client request 1')
+
+  const [{ foo }] = data.bars
+
+  expect(typeof foo.JsonManually).toEqual('object')
+  expect(typeof foo.DateTimeManually).toEqual('string')
+  expect(typeof foo.BytesManually).toEqual('string')
+  expect(typeof foo.BigIntManually).toEqual('string')
+  expect(typeof foo.someEnumA).toEqual('string')
+  expect(typeof foo.someJsonField).toEqual('object')
+  expect(typeof foo.someDateTimeField).toEqual('string')
+  expect(typeof foo.someBytesField).toEqual('string')
+  expect(typeof foo.someBigIntField).toEqual('string')
 }, 60_000)

@@ -84,14 +84,20 @@ export namespace Gentime {
   })
 
   /**
-   * Adjust Nexus Prisma's [runtime settings](https://github.com/prisma/nexus-prisma#runtime-settings). 
-   *
-   * @remarks These are different than Nexus Prisma's [_gentime_ settings](https://github.com/prisma/nexus-prisma#generator-settings).
+   * Adjust Nexus Prisma's [gentime settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
    *
    * @example
    *
-   *   changeSettings({ projectIdIntToGraphQL: 'Int' })
+   *   // prisma/nexus-prisma.ts
    *
+   *   import { settings } from 'nexus-prisma/generator'
+   *
+   *   settings({
+   *     projectIdIntToGraphQL: 'ID',
+   *   })
+   *
+   * @remarks This is _different_ than Nexus Prisma's [_runtime_
+   *          settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
    */
   export function changeSettings(input: Setset.UserInput<SettingsInput>): void {
     settings.change(input)

@@ -170,6 +170,35 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
+/**
+ * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
+ * 
+ *
+ * @example
+ *
+ *     import { PrismaClient } from '@prisma/client'
+ *     import { ApolloServer } from 'apollo-server'
+ *     import { makeSchema } from 'nexus'
+ *     import { User, Post, $settings } from 'nexus-prisma'
+ *
+ *     new ApolloServer({
+ *       schema: makeSchema({
+ *         types: [],
+ *       }),
+ *       context() {
+ *         return {
+ *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *         }
+ *       },
+ *     })
+ *
+ *     $settings({
+ *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
+ *     })
+ *
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_
+ *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ */
 export const $settings: typeof Runtime.changeSettings
 "
 `;
@@ -356,6 +385,35 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
+/**
+ * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
+ * 
+ *
+ * @example
+ *
+ *     import { PrismaClient } from '@prisma/client'
+ *     import { ApolloServer } from 'apollo-server'
+ *     import { makeSchema } from 'nexus'
+ *     import { User, Post, $settings } from 'nexus-prisma'
+ *
+ *     new ApolloServer({
+ *       schema: makeSchema({
+ *         types: [],
+ *       }),
+ *       context() {
+ *         return {
+ *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *         }
+ *       },
+ *     })
+ *
+ *     $settings({
+ *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
+ *     })
+ *
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_
+ *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ */
 export const $settings: typeof Runtime.changeSettings
 "
 `;
@@ -516,6 +574,35 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
+/**
+ * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
+ * 
+ *
+ * @example
+ *
+ *     import { PrismaClient } from '@prisma/client'
+ *     import { ApolloServer } from 'apollo-server'
+ *     import { makeSchema } from 'nexus'
+ *     import { User, Post, $settings } from 'nexus-prisma'
+ *
+ *     new ApolloServer({
+ *       schema: makeSchema({
+ *         types: [],
+ *       }),
+ *       context() {
+ *         return {
+ *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *         }
+ *       },
+ *     })
+ *
+ *     $settings({
+ *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
+ *     })
+ *
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_
+ *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ */
 export const $settings: typeof Runtime.changeSettings
 "
 `;
@@ -702,6 +789,35 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
+/**
+ * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
+ * 
+ *
+ * @example
+ *
+ *     import { PrismaClient } from '@prisma/client'
+ *     import { ApolloServer } from 'apollo-server'
+ *     import { makeSchema } from 'nexus'
+ *     import { User, Post, $settings } from 'nexus-prisma'
+ *
+ *     new ApolloServer({
+ *       schema: makeSchema({
+ *         types: [],
+ *       }),
+ *       context() {
+ *         return {
+ *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *         }
+ *       },
+ *     })
+ *
+ *     $settings({
+ *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
+ *     })
+ *
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_
+ *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ */
 export const $settings: typeof Runtime.changeSettings
 "
 `;

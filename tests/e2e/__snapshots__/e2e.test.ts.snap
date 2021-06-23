@@ -70,8 +70,8 @@ exports[`When bundled custom scalars are used the project type checks and genera
  * Do not make changes to this file directly
  */
 
-import * as PrismaClient from \\".prisma/client\\"
-import { core } from \\"nexus\\"
+import type * as PrismaClient from \\".prisma/client\\"
+import type { core } from \\"nexus\\"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
     /**
@@ -242,6 +242,8 @@ export interface NexusGenTypes {
 
 declare global {
   interface NexusGenPluginTypeConfig<TypeName extends string> {
+  }
+  interface NexusGenPluginInputTypeConfig<TypeName extends string> {
   }
   interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
   }

@@ -187,6 +187,7 @@ it('When bundled custom scalars are used the project type checks and generates e
           queryType({
             definition(t) {
               t.list.field({
+                name: 'bars',
                 type: 'Bar',
                 resolve(_, __, ctx) {
                   return ctx.prisma.bar.findMany()
@@ -204,6 +205,7 @@ it('When bundled custom scalars are used the project type checks and generates e
             name: Foo.$name,
             definition(t) {
               t.field({
+                name: 'someEnumA',
                 type: 'SomeEnumA',
               })
               t.json('JsonManually')

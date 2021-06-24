@@ -22,12 +22,13 @@ testIntegration({
       objectType({
         name: Foo.$name,
         definition(t) {
-          t.field(Foo.json.$name, Foo.json)
+          t.field(Foo.json)
         },
       }),
       queryType({
         definition(t) {
-          t.field('foos', {
+          t.field({
+            name: 'foos',
             type: list(Foo.name),
             resolve(_, __, ctx) {
               return ctx.prisma.foo.findMany()

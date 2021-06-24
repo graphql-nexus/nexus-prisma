@@ -254,12 +254,12 @@ declare namespace $Types {
   // Models
 
   /**
-    * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+    * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
     *
-    * ### ️⚠️ Missing Documentation for this Model
+    * ### ️⚠️ You have not writen documentation for model SomeModel
     * 
-    * Automatically ✨ enrich this JSDoc with information about your enum
-    * type by documenting it in your Prisma schema. For example:
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
     *
     * 
     * \`\`\`prisma
@@ -269,7 +269,7 @@ declare namespace $Types {
     * }
     * \`\`\`
     * 
-    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
     *
     * @example
     *
@@ -280,7 +280,7 @@ declare namespace $Types {
     *   name: SomeModel.$name
     *   description: SomeModel.$description
     *   definition(t) {
-    *     t.field(SomeModel.id.name, SomeModel.id)
+    *     t.field(SomeModel.id)
     *   }
     * }) 
     */
@@ -288,12 +288,12 @@ declare namespace $Types {
     $name: 'SomeModel'
     $description: undefined
     /**
-     * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
+     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
       *
-      * ### ️⚠️ Missing Documentation for this Model
+      * ### ️⚠️ You have not writen documentation for model SomeModel
       * 
-      * Automatically ✨ enrich this JSDoc with information about your enum
-      * type by documenting it in your Prisma schema. For example:
+      * Replace this default advisory JSDoc with your own documentation about model SomeModel
+      * by documenting it in your Prisma schema. For example:
       *
       * \`\`\`prisma
       * model SomeModel {
@@ -302,7 +302,7 @@ declare namespace $Types {
       * }
       * \`\`\`
       *
-      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
       *
       * @example
       *
@@ -313,7 +313,7 @@ declare namespace $Types {
       *   name: SomeModel.$name
       *   description: SomeModel.$description
       *   definition(t) {
-      *     t.field(SomeModel.id.name, SomeModel.id)
+      *     t.field(SomeModel.id)
       *   }
       * }) 
       */
@@ -339,12 +339,12 @@ declare namespace $Types {
       resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
     }
     /**
-     * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
+     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
       *
-      * ### ️⚠️ Missing Documentation for this Model
+      * ### ️⚠️ You have not writen documentation for model SomeModel
       * 
-      * Automatically ✨ enrich this JSDoc with information about your enum
-      * type by documenting it in your Prisma schema. For example:
+      * Replace this default advisory JSDoc with your own documentation about model SomeModel
+      * by documenting it in your Prisma schema. For example:
       *
       * \`\`\`prisma
       * model SomeModel {
@@ -353,7 +353,7 @@ declare namespace $Types {
       * }
       * \`\`\`
       *
-      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
       *
       * @example
       *
@@ -364,7 +364,7 @@ declare namespace $Types {
       *   name: SomeModel.$name
       *   description: SomeModel.$description
       *   definition(t) {
-      *     t.field(SomeModel.foo.name, SomeModel.foo)
+      *     t.field(SomeModel.foo)
       *   }
       * }) 
       */
@@ -416,12 +416,12 @@ declare namespace $Types {
 //
 
 /**
-  * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ Missing Documentation for this Model
+  * ### ️⚠️ You have not writen documentation for model SomeModel
   * 
-  * Automatically ✨ enrich this JSDoc with information about your enum
-  * type by documenting it in your Prisma schema. For example:
+  * Replace this default advisory JSDoc with your own documentation about model SomeModel
+  * by documenting it in your Prisma schema. For example:
   *
   * 
   * \`\`\`prisma
@@ -431,7 +431,7 @@ declare namespace $Types {
   * }
   * \`\`\`
   * 
-  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
   *
@@ -442,7 +442,7 @@ declare namespace $Types {
   *   name: SomeModel.$name
   *   description: SomeModel.$description
   *   definition(t) {
-  *     t.field(SomeModel.id.name, SomeModel.id)
+  *     t.field(SomeModel.id)
   *   }
   * }) 
   */
@@ -470,6 +470,35 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
+/**
+ * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
+ * 
+ *
+ * @example
+ *
+ *     import { PrismaClient } from '@prisma/client'
+ *     import { ApolloServer } from 'apollo-server'
+ *     import { makeSchema } from 'nexus'
+ *     import { User, Post, $settings } from 'nexus-prisma'
+ *
+ *     new ApolloServer({
+ *       schema: makeSchema({
+ *         types: [],
+ *       }),
+ *       context() {
+ *         return {
+ *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *         }
+ *       },
+ *     })
+ *
+ *     $settings({
+ *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
+ *     })
+ *
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_
+ *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ */
 export const $settings: typeof Runtime.changeSettings
 "
 `;
@@ -491,12 +520,12 @@ declare namespace $Types {
   // Models
 
   /**
-    * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+    * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
     *
-    * ### ️⚠️ Missing Documentation for this Model
+    * ### ️⚠️ You have not writen documentation for model SomeModel
     * 
-    * Automatically ✨ enrich this JSDoc with information about your enum
-    * type by documenting it in your Prisma schema. For example:
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
     *
     * 
     * \`\`\`prisma
@@ -506,7 +535,7 @@ declare namespace $Types {
     * }
     * \`\`\`
     * 
-    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
     *
     * @example
     *
@@ -517,7 +546,7 @@ declare namespace $Types {
     *   name: SomeModel.$name
     *   description: SomeModel.$description
     *   definition(t) {
-    *     t.field(SomeModel.id.name, SomeModel.id)
+    *     t.field(SomeModel.id)
     *   }
     * }) 
     */
@@ -525,12 +554,12 @@ declare namespace $Types {
     $name: 'SomeModel'
     $description: undefined
     /**
-     * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
+     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
       *
-      * ### ️⚠️ Missing Documentation for this Model
+      * ### ️⚠️ You have not writen documentation for model SomeModel
       * 
-      * Automatically ✨ enrich this JSDoc with information about your enum
-      * type by documenting it in your Prisma schema. For example:
+      * Replace this default advisory JSDoc with your own documentation about model SomeModel
+      * by documenting it in your Prisma schema. For example:
       *
       * \`\`\`prisma
       * model SomeModel {
@@ -539,7 +568,7 @@ declare namespace $Types {
       * }
       * \`\`\`
       *
-      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
       *
       * @example
       *
@@ -550,7 +579,7 @@ declare namespace $Types {
       *   name: SomeModel.$name
       *   description: SomeModel.$description
       *   definition(t) {
-      *     t.field(SomeModel.id.name, SomeModel.id)
+      *     t.field(SomeModel.id)
       *   }
       * }) 
       */
@@ -576,12 +605,12 @@ declare namespace $Types {
       resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
     }
     /**
-     * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
+     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
       *
-      * ### ️⚠️ Missing Documentation for this Model
+      * ### ️⚠️ You have not writen documentation for model SomeModel
       * 
-      * Automatically ✨ enrich this JSDoc with information about your enum
-      * type by documenting it in your Prisma schema. For example:
+      * Replace this default advisory JSDoc with your own documentation about model SomeModel
+      * by documenting it in your Prisma schema. For example:
       *
       * \`\`\`prisma
       * model SomeModel {
@@ -590,7 +619,7 @@ declare namespace $Types {
       * }
       * \`\`\`
       *
-      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
       *
       * @example
       *
@@ -601,7 +630,7 @@ declare namespace $Types {
       *   name: SomeModel.$name
       *   description: SomeModel.$description
       *   definition(t) {
-      *     t.field(SomeModel.foo.name, SomeModel.foo)
+      *     t.field(SomeModel.foo)
       *   }
       * }) 
       */
@@ -653,12 +682,12 @@ declare namespace $Types {
 //
 
 /**
-  * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ Missing Documentation for this Model
+  * ### ️⚠️ You have not writen documentation for model SomeModel
   * 
-  * Automatically ✨ enrich this JSDoc with information about your enum
-  * type by documenting it in your Prisma schema. For example:
+  * Replace this default advisory JSDoc with your own documentation about model SomeModel
+  * by documenting it in your Prisma schema. For example:
   *
   * 
   * \`\`\`prisma
@@ -668,7 +697,7 @@ declare namespace $Types {
   * }
   * \`\`\`
   * 
-  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
   *
@@ -679,7 +708,7 @@ declare namespace $Types {
   *   name: SomeModel.$name
   *   description: SomeModel.$description
   *   definition(t) {
-  *     t.field(SomeModel.id.name, SomeModel.id)
+  *     t.field(SomeModel.id)
   *   }
   * }) 
   */
@@ -707,6 +736,35 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
+/**
+ * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
+ * 
+ *
+ * @example
+ *
+ *     import { PrismaClient } from '@prisma/client'
+ *     import { ApolloServer } from 'apollo-server'
+ *     import { makeSchema } from 'nexus'
+ *     import { User, Post, $settings } from 'nexus-prisma'
+ *
+ *     new ApolloServer({
+ *       schema: makeSchema({
+ *         types: [],
+ *       }),
+ *       context() {
+ *         return {
+ *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *         }
+ *       },
+ *     })
+ *
+ *     $settings({
+ *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
+ *     })
+ *
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_
+ *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ */
 export const $settings: typeof Runtime.changeSettings
 "
 `;
@@ -728,12 +786,12 @@ declare namespace $Types {
   // Models
 
   /**
-    * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+    * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
     *
-    * ### ️⚠️ Missing Documentation for this Model
+    * ### ️⚠️ You have not writen documentation for model SomeModel
     * 
-    * Automatically ✨ enrich this JSDoc with information about your enum
-    * type by documenting it in your Prisma schema. For example:
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
     *
     * 
     * \`\`\`prisma
@@ -743,7 +801,7 @@ declare namespace $Types {
     * }
     * \`\`\`
     * 
-    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
     *
     * @example
     *
@@ -754,7 +812,7 @@ declare namespace $Types {
     *   name: SomeModel.$name
     *   description: SomeModel.$description
     *   definition(t) {
-    *     t.field(SomeModel.id.name, SomeModel.id)
+    *     t.field(SomeModel.id)
     *   }
     * }) 
     */
@@ -762,12 +820,12 @@ declare namespace $Types {
     $name: 'SomeModel'
     $description: undefined
     /**
-     * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
+     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
       *
-      * ### ️⚠️ Missing Documentation for this Model
+      * ### ️⚠️ You have not writen documentation for model SomeModel
       * 
-      * Automatically ✨ enrich this JSDoc with information about your enum
-      * type by documenting it in your Prisma schema. For example:
+      * Replace this default advisory JSDoc with your own documentation about model SomeModel
+      * by documenting it in your Prisma schema. For example:
       *
       * \`\`\`prisma
       * model SomeModel {
@@ -776,7 +834,7 @@ declare namespace $Types {
       * }
       * \`\`\`
       *
-      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
       *
       * @example
       *
@@ -787,7 +845,7 @@ declare namespace $Types {
       *   name: SomeModel.$name
       *   description: SomeModel.$description
       *   definition(t) {
-      *     t.field(SomeModel.id.name, SomeModel.id)
+      *     t.field(SomeModel.id)
       *   }
       * }) 
       */
@@ -813,12 +871,12 @@ declare namespace $Types {
       resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
     }
     /**
-     * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
+     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
       *
-      * ### ️⚠️ Missing Documentation for this Model
+      * ### ️⚠️ You have not writen documentation for model SomeModel
       * 
-      * Automatically ✨ enrich this JSDoc with information about your enum
-      * type by documenting it in your Prisma schema. For example:
+      * Replace this default advisory JSDoc with your own documentation about model SomeModel
+      * by documenting it in your Prisma schema. For example:
       *
       * \`\`\`prisma
       * model SomeModel {
@@ -827,7 +885,7 @@ declare namespace $Types {
       * }
       * \`\`\`
       *
-      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
       *
       * @example
       *
@@ -838,7 +896,7 @@ declare namespace $Types {
       *   name: SomeModel.$name
       *   description: SomeModel.$description
       *   definition(t) {
-      *     t.field(SomeModel.foo.name, SomeModel.foo)
+      *     t.field(SomeModel.foo)
       *   }
       * }) 
       */
@@ -890,12 +948,12 @@ declare namespace $Types {
 //
 
 /**
-  * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ Missing Documentation for this Model
+  * ### ️⚠️ You have not writen documentation for model SomeModel
   * 
-  * Automatically ✨ enrich this JSDoc with information about your enum
-  * type by documenting it in your Prisma schema. For example:
+  * Replace this default advisory JSDoc with your own documentation about model SomeModel
+  * by documenting it in your Prisma schema. For example:
   *
   * 
   * \`\`\`prisma
@@ -905,7 +963,7 @@ declare namespace $Types {
   * }
   * \`\`\`
   * 
-  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
   *
@@ -916,7 +974,7 @@ declare namespace $Types {
   *   name: SomeModel.$name
   *   description: SomeModel.$description
   *   definition(t) {
-  *     t.field(SomeModel.id.name, SomeModel.id)
+  *     t.field(SomeModel.id)
   *   }
   * }) 
   */
@@ -944,6 +1002,35 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
+/**
+ * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
+ * 
+ *
+ * @example
+ *
+ *     import { PrismaClient } from '@prisma/client'
+ *     import { ApolloServer } from 'apollo-server'
+ *     import { makeSchema } from 'nexus'
+ *     import { User, Post, $settings } from 'nexus-prisma'
+ *
+ *     new ApolloServer({
+ *       schema: makeSchema({
+ *         types: [],
+ *       }),
+ *       context() {
+ *         return {
+ *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *         }
+ *       },
+ *     })
+ *
+ *     $settings({
+ *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
+ *     })
+ *
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_
+ *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ */
 export const $settings: typeof Runtime.changeSettings
 "
 `;
@@ -965,12 +1052,12 @@ declare namespace $Types {
   // Models
 
   /**
-    * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+    * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
     *
-    * ### ️⚠️ Missing Documentation for this Model
+    * ### ️⚠️ You have not writen documentation for model SomeModel
     * 
-    * Automatically ✨ enrich this JSDoc with information about your enum
-    * type by documenting it in your Prisma schema. For example:
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
     *
     * 
     * \`\`\`prisma
@@ -980,7 +1067,7 @@ declare namespace $Types {
     * }
     * \`\`\`
     * 
-    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
     *
     * @example
     *
@@ -991,7 +1078,7 @@ declare namespace $Types {
     *   name: SomeModel.$name
     *   description: SomeModel.$description
     *   definition(t) {
-    *     t.field(SomeModel.id.name, SomeModel.id)
+    *     t.field(SomeModel.id)
     *   }
     * }) 
     */
@@ -999,12 +1086,12 @@ declare namespace $Types {
     $name: 'SomeModel'
     $description: undefined
     /**
-     * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
+     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
       *
-      * ### ️⚠️ Missing Documentation for this Model
+      * ### ️⚠️ You have not writen documentation for model SomeModel
       * 
-      * Automatically ✨ enrich this JSDoc with information about your enum
-      * type by documenting it in your Prisma schema. For example:
+      * Replace this default advisory JSDoc with your own documentation about model SomeModel
+      * by documenting it in your Prisma schema. For example:
       *
       * \`\`\`prisma
       * model SomeModel {
@@ -1013,7 +1100,7 @@ declare namespace $Types {
       * }
       * \`\`\`
       *
-      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
       *
       * @example
       *
@@ -1024,7 +1111,7 @@ declare namespace $Types {
       *   name: SomeModel.$name
       *   description: SomeModel.$description
       *   definition(t) {
-      *     t.field(SomeModel.id.name, SomeModel.id)
+      *     t.field(SomeModel.id)
       *   }
       * }) 
       */
@@ -1050,12 +1137,12 @@ declare namespace $Types {
       resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
     }
     /**
-     * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
+     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
       *
-      * ### ️⚠️ Missing Documentation for this Model
+      * ### ️⚠️ You have not writen documentation for model SomeModel
       * 
-      * Automatically ✨ enrich this JSDoc with information about your enum
-      * type by documenting it in your Prisma schema. For example:
+      * Replace this default advisory JSDoc with your own documentation about model SomeModel
+      * by documenting it in your Prisma schema. For example:
       *
       * \`\`\`prisma
       * model SomeModel {
@@ -1064,7 +1151,7 @@ declare namespace $Types {
       * }
       * \`\`\`
       *
-      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
       *
       * @example
       *
@@ -1075,7 +1162,7 @@ declare namespace $Types {
       *   name: SomeModel.$name
       *   description: SomeModel.$description
       *   definition(t) {
-      *     t.field(SomeModel.foo.name, SomeModel.foo)
+      *     t.field(SomeModel.foo)
       *   }
       * }) 
       */
@@ -1127,12 +1214,12 @@ declare namespace $Types {
 //
 
 /**
-  * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ Missing Documentation for this Model
+  * ### ️⚠️ You have not writen documentation for model SomeModel
   * 
-  * Automatically ✨ enrich this JSDoc with information about your enum
-  * type by documenting it in your Prisma schema. For example:
+  * Replace this default advisory JSDoc with your own documentation about model SomeModel
+  * by documenting it in your Prisma schema. For example:
   *
   * 
   * \`\`\`prisma
@@ -1142,7 +1229,7 @@ declare namespace $Types {
   * }
   * \`\`\`
   * 
-  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
   *
@@ -1153,7 +1240,7 @@ declare namespace $Types {
   *   name: SomeModel.$name
   *   description: SomeModel.$description
   *   definition(t) {
-  *     t.field(SomeModel.id.name, SomeModel.id)
+  *     t.field(SomeModel.id)
   *   }
   * }) 
   */
@@ -1181,6 +1268,35 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
+/**
+ * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
+ * 
+ *
+ * @example
+ *
+ *     import { PrismaClient } from '@prisma/client'
+ *     import { ApolloServer } from 'apollo-server'
+ *     import { makeSchema } from 'nexus'
+ *     import { User, Post, $settings } from 'nexus-prisma'
+ *
+ *     new ApolloServer({
+ *       schema: makeSchema({
+ *         types: [],
+ *       }),
+ *       context() {
+ *         return {
+ *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *         }
+ *       },
+ *     })
+ *
+ *     $settings({
+ *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
+ *     })
+ *
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_
+ *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ */
 export const $settings: typeof Runtime.changeSettings
 "
 `;
@@ -1202,12 +1318,12 @@ declare namespace $Types {
   // Models
 
   /**
-    * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+    * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
     *
-    * ### ️⚠️ Missing Documentation for this Model
+    * ### ️⚠️ You have not writen documentation for model SomeModel
     * 
-    * Automatically ✨ enrich this JSDoc with information about your enum
-    * type by documenting it in your Prisma schema. For example:
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
     *
     * 
     * \`\`\`prisma
@@ -1217,7 +1333,7 @@ declare namespace $Types {
     * }
     * \`\`\`
     * 
-    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
     *
     * @example
     *
@@ -1228,7 +1344,7 @@ declare namespace $Types {
     *   name: SomeModel.$name
     *   description: SomeModel.$description
     *   definition(t) {
-    *     t.field(SomeModel.id.name, SomeModel.id)
+    *     t.field(SomeModel.id)
     *   }
     * }) 
     */
@@ -1236,12 +1352,12 @@ declare namespace $Types {
     $name: 'SomeModel'
     $description: undefined
     /**
-     * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
+     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
       *
-      * ### ️⚠️ Missing Documentation for this Model
+      * ### ️⚠️ You have not writen documentation for model SomeModel
       * 
-      * Automatically ✨ enrich this JSDoc with information about your enum
-      * type by documenting it in your Prisma schema. For example:
+      * Replace this default advisory JSDoc with your own documentation about model SomeModel
+      * by documenting it in your Prisma schema. For example:
       *
       * \`\`\`prisma
       * model SomeModel {
@@ -1250,7 +1366,7 @@ declare namespace $Types {
       * }
       * \`\`\`
       *
-      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
       *
       * @example
       *
@@ -1261,7 +1377,7 @@ declare namespace $Types {
       *   name: SomeModel.$name
       *   description: SomeModel.$description
       *   definition(t) {
-      *     t.field(SomeModel.id.name, SomeModel.id)
+      *     t.field(SomeModel.id)
       *   }
       * }) 
       */
@@ -1287,12 +1403,12 @@ declare namespace $Types {
       resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
     }
     /**
-     * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
+     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
       *
-      * ### ️⚠️ Missing Documentation for this Model
+      * ### ️⚠️ You have not writen documentation for model SomeModel
       * 
-      * Automatically ✨ enrich this JSDoc with information about your enum
-      * type by documenting it in your Prisma schema. For example:
+      * Replace this default advisory JSDoc with your own documentation about model SomeModel
+      * by documenting it in your Prisma schema. For example:
       *
       * \`\`\`prisma
       * model SomeModel {
@@ -1301,7 +1417,7 @@ declare namespace $Types {
       * }
       * \`\`\`
       *
-      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
       *
       * @example
       *
@@ -1312,7 +1428,7 @@ declare namespace $Types {
       *   name: SomeModel.$name
       *   description: SomeModel.$description
       *   definition(t) {
-      *     t.field(SomeModel.foo.name, SomeModel.foo)
+      *     t.field(SomeModel.foo)
       *   }
       * }) 
       */
@@ -1364,12 +1480,12 @@ declare namespace $Types {
 //
 
 /**
-  * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ Missing Documentation for this Model
+  * ### ️⚠️ You have not writen documentation for model SomeModel
   * 
-  * Automatically ✨ enrich this JSDoc with information about your enum
-  * type by documenting it in your Prisma schema. For example:
+  * Replace this default advisory JSDoc with your own documentation about model SomeModel
+  * by documenting it in your Prisma schema. For example:
   *
   * 
   * \`\`\`prisma
@@ -1379,7 +1495,7 @@ declare namespace $Types {
   * }
   * \`\`\`
   * 
-  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
   *
@@ -1390,7 +1506,7 @@ declare namespace $Types {
   *   name: SomeModel.$name
   *   description: SomeModel.$description
   *   definition(t) {
-  *     t.field(SomeModel.id.name, SomeModel.id)
+  *     t.field(SomeModel.id)
   *   }
   * }) 
   */
@@ -1418,6 +1534,35 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
+/**
+ * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
+ * 
+ *
+ * @example
+ *
+ *     import { PrismaClient } from '@prisma/client'
+ *     import { ApolloServer } from 'apollo-server'
+ *     import { makeSchema } from 'nexus'
+ *     import { User, Post, $settings } from 'nexus-prisma'
+ *
+ *     new ApolloServer({
+ *       schema: makeSchema({
+ *         types: [],
+ *       }),
+ *       context() {
+ *         return {
+ *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *         }
+ *       },
+ *     })
+ *
+ *     $settings({
+ *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
+ *     })
+ *
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_
+ *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ */
 export const $settings: typeof Runtime.changeSettings
 "
 `;
@@ -1439,12 +1584,12 @@ declare namespace $Types {
   // Models
 
   /**
-    * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+    * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
     *
-    * ### ️⚠️ Missing Documentation for this Model
+    * ### ️⚠️ You have not writen documentation for model SomeModel
     * 
-    * Automatically ✨ enrich this JSDoc with information about your enum
-    * type by documenting it in your Prisma schema. For example:
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
     *
     * 
     * \`\`\`prisma
@@ -1454,7 +1599,7 @@ declare namespace $Types {
     * }
     * \`\`\`
     * 
-    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
     *
     * @example
     *
@@ -1465,7 +1610,7 @@ declare namespace $Types {
     *   name: SomeModel.$name
     *   description: SomeModel.$description
     *   definition(t) {
-    *     t.field(SomeModel.id.name, SomeModel.id)
+    *     t.field(SomeModel.id)
     *   }
     * }) 
     */
@@ -1473,12 +1618,12 @@ declare namespace $Types {
     $name: 'SomeModel'
     $description: undefined
     /**
-     * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
+     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
       *
-      * ### ️⚠️ Missing Documentation for this Model
+      * ### ️⚠️ You have not writen documentation for model SomeModel
       * 
-      * Automatically ✨ enrich this JSDoc with information about your enum
-      * type by documenting it in your Prisma schema. For example:
+      * Replace this default advisory JSDoc with your own documentation about model SomeModel
+      * by documenting it in your Prisma schema. For example:
       *
       * \`\`\`prisma
       * model SomeModel {
@@ -1487,7 +1632,7 @@ declare namespace $Types {
       * }
       * \`\`\`
       *
-      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
       *
       * @example
       *
@@ -1498,7 +1643,7 @@ declare namespace $Types {
       *   name: SomeModel.$name
       *   description: SomeModel.$description
       *   definition(t) {
-      *     t.field(SomeModel.id.name, SomeModel.id)
+      *     t.field(SomeModel.id)
       *   }
       * }) 
       */
@@ -1550,12 +1695,12 @@ declare namespace $Types {
 //
 
 /**
-  * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ Missing Documentation for this Model
+  * ### ️⚠️ You have not writen documentation for model SomeModel
   * 
-  * Automatically ✨ enrich this JSDoc with information about your enum
-  * type by documenting it in your Prisma schema. For example:
+  * Replace this default advisory JSDoc with your own documentation about model SomeModel
+  * by documenting it in your Prisma schema. For example:
   *
   * 
   * \`\`\`prisma
@@ -1565,7 +1710,7 @@ declare namespace $Types {
   * }
   * \`\`\`
   * 
-  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
   *
@@ -1576,7 +1721,7 @@ declare namespace $Types {
   *   name: SomeModel.$name
   *   description: SomeModel.$description
   *   definition(t) {
-  *     t.field(SomeModel.id.name, SomeModel.id)
+  *     t.field(SomeModel.id)
   *   }
   * }) 
   */
@@ -1604,6 +1749,35 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
+/**
+ * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
+ * 
+ *
+ * @example
+ *
+ *     import { PrismaClient } from '@prisma/client'
+ *     import { ApolloServer } from 'apollo-server'
+ *     import { makeSchema } from 'nexus'
+ *     import { User, Post, $settings } from 'nexus-prisma'
+ *
+ *     new ApolloServer({
+ *       schema: makeSchema({
+ *         types: [],
+ *       }),
+ *       context() {
+ *         return {
+ *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *         }
+ *       },
+ *     })
+ *
+ *     $settings({
+ *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
+ *     })
+ *
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_
+ *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ */
 export const $settings: typeof Runtime.changeSettings
 "
 `;
@@ -1625,12 +1799,12 @@ declare namespace $Types {
   // Models
 
   /**
-    * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+    * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
     *
-    * ### ️⚠️ Missing Documentation for this Model
+    * ### ️⚠️ You have not writen documentation for model SomeModel
     * 
-    * Automatically ✨ enrich this JSDoc with information about your enum
-    * type by documenting it in your Prisma schema. For example:
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
     *
     * 
     * \`\`\`prisma
@@ -1640,7 +1814,7 @@ declare namespace $Types {
     * }
     * \`\`\`
     * 
-    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
     *
     * @example
     *
@@ -1651,7 +1825,7 @@ declare namespace $Types {
     *   name: SomeModel.$name
     *   description: SomeModel.$description
     *   definition(t) {
-    *     t.field(SomeModel.id.name, SomeModel.id)
+    *     t.field(SomeModel.id)
     *   }
     * }) 
     */
@@ -1659,12 +1833,12 @@ declare namespace $Types {
     $name: 'SomeModel'
     $description: undefined
     /**
-     * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
+     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
       *
-      * ### ️⚠️ Missing Documentation for this Model
+      * ### ️⚠️ You have not writen documentation for model SomeModel
       * 
-      * Automatically ✨ enrich this JSDoc with information about your enum
-      * type by documenting it in your Prisma schema. For example:
+      * Replace this default advisory JSDoc with your own documentation about model SomeModel
+      * by documenting it in your Prisma schema. For example:
       *
       * \`\`\`prisma
       * model SomeModel {
@@ -1673,7 +1847,7 @@ declare namespace $Types {
       * }
       * \`\`\`
       *
-      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
       *
       * @example
       *
@@ -1684,7 +1858,7 @@ declare namespace $Types {
       *   name: SomeModel.$name
       *   description: SomeModel.$description
       *   definition(t) {
-      *     t.field(SomeModel.id.name, SomeModel.id)
+      *     t.field(SomeModel.id)
       *   }
       * }) 
       */
@@ -1710,12 +1884,12 @@ declare namespace $Types {
       resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
     }
     /**
-     * Nexus \`t.field\` related configuration based on the \`SomeModel.foo\` field in your Prisma schema.
+     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
       *
-      * ### ️⚠️ Missing Documentation for this Model
+      * ### ️⚠️ You have not writen documentation for model SomeModel
       * 
-      * Automatically ✨ enrich this JSDoc with information about your enum
-      * type by documenting it in your Prisma schema. For example:
+      * Replace this default advisory JSDoc with your own documentation about model SomeModel
+      * by documenting it in your Prisma schema. For example:
       *
       * \`\`\`prisma
       * model SomeModel {
@@ -1724,7 +1898,7 @@ declare namespace $Types {
       * }
       * \`\`\`
       *
-      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
       *
       * @example
       *
@@ -1735,7 +1909,7 @@ declare namespace $Types {
       *   name: SomeModel.$name
       *   description: SomeModel.$description
       *   definition(t) {
-      *     t.field(SomeModel.foo.name, SomeModel.foo)
+      *     t.field(SomeModel.foo)
       *   }
       * }) 
       */
@@ -1787,12 +1961,12 @@ declare namespace $Types {
 //
 
 /**
-  * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ Missing Documentation for this Model
+  * ### ️⚠️ You have not writen documentation for model SomeModel
   * 
-  * Automatically ✨ enrich this JSDoc with information about your enum
-  * type by documenting it in your Prisma schema. For example:
+  * Replace this default advisory JSDoc with your own documentation about model SomeModel
+  * by documenting it in your Prisma schema. For example:
   *
   * 
   * \`\`\`prisma
@@ -1802,7 +1976,7 @@ declare namespace $Types {
   * }
   * \`\`\`
   * 
-  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
   *
@@ -1813,7 +1987,7 @@ declare namespace $Types {
   *   name: SomeModel.$name
   *   description: SomeModel.$description
   *   definition(t) {
-  *     t.field(SomeModel.id.name, SomeModel.id)
+  *     t.field(SomeModel.id)
   *   }
   * }) 
   */
@@ -1841,6 +2015,35 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
+/**
+ * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
+ * 
+ *
+ * @example
+ *
+ *     import { PrismaClient } from '@prisma/client'
+ *     import { ApolloServer } from 'apollo-server'
+ *     import { makeSchema } from 'nexus'
+ *     import { User, Post, $settings } from 'nexus-prisma'
+ *
+ *     new ApolloServer({
+ *       schema: makeSchema({
+ *         types: [],
+ *       }),
+ *       context() {
+ *         return {
+ *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *         }
+ *       },
+ *     })
+ *
+ *     $settings({
+ *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
+ *     })
+ *
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_
+ *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ */
 export const $settings: typeof Runtime.changeSettings
 "
 `;
@@ -1862,12 +2065,12 @@ declare namespace $Types {
   // Models
 
   /**
-    * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+    * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
     *
-    * ### ️⚠️ Missing Documentation for this Model
+    * ### ️⚠️ You have not writen documentation for model SomeModel
     * 
-    * Automatically ✨ enrich this JSDoc with information about your enum
-    * type by documenting it in your Prisma schema. For example:
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
     *
     * 
     * \`\`\`prisma
@@ -1877,7 +2080,7 @@ declare namespace $Types {
     * }
     * \`\`\`
     * 
-    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
     *
     * @example
     *
@@ -1888,7 +2091,7 @@ declare namespace $Types {
     *   name: SomeModel.$name
     *   description: SomeModel.$description
     *   definition(t) {
-    *     t.field(SomeModel.id.name, SomeModel.id)
+    *     t.field(SomeModel.id)
     *   }
     * }) 
     */
@@ -1896,12 +2099,12 @@ declare namespace $Types {
     $name: 'SomeModel'
     $description: undefined
     /**
-     * Nexus \`t.field\` related configuration based on the \`SomeModel.id\` field in your Prisma schema.
+     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
       *
-      * ### ️⚠️ Missing Documentation for this Model
+      * ### ️⚠️ You have not writen documentation for model SomeModel
       * 
-      * Automatically ✨ enrich this JSDoc with information about your enum
-      * type by documenting it in your Prisma schema. For example:
+      * Replace this default advisory JSDoc with your own documentation about model SomeModel
+      * by documenting it in your Prisma schema. For example:
       *
       * \`\`\`prisma
       * model SomeModel {
@@ -1910,7 +2113,7 @@ declare namespace $Types {
       * }
       * \`\`\`
       *
-      * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
       *
       * @example
       *
@@ -1921,7 +2124,7 @@ declare namespace $Types {
       *   name: SomeModel.$name
       *   description: SomeModel.$description
       *   definition(t) {
-      *     t.field(SomeModel.id.name, SomeModel.id)
+      *     t.field(SomeModel.id)
       *   }
       * }) 
       */
@@ -1973,12 +2176,12 @@ declare namespace $Types {
 //
 
 /**
-  * Nexus \`objectType\` related configuration based on the \`SomeModel\` model in your Prisma schema.
+  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ Missing Documentation for this Model
+  * ### ️⚠️ You have not writen documentation for model SomeModel
   * 
-  * Automatically ✨ enrich this JSDoc with information about your enum
-  * type by documenting it in your Prisma schema. For example:
+  * Replace this default advisory JSDoc with your own documentation about model SomeModel
+  * by documenting it in your Prisma schema. For example:
   *
   * 
   * \`\`\`prisma
@@ -1988,7 +2191,7 @@ declare namespace $Types {
   * }
   * \`\`\`
   * 
-  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
   *
@@ -1999,7 +2202,7 @@ declare namespace $Types {
   *   name: SomeModel.$name
   *   description: SomeModel.$description
   *   definition(t) {
-  *     t.field(SomeModel.id.name, SomeModel.id)
+  *     t.field(SomeModel.id)
   *   }
   * }) 
   */
@@ -2027,6 +2230,35 @@ export const SomeModel: $Types.SomeModel
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
+/**
+ * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
+ * 
+ *
+ * @example
+ *
+ *     import { PrismaClient } from '@prisma/client'
+ *     import { ApolloServer } from 'apollo-server'
+ *     import { makeSchema } from 'nexus'
+ *     import { User, Post, $settings } from 'nexus-prisma'
+ *
+ *     new ApolloServer({
+ *       schema: makeSchema({
+ *         types: [],
+ *       }),
+ *       context() {
+ *         return {
+ *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *         }
+ *       },
+ *     })
+ *
+ *     $settings({
+ *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
+ *     })
+ *
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_
+ *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ */
 export const $settings: typeof Runtime.changeSettings
 "
 `;

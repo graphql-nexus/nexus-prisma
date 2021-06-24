@@ -21,9 +21,11 @@ declare namespace $Types {
   // Enums
 
   /**
-    * Nexus \`enumType\` configuration based on the \`Foo\` enum in your Prisma schema.
+    * Generated Nexus \`enumType\` configuration based on your Prisma schema's enum \`Foo\`.
     *
     * Some documentation
+    *
+    * Contains these members: a
     *
     * @example
     *
@@ -70,9 +72,11 @@ declare namespace $Types {
 //
 
 /**
-  * Nexus \`enumType\` configuration based on the \`Foo\` enum in your Prisma schema.
+  * Generated Nexus \`enumType\` configuration based on your Prisma schema's enum \`Foo\`.
   *
   * Some documentation
+  *
+  * Contains these members: a
   *
   * @example
   *
@@ -94,6 +98,35 @@ export const Foo: $Types.Foo
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
+/**
+ * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
+ * 
+ *
+ * @example
+ *
+ *     import { PrismaClient } from '@prisma/client'
+ *     import { ApolloServer } from 'apollo-server'
+ *     import { makeSchema } from 'nexus'
+ *     import { User, Post, $settings } from 'nexus-prisma'
+ *
+ *     new ApolloServer({
+ *       schema: makeSchema({
+ *         types: [],
+ *       }),
+ *       context() {
+ *         return {
+ *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *         }
+ *       },
+ *     })
+ *
+ *     $settings({
+ *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
+ *     })
+ *
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_
+ *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ */
 export const $settings: typeof Runtime.changeSettings
 "
 `;
@@ -119,12 +152,12 @@ declare namespace $Types {
   // Enums
 
   /**
-    * Nexus \`enumType\` configuration based on the \`Foo\` enum in your Prisma schema.
+    * Generated Nexus \`enumType\` configuration based on your Prisma schema's enum \`Foo\`.
     *
-    * ### ️⚠️ Missing Documentation for this Enum
+    * ### ️⚠️ You have not writen documentation for enum Foo
     * 
-    * Automatically ✨ enrich this JSDoc with information about your enum
-    * type by documenting it in your Prisma schema. For example:
+    * Replace this default advisory JSDoc with your own documentation about enum Foo
+    * by documenting it in your Prisma schema. For example:
     *
     *
     * \`\`\`prisma
@@ -134,7 +167,9 @@ declare namespace $Types {
     * }
     * \`\`\`
     * 
-    * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * Contains these members: a
     *
     * @example
     *
@@ -181,12 +216,12 @@ declare namespace $Types {
 //
 
 /**
-  * Nexus \`enumType\` configuration based on the \`Foo\` enum in your Prisma schema.
+  * Generated Nexus \`enumType\` configuration based on your Prisma schema's enum \`Foo\`.
   *
-  * ### ️⚠️ Missing Documentation for this Enum
+  * ### ️⚠️ You have not writen documentation for enum Foo
   * 
-  * Automatically ✨ enrich this JSDoc with information about your enum
-  * type by documenting it in your Prisma schema. For example:
+  * Replace this default advisory JSDoc with your own documentation about enum Foo
+  * by documenting it in your Prisma schema. For example:
   *
   *
   * \`\`\`prisma
@@ -196,7 +231,9 @@ declare namespace $Types {
   * }
   * \`\`\`
   * 
-  * Learn more about Prisma Schema documentation comments [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  *
+  * Contains these members: a
   *
   * @example
   *
@@ -218,6 +255,35 @@ export const Foo: $Types.Foo
 
 import { Runtime } from '../generator/runtime/settingsSingleton'
 
+/**
+ * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
+ * 
+ *
+ * @example
+ *
+ *     import { PrismaClient } from '@prisma/client'
+ *     import { ApolloServer } from 'apollo-server'
+ *     import { makeSchema } from 'nexus'
+ *     import { User, Post, $settings } from 'nexus-prisma'
+ *
+ *     new ApolloServer({
+ *       schema: makeSchema({
+ *         types: [],
+ *       }),
+ *       context() {
+ *         return {
+ *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *         }
+ *       },
+ *     })
+ *
+ *     $settings({
+ *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
+ *     })
+ *
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_
+ *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ */
 export const $settings: typeof Runtime.changeSettings
 "
 `;

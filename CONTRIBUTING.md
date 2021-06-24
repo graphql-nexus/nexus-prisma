@@ -4,7 +4,10 @@
 
 - You can run tests with `yarn test`
 
-- You can update snapshots with `yarn test -u`
+- You can update snapshots with the Jest CLI:
+  - `yarn test -u`
+  - `yarn test --update-snapshots`
+  - More details here https://jestjs.io/docs/snapshot-testing#updating-snapshots
 
 #### Remarks
 

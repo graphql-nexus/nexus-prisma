@@ -32,14 +32,14 @@ export namespace Specs {
         objectType({
           name: User.$name,
           definition(t) {
-            t.field(User.id.name, User.id)
+            t.field(User.id)
           },
         }),
         objectType({
           name: Post.$name,
           definition(t) {
-            t.field(Post.id.name, Post.id)
-            t.field(Post.author.name, Post.author)
+            t.field(Post.id)
+            t.field(Post.author)
           },
         }),
       ]
@@ -95,14 +95,14 @@ export namespace Specs {
         objectType({
           name: User.$name,
           definition(t) {
-            t.field(User.id.name, User.id)
+            t.field(User.id)
           },
         }),
         objectType({
           name: Post.$name,
           definition(t) {
-            t.field(Post.id.name, Post.id)
-            t.field(Post.author.name, Post.author)
+            t.field(Post.id)
+            t.field(Post.author)
           },
         }),
       ]

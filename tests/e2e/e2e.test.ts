@@ -60,7 +60,7 @@ function setupTestNexusPrismaProject(): TestProject {
       license: 'MIT',
       scripts: {
         reflect: 'yarn -s reflect:prisma && yarn -s reflect:nexus',
-        'reflect:prisma': 'prisma generate',
+        'reflect:prisma': "cross-env DEBUG='*' prisma generate",
         // peer dependency check will fail since we're using yalc, e.g.:
         // " ... nexus-prisma@0.0.0-dripip+c2653557 does not officially support @prisma/client@2.22.1 ... "
         'reflect:nexus': 'cross-env REFLECT=true ts-node --transpile-only src/schema',
@@ -188,7 +188,8 @@ it('When bundled custom scalars are used the project type checks and generates e
           enumType(SomeEnumA),
           queryType({
             definition(t) {
-              t.list.field('bars', {
+              t.list.field({
+                name: 'bars',
                 type: 'Bar',
                 resolve(_, __, ctx) {
                   return ctx.prisma.bar.findMany()
@@ -199,23 +200,24 @@ it('When bundled custom scalars are used the project type checks and generates e
           objectType({
             name: Bar.$name,
             definition(t) {
-              t.field(Bar.foo.name, Bar.foo)
+              t.field(Bar.foo)
             },
           }),
           objectType({
             name: Foo.$name,
             definition(t) {
-              t.field('someEnumA', {
+              t.field({
+                name: 'someEnumA',
                 type: 'SomeEnumA',
               })
               t.json('JsonManually')
               t.dateTime('DateTimeManually')
               t.bytes('BytesManually')
               t.bigInt('BigIntManually')
-              t.field(Foo.someJsonField.name, Foo.someJsonField)
-              t.field(Foo.someDateTimeField.name, Foo.someDateTimeField)
-              t.field(Foo.someBytesField.name, Foo.someBytesField)
-              t.field(Foo.someBigIntField.name, Foo.someBigIntField)
+              t.field(Foo.someBigIntField)
+              t.field(Foo.someJsonField)
+              t.field(Foo.someDateTimeField)
+              t.field(Foo.someBytesField)
             },
           }),
         ]
@@ -340,6 +342,14 @@ it('When bundled custom scalars are used the project type checks and generates e
   expect(results.fileGraphqlSchema).toMatchSnapshot('graphql schema')
 
   expect(results.fileTypegen).toMatchSnapshot('nexus typegen')
+
+  /**
+   * Sanity check the Prisma Client import ID
+   */
+
+  expect(testProject.fs.read('node_modules/nexus-prisma/dist/runtime/index.js')).toMatch(
+    /.*"prismaClientImportId": "@prisma\/client".*/
+  )
 
   /**
    * Sanity check the runtime

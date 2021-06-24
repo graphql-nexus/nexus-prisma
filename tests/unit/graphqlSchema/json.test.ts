@@ -20,7 +20,7 @@ testGraphqlSchema({
       objectType({
         name: Foo.$name,
         definition(t) {
-          t.field(Foo.json.$name, Foo.json)
+          t.field(Foo.json)
         },
       }),
     ]

@@ -38,7 +38,10 @@ Official Prisma plugin for Nexus.
   - [Project relation with custom resolver logic](#project-relation-with-custom-resolver-logic)
   - [Supply custom custom scalars to your GraphQL schema](#supply-custom-custom-scalars-to-your-graphql-schema)
 - [Notes](#notes)
-- [Supported Versions Of Node & Prisma](#supported-versions-of-node--prisma)
+  - [For users of `nexus-prisma@=<0.20`](#for-users-of-nexus-prisma020)
+  - [For users of `prisma@=<2.17`](#for-users-of-prisma217)
+  - [For users of `nexus@=<1.0`](#for-users-of-nexus10)
+  - [Supported Versions Of Node & Prisma](#supported-versions-of-node--prisma)
 
 <!-- tocstop -->
 
@@ -47,15 +50,17 @@ Official Prisma plugin for Nexus.
 1. Install dependencies
 
    ```
-   npm add nexus-prisma graphql @prisma/client
+   npm add nexus-prisma nexus graphql @prisma/client
    npm add --dev prisma
    ```
 
-   > `graphql` and `@prisma/client` are peer dependencies. `prisma` is for the Prisma CLI which you'll probably want during development.
+   > `nexus` `graphql` and `@prisma/client` are peer dependencies. `prisma` is for the Prisma CLI which you'll probably want during development.
+
+   > If you use `nexus@=<1.0` then you must use `t.field(<NAME>, <CONFIG>)` instead of `t.field(<CONFIG>)`. The Nexus Prisma docs assume the latter form.
 
 1. Add a `nexus-prisma` generator block to your Prisma Schema.
 
-   > If you are using `prisma@=<2.17.x` then you must use the Nexus Prisma Prisma generator name of `nexus_prisma` instead of `nexus-prisma`. See [notes](#notes) for more detail.
+   > If you are using `prisma@=<2.17` then you must use the Nexus Prisma Prisma generator name of `nexus_prisma` instead of `nexus-prisma`. See [notes](#notes) for more detail.
 
 1. Run `prisma generate` in your terminal.
 
@@ -71,7 +76,7 @@ generator client {
 
 generator nexusPrisma {
    provider = "nexus-prisma"
-// provider = "nexus_prisma" <-- For prisma@=<2.17.x users
+// provider = "nexus_prisma"    <-- For prisma@=<2.17 users
 }
 
 /// This is a user!
@@ -95,7 +100,8 @@ export const schema = makeSchema({
       name: User.$name
       description: User.$description
       definition(t) {
-        t.field(User.id.name, User.id)
+        t.field(User.id)
+     // t.field(User.id.name, User.id)    <-- For nexus@=<1.0 users
       }
     })
   ]
@@ -112,17 +118,21 @@ export const schema = makeSchema({
 - [x] ([#25](https://github.com/prisma/nexus-prisma/pull/25), [#36](https://github.com/prisma/nexus-prisma/issues/36)) Basic support for Prisma Model field types relating to other Models 1:1
 - [x] ([#38](https://github.com/prisma/nexus-prisma/pull/38)) Basic support for Prisma Model field types relating to other Models 1:n
 - [x] ([#43](https://github.com/prisma/nexus-prisma/issues/43)) Support for runtime and gentime settings
+- [x] ([#61](https://github.com/prisma/nexus-prisma/issues/61)) JSDoc for settings/$settings
+- [x] ([#68](https://github.com/prisma/nexus-prisma/issues/68)) Support for Prisma Model field type `Bytes`
 
 ##### Shortterm
 
+- [ ] ([#59](https://github.com/prisma/nexus-prisma/issues/59)) Support for Prisma Model field type `BigInt`
+- [ ] ([#94](https://github.com/prisma/nexus-prisma/issues/94)) Support for Prisma Model field type `Decimal`
 - [ ] Improved JSDoc for relation 1:1 & 1:n fields
-- [ ] Improved JSDoc for settings
 
 ##### Midterm
 
-- [ ] Support for Prisma Model field types of remaining scalars (`Decimal`, etc.)
 - [ ] Support for Prisma Model field types relating to other Models n:n
 - [ ] Support for relation field ordering parameters
+- [ ] ([#83](https://github.com/prisma/nexus-prisma/issues/83)) Support for relation field filtering parameters
+- [ ] Support for relation field pagination parameters
 
 ##### Longterm
 
@@ -163,7 +173,7 @@ objectType({
   name: User.$name
   description: User.$description
   definition(t) {
-    t.field(User.id.name, {
+    t.field({
       type: User.id.type,
       description: User.id.description
     })
@@ -209,7 +219,7 @@ Like GraphQL, [Prisma has the concept of scalar types](https://www.prisma.io/doc
 
 However some of the Prisma scalars do not have a natural standard representation in GraphQL. For these cases Nexus Prisma generates code that references type names matching those scalar names in Prisma. Then, you are expected to define those custom scalar types in your GraphQL API. Nexus Prisma ships with pre-defined mappings in `nexus-prisma/scalars` you _can_ use for convenience. The mapping is as follows:
 
-**Prisma Standard Scalar to GraphQL Custom Scalar Mapping**
+**Prisma Standard-Scalar to GraphQL Custom-Scalar Mapping**
 
 | Prisma     | GraphQL    | Nexus `t` Helper | GraphQL Scalar Implementation                                     |
 | ---------- | ---------- | ---------------- | ----------------------------------------------------------------- |
@@ -219,9 +229,9 @@ However some of the Prisma scalars do not have a natural standard representation
 
 > **Note:** Not all Prisma scalar mappings are implemented yet: `BigInt`, `Decimal`, `Unsupported`
 
-While you are not required to use the implementations supplied by Nexus Prisma, you _are required to define custom scalars whose name matches the above mapping_.
+You can use your own GraphQL Scalar Implementation, however, you _must adhear to the above Prisma/GraphQL name mapping defined above_.
 
-Here is an example using the Nexus Prisma pre-defined custom scalars:
+Here is an example using Nexus Prisma's pre-defined GraphQL custom scalars:
 
 ```ts
 import NexusPrismaScalars from 'nexus-prisma/scalars'
@@ -308,15 +318,15 @@ queryType({
 objectType({
   name: User.$name,
   definition(t) {
-    t.field(User.id.name, User.id)
-    t.field(User.profile.name, User.profile)
+    t.field(User.id)
+    t.field(User.profile)
   },
 })
 
 objectType({
   name: Profile.$name,
   definition(t) {
-    t.field(Profile.id.name, Profile.id)
+    t.field(Profile.id)
   },
 })
 ```
@@ -406,16 +416,16 @@ import { User, Profile } from 'nexus-prisma'
 objectType({
   name: User.$name,
   definition(t) {
-    t.field(User.id.name, User.id)
-    t.field(User.profile.name, User.profile)
+    t.field(User.id)
+    t.field(User.profile)
   },
 })
 
 objectType({
   name: Profile.$name,
   definition(t) {
-    t.field(Profile.id.name, Profile.id)
-    t.field(User.profile.name, User.profile)
+    t.field(Profile.id)
+    t.field(User.profile)
   },
 })
 ```
@@ -438,8 +448,8 @@ This limitation may be a problem for your API. There is an [issue track this tha
 objectType({
   name: Profile.$name,
   definition(t) {
-    t.field(Profile.id.name, Profile.id)
-    t.field(User.profile.name, {
+    t.field(Profile.id)
+    t.field({
       ...User.profile,
       type: nonNull(User.profile.type),
     })
@@ -494,15 +504,15 @@ queryType({
 objectType({
   name: User.$name,
   definition(t) {
-    t.field(User.id.name, User.id)
-    t.field(User.posts.name, User.posts)
+    t.field(User.id)
+    t.field(User.posts)
   },
 })
 
 objectType({
   name: Post.$name,
   definition(t) {
-    t.field(Post.id.name, Post.id)
+    t.field(Post.id)
   },
 })
 ```
@@ -708,7 +718,7 @@ objectType({
   name: User.$name
   description: User.$description
   definition(t) {
-    t.field(User.id.name, User.id)
+    t.field(User.id)
   }
 })
 ```
@@ -742,7 +752,7 @@ objectType({
   name: User.$name
   description: User.$description
   definition(t) {
-    t.field(User.id.name, User.id)
+    t.field(User.id)
   }
 })
 ```
@@ -760,6 +770,8 @@ type User {
 ```
 
 #### As JSDoc
+
+Can be disabled in [gentime settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
 
 ```prisma
 /// A user.
@@ -780,9 +792,10 @@ User.id // JSDoc: A stable identifier to find users by.
 
 These are finer points that aren't perhaps worth a top-level point but none the less add up toward a thoughtful developer experience.
 
-##### Default JSDoc
+##### JSDoc
 
-Fields and models that you do not document will result in a helpful default JSDoc that teaches you about this.
+- Generated Nexus configuration for fields and models that you _have not_ documented in your PSL get default JSDoc that teaches you how to do so.
+- JSDoc for Enums have their members embedded
 
 ##### Default Runtime
 
@@ -815,8 +828,8 @@ Nexus Prisma generates default GraphQL resolvers for your model _relation fields
    objectType({
      name: User.$name,
      definition(t) {
-       t.field(User.id.name, User.id)
-       t.field(User.posts.name, {
+       t.field(User.id)
+       t.field({
          ...User.posts,
          async resolve(...args) {
            // Your custom before-logic here
@@ -835,8 +848,8 @@ Nexus Prisma generates default GraphQL resolvers for your model _relation fields
    objectType({
      name: User.$name,
      definition(t) {
-       t.field(User.id.name, User.id)
-       t.field(User.posts.name, {
+       t.field(User.id)
+       t.field({
          ...User.posts,
          async resolve(...args) {
            // Your custom logic here
@@ -870,11 +883,37 @@ makeSchema({
 
 ## Notes
 
-- Versions of `nexus-prisma` package prior to `0.20` were a completely different version of the API, and had also become deprecated at one point to migrate to `nexus-plugin-prisma` when Nexus Framework was being worked on. All of that is history.
+### For users of `nexus-prisma@=<0.20`
 
-- If you are using `prisma@=<2.17.x` then you must use the Nexus Prisma Prisma generator name of `nexus_prisma` instead of `nexus-prisma`. This is because prior to `prisma@2.18.x` there was a hardcode check for `nexus-prisma` that would fail with an error message about a now-old migration.
+Versions of `nexus-prisma` package prior to `0.20` were a completely different version of the API, and had also become deprecated at one point to migrate to `nexus-plugin-prisma` when Nexus Framework was being worked on. All of that is history.
 
-## Supported Versions Of Node & Prisma
+### For users of `prisma@=<2.17`
+
+If you are using `prisma@=<2.17` then you must use the Nexus Prisma Prisma generator name of `nexus_prisma` instead of `nexus-prisma`. This is because prior to `prisma@2.18` there was a hardcode check for `nexus-prisma` that would fail with an error message about a now-old migration.
+
+### For users of `nexus@=<1.0`
+
+The [release of Nexus 1.1](https://github.com/graphql-nexus/nexus/releases/tag/1.0.0) introduced an overload to `t.field` allowing improved usage of Nexus Prisma. The difference is as follows. Note if you prefer the older way that is and always will be supported too.
+
+```diff ts
+import { User } from 'nexus-prisma'
+import { makeSchema, objectType } from 'nexus'
+
+export const schema = makeSchema({
+  types: [
+    objectType({
+      name: User.$name
+      description: User.$description
+      definition(t) {
++        t.field(User.id) //                 <-- for nexus@>=1.1 users
+-        t.field(User.id.name, User.id) //   <-- For nexus@=<1.0 users
+      }
+    })
+  ]
+})
+```
+
+### Supported Versions Of Node & Prisma
 
 We only officially support what we test.
 

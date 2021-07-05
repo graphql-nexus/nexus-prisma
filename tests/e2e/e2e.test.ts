@@ -186,7 +186,8 @@ it('When bundled custom scalars are used the project type checks and generates e
           enumType(SomeEnumA),
           queryType({
             definition(t) {
-              t.list.field('bars', {
+              t.list.field({
+                name: 'bars',
                 type: 'Bar',
                 resolve(_, __, ctx) {
                   return ctx.prisma.bar.findMany()
@@ -197,21 +198,22 @@ it('When bundled custom scalars are used the project type checks and generates e
           objectType({
             name: Bar.$name,
             definition(t) {
-              t.field(Bar.foo.name, Bar.foo)
+              t.field(Bar.foo)
             },
           }),
           objectType({
             name: Foo.$name,
             definition(t) {
-              t.field('someEnumA', {
+              t.field({
+                name: 'someEnumA',
                 type: 'SomeEnumA',
               })
               t.json('JsonManually')
               t.dateTime('DateTimeManually')
               t.bytes('BytesManually')
-              t.field(Foo.someJsonField.name, Foo.someJsonField)
-              t.field(Foo.someDateTimeField.name, Foo.someDateTimeField)
-              t.field(Foo.someBytesField.name, Foo.someBytesField)
+              t.field(Foo.someJsonField)
+              t.field(Foo.someDateTimeField)
+              t.field(Foo.someBytesField)
             },
           }),
         ]

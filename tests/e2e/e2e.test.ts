@@ -403,13 +403,13 @@ it('When bundled custom scalars are used the project type checks and generates e
 
   const [{ foo }] = data.bars
 
-  expect(typeof foo.JsonManually).toEqual('object')
-  expect(typeof foo.DateTimeManually).toEqual('string')
-  expect(typeof foo.BytesManually).toEqual('string')
-  expect(typeof foo.BigIntManually).toEqual('string')
+  expect(foo.JsonManually).toBeNull()
+  expect(foo.DateTimeManually).toBeNull()
+  expect(foo.BytesManually).toBeNull()
+  expect(foo.BigIntManually).toBeNull()
   expect(typeof foo.someEnumA).toEqual('string')
   expect(typeof foo.someJsonField).toEqual('object')
   expect(typeof foo.someDateTimeField).toEqual('string')
-  expect(typeof foo.someBytesField).toEqual('string')
+  expect(typeof foo.someBytesField).toEqual('object')
   expect(typeof foo.someBigIntField).toEqual('string')
 }, 60_000)

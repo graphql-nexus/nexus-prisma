@@ -7,6 +7,7 @@ import { inspect } from 'util'
 import { assertBuildPresent } from '../__helpers__/helpers'
 import { createPrismaSchema } from '../__helpers__/testers'
 import { setupTestProject, TestProject } from '../__helpers__/testProject'
+import * as GQLScalars from 'graphql-scalars'
 
 const d = debug('e2e')
 
@@ -411,5 +412,5 @@ it('When bundled custom scalars are used the project type checks and generates e
   expect(typeof foo.someJsonField).toEqual('object')
   expect(typeof foo.someDateTimeField).toEqual('string')
   expect(typeof foo.someBytesField).toEqual('object')
-  expect(typeof foo.someBigIntField).toEqual('string')
+  expect(typeof GQLScalars.BigIntResolver.parseValue(foo.someBigIntField)).toEqual('bigint')
 }, 60_000)

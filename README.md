@@ -219,7 +219,7 @@ Like GraphQL, [Prisma has the concept of scalar types](https://www.prisma.io/doc
 
 However some of the Prisma scalars do not have a natural standard representation in GraphQL. For these cases Nexus Prisma generates code that references type names matching those scalar names in Prisma. Then, you are expected to define those custom scalar types in your GraphQL API. Nexus Prisma ships with pre-defined mappings in `nexus-prisma/scalars` you _can_ use for convenience. The mapping is as follows:
 
-**Prisma Standard Scalar to GraphQL Custom Scalar Mapping**
+**Prisma Standard-Scalar to GraphQL Custom-Scalar Mapping**
 
 | Prisma     | GraphQL    | Nexus `t` Helper | GraphQL Scalar Implementation                                         | Additional Info                                                                                              |
 | ---------- | ---------- | ---------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
@@ -232,9 +232,9 @@ However some of the Prisma scalars do not have a natural standard representation
 
 > **Note:** BigInt is supported in Node.js since version [10.4.0](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt#browser_compatibility) however to support BigInt in `JSON.parse`/`JSON.stringify` you must use [`json-bigint-patch`](https://github.com/ardatan/json-bigint-patch) otherwise BigInt values will be serialized as strings.
 
-While you are not required to use the implementations supplied by Nexus Prisma, you _are required to define custom scalars whose name matches the above mapping_.
+You can use your own GraphQL Scalar Implementation, however, you _must adhear to the above Prisma/GraphQL name mapping defined above_.
 
-Here is an example using the Nexus Prisma pre-defined custom scalars:
+Here is an example using Nexus Prisma's pre-defined GraphQL custom scalars:
 
 ```ts
 import NexusPrismaScalars from 'nexus-prisma/scalars'

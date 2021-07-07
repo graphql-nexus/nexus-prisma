@@ -69,6 +69,16 @@ testGeneratedModules({
 })
 
 testGeneratedModules({
+  description: 'A model field with type BigInt maps to GraphQL BigInt custom scalar',
+  databaseSchema: `
+    model SomeModel {
+      id  String @id
+      foo BigInt
+    }
+  `,
+})
+
+testGeneratedModules({
   description: 'A model field with type Bytes maps to GraphQL Bytes custom scalar',
   databaseSchema: `
     model SomeModel {

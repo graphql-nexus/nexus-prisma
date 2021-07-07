@@ -2,7 +2,7 @@ import { DMMF } from '@prisma/generator-helper'
 import dedent from 'dindist'
 import * as OS from 'os'
 import { LiteralUnion } from 'type-fest'
-import { StandardGraphQLScalarType, StandardgraphQLScalarTypes } from '../../helpers/graphql'
+import { StandardGraphQLScalarType, StandardGraphQLScalarTypes } from '../../helpers/graphql'
 import { PrismaScalarType } from '../../helpers/prisma'
 import { allCasesHandled } from '../../helpers/utils'
 import { Gentime } from '../gentime/settingsSingleton'
@@ -276,25 +276,25 @@ export function fieldTypeToGraphQLType(
 
       if (field.isId) {
         if (field.type === 'String' || (field.type === 'Int' && settings.projectIdIntToGraphQL === 'ID')) {
-          return StandardgraphQLScalarTypes.ID
+          return StandardGraphQLScalarTypes.ID
         }
       }
 
       switch (typeName) {
         case 'String': {
-          return StandardgraphQLScalarTypes.String
+          return StandardGraphQLScalarTypes.String
         }
         case 'Int': {
-          return StandardgraphQLScalarTypes.Int
+          return StandardGraphQLScalarTypes.Int
         }
         case 'Boolean': {
-          return StandardgraphQLScalarTypes.Boolean
+          return StandardGraphQLScalarTypes.Boolean
         }
         case 'Float': {
-          return StandardgraphQLScalarTypes.Float
+          return StandardGraphQLScalarTypes.Float
         }
         case 'BigInt': {
-          return StandardgraphQLScalarTypes.String
+          return 'BigInt'
         }
         case 'DateTime': {
           return 'DateTime'
@@ -306,7 +306,7 @@ export function fieldTypeToGraphQLType(
           return 'Bytes'
         }
         case 'Decimal': {
-          return StandardgraphQLScalarTypes.String
+          return StandardGraphQLScalarTypes.String
         }
         default: {
           return allCasesHandled(typeName)

@@ -5,15 +5,18 @@ Object {
   "bars": Array [
     Object {
       "foo": Object {
+        "BigIntManually": null,
         "BytesManually": null,
         "DateTimeManually": null,
         "JsonManually": null,
+        "someBigIntField": "9007199254740991",
         "someBytesField": Object {
           "data": Array [],
           "type": "Buffer",
         },
         "someDateTimeField": "2021-05-10T20:42:46.609Z",
         "someEnumA": "alpha",
+        "someJsonField": Object {},
       },
     },
   ],
@@ -29,6 +32,12 @@ type Bar {
   foo: Foo
 }
 
+\\"\\"\\"
+The \`BigInt\` scalar type represents non-fractional signed whole numeric values.
+@see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt
+\\"\\"\\"
+scalar BigInt
+
 \\"\\"\\"The \`Byte\` scalar type represents byte value as a Buffer\\"\\"\\"
 scalar Bytes
 
@@ -38,9 +47,11 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the \`da
 scalar DateTime
 
 type Foo {
+  BigIntManually: BigInt
   BytesManually: Bytes
   DateTimeManually: DateTime
   JsonManually: Json
+  someBigIntField: BigInt!
   someBytesField: Bytes!
   someDateTimeField: DateTime!
   someEnumA: SomeEnumA
@@ -75,6 +86,11 @@ import type { core } from \\"nexus\\"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
     /**
+     * The \`BigInt\` scalar type represents non-fractional signed whole numeric values.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt
+     */
+    bigInt<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // \\"BigInt\\";
+    /**
      * The \`Byte\` scalar type represents byte value as a Buffer
      */
     bytes<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // \\"Bytes\\";
@@ -90,6 +106,11 @@ declare global {
 }
 declare global {
   interface NexusGenCustomOutputMethods<TypeName extends string> {
+    /**
+     * The \`BigInt\` scalar type represents non-fractional signed whole numeric values.
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt
+     */
+    bigInt<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // \\"BigInt\\";
     /**
      * The \`Byte\` scalar type represents byte value as a Buffer
      */
@@ -123,6 +144,7 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
+  BigInt: any
   Bytes: any
   DateTime: any
   Json: any
@@ -149,9 +171,11 @@ export interface NexusGenFieldTypes {
     foo: NexusGenRootTypes['Foo'] | null; // Foo
   }
   Foo: { // field return type
+    BigIntManually: NexusGenScalars['BigInt'] | null; // BigInt
     BytesManually: NexusGenScalars['Bytes'] | null; // Bytes
     DateTimeManually: NexusGenScalars['DateTime'] | null; // DateTime
     JsonManually: NexusGenScalars['Json'] | null; // Json
+    someBigIntField: NexusGenScalars['BigInt']; // BigInt!
     someBytesField: NexusGenScalars['Bytes']; // Bytes!
     someDateTimeField: NexusGenScalars['DateTime']; // DateTime!
     someEnumA: NexusGenEnums['SomeEnumA'] | null; // SomeEnumA
@@ -167,9 +191,11 @@ export interface NexusGenFieldTypeNames {
     foo: 'Foo'
   }
   Foo: { // field return type name
+    BigIntManually: 'BigInt'
     BytesManually: 'Bytes'
     DateTimeManually: 'DateTime'
     JsonManually: 'Json'
+    someBigIntField: 'BigInt'
     someBytesField: 'Bytes'
     someDateTimeField: 'DateTime'
     someEnumA: 'SomeEnumA'

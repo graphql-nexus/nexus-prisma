@@ -13,6 +13,7 @@ testGraphqlSchema({
   `,
   apiSchema({ Foo }) {
     return [
+      NexusPrismaScalars.BigInt,
       NexusPrismaScalars.Bytes,
       NexusPrismaScalars.DateTime,
       NexusPrismaScalars.Json,

@@ -7,6 +7,7 @@ import { inspect } from 'util'
 import { assertBuildPresent } from '../__helpers__/helpers'
 import { createPrismaSchema } from '../__helpers__/testers'
 import { setupTestProject, TestProject } from '../__helpers__/testProject'
+import * as GQLScalars from 'graphql-scalars'
 
 const d = debug('e2e')
 
@@ -120,6 +121,7 @@ it('When bundled custom scalars are used the project type checks and generates e
             someJsonField     Json
             someDateTimeField DateTime
             someBytesField    Bytes
+            someBigIntField   BigInt
             someEnumA         SomeEnumA
             bar               Bar?
           }
@@ -154,7 +156,8 @@ it('When bundled custom scalars are used the project type checks and generates e
               id: 'foo1',
               someDateTimeField: new Date("2021-05-10T20:42:46.609Z"),
               someBytesField: Buffer.from([]),
-              someJsonField: JSON.stringify({}),
+              someJsonField: {},
+              someBigIntField: BigInt(9007199254740991),
               someEnumA: 'alpha',
               bar: {
                 create: {
@@ -211,6 +214,8 @@ it('When bundled custom scalars are used the project type checks and generates e
               t.json('JsonManually')
               t.dateTime('DateTimeManually')
               t.bytes('BytesManually')
+              t.bigInt('BigIntManually')
+              t.field(Foo.someBigIntField)
               t.field(Foo.someJsonField)
               t.field(Foo.someDateTimeField)
               t.field(Foo.someBytesField)
@@ -321,6 +326,9 @@ it('When bundled custom scalars are used the project type checks and generates e
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
     /.*error TS2339: Property 'dateTime' does not exist on type 'ObjectDefinitionBlock<any>'.*/
   )
+  expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
+    /.*error TS2339: Property 'bigInt' does not exist on type 'ObjectDefinitionBlock<any>'.*/
+  )
 
   expect(results.runReflectPrisma.exitCode).toBe(0)
 
@@ -372,9 +380,12 @@ it('When bundled custom scalars are used the project type checks and generates e
           JsonManually
           DateTimeManually
           BytesManually
+          BigIntManually
           someEnumA
+          someJsonField
           someDateTimeField
           someBytesField
+          someBigIntField
         }
       }
     }
@@ -390,4 +401,16 @@ it('When bundled custom scalars are used the project type checks and generates e
   d(`stopped server`)
 
   expect(data).toMatchSnapshot('client request 1')
+
+  const [{ foo }] = data.bars
+
+  expect(foo.JsonManually).toBeNull()
+  expect(foo.DateTimeManually).toBeNull()
+  expect(foo.BytesManually).toBeNull()
+  expect(foo.BigIntManually).toBeNull()
+  expect(typeof foo.someEnumA).toEqual('string')
+  expect(typeof foo.someJsonField).toEqual('object')
+  expect(typeof foo.someDateTimeField).toEqual('string')
+  expect(typeof foo.someBytesField).toEqual('object')
+  expect(typeof GQLScalars.BigIntResolver.parseValue(foo.someBigIntField)).toEqual('bigint')
 }, 60_000)

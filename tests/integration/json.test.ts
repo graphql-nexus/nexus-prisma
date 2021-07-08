@@ -16,6 +16,7 @@ testIntegration({
   apiSchema({ Foo }) {
     return [
       NexusPrismaScalars.Bytes,
+      NexusPrismaScalars.BigInt,
       NexusPrismaScalars.DateTime,
       NexusPrismaScalars.Decimal,
       NexusPrismaScalars.Json,

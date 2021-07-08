@@ -6,6 +6,7 @@ assertBuildPresent()
 it('scalars can be accessed via namespace import', () => {
   expect(Object.keys(NexusPrismaScalarsNS)).toMatchInlineSnapshot(`
 Array [
+  "BigInt",
   "Bytes",
   "DateTime",
   "Decimal",
@@ -17,11 +18,12 @@ Array [
 
 it('scalars can be accessed via a default import', () => {
   expect(Object.keys(NexusPrismaScalars)).toMatchInlineSnapshot(`
-Array [
-  "Bytes",
-  "DateTime",
-  "Decimal",
-  "Json",
-]
-`)
+    Array [
+      "BigInt",
+      "Bytes",
+      "DateTime",
+      "Decimal",
+      "Json",
+    ]
+  `)
 })

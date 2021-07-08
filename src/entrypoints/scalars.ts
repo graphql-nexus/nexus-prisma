@@ -1,21 +1,24 @@
-import { DateTime } from '../scalars/DateTime'
-import { Json } from '../scalars/Json'
+import { BigInt } from '../scalars/BigInt'
 import { Bytes } from '../scalars/Bytes'
+import { DateTime } from '../scalars/DateTime'
 import { Decimal } from '../scalars/Decimal'
+import { Json } from '../scalars/Json'
 
 /**
  * Predefined Nexus scalar type definitions to satisfy all custom scalars needed in GraphQL to map to the
  * native scalars in Prisma. The mapping is as follows:
  *
- * | Prisma | GraphQL | Nexus `t` Helper | GraphQL Scalar Implementation |
- * | ---------- | ---------- | ---- | ----------------------------------------------------------------- |
- * | `Json` | `Json` | `json` | [JsonObject](https://github.com/Urigo/graphql-scalars#jsonobject) |
- * | `DateTime` | `DateTime` | `datetime` | [DateTime](https://github.com/Urigo/graphql-scalars#datetime) |
- * | `Decimal` | `Decimal` | `decimal` | |.
+ * | Prisma     | GraphQL    | Nexus `t` Helper | GraphQL Scalar Implementation                                         | Additional Info                                                                                              |
+ * | ---------- | ---------- | ---------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+ * | `Json`     | `Json`     | `json`           | [JsonObject](https://www.graphql-scalars.dev/docs/scalars/jsonobject) |                                                                                                              |
+ * | `DateTime` | `DateTime` | `dateTime`       | [DateTime](https://www.graphql-scalars.dev/docs/scalars/datetime)     |                                                                                                              |
+ * | `BigInt`   | `BigInt`   | `bigInt`         | [BigInt](https://www.graphql-scalars.dev/docs/scalars/big-int)        | [JavaScript BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) |
+ * | `Bytes`    | `Bytes`    | `bytes`          | [Byte](https://www.graphql-scalars.dev/docs/scalars/byte/)            | [Node.js Buffer](https://nodejs.org/api/buffer.html#buffer_buffer)                                           |
+ * | `Decimal` | `Decimal` | `decimal` | | |.
  *
  * @example
  *
- *   // Use this defualt export
+ *   // Use this default export
  *
  *   import { makeSchema, objectType } from 'nexus'
  *   import NexusPrismaScalars from 'nexus-prisma/scalars'
@@ -37,7 +40,7 @@ import { Decimal } from '../scalars/Decimal'
  *
  * @example
  *
- *   // Use only select precefined custom scalars
+ *   // Use only select predefined custom scalars
  *
  *   import { makeSchema, objectType } from 'nexus'
  *   import { Json } from 'nexus-prisma/scalars'
@@ -72,6 +75,7 @@ import { Decimal } from '../scalars/Decimal'
  *          API. For convenience you can use these ones.
  */
 const NexusPrismaScalars = {
+  BigInt,
   Bytes,
   DateTime,
   Decimal,
@@ -80,4 +84,4 @@ const NexusPrismaScalars = {
 
 export default NexusPrismaScalars
 
-export { Bytes, DateTime, Decimal, Json }
+export { BigInt, Bytes, DateTime, Decimal, Json }

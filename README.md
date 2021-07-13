@@ -227,8 +227,9 @@ However some of the Prisma scalars do not have a natural standard representation
 | `DateTime` | `DateTime` | `dateTime`       | [DateTime](https://www.graphql-scalars.dev/docs/scalars/datetime)     |                                                                                                              |
 | `BigInt`   | `BigInt`   | `bigInt`         | [BigInt](https://www.graphql-scalars.dev/docs/scalars/big-int)        | [JavaScript BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) |
 | `Bytes`    | `Bytes`    | `bytes`          | [Byte](https://www.graphql-scalars.dev/docs/scalars/byte/)            | [Node.js Buffer](https://nodejs.org/api/buffer.html#buffer_buffer)                                           |
+| `Decimal`  | `Decimal`  | `decimal`        | (internal)                                                            | Uses [Decimal.js](https://github.com/MikeMcl/decimal.js)                                                     |
 
-> **Note:** Not all Prisma scalar mappings are implemented yet: `Decimal`, `Unsupported`
+> **Note:** Not all Prisma scalar mappings are implemented yet: `Unsupported`
 
 > **Note:** BigInt is supported in Node.js since version [10.4.0](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt#browser_compatibility) however to support BigInt in `JSON.parse`/`JSON.stringify` you must use [`json-bigint-patch`](https://github.com/ardatan/json-bigint-patch) otherwise BigInt values will be serialized as strings.
 

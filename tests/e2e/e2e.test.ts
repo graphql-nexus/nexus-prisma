@@ -145,6 +145,7 @@ it('When bundled custom scalars are used the project type checks and generates e
       filePath: `prisma/seed.ts`,
       content: dedent/*ts*/ `
         import { PrismaClient, Prisma } from '@prisma/client'
+        import { Decimal } from 'decimal.js'
 
         main()
 
@@ -156,7 +157,7 @@ it('When bundled custom scalars are used the project type checks and generates e
             data: {
               id: 'foo1',
               someDateTimeField: new Date("2021-05-10T20:42:46.609Z"),
-              someDecimalField: new Prisma.Decimal(24.454545),
+              someDecimalField: new Decimal(24.454545),
               someBytesField: Buffer.from([]),
               someJsonField: {},
               someBigIntField: BigInt(9007199254740991),

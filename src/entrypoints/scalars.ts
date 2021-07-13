@@ -14,7 +14,8 @@ import { Json } from '../scalars/Json'
  * | `DateTime` | `DateTime` | `dateTime`       | [DateTime](https://www.graphql-scalars.dev/docs/scalars/datetime)     |                                                                                                              |
  * | `BigInt`   | `BigInt`   | `bigInt`         | [BigInt](https://www.graphql-scalars.dev/docs/scalars/big-int)        | [JavaScript BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) |
  * | `Bytes`    | `Bytes`    | `bytes`          | [Byte](https://www.graphql-scalars.dev/docs/scalars/byte/)            | [Node.js Buffer](https://nodejs.org/api/buffer.html#buffer_buffer)                                           |
- * | `Decimal` | `Decimal` | `decimal` | (internal) | Uses [Decimal.js](https://github.com/MikeMcl/decimal.js) |.
+ * | `Decimal` | `Decimal` | `decimal` | (internal) | Uses [Decimal.js](https://github.com/MikeMcl/decimal.js)
+ * |.
  *
  * @example
  *

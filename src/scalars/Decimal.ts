@@ -1,5 +1,5 @@
 import { asNexusMethod } from 'nexus'
-import * as decimal from 'decimal.js'
+import * as DecimalJs from 'decimal.js'
 
 import { GraphQLScalarType, Kind } from 'graphql'
 
@@ -42,18 +42,18 @@ export const Decimal = asNexusMethod(
     /**
      * Value sent to the client
      */
-    serialize(value: decimal.Decimal) {
+    serialize(value: DecimalJs.Decimal) {
       return value.toString()
     },
     /**
      * Value from the client
      */
-    parseValue(value: decimal.Decimal.Value) {
-      return new decimal.Decimal(value)
+    parseValue(value: DecimalJs.Decimal.Value) {
+      return new DecimalJs.Decimal(value)
     },
     parseLiteral(ast) {
       if (ast.kind === Kind.INT || ast.kind === Kind.FLOAT || ast.kind === Kind.STRING) {
-        return new decimal.Decimal(ast.value)
+        return new DecimalJs.Decimal(ast.value)
       }
       return null
     },

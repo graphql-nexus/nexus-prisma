@@ -4,7 +4,7 @@ import * as decimal from 'decimal.js'
 import { GraphQLScalarType, Kind } from 'graphql'
 
 /**
- * A Nexus scalar type definition for arbitrary-precision Decimal type
+ * A Nexus scalar type definition for arbitrary-precision Decimal type.
  *
  * Contributes a scalar to your GraphQL schema called `Decimal`.
  *

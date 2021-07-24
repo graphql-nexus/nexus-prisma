@@ -166,8 +166,8 @@ import { User } from 'nexus-prisma'
 import { objectType } from 'nexus'
 
 objectType({
-  name: User.$name
-  description: User.$description
+  name: User.$name,
+  description: User.$description,
   definition(t) {
     t.field({
       type: User.id.type,

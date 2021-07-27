@@ -171,9 +171,9 @@ objectType({
   definition(t) {
     t.field({
       type: User.id.type,
-      description: User.id.description
+      description: User.id.description,
     })
-  }
+  },
 })
 ```
 

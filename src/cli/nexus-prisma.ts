@@ -149,7 +149,7 @@ function resolveGitHubActionsWindowsHomeDir(path: string): string {
 
   const pathEnd = path.slice(path.indexOf(windowsHomeDirVar) + windowsHomeDirVar.length)
   const pathStart = os.homedir()
-  const newPath = Path.join(pathEnd, pathStart)
+  const newPath = Path.join(pathStart, pathEnd)
 
   return newPath
 }

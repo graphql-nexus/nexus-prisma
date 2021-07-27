@@ -6,13 +6,13 @@ process.env.DEBUG_COLORS = 'true'
 process.env.DEBUG_HIDE_DATE = 'true'
 import { GeneratorConfig, generatorHandler } from '@prisma/generator-helper'
 import expandTilde from 'expand-tilde'
-import * as os from 'os'
 import * as Path from 'path'
 import { generateRuntimeAndEmit } from '../generator'
 import { loadUserGentimeSettings } from '../generator/gentime/settingsLoader'
 import { Gentime } from '../generator/gentime/settingsSingleton'
 import { d } from '../helpers/debugNexusPrisma'
 import { externalToInternalDmmf } from '../helpers/prismaExternalToInternalDMMF'
+import { resolveGitHubActionsWindowsPathTilde } from '../helpers/utils'
 
 // todo by default error in ci and warn in local
 // enforceValidPeerDependencies({
@@ -104,11 +104,11 @@ function getPrismaClientImportIdForItsGeneratorOutputConfig(
      * We're not certain what path standard we'll get from Prisma for example and ideally we don't care. Path.relative function should let us not
      * care.
      */
-    const dirPrismaClientOutputWithoutTrailingNodeModulesMoniker = resolveGitHubActionsWindowsHomeDir(
+    const dirPrismaClientOutputWithoutTrailingNodeModulesMoniker = resolveGitHubActionsWindowsPathTilde(
       expandTilde(prismaClientGeneratorConfig.output.value.replace(prismaClientDefaultOutput, ''))
     )
 
-    const dirProjectForThisNexusPrisma = resolveGitHubActionsWindowsHomeDir(
+    const dirProjectForThisNexusPrisma = resolveGitHubActionsWindowsPathTilde(
       expandTilde(Path.join(__dirname, '../../../..'))
     )
 
@@ -129,27 +129,4 @@ function getPrismaClientImportIdForItsGeneratorOutputConfig(
   }
 
   return prismaClientGeneratorConfig.output.value
-}
-
-/**
- * On GitHub Actions on Windows the path returned by __dirname is something like:
- *
- *    C:\\Users\\RUNNER~1\\foo\\bar\\qux
- *
- * This function resolvers the `C:\\Users\\RUNNER~1` into the current system user's homedir.
- *
- * https://github.com/prisma/nexus-prisma/pull/104/checks?check_run_id=3175632323#step:9:146
- * https://prisma-company.slack.com/archives/C016KUHB1R6/p1627416092002000
- * https://github.com/actions/virtual-environments/issues/712
- */
-function resolveGitHubActionsWindowsHomeDir(path: string): string {
-  const windowsHomeDirVar = 'RUNNER~1'
-
-  if (!path.includes(windowsHomeDirVar)) return path
-
-  const pathEnd = path.slice(path.indexOf(windowsHomeDirVar) + windowsHomeDirVar.length)
-  const pathStart = os.homedir()
-  const newPath = Path.join(pathStart, pathEnd)
-
-  return newPath
 }

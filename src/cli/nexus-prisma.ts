@@ -5,12 +5,14 @@
 process.env.DEBUG_COLORS = 'true'
 process.env.DEBUG_HIDE_DATE = 'true'
 import { GeneratorConfig, generatorHandler } from '@prisma/generator-helper'
+import expandTilde from 'expand-tilde'
 import * as Path from 'path'
 import { generateRuntimeAndEmit } from '../generator'
 import { loadUserGentimeSettings } from '../generator/gentime/settingsLoader'
 import { Gentime } from '../generator/gentime/settingsSingleton'
 import { d } from '../helpers/debugNexusPrisma'
 import { externalToInternalDmmf } from '../helpers/prismaExternalToInternalDMMF'
+import { resolveGitHubActionsWindowsPathTilde } from '../helpers/utils'
 
 // todo by default error in ci and warn in local
 // enforceValidPeerDependencies({
@@ -67,7 +69,7 @@ function getPrismaClientImportIdForItsGeneratorOutputConfig(
   prismaClientGeneratorConfig: GeneratorConfig
 ): string {
   const prismaClientPackageMoniker = `@prisma/client`
-  const prismaClientDefaultOutput = Path.join(`node_modules`, `@prisma`, `client`)
+  const prismaClientDefaultOutput = Path.normalize(`/node_modules/@prisma/client`)
 
   if (!prismaClientGeneratorConfig.output || !prismaClientGeneratorConfig.output.value) {
     return prismaClientPackageMoniker
@@ -102,9 +104,14 @@ function getPrismaClientImportIdForItsGeneratorOutputConfig(
      * We're not certain what path standard we'll get from Prisma for example and ideally we don't care. Path.relative function should let us not
      * care.
      */
-    const dirPrismaClientOutputWithoutTrailingNodeModulesMoniker =
-      prismaClientGeneratorConfig.output.value.replace(prismaClientDefaultOutput, '')
-    const dirProjectForThisNexusPrisma = Path.join(__dirname, '../../../..')
+    const dirPrismaClientOutputWithoutTrailingNodeModulesMoniker = resolveGitHubActionsWindowsPathTilde(
+      expandTilde(prismaClientGeneratorConfig.output.value.replace(prismaClientDefaultOutput, ''))
+    )
+
+    const dirProjectForThisNexusPrisma = resolveGitHubActionsWindowsPathTilde(
+      expandTilde(Path.join(__dirname, '../../../..'))
+    )
+
     const dirDiff = Path.relative(
       dirPrismaClientOutputWithoutTrailingNodeModulesMoniker,
       dirProjectForThisNexusPrisma

@@ -1869,10 +1869,10 @@ commander@^2.19.0:
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
   integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
 
-comment-parser@^1.1.5:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/comment-parser/-/comment-parser-1.2.1.tgz#38778b5b2af825cc10099fd5923f8ac151274381"
-  integrity sha512-nZKYGIben18JaK3AcokrFUpqdY/aRkEtHNM3nm8zhLRxZl+kNEiTelGhfGHBkzzA4s0KDpNTX8xSdNYX1hH7Mw==
+comment-parser@1.1.5, comment-parser@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/comment-parser/-/comment-parser-1.1.5.tgz#453627ef8f67dbcec44e79a9bd5baa37f0bce9b2"
+  integrity sha512-RePCE4leIhBlmrqiYTvaqEeGYg7qpSl4etaIabKtdOQVi+mSTIBBklGUwIr79GXYnl3LpMwmDw4KeR2stNc6FA==
 
 common-tags@^1.8.0:
   version "1.8.0"

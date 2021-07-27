@@ -84,6 +84,9 @@
     "@prisma/client": "2.17.x || 2.18.x || 2.19.x || 2.20.x || 2.21.x || 2.22.x || 2.23.x || 2.24.x || 2.25.x",
     "nexus": "^1.0.0"
   },
+  "resolutions": {
+    "comment-parser": "1.1.5"
+  },
   "dependencies": {
     "@prisma/generator-helper": "^2.25.0",
     "debug": "^4.3.2",

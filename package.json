@@ -50,6 +50,7 @@
     "@types/expand-tilde": "^2.0.0",
     "@types/jest": "26.0.24",
     "@types/lodash": "^4.14.171",
+    "@types/node": "^16.4.3",
     "@types/pluralize": "^0.0.29",
     "@types/semver": "^7.3.8",
     "@types/strip-ansi": "^5.2.1",

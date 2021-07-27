@@ -67,7 +67,7 @@ function getPrismaClientImportIdForItsGeneratorOutputConfig(
   prismaClientGeneratorConfig: GeneratorConfig
 ): string {
   const prismaClientPackageMoniker = `@prisma/client`
-  const prismaClientDefaultOutput = Path.join(`node_modules`, `@prisma`, `client`)
+  const prismaClientDefaultOutput = Path.normalize(`/node_modules/@prisma/client`)
 
   if (!prismaClientGeneratorConfig.output || !prismaClientGeneratorConfig.output.value) {
     return prismaClientPackageMoniker
@@ -104,7 +104,9 @@ function getPrismaClientImportIdForItsGeneratorOutputConfig(
      */
     const dirPrismaClientOutputWithoutTrailingNodeModulesMoniker =
       prismaClientGeneratorConfig.output.value.replace(prismaClientDefaultOutput, '')
+
     const dirProjectForThisNexusPrisma = Path.join(__dirname, '../../../..')
+
     const dirDiff = Path.relative(
       dirPrismaClientOutputWithoutTrailingNodeModulesMoniker,
       dirProjectForThisNexusPrisma

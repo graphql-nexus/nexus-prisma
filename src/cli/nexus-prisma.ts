@@ -5,6 +5,7 @@
 process.env.DEBUG_COLORS = 'true'
 process.env.DEBUG_HIDE_DATE = 'true'
 import { GeneratorConfig, generatorHandler } from '@prisma/generator-helper'
+import expandTilde from 'expand-tilde'
 import * as Path from 'path'
 import { generateRuntimeAndEmit } from '../generator'
 import { loadUserGentimeSettings } from '../generator/gentime/settingsLoader'
@@ -102,10 +103,11 @@ function getPrismaClientImportIdForItsGeneratorOutputConfig(
      * We're not certain what path standard we'll get from Prisma for example and ideally we don't care. Path.relative function should let us not
      * care.
      */
-    const dirPrismaClientOutputWithoutTrailingNodeModulesMoniker =
+    const dirPrismaClientOutputWithoutTrailingNodeModulesMoniker = expandTilde(
       prismaClientGeneratorConfig.output.value.replace(prismaClientDefaultOutput, '')
+    )
 
-    const dirProjectForThisNexusPrisma = Path.join(__dirname, '../../../..')
+    const dirProjectForThisNexusPrisma = expandTilde(Path.join(__dirname, '../../../..'))
 
     const dirDiff = Path.relative(
       dirPrismaClientOutputWithoutTrailingNodeModulesMoniker,

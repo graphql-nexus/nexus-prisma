@@ -923,6 +923,6 @@ We only officially support what we test.
 
 We test Node versions that are `Active LTS` and `Current`. For which versions of Node that equals you can refer to our tests or look here: https://nodejs.org/en/about/releases.
 
-We test Prisma versions `2.25`. More Prisma versions are planned to be tested, refer to [#69](https://github.com/prisma/nexus-prisma/issues/69).
+We test Prisma versions `2.27`. More Prisma versions are planned to be tested, refer to [#69](https://github.com/prisma/nexus-prisma/issues/69).
 
 We do not currently maintain a historical matrix of what past versions of Prisma supported what vesrions of Prisma and Node.

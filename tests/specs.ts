@@ -17,7 +17,9 @@ export namespace Specs {
       authorId  String
     }
   `,
-    apiSchema({ User, Post }) {
+    apiSchema(nexusPrisma) {
+      const { User, Post } = nexusPrisma
+
       return [
         queryType({
           definition(t) {
@@ -80,7 +82,9 @@ export namespace Specs {
       authorId  String
     }
   `,
-    apiSchema({ User, Post }) {
+    apiSchema(nexusPrisma) {
+      const { User, Post } = nexusPrisma
+
       return [
         queryType({
           definition(t) {

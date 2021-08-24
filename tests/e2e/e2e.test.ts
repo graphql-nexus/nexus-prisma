@@ -89,17 +89,7 @@ function setupTestNexusPrismaProject(): TestProject {
   })
 
   if (testProject.info.isReusing) {
-    d(`starting project setup cleanup for reuse`)
     testProject.fs.remove(TYPEGEN_FILE_PATH)
-    testProject.fs.remove('node_modules/nexus-prisma')
-    testProject.runOrThrow(`yalc add nexus-prisma`)
-    d(`done project setup cleanup for reuse`)
-  } else {
-    d(`starting project setup`)
-    Execa.commandSync(`yalc publish --no-scripts`, { stdio: 'inherit' })
-    testProject.runOrThrow(`yalc add nexus-prisma`, { stdio: 'inherit' })
-    testProject.runOrThrow(`npm install`, { stdio: 'inherit' })
-    d(`done project setup`)
   }
 
   return testProject

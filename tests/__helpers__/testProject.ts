@@ -1,16 +1,19 @@
-import execa from 'execa'
+import { debug } from 'debug'
+import * as Execa from 'execa'
 import * as fs from 'fs-jetpack'
 import { FSJetpack } from 'fs-jetpack/types'
 import { GraphQLClient } from 'graphql-request'
 import { merge } from 'lodash'
 import { PackageJson, TsConfigJson } from 'type-fest'
 
+const d = debug(`testProject`)
+
 export interface TestProject {
   fs: FSJetpack
   info: TestProjectInfo
-  run(command: string, options?: execa.SyncOptions): execa.ExecaSyncReturnValue
-  runAsync(command: string, options?: execa.SyncOptions): execa.ExecaChildProcess
-  runOrThrow(command: string, options?: execa.SyncOptions): execa.ExecaSyncReturnValue
+  run(command: string, options?: Execa.SyncOptions): Execa.ExecaSyncReturnValue
+  runAsync(command: string, options?: Execa.SyncOptions): Execa.ExecaChildProcess
+  runOrThrow(command: string, options?: Execa.SyncOptions): Execa.ExecaSyncReturnValue
   client: GraphQLClient
 }
 
@@ -57,18 +60,47 @@ export function setupTestProject(
     }
   } = {}
 ): TestProject {
-  let fs_: FSJetpack
+  const thisPackageName = `nexus-prisma`
   const tpi = new TestProjectInfo()
+  /**
+   * Allow reusing a test project directory. This can be helpful when debugging things.
+   */
+  const fs_ = tpi.isReusingEnabled ? fs.cwd(tpi.getOrSetGet().dir) : fs.tmpDir()
+
+  const testProject: TestProject = {
+    fs: fs_,
+    info: tpi,
+    run(command, options) {
+      // console.log(`${command} ...`)
+      return Execa.commandSync(command, {
+        reject: false,
+        ...options,
+        cwd: fs_.cwd(),
+      })
+    },
+    runOrThrow(command, options) {
+      // console.log(`${command} ...`)
+      return Execa.commandSync(command, {
+        ...options,
+        cwd: fs_.cwd(),
+      })
+    },
+    runAsync(command, options) {
+      // console.log(`${command} ...`)
+      return Execa.command(command, {
+        ...options,
+        cwd: fs_.cwd(),
+      })
+    },
+    client: new GraphQLClient('http://localhost:4000'),
+  }
 
   if (params.fixture) {
-    fs_ = fs.cwd(params.fixture)
+    testProject.fs.copy(params.fixture, testProject.fs.cwd(), {
+      overwrite: true,
+    })
   } else {
-    /**
-     * Allow reusing a test project directory. This can be helpful when debugging things.
-     */
-    fs_ = tpi.isReusingEnabled ? fs.cwd(tpi.getOrSetGet().dir) : fs.tmpDir()
-
-    fs_.write(
+    testProject.fs.write(
       'package.json',
       merge(
         {
@@ -79,7 +111,7 @@ export function setupTestProject(
       )
     )
 
-    fs_.write(
+    testProject.fs.write(
       'tsconfig.json',
       merge(
         {
@@ -99,33 +131,18 @@ export function setupTestProject(
     )
   }
 
-  const api: TestProject = {
-    fs: fs_,
-    info: tpi,
-    run(command, options) {
-      // console.log(`${command} ...`)
-      return execa.commandSync(command, {
-        reject: false,
-        ...options,
-        cwd: fs_.cwd(),
-      })
-    },
-    runOrThrow(command, options) {
-      // console.log(`${command} ...`)
-      return execa.commandSync(command, {
-        ...options,
-        cwd: fs_.cwd(),
-      })
-    },
-    runAsync(command, options) {
-      // console.log(`${command} ...`)
-      return execa.command(command, {
-        ...options,
-        cwd: fs_.cwd(),
-      })
-    },
-    client: new GraphQLClient('http://localhost:4000'),
+  if (testProject.info.isReusing) {
+    d(`starting project setup cleanup for reuse`)
+    testProject.fs.remove(`node_modules/${thisPackageName}`)
+    testProject.runOrThrow(`yalc add ${thisPackageName}`)
+    d(`done project setup cleanup for reuse`)
+  } else {
+    d(`starting project setup`)
+    Execa.commandSync(`yalc publish --no-scripts`, { stdio: 'inherit' })
+    testProject.runOrThrow(`yalc add ${thisPackageName}`, { stdio: 'inherit' })
+    testProject.runOrThrow(`npm install --legacy-peer-deps`, { stdio: 'inherit' })
+    d(`done project setup`)
   }
 
-  return api
+  return testProject
 }

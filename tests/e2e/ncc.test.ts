@@ -6,11 +6,9 @@ it('works with ncc', async () => {
     fixture: Path.join(__dirname, 'fixtures/ncc'),
   })
 
-  await testProject.runOrThrow(`npm install --force`)
+  await testProject.runOrThrowNpmScript(`build`)
 
-  await testProject.runOrThrow(`npm run build`)
-
-  const result = await testProject.runOrThrow(`npm run start:dist`)
+  const result = await testProject.runOrThrowNpmScript(`start:dist`)
 
   expect(result.stdout).toMatchSnapshot()
 })

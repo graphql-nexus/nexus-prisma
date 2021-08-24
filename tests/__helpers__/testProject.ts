@@ -14,6 +14,7 @@ export interface TestProject {
   run(command: string, options?: Execa.SyncOptions): Execa.ExecaSyncReturnValue
   runAsync(command: string, options?: Execa.SyncOptions): Execa.ExecaChildProcess
   runOrThrow(command: string, options?: Execa.SyncOptions): Execa.ExecaSyncReturnValue
+  runOrThrowNpmScript(command: string, options?: Execa.SyncOptions): Execa.ExecaSyncReturnValue
   client: GraphQLClient
 }
 
@@ -81,6 +82,13 @@ export function setupTestProject(
     runOrThrow(command, options) {
       // console.log(`${command} ...`)
       return Execa.commandSync(command, {
+        ...options,
+        cwd: fs_.cwd(),
+      })
+    },
+    runOrThrowNpmScript(command, options) {
+      // console.log(`${command} ...`)
+      return Execa.commandSync(`npm run --silent ${command}`, {
         ...options,
         cwd: fs_.cwd(),
       })

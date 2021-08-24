@@ -809,7 +809,7 @@ When your project is in a state where the generated Nexus Prisma part is missing
 
 When `nexus-prisma` is imported it will validate that your project has peer dependencies setup correctly.
 
-If a peer dependency is not installed it `nexus-prisma` will log an error and then exit 1. If its version does not satify the range supported by the current version of `nexus-prisma` that you have installed, then a warning will be logged. If you want to opt-out of this validation then set an envar as follows:
+If a peer dependency is not installed it `nexus-prisma` will log an error and then exit 1. If its version does not satify the range supported by the current version of `nexus-prisma` that you have installed, then a warning will be logged. If you want to opt-out of this validation (e.g. you're [using a bundler](#Disable-Peer-Dependency-Check)) then set an envar as follows:
 
 ```
 NO_PEER_DEPENDENCY_CHECK=true|1
@@ -886,6 +886,18 @@ makeSchema({
 ```
 
 ## Notes
+
+### Working with Bundlers
+
+#### Disable Peer Dependency Check
+
+When working with bundlers, it probably makes sense to disable the rutnime peer dependency check system since the bundle step is merging the dependency tree into a single file and may be moved to run standalone away from the original project manifest (e.g. in a docker container).
+
+Instructions to do this can be found [here](#Peer-Dependency-Validation).
+
+#### General Support
+
+`nexus-prisma` has tests showing that it supports `ncc`. Other bundlers are not tested and may or may not work. It is our goal however that nexus-prisma not be the reason for any popular bundler to not work on your project. So if you encounter a problem with one (e.g. `parcel`), open an issue here and we'll fix the issue including an addition to our test suite.
 
 ### For users of `nexus-prisma@=<0.20`
 

@@ -2,12 +2,12 @@ import debug from 'debug'
 import dedent from 'dindist'
 import * as Execa from 'execa'
 import { gql } from 'graphql-request'
+import * as GQLScalars from 'graphql-scalars'
 import stripAnsi from 'strip-ansi'
 import { inspect } from 'util'
 import { assertBuildPresent } from '../__helpers__/helpers'
 import { createPrismaSchema } from '../__helpers__/testers'
 import { setupTestProject, TestProject } from '../__helpers__/testProject'
-import * as GQLScalars from 'graphql-scalars'
 
 const d = debug('e2e')
 
@@ -56,32 +56,34 @@ function runTestProjectBuild(testProject: TestProject): ProjectResult {
 
 function setupTestNexusPrismaProject(): TestProject {
   const testProject = setupTestProject({
-    tsconfigJson: {},
-    packageJson: {
-      license: 'MIT',
-      scripts: {
-        reflect: 'yarn -s reflect:prisma && yarn -s reflect:nexus',
-        'reflect:prisma': "cross-env DEBUG='*' prisma generate",
-        // peer dependency check will fail since we're using yalc, e.g.:
-        // " ... nexus-prisma@0.0.0-dripip+c2653557 does not officially support @prisma/client@2.22.1 ... "
-        'reflect:nexus': 'cross-env REFLECT=true ts-node --transpile-only src/schema',
-        build: 'tsc',
-        start: 'node build/server',
-        'dev:server': 'yarn ts-node-dev --transpile-only server',
-        'db:migrate': 'prisma db push --force-reset && ts-node prisma/seed',
-      },
-      dependencies: {
-        dotenv: '^9.0.0',
-        'apollo-server': '^2.24.0',
-        'cross-env': '^7.0.1',
-        '@prisma/client': '^2.18.0',
-        '@types/node': '^14.14.32',
-        graphql: '^15.5.0',
-        nexus: '^1.0.0',
-        prisma: '^2.18.0',
-        'ts-node': '^9.1.1',
-        'ts-node-dev': '^1.1.6',
-        typescript: '^4.2.3',
+    files: {
+      tsconfigJson: {},
+      packageJson: {
+        license: 'MIT',
+        scripts: {
+          reflect: 'yarn -s reflect:prisma && yarn -s reflect:nexus',
+          'reflect:prisma': "cross-env DEBUG='*' prisma generate",
+          // peer dependency check will fail since we're using yalc, e.g.:
+          // " ... nexus-prisma@0.0.0-dripip+c2653557 does not officially support @prisma/client@2.22.1 ... "
+          'reflect:nexus': 'cross-env REFLECT=true ts-node --transpile-only src/schema',
+          build: 'tsc',
+          start: 'node build/server',
+          'dev:server': 'yarn ts-node-dev --transpile-only server',
+          'db:migrate': 'prisma db push --force-reset && ts-node prisma/seed',
+        },
+        dependencies: {
+          dotenv: '^9.0.0',
+          'apollo-server': '^2.24.0',
+          'cross-env': '^7.0.1',
+          '@prisma/client': '^2.18.0',
+          '@types/node': '^14.14.32',
+          graphql: '^15.5.0',
+          nexus: '^1.0.0',
+          prisma: '^2.18.0',
+          'ts-node': '^9.1.1',
+          'ts-node-dev': '^1.1.6',
+          typescript: '^4.2.3',
+        },
       },
     },
   })

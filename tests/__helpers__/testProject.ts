@@ -48,54 +48,62 @@ export class TestProjectInfo {
   }
 }
 
-export function setupTestProject({
-  packageJson,
-  tsconfigJson,
-}: {
-  packageJson?: PackageJson
-  tsconfigJson?: TsConfigJson
-} = {}): TestProject {
+export function setupTestProject(
+  params: {
+    fixture?: string
+    files?: {
+      packageJson?: PackageJson
+      tsconfigJson?: TsConfigJson
+    }
+  } = {}
+): TestProject {
+  let fs_: FSJetpack
   const tpi = new TestProjectInfo()
 
-  /**
-   * Allow reusing a test project directory. This can be helpful when debugging things.
-   */
-  let fs_ = tpi.isReusingEnabled ? fs.cwd(tpi.getOrSetGet().dir) : fs.tmpDir()
+  if (params.fixture) {
+    fs_ = fs.cwd(params.fixture)
+  } else {
+    /**
+     * Allow reusing a test project directory. This can be helpful when debugging things.
+     */
+    fs_ = tpi.isReusingEnabled ? fs.cwd(tpi.getOrSetGet().dir) : fs.tmpDir()
 
-  fs_.write(
-    'package.json',
-    merge(
-      {
-        name: 'some-test-project',
-        version: '1.0.0',
-      },
-      packageJson
-    )
-  )
-
-  fs_.write(
-    'tsconfig.json',
-    merge(
-      {
-        compilerOptions: {
-          strict: true,
-          target: 'ES2018',
-          module: 'CommonJS',
-          moduleResolution: 'node',
-          rootDir: 'src',
-          outDir: 'build',
-          esModuleInterop: true, // for ApolloServer b/c ws dep  :(
+    fs_.write(
+      'package.json',
+      merge(
+        {
+          name: 'some-test-project',
+          version: '1.0.0',
         },
-        include: ['src'],
-      } as TsConfigJson,
-      tsconfigJson
+        params.files?.packageJson
+      )
     )
-  )
+
+    fs_.write(
+      'tsconfig.json',
+      merge(
+        {
+          compilerOptions: {
+            strict: true,
+            target: 'ES2018',
+            module: 'CommonJS',
+            moduleResolution: 'node',
+            rootDir: 'src',
+            outDir: 'build',
+            esModuleInterop: true, // for ApolloServer b/c ws dep  :(
+          },
+          include: ['src'],
+        } as TsConfigJson,
+        params.files?.tsconfigJson
+      )
+    )
+  }
 
   const api: TestProject = {
     fs: fs_,
     info: tpi,
     run(command, options) {
+      // console.log(`${command} ...`)
       return execa.commandSync(command, {
         reject: false,
         ...options,
@@ -103,12 +111,14 @@ export function setupTestProject({
       })
     },
     runOrThrow(command, options) {
+      // console.log(`${command} ...`)
       return execa.commandSync(command, {
         ...options,
         cwd: fs_.cwd(),
       })
     },
     runAsync(command, options) {
+      // console.log(`${command} ...`)
       return execa.command(command, {
         ...options,
         cwd: fs_.cwd(),

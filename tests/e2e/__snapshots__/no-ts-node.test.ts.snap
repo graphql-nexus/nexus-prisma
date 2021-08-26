@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when project does not have ts-node installed nexus-prisma generator still generates if there are no TS generator config files present 1`] = `
+"Prisma schema loaded from <SOME PATH>
+You can now start using Nexus Prisma in your code. Reference: https://pris.ly/d/nexus-prisma
+
+✔ Generated Prisma Client (<SOME VERSION>) to <SOME PATH> in <SOME TIME>ms
+
+✔ Generated Nexus Prisma to <SOME PATH> in <SOME TIME>ms
+You can now start using Prisma Client in your code. Reference: https://pris.ly/d/client
+\`\`\`
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
+\`\`\`"
+`;

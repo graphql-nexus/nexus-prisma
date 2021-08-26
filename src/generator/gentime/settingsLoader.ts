@@ -1,15 +1,8 @@
 import * as fs from 'fs'
+import type * as TSNode from 'ts-node'
 import { d } from '../../helpers/debugNexusPrisma'
 
 export function loadUserGentimeSettings(): void {
-  // eslint-disable-next-line
-  const tsNode = require('ts-node')
-
-  // eslint-disable-next-line
-  tsNode.register({
-    compilerOptions: { module: 'commonjs' },
-  })
-
   const userSettingsModulePath = pickFirstExisting(
     [
       'nexus-prisma.ts',
@@ -21,11 +14,21 @@ export function loadUserGentimeSettings(): void {
     ].map((path) => `${process.cwd()}/${path}`)
   )
 
-  /**
-   * Load the user's settings module for side-effects against the setset instance.
-   */
-
   if (userSettingsModulePath) {
+    // Now that we know a TS config file is present, try loading ts-node
+
+    // eslint-disable-next-line
+    let tsNode: typeof TSNode = require('ts-node')
+
+    // eslint-disable-next-line
+    tsNode.register({
+      compilerOptions: {
+        module: 'commonjs',
+      },
+    })
+
+    // Load the user's settings module for side-effects against the setset instance.
+
     d(`Loaded configuration from ${userSettingsModulePath}`)
     require(userSettingsModulePath)
   }

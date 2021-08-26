@@ -42,7 +42,6 @@ Official Prisma plugin for Nexus.
     - [Disable Peer Dependency Check](#disable-peer-dependency-check)
     - [General Support](#general-support)
   - [For users of `nexus-prisma@=<0.20`](#for-users-of-nexus-prisma020)
-  - [For users of `prisma@=<2.17`](#for-users-of-prisma217)
   - [For users of `nexus@=<1.0`](#for-users-of-nexus10)
   - [Supported Versions Of Node & Prisma](#supported-versions-of-node--prisma)
 
@@ -63,8 +62,6 @@ Official Prisma plugin for Nexus.
 
 1. Add a `nexus-prisma` generator block to your Prisma Schema.
 
-   > If you are using `prisma@=<2.17` then you must use the Nexus Prisma Prisma generator name of `nexus_prisma` instead of `nexus-prisma`. See [notes](#notes) for more detail.
-
 1. Run `prisma generate` in your terminal.
 
 1. Import models from `nexus-prisma` and then pass them to your Nexus type definition and field definition configurations. In this way you will be effectively projecting models from your data layer into GraphQL types in your API layer.
@@ -79,7 +76,6 @@ generator client {
 
 generator nexusPrisma {
    provider = "nexus-prisma"
-// provider = "nexus_prisma"    <-- For prisma@=<2.17 users
 }
 
 /// This is a user!
@@ -906,10 +902,6 @@ Instructions to do this can be found [here](#Peer-Dependency-Validation).
 
 Versions of `nexus-prisma` package prior to `0.20` were a completely different version of the API, and had also become deprecated at one point to migrate to `nexus-plugin-prisma` when Nexus Framework was being worked on. All of that is history.
 
-### For users of `prisma@=<2.17`
-
-If you are using `prisma@=<2.17` then you must use the Nexus Prisma Prisma generator name of `nexus_prisma` instead of `nexus-prisma`. This is because prior to `prisma@2.18` there was a hardcode check for `nexus-prisma` that would fail with an error message about a now-old migration.
-
 ### For users of `nexus@=<1.0`
 
 The [release of Nexus 1.1](https://github.com/graphql-nexus/nexus/releases/tag/1.0.0) introduced an overload to `t.field` allowing improved usage of Nexus Prisma. The difference is as follows. Note if you prefer the older way that is and always will be supported too.
@@ -938,6 +930,6 @@ We only officially support what we test.
 
 We test Node versions that are `Active LTS` and `Current`. For which versions of Node that equals you can refer to our tests or look here: https://nodejs.org/en/about/releases.
 
-We test Prisma versions `2.27`. More Prisma versions are planned to be tested, refer to [#69](https://github.com/prisma/nexus-prisma/issues/69).
+We test Prisma versions `2.30`. More Prisma versions are planned to be tested, refer to [#69](https://github.com/prisma/nexus-prisma/issues/69).
 
 We do not currently maintain a historical matrix of what past versions of Prisma supported what vesrions of Prisma and Node.

@@ -2,6 +2,7 @@ import dedent from 'dindist'
 import * as Semver from 'semver'
 import { PackageJson } from 'type-fest'
 import { d } from '../helpers/debugNexusPrisma'
+import { isModuleNotFoundError } from '../helpers/utils'
 import { detectProjectPackageManager, renderAddDeps } from './packageManager'
 import kleur = require('kleur')
 
@@ -16,9 +17,30 @@ type Failure =
   | { message: string; kind: 'peer_dep_package_json_read_error'; error: unknown }
   | { message: string; kind: 'unexpected_error'; error: unknown }
 
+export const envarSpecs = {
+  NO_PEER_DEPENDENCY_CHECK: {
+    name: `NO_PEER_DEPENDENCY_CHECK`,
+    values: ['true', '1'],
+  },
+  PEER_DEPENDENCY_CHECK: {
+    name: `PEER_DEPENDENCY_CHECK`,
+    values: ['false', '0'],
+  },
+}
+
 export function enforceValidPeerDependencies({ packageJson }: { packageJson: PackageJson }): void {
-  if (['true', '1'].includes(process.env.NO_PEER_DEPENDENCY_CHECK ?? '')) return
-  if (['false', '0'].includes(process.env.PEER_DEPENDENCY_CHECK ?? '')) return
+  if (
+    envarSpecs.NO_PEER_DEPENDENCY_CHECK.values.includes(
+      process.env[envarSpecs.NO_PEER_DEPENDENCY_CHECK.name] ?? ''
+    )
+  )
+    return
+
+  if (
+    envarSpecs.PEER_DEPENDENCY_CHECK.values.includes(process.env[envarSpecs.PEER_DEPENDENCY_CHECK.name] ?? '')
+  )
+    return
+
   d('validating peer dependencies')
 
   const failure = validatePeerDependencies({ packageJson })
@@ -57,9 +79,16 @@ export function validatePeerDependencies({ packageJson }: { packageJson: Package
       if (failure) return failure
     }
   } catch (error: unknown) {
+    const code = `unexpected_error`
     return {
-      kind: 'unexpected_error',
-      message: renderWarning(`Something went wrong while trying to validate peer dependencies`),
+      kind: code,
+      message: renderWarning({
+        title: `Something went wrong while trying to validate peer dependencies`,
+        code,
+        reason: error instanceof Error ? error.message : String(error),
+        consequence: `There seems to be a bug so the regular correctness checks of the peer dep checker cannot be carried out now. You are on your own.`,
+        solution: `Please report this issue.`,
+      }),
       error,
     }
   }
@@ -91,14 +120,18 @@ export function validatePeerDependencyRangeSatisfied({
       }
     }
 
+    const code = 'peer_dep_not_installed'
     return {
-      kind: 'peer_dep_not_installed',
-      message: renderError(
+      kind: code,
+      message: renderError({
+        title: `Peer dependency validation check failed.`,
         // prettier-ignore
-        dedent`
-          ${kleur.green(peerDependencyName)} is a peer dependency required by ${renderPackageJsonField(requireer,'name')}. But you have not installed it into this project yet. Please run \`${kleur.green(renderAddDeps(detectProjectPackageManager(),[peerDependencyName]))}\`.
-        `
-      ),
+        reason: dedent`${kleur.green(peerDependencyName)} is a peer dependency required by ${renderPackageJsonField(requireer,'name')}. But you have not installed it into this project yet.`,
+        code,
+        // prettier-ignore
+        solution: `Please run \`${kleur.green(renderAddDeps(detectProjectPackageManager(),[peerDependencyName]))}\`.`,
+        consequence: `Your project may not work correctly.`,
+      }),
     }
   }
 
@@ -108,37 +141,29 @@ export function validatePeerDependencyRangeSatisfied({
   // npm enforces that package manifests have a valid "version" field so this
   // case _should_ never happen under normal circumstances.
   if (!pdVersion) {
+    const code = 'peer_dep_package_json_invalid'
     return {
-      kind: 'peer_dep_package_json_invalid',
-      message: renderWarning(
-        `Peer dependency validation check failed unexpectedly. ${renderPackageJsonField(
-          requireer,
-          'name'
-        )} requires peer dependency ${renderPackageJsonField(
-          pdPackageJson,
-          'name'
-        )}. No version info for ${renderPackageJsonField(
-          pdPackageJson,
-          'name'
-        )} could be found in its package.json thus preventing a check if its version satisfies the peer dependency version range.`
-      ),
+      kind: code,
+      message: renderWarning({
+        title: `Peer dependency validation check failed unexpectedly.`,
+        // prettier-ignore
+        reason: `${renderPackageJsonField(requireer, 'name')} requires peer dependency ${renderPackageJsonField(pdPackageJson, 'name')}. No version info for ${renderPackageJsonField(pdPackageJson, 'name')} could be found in its package.json thus preventing a check if its version satisfies the peer dependency version range.`,
+        consequence: `Peer dep validator checks cannot be carried out so you are on your own.`,
+        code,
+      }),
     }
   }
 
   if (!pdVersionRangeSupported) {
+    const code = `unknown`
     console.warn(
-      renderWarning(
-        `Peer dependency validation check failed unexpectedly. ${renderPackageJsonField(
-          requireer,
-          'name'
-        )} apparently requires peer dependency ${renderPackageJsonField(
-          pdPackageJson,
-          'name'
-        )} yet ${renderPackageJsonField(
-          pdPackageJson,
-          'name'
-        )} is not listed in the peer dependency listing of ${renderPackageJsonField(requireer, 'name')}.`
-      )
+      renderWarning({
+        title: `Peer dependency validation check failed unexpectedly.`,
+        // prettier-ignore
+        reason: `${renderPackageJsonField(requireer, 'name')} apparently requires peer dependency ${renderPackageJsonField(pdPackageJson, 'name')} yet ${renderPackageJsonField(pdPackageJson, 'name')} is not listed in the peer dependency listing of ${renderPackageJsonField(requireer, 'name')}.`,
+        consequence: `There seems to be a bug so the regular correctness checks of the peer dep checker cannot be carried out now. You are on your own. Please report this issue.`,
+        code,
+      })
     )
     return null
   }
@@ -149,36 +174,51 @@ export function validatePeerDependencyRangeSatisfied({
 
   return {
     kind: 'peer_dep_invalid_version',
-    message: renderWarning(
-      `Peer dependency validation check failed: ${renderPackageJsonField(
-        requireer,
-        'name'
-      )}@${renderPackageJsonField(requireer, 'version')} does not officially support ${renderPackageJsonField(
-        pdPackageJson,
-        'name'
-      )}@${renderPackageJsonField(
-        pdPackageJson,
-        'version'
-      )}. The officially supported range is: \`${pdVersionRangeSupported}\`. This could lead to undefined behaviors and bugs.`
-    ),
+    message: renderWarning({
+      title: `Peer dependency validation check failed`,
+      // prettier-ignore
+      reason: `${renderPackageJsonField(requireer, 'name')}@${renderPackageJsonField(requireer, 'version')} does not officially support ${renderPackageJsonField(pdPackageJson, 'name')}@${renderPackageJsonField(pdPackageJson, 'version')}. The officially supported range is: \`${pdVersionRangeSupported}\`.`,
+      consequence: `This could lead to undefined behaviors and bugs.`,
+      code: `peer_dep_invalid_version`,
+    }),
   }
 }
 
-function renderError(message: string): string {
-  return `${kleur.red('ERROR:')} ${message}`
+//prettier-ignore
+const prettyPrintedDisableGuide = dedent`
+  HOW TO DISABLE:
+  
+    You can disable this peer dependency check by setting one of two environment variables. Their specs are:
+
+      ${envarSpecs.NO_PEER_DEPENDENCY_CHECK.name} = ${envarSpecs.NO_PEER_DEPENDENCY_CHECK.values.map(_=>`'${_}'`).join(` | `)}
+      ${envarSpecs.PEER_DEPENDENCY_CHECK.name}    = ${envarSpecs.PEER_DEPENDENCY_CHECK.values.map(_=>`'${_}'`).join(` | `)}
+
+    Examples:
+
+      NO_PEER_DEPENDENCY_CHECK='true'
+      NO_PEER_DEPENDENCY_CHECK='1'
+      PEER_DEPENDENCY_CHECK='false'
+      PEER_DEPENDENCY_CHECK='0'
+`
+
+type DiagnosticInfo = {
+  title: string
+  code: string
+  reason: string
+  consequence: string
+  solution?: string
 }
 
-function renderWarning(message: string): string {
-  return `${kleur.yellow('WARNING:')} ${message}`
+function renderError(params: DiagnosticInfo): string {
+  const solution = params.solution ? `\n\nSOLUTION: ${params.solution}` : ''
+  // prettier-ignore
+  return `${kleur.red('ERROR:')} ${params.title}\n\nREASON: ${params.reason}\n\nCONSEQUENCE: ${params.consequence}${solution}\n\n${prettyPrintedDisableGuide}\n\nCODE: ${params.code}`
 }
 
-function isModuleNotFoundError(error: unknown): error is Error {
-  // @ts-expect-error .code is not a standard field
-  if (error instanceof Error && error.code === 'MODULE_NOT_FOUND') {
-    return true
-  }
-
-  return false
+function renderWarning(params: DiagnosticInfo): string {
+  const solution = params.solution ? `\n\nSOLUTION: ${params.solution}` : ''
+  // prettier-ignore
+  return `${kleur.yellow('WARNING:')} ${params.title}\n\nREASON: ${params.reason}\n\nCONSEQUENCE: ${params.consequence}${solution}\n\n${prettyPrintedDisableGuide}\n\nCODE: ${params.code}`
 }
 
 function renderPackageJsonField(packageJson: PackageJson, fieldName: keyof PackageJson): string {

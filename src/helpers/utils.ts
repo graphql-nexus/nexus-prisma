@@ -67,3 +67,12 @@ export function resolveNestedTilde(tildePattern: string, path: string): string {
 
   return newPath
 }
+
+export function isModuleNotFoundError(error: unknown): error is Error {
+  // @ts-expect-error .code is not a standard field
+  if (error instanceof Error && error.code === 'MODULE_NOT_FOUND') {
+    return true
+  }
+
+  return false
+}

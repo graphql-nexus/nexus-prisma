@@ -5,6 +5,7 @@ import { gql } from 'graphql-request'
 import * as GQLScalars from 'graphql-scalars'
 import stripAnsi from 'strip-ansi'
 import { inspect } from 'util'
+import { envarSpecs } from '../../src/lib/peerDepValidator'
 import { assertBuildPresent } from '../__helpers__/helpers'
 import { createPrismaSchema } from '../__helpers__/testers'
 import { setupTestProject, TestProject } from '../__helpers__/testProject'
@@ -281,7 +282,7 @@ it('When bundled custom scalars are used the project type checks and generates e
         DB_URL="postgres://bcnfshogmxsukp:e31b6ddc8b9d85f8964b6671e4b578c58f0d13e15f637513207d44268eabc950@ec2-54-196-33-23.compute-1.amazonaws.com:5432/d17vadgam0dtao?schema=${
           process.env.E2E_DB_SCHEMA ?? 'local'
         }"
-        NO_PEER_DEPENDENCY_CHECK="true"
+        ${envarSpecs.NO_PEER_DEPENDENCY_CHECK.name}="true"
       `,
     },
   ]

@@ -2,6 +2,7 @@ import dedent from 'dindist'
 import * as Execa from 'execa'
 import { merge, omit } from 'lodash'
 import { PackageJson } from 'type-fest'
+import { envarSpecs } from '../../src/lib/peerDepValidator'
 import { assertBuildPresent } from '../__helpers__/helpers'
 import { setupTestProject, TestProject } from '../__helpers__/testProject'
 
@@ -170,14 +171,18 @@ describe('ValidatePeerDependencies', () => {
 })
 
 describe('enforceValidPeerDependencies', () => {
-  it('if PEER_DEPENDENCY_CHECK=false|0 then no validation happens', () => {
-    expect(runEnforceValidPeerDependencies({ env: { PEER_DEPENDENCY_CHECK: 'false' } }).stdout).toEqual(``)
-    expect(runEnforceValidPeerDependencies({ env: { PEER_DEPENDENCY_CHECK: '0' } }).stdout).toEqual(``)
+  it(`if ${[envarSpecs.PEER_DEPENDENCY_CHECK.name]}=false|0 then no validation happens`, () => {
+    // prettier-ignore
+    expect(runEnforceValidPeerDependencies({ env: { [envarSpecs.PEER_DEPENDENCY_CHECK.name]: 'false' } }).stdout).toEqual(``)
+    // prettier-ignore
+    expect(runEnforceValidPeerDependencies({ env: { [envarSpecs.PEER_DEPENDENCY_CHECK.name]: '0' } }).stdout).toEqual(``)
   })
 
-  it('if NO_PEER_DEPENDENCY_CHECK=true|1 then no validation happens', () => {
-    expect(runEnforceValidPeerDependencies({ env: { NO_PEER_DEPENDENCY_CHECK: 'true' } }).stdout).toEqual(``)
-    expect(runEnforceValidPeerDependencies({ env: { NO_PEER_DEPENDENCY_CHECK: '1' } }).stdout).toEqual(``)
+  it(`if ${[envarSpecs.NO_PEER_DEPENDENCY_CHECK.name]}=true|1 then no validation happens`, () => {
+    // prettier-ignore
+    expect(runEnforceValidPeerDependencies({ env: { [envarSpecs.NO_PEER_DEPENDENCY_CHECK.name]: 'true' } }).stdout).toEqual(``)
+    // prettier-ignore
+    expect(runEnforceValidPeerDependencies({ env: { [envarSpecs.NO_PEER_DEPENDENCY_CHECK.name]: '1' } }).stdout).toEqual(``)
   })
 
   it('if peer dependency is missing, than logs and process exits 1', () => {

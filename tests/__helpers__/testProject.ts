@@ -52,12 +52,18 @@ export class TestProjectInfo {
   }
 }
 
+export interface FileSpec {
+  filePath: string
+  content: string
+}
+
 export function setupTestProject(
   params: {
     fixture?: string
     files?: {
       packageJson?: PackageJson
       tsconfigJson?: TsConfigJson
+      other?: FileSpec[]
     }
   } = {}
 ): TestProject {
@@ -137,6 +143,8 @@ export function setupTestProject(
         params.files?.tsconfigJson
       )
     )
+
+    params.files.other.forEach((fileSpec) => testProject.fs.write(fileSpec.filePath, fileSpec.content))
   }
 
   if (testProject.info.isReusing) {

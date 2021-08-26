@@ -1,7 +1,6 @@
 {
   "name": "nexus-prisma-ncc-test",
   "version": "0.0.0",
-  "main": "index.js",
   "scripts": {
     "build": "npm run build:prisma && npm run build:ncc",
     "build:prisma": "prisma generate",
@@ -9,8 +8,6 @@
     "start:dist": "cross-env NO_PEER_DEPENDENCY_CHECK=true node ./dist",
     "start:ts": "ts-node main"
   },
-  "author": "Jason Kuhrt",
-  "license": "ISC",
   "dependencies": {
     "@prisma/client": "2.30",
     "cross-env": "7.0.1",

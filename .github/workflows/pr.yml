@@ -75,4 +75,3 @@ jobs:
       - name: Install Prisma Client version
         run: yarn -s add @prisma/client@${{ matrix.prisma-client-version }}
       - run: yarn -s test:ci
-      

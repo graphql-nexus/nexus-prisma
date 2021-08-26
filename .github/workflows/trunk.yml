@@ -54,10 +54,9 @@ jobs:
       - name: Install Prisma Client version
         run: yarn -s add @prisma/client@${{ matrix.prisma-client-version }}
       - run: yarn -s test:ci
-      
 
   release-canary:
-    needs: 
+    needs:
       - test-latest-prisma
       - test-past-prisma
     runs-on: ubuntu-latest

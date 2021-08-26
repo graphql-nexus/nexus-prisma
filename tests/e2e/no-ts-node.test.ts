@@ -33,5 +33,5 @@ it('when project does not have ts-node installed nexus-prisma generator still ge
 
   const result = await testProject.runOrThrowNpmScript(`build`)
 
-  expect(result.stdout).toMatchSnapshot()
+  expect(result.stdout.replace(/\d+ms/, 'XXXms')).toMatchSnapshot()
 })

@@ -1,4 +1,5 @@
 import * as fs from 'fs'
+import type * as TSNode from 'ts-node'
 import { d } from '../../helpers/debugNexusPrisma'
 
 export function loadUserGentimeSettings(): void {
@@ -17,11 +18,13 @@ export function loadUserGentimeSettings(): void {
     // Now that we know a TS config file is present, try loading ts-node
 
     // eslint-disable-next-line
-    const tsNode = require('ts-node')
+    let tsNode: typeof TSNode = require('ts-node')
 
     // eslint-disable-next-line
     tsNode.register({
-      compilerOptions: { module: 'commonjs' },
+      compilerOptions: {
+        module: 'commonjs',
+      },
     })
 
     // Load the user's settings module for side-effects against the setset instance.

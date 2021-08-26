@@ -34,10 +34,10 @@ it('when project does not have ts-node installed nexus-prisma generator still ge
 
   const result = await testProject.runOrThrowNpmScript(`build`)
 
-  expect(sanitizeGeneratorOutput(result.stdout)).toMatchSnapshot()
+  expect(normalizeGeneratorOutput(result.stdout)).toMatchSnapshot()
 })
 
-const sanitizeGeneratorOutput = (output: string) =>
+const normalizeGeneratorOutput = (output: string) =>
   output
     .replaceAll(/\d+ms/g, '<SOME TIME>ms')
     .replaceAll(/ to .* in /g, ' to <SOME PATH> in ')

@@ -85,9 +85,13 @@ export function validatePeerDependencies({ packageJson }: { packageJson: Package
   try {
     const peerDependencies = packageJson['peerDependencies'] ?? []
 
-    for (const [pdName, _] of Object.entries(peerDependencies)) {
+    for (const [peerDepName, _] of Object.entries(peerDependencies)) {
+      if (packageJson['peerDependenciesMeta']?.[peerDepName]?.optional === true) {
+        continue
+      }
+
       const failure = validatePeerDependencyRangeSatisfied({
-        peerDependencyName: pdName,
+        peerDependencyName: peerDepName,
         requireer: packageJson,
       })
 

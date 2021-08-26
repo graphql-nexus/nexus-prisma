@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ValidatePeerDependencies if peer dep is optional, then no check is made against it 1`] = `"null"`;
+
 exports[`ValidatePeerDependencies if peer dep missing, then returns failure 1`] = `
 "{
   kind: 'peer_dep_not_installed',

@@ -69,14 +69,15 @@ beforeAll(() => {
       })
     `
   )
-
-  setupPeerDepRequirement({
-    name: peerDep.name,
-    range: '2.0.x',
-  })
 })
 
 beforeEach(() => {
+  setupPeerDepRequirement({
+    name: peerDep.name,
+    range: '2.0.x',
+    optional: false,
+  })
+
   testProject.fs.remove(`node_modules/${peerDep.name}`)
 })
 
@@ -98,11 +99,26 @@ function setupDep({
   testProject.fs.write(`${depdir}/index.js`, main)
 }
 
-function setupPeerDepRequirement({ name, range }: { name: string; range: string }) {
+function setupPeerDepRequirement({
+  name,
+  range,
+  optional,
+}: {
+  name: string
+  range: string
+  optional: boolean
+}) {
   const old = testProject.fs.read(`node_modules/${requireer.name}/package.json`, 'json')
   testProject.fs.write(
     `node_modules/${requireer.name}/package.json`,
-    merge(old, { peerDependencies: { [name]: range } })
+    merge(old, {
+      peerDependencies: {
+        [name]: range,
+      },
+      peerDependenciesMeta: {
+        [name]: { optional },
+      },
+    })
   )
 }
 
@@ -129,6 +145,15 @@ function runEnforceValidPeerDependencies(params?: { env?: Record<string, string>
 
 describe('ValidatePeerDependencies', () => {
   it('if peer dep missing, then returns failure', () => {
+    expect(runValidatePeerDependencies().stdout).toMatchSnapshot()
+  })
+
+  it('if peer dep is optional, then no check is made against it', () => {
+    setupPeerDepRequirement({
+      name: peerDep.name,
+      range: '2.0.x',
+      optional: true,
+    })
     expect(runValidatePeerDependencies().stdout).toMatchSnapshot()
   })
 

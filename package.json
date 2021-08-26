@@ -83,7 +83,13 @@
   "prettier": "@prisma-labs/prettier-config",
   "peerDependencies": {
     "@prisma/client": "2.29.x || 2.30.x",
-    "nexus": "^1.0.0"
+    "nexus": "^1.0.0",
+    "ts-node": "^10.0.0"
+  },
+  "peerDependenciesMeta": {
+    "ts-node": {
+      "optional": true
+    }
   },
   "resolutions": {
     "comment-parser": "1.1.5"

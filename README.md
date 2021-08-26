@@ -941,6 +941,14 @@ We only officially support what we test.
 
 We test Prisma Client versions `2.30.x`, `2.29.x`.
 
+### Supported Versions Of `ts-node`
+
+We only officially support what we test.
+
+We test `ts-node` versions `10.x`.
+
+Reminder: `ts-node` is an optional peer dep required when you are working with the [generator settings](#generator-settings).
+
 #### Matrix Testing Policy
 
 We test the latest versions of `@prisma/client` against Node 16 and 14 on Ubuntu, macOS, and Windows while past versions of `@prisma/client` are tested only against Node 16 on Ubuntu. We do this to keep the CI test matris reasonable as the number of past `@prisma/client` versions supported could grow long.

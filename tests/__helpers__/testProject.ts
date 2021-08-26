@@ -12,6 +12,7 @@ export interface TestProject {
   fs: FSJetpack
   info: TestProjectInfo
   run(command: string, options?: Execa.SyncOptions): Execa.ExecaSyncReturnValue
+  runNpmScript(command: string, options?: Execa.SyncOptions): Execa.ExecaSyncReturnValue
   runAsync(command: string, options?: Execa.SyncOptions): Execa.ExecaChildProcess
   runOrThrow(command: string, options?: Execa.SyncOptions): Execa.ExecaSyncReturnValue
   runOrThrowNpmScript(command: string, options?: Execa.SyncOptions): Execa.ExecaSyncReturnValue
@@ -80,8 +81,16 @@ export function setupTestProject(
     run(command, options) {
       // console.log(`${command} ...`)
       return Execa.commandSync(command, {
-        reject: false,
         ...options,
+        reject: false,
+        cwd: fs_.cwd(),
+      })
+    },
+    runNpmScript(command, options) {
+      // console.log(`${command} ...`)
+      return Execa.commandSync(`npm run --silent ${command}`, {
+        ...options,
+        reject: false,
         cwd: fs_.cwd(),
       })
     },

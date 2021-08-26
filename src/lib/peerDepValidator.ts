@@ -3,19 +3,9 @@ import * as Semver from 'semver'
 import { PackageJson } from 'type-fest'
 import { d } from '../helpers/debugNexusPrisma'
 import { isModuleNotFoundError } from '../helpers/utils'
+import { renderError, renderWarning } from './diagnostic'
 import { detectProjectPackageManager, renderAddDeps } from './packageManager'
 import kleur = require('kleur')
-
-type Failure =
-  // todo
-  // | { message: string; kind: 'peer_dep_import_error' }
-  // | { message: string; kind: 'peer_dep_missing_from_node_modules' }
-  // | { message: string; kind: 'peer_dep_missing_from_package_json' }
-  | { message: string; kind: 'peer_dep_not_installed' } // replace with peer_dep_missing_from_package_json
-  | { message: string; kind: 'peer_dep_invalid_version' }
-  | { message: string; kind: 'peer_dep_package_json_invalid' }
-  | { message: string; kind: 'peer_dep_package_json_read_error'; error: unknown }
-  | { message: string; kind: 'unexpected_error'; error: unknown }
 
 export const envarSpecs = {
   NO_PEER_DEPENDENCY_CHECK: {
@@ -27,6 +17,31 @@ export const envarSpecs = {
     values: ['false', '0'],
   },
 }
+//prettier-ignore
+const prettyPrintedDisableGuide = '\n\n' + dedent`
+  You can disable this peer dependency check by setting one of two environment variables. Their specs are:
+
+    ${envarSpecs.NO_PEER_DEPENDENCY_CHECK.name} = ${envarSpecs.NO_PEER_DEPENDENCY_CHECK.values.map(_=>`'${_}'`).join(` | `)}
+    ${envarSpecs.PEER_DEPENDENCY_CHECK.name}    = ${envarSpecs.PEER_DEPENDENCY_CHECK.values.map(_=>`'${_}'`).join(` | `)}
+
+  Examples:
+
+    NO_PEER_DEPENDENCY_CHECK='true'
+    NO_PEER_DEPENDENCY_CHECK='1'
+    PEER_DEPENDENCY_CHECK='false'
+    PEER_DEPENDENCY_CHECK='0'
+`
+
+type Failure =
+  // todo
+  // | { message: string; kind: 'peer_dep_import_error' }
+  // | { message: string; kind: 'peer_dep_missing_from_node_modules' }
+  // | { message: string; kind: 'peer_dep_missing_from_package_json' }
+  | { message: string; kind: 'peer_dep_not_installed' } // replace with peer_dep_missing_from_package_json
+  | { message: string; kind: 'peer_dep_invalid_version' }
+  | { message: string; kind: 'peer_dep_package_json_invalid' }
+  | { message: string; kind: 'peer_dep_package_json_read_error'; error: unknown }
+  | { message: string; kind: 'unexpected_error'; error: unknown }
 
 export function enforceValidPeerDependencies({ packageJson }: { packageJson: PackageJson }): void {
   if (
@@ -88,6 +103,7 @@ export function validatePeerDependencies({ packageJson }: { packageJson: Package
         reason: error instanceof Error ? error.message : String(error),
         consequence: `There seems to be a bug so the regular correctness checks of the peer dep checker cannot be carried out now. You are on your own.`,
         solution: `Please report this issue.`,
+        disable: prettyPrintedDisableGuide,
       }),
       error,
     }
@@ -130,6 +146,7 @@ export function validatePeerDependencyRangeSatisfied({
         code,
         // prettier-ignore
         solution: `Please run \`${kleur.green(renderAddDeps(detectProjectPackageManager(),[peerDependencyName]))}\`.`,
+        disable: prettyPrintedDisableGuide,
         consequence: `Your project may not work correctly.`,
       }),
     }
@@ -149,6 +166,7 @@ export function validatePeerDependencyRangeSatisfied({
         // prettier-ignore
         reason: `${renderPackageJsonField(requireer, 'name')} requires peer dependency ${renderPackageJsonField(pdPackageJson, 'name')}. No version info for ${renderPackageJsonField(pdPackageJson, 'name')} could be found in its package.json thus preventing a check if its version satisfies the peer dependency version range.`,
         consequence: `Peer dep validator checks cannot be carried out so you are on your own.`,
+        disable: prettyPrintedDisableGuide,
         code,
       }),
     }
@@ -162,6 +180,7 @@ export function validatePeerDependencyRangeSatisfied({
         // prettier-ignore
         reason: `${renderPackageJsonField(requireer, 'name')} apparently requires peer dependency ${renderPackageJsonField(pdPackageJson, 'name')} yet ${renderPackageJsonField(pdPackageJson, 'name')} is not listed in the peer dependency listing of ${renderPackageJsonField(requireer, 'name')}.`,
         consequence: `There seems to be a bug so the regular correctness checks of the peer dep checker cannot be carried out now. You are on your own. Please report this issue.`,
+        disable: prettyPrintedDisableGuide,
         code,
       })
     )
@@ -179,46 +198,10 @@ export function validatePeerDependencyRangeSatisfied({
       // prettier-ignore
       reason: `${renderPackageJsonField(requireer, 'name')}@${renderPackageJsonField(requireer, 'version')} does not officially support ${renderPackageJsonField(pdPackageJson, 'name')}@${renderPackageJsonField(pdPackageJson, 'version')}. The officially supported range is: \`${pdVersionRangeSupported}\`.`,
       consequence: `This could lead to undefined behaviors and bugs.`,
+      disable: prettyPrintedDisableGuide,
       code: `peer_dep_invalid_version`,
     }),
   }
-}
-
-//prettier-ignore
-const prettyPrintedDisableGuide = dedent`
-  HOW TO DISABLE:
-  
-    You can disable this peer dependency check by setting one of two environment variables. Their specs are:
-
-      ${envarSpecs.NO_PEER_DEPENDENCY_CHECK.name} = ${envarSpecs.NO_PEER_DEPENDENCY_CHECK.values.map(_=>`'${_}'`).join(` | `)}
-      ${envarSpecs.PEER_DEPENDENCY_CHECK.name}    = ${envarSpecs.PEER_DEPENDENCY_CHECK.values.map(_=>`'${_}'`).join(` | `)}
-
-    Examples:
-
-      NO_PEER_DEPENDENCY_CHECK='true'
-      NO_PEER_DEPENDENCY_CHECK='1'
-      PEER_DEPENDENCY_CHECK='false'
-      PEER_DEPENDENCY_CHECK='0'
-`
-
-type DiagnosticInfo = {
-  title: string
-  code: string
-  reason: string
-  consequence: string
-  solution?: string
-}
-
-function renderError(params: DiagnosticInfo): string {
-  const solution = params.solution ? `\n\nSOLUTION: ${params.solution}` : ''
-  // prettier-ignore
-  return `${kleur.red('ERROR:')} ${params.title}\n\nREASON: ${params.reason}\n\nCONSEQUENCE: ${params.consequence}${solution}\n\n${prettyPrintedDisableGuide}\n\nCODE: ${params.code}`
-}
-
-function renderWarning(params: DiagnosticInfo): string {
-  const solution = params.solution ? `\n\nSOLUTION: ${params.solution}` : ''
-  // prettier-ignore
-  return `${kleur.yellow('WARNING:')} ${params.title}\n\nREASON: ${params.reason}\n\nCONSEQUENCE: ${params.consequence}${solution}\n\n${prettyPrintedDisableGuide}\n\nCODE: ${params.code}`
 }
 
 function renderPackageJsonField(packageJson: PackageJson, fieldName: keyof PackageJson): string {

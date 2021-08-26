@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when project does not have ts-node installed nexus-prisma generator still generates if there are no TS generator config files present: stderr 1`] = `
+"Error: 
+✔ Generated Prisma Client (<SOME VERSION>) to <SOME PATH> in <SOME TIME>ms
+
+Error: Cannot find module 'ts-node'
+Require stack:
+- <SOME STACK>
+
+"
+`;
+
+exports[`when project does not have ts-node installed nexus-prisma generator still generates if there are no TS generator config files present: stdout 1`] = `
+"Prisma schema loaded from <SOME PATH>
+ERROR: Failed to read configuration module
+
+REASON: nexus-prisma uses ts-node to read your generator configuration module, but there was an error while trying to import ts-node: Cannot find module 'ts-node'
+Require stack:
+- <SOME STACK>
+
+CONSEQUENCE: nexus-prisma will stop generation.
+
+SOLUTION: Fix the ts-node import error (missing dependency?) or stop using nexus-prisma generator configuration module.
+
+CODE: nexus_prisma_ts_node_import"
+`;

@@ -2,35 +2,36 @@ import { DMMF } from '@prisma/client/runtime'
 import { RecordUnknown } from '../../helpers/utils'
 
 /**
- * Find the unique identifiers necessary to indentify a field
+ * Find the unique identifiers necessary to indentify a field.
  *
- * Unique fields for a model can be one of (in this order):
- * 1. One (and only one) field with an @id annotation
- * 2. Multiple fields with @@id clause
- * 3. One (and only one) field with a @unique annotation (if there are multiple, use the first one)
- * 4. Multiple fields with a @@unique clause
+ * @remarks Unique fields for a model can be one of (in this order):
+ *
+ *          1. Exacrly one field with an `@id` annotation.
+ *          2. Multiple fields with `@@id` clause.
+ *          3. Exactly one field with a `@unique` annotation (if multiple, use first).
+ *          4. Multiple fields with a `@@unique` clause.
  */
 export function resolveUniqueIdentifiers(model: DMMF.Model): string[] {
-  // Try finding 1.
+  // Try finding 1
   const singleIdField = model.fields.find((f) => f.isId)
 
   if (singleIdField) {
     return [singleIdField.name]
   }
 
-  // Try finding 2.
-  if (model.idFields && model.idFields.length > 0) {
-    return model.idFields
+  // Try finding 2
+  if (model.primaryKey && model.primaryKey.fields.length > 0) {
+    return model.primaryKey.fields
   }
 
-  // Try finding 3.
+  // Try finding 3
   const singleUniqueField = model.fields.find((f) => f.isUnique)
 
   if (singleUniqueField) {
     return [singleUniqueField.name]
   }
 
-  // Try finding 4.
+  // Try finding 4
   if (model.uniqueFields && model.uniqueFields.length > 0) {
     return model.uniqueFields[0] as string[] // I don't know why typescript want a cast here
   }

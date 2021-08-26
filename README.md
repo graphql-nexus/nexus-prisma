@@ -43,7 +43,8 @@ Official Prisma plugin for Nexus.
     - [General Support](#general-support)
   - [For users of `nexus-prisma@=<0.20`](#for-users-of-nexus-prisma020)
   - [For users of `nexus@=<1.0`](#for-users-of-nexus10)
-  - [Supported Versions Of Node & Prisma](#supported-versions-of-node--prisma)
+  - [Supported Versions Of Node](#supported-versions-of-node)
+  - [Supported Versions Of Prisma Client](#supported-versions-of-prisma-client)
 
 <!-- tocstop -->
 
@@ -924,12 +925,16 @@ export const schema = makeSchema({
 })
 ```
 
-### Supported Versions Of Node & Prisma
+### Supported Versions Of Node
 
 We only officially support what we test.
 
 We test Node versions that are `Active LTS` and `Current`. For which versions of Node that equals you can refer to our tests or look here: https://nodejs.org/en/about/releases.
 
-We test Prisma versions `2.30`. More Prisma versions are planned to be tested, refer to [#69](https://github.com/prisma/nexus-prisma/issues/69).
+### Supported Versions Of Prisma Client
 
-We do not currently maintain a historical matrix of what past versions of Prisma supported what vesrions of Prisma and Node.
+We only officially support what we test.
+
+We test Prisma Client versions `2.30`, `2.29`.
+
+The latest versions of Prisma Client tested is tested against Node 16 and 14 on Ubuntu, macOS, and Windows. Meanwhile, the past versions are tested only against Node 16 on Ubuntu.

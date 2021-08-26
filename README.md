@@ -678,7 +678,9 @@ You are able to control certain aspects of the Nexus Prisma code generation.
         └── package.json
       ```
 
-2. Import the settings singleton and make your desired changes. Example:
+2. If you have not already, install [`ts-node`](https://github.com/TypeStrong/ts-node) which `nexus-prisma` will use to read your configuration module.
+
+3. Import the settings singleton and make your desired changes. Example:
 
    ```ts
    import { settings } from 'nexus-prisma/generator'

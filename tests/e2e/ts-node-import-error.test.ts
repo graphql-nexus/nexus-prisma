@@ -28,17 +28,27 @@ it('when project does not have ts-node installed nexus-prisma generator still ge
 						`,
           }),
         },
+        {
+          filePath: 'prisma/nexus-prisma.ts',
+          content: dindist`
+            throw new Error('Oops, something unexpected happened.')
+          `,
+        },
       ],
     },
   })
 
-  const result = await testProject.runOrThrowNpmScript(`build`)
+  const result = await testProject.runNpmScript(`build`)
 
-  expect(
-    result.stdout
-      .replaceAll(/\d+ms/g, '<SOME TIME>ms')
-      .replaceAll(/to.*in/g, 'to <SOME PATH> in')
-      .replaceAll(/loaded from.*/g, 'loaded from <SOME PATH>')
-      .replaceAll(/Generated Prisma Client \(.*\)/g, 'Generated Prisma Client (<SOME VERSION>)')
-  ).toMatchSnapshot()
+  expect(normalizeGeneratorOutput(result.stderr)).toMatchSnapshot('stderr')
+  expect(normalizeGeneratorOutput(result.stdout)).toMatchSnapshot('stdout')
 })
+
+const normalizeGeneratorOutput = (output: string) =>
+  output
+    .replaceAll(/\d+ms/g, '<SOME TIME>ms')
+    .replaceAll(/ to .* in /g, ' to <SOME PATH> in ')
+    .replaceAll(/loaded from.*/g, 'loaded from <SOME PATH>')
+    .replaceAll(/Generated Prisma Client \(.*\)/g, 'Generated Prisma Client (<SOME VERSION>)')
+    // https://regex101.com/r/r2wR1Y/2
+    .replaceAll(/Require stack:(?:(?:\n\s*- .*)(?:\n +at .* \(.*\))*)+/g, 'Require stack:\n- <SOME STACK>')

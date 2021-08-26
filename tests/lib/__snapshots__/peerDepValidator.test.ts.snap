@@ -11,19 +11,19 @@ exports[`ValidatePeerDependencies if peer dep missing, then returns failure 1`] 
     '\\\\n' +
     'SOLUTION: Please run \`yarn add charlie\`.\\\\n' +
     '\\\\n' +
-    'HOW TO DISABLE:\\\\n' +
+    'HOW TO DISABLE: \\\\n' +
     '\\\\n' +
-    '  You can disable this peer dependency check by setting one of two environment variables. Their specs are:\\\\n' +
+    'You can disable this peer dependency check by setting one of two environment variables. Their specs are:\\\\n' +
     '\\\\n' +
-    \\"    NO_PEER_DEPENDENCY_CHECK = 'true' | '1'\\\\n\\" +
-    \\"    PEER_DEPENDENCY_CHECK    = 'false' | '0'\\\\n\\" +
+    \\"  NO_PEER_DEPENDENCY_CHECK = 'true' | '1'\\\\n\\" +
+    \\"  PEER_DEPENDENCY_CHECK    = 'false' | '0'\\\\n\\" +
     '\\\\n' +
-    '  Examples:\\\\n' +
+    'Examples:\\\\n' +
     '\\\\n' +
-    \\"    NO_PEER_DEPENDENCY_CHECK='true'\\\\n\\" +
-    \\"    NO_PEER_DEPENDENCY_CHECK='1'\\\\n\\" +
-    \\"    PEER_DEPENDENCY_CHECK='false'\\\\n\\" +
-    \\"    PEER_DEPENDENCY_CHECK='0'\\\\n\\" +
+    \\"  NO_PEER_DEPENDENCY_CHECK='true'\\\\n\\" +
+    \\"  NO_PEER_DEPENDENCY_CHECK='1'\\\\n\\" +
+    \\"  PEER_DEPENDENCY_CHECK='false'\\\\n\\" +
+    \\"  PEER_DEPENDENCY_CHECK='0'\\\\n\\" +
     '\\\\n' +
     'CODE: peer_dep_not_installed'
 }"
@@ -38,19 +38,19 @@ exports[`ValidatePeerDependencies if peer dep package.json missing version field
     '\\\\n' +
     'CONSEQUENCE: Peer dep validator checks cannot be carried out so you are on your own.\\\\n' +
     '\\\\n' +
-    'HOW TO DISABLE:\\\\n' +
+    'HOW TO DISABLE: \\\\n' +
     '\\\\n' +
-    '  You can disable this peer dependency check by setting one of two environment variables. Their specs are:\\\\n' +
+    'You can disable this peer dependency check by setting one of two environment variables. Their specs are:\\\\n' +
     '\\\\n' +
-    \\"    NO_PEER_DEPENDENCY_CHECK = 'true' | '1'\\\\n\\" +
-    \\"    PEER_DEPENDENCY_CHECK    = 'false' | '0'\\\\n\\" +
+    \\"  NO_PEER_DEPENDENCY_CHECK = 'true' | '1'\\\\n\\" +
+    \\"  PEER_DEPENDENCY_CHECK    = 'false' | '0'\\\\n\\" +
     '\\\\n' +
-    '  Examples:\\\\n' +
+    'Examples:\\\\n' +
     '\\\\n' +
-    \\"    NO_PEER_DEPENDENCY_CHECK='true'\\\\n\\" +
-    \\"    NO_PEER_DEPENDENCY_CHECK='1'\\\\n\\" +
-    \\"    PEER_DEPENDENCY_CHECK='false'\\\\n\\" +
-    \\"    PEER_DEPENDENCY_CHECK='0'\\\\n\\" +
+    \\"  NO_PEER_DEPENDENCY_CHECK='true'\\\\n\\" +
+    \\"  NO_PEER_DEPENDENCY_CHECK='1'\\\\n\\" +
+    \\"  PEER_DEPENDENCY_CHECK='false'\\\\n\\" +
+    \\"  PEER_DEPENDENCY_CHECK='0'\\\\n\\" +
     '\\\\n' +
     'CODE: peer_dep_package_json_invalid'
 }"
@@ -67,19 +67,19 @@ exports[`ValidatePeerDependencies if project peer dep version does not satisfy r
     '\\\\n' +
     'CONSEQUENCE: This could lead to undefined behaviors and bugs.\\\\n' +
     '\\\\n' +
-    'HOW TO DISABLE:\\\\n' +
+    'HOW TO DISABLE: \\\\n' +
     '\\\\n' +
-    '  You can disable this peer dependency check by setting one of two environment variables. Their specs are:\\\\n' +
+    'You can disable this peer dependency check by setting one of two environment variables. Their specs are:\\\\n' +
     '\\\\n' +
-    \\"    NO_PEER_DEPENDENCY_CHECK = 'true' | '1'\\\\n\\" +
-    \\"    PEER_DEPENDENCY_CHECK    = 'false' | '0'\\\\n\\" +
+    \\"  NO_PEER_DEPENDENCY_CHECK = 'true' | '1'\\\\n\\" +
+    \\"  PEER_DEPENDENCY_CHECK    = 'false' | '0'\\\\n\\" +
     '\\\\n' +
-    '  Examples:\\\\n' +
+    'Examples:\\\\n' +
     '\\\\n' +
-    \\"    NO_PEER_DEPENDENCY_CHECK='true'\\\\n\\" +
-    \\"    NO_PEER_DEPENDENCY_CHECK='1'\\\\n\\" +
-    \\"    PEER_DEPENDENCY_CHECK='false'\\\\n\\" +
-    \\"    PEER_DEPENDENCY_CHECK='0'\\\\n\\" +
+    \\"  NO_PEER_DEPENDENCY_CHECK='true'\\\\n\\" +
+    \\"  NO_PEER_DEPENDENCY_CHECK='1'\\\\n\\" +
+    \\"  PEER_DEPENDENCY_CHECK='false'\\\\n\\" +
+    \\"  PEER_DEPENDENCY_CHECK='0'\\\\n\\" +
     '\\\\n' +
     'CODE: peer_dep_invalid_version'
 }"
@@ -94,19 +94,19 @@ CONSEQUENCE: Your project may not work correctly.
 
 SOLUTION: Please run \`yarn add charlie\`.
 
-HOW TO DISABLE:
+HOW TO DISABLE: 
 
-  You can disable this peer dependency check by setting one of two environment variables. Their specs are:
+You can disable this peer dependency check by setting one of two environment variables. Their specs are:
 
-    NO_PEER_DEPENDENCY_CHECK = 'true' | '1'
-    PEER_DEPENDENCY_CHECK    = 'false' | '0'
+  NO_PEER_DEPENDENCY_CHECK = 'true' | '1'
+  PEER_DEPENDENCY_CHECK    = 'false' | '0'
 
-  Examples:
+Examples:
 
-    NO_PEER_DEPENDENCY_CHECK='true'
-    NO_PEER_DEPENDENCY_CHECK='1'
-    PEER_DEPENDENCY_CHECK='false'
-    PEER_DEPENDENCY_CHECK='0'
+  NO_PEER_DEPENDENCY_CHECK='true'
+  NO_PEER_DEPENDENCY_CHECK='1'
+  PEER_DEPENDENCY_CHECK='false'
+  PEER_DEPENDENCY_CHECK='0'
 
 CODE: peer_dep_not_installed"
 `;

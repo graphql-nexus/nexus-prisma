@@ -144,7 +144,7 @@ export function setupTestProject(
       )
     )
 
-    params.files.other.forEach((fileSpec) => testProject.fs.write(fileSpec.filePath, fileSpec.content))
+    params.files?.other?.forEach((fileSpec) => testProject.fs.write(fileSpec.filePath, fileSpec.content))
   }
 
   if (testProject.info.isReusing) {

@@ -1,4 +1,5 @@
 import dindist from 'dindist'
+import 'ts-replace-all'
 import { createPrismaSchema } from '../__helpers__/testers'
 import { setupTestProject } from '../__helpers__/testProject'
 

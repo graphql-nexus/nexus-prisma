@@ -44,7 +44,9 @@ Official Prisma plugin for Nexus.
   - [For users of `nexus-prisma@=<0.20`](#for-users-of-nexus-prisma020)
   - [For users of `nexus@=<1.0`](#for-users-of-nexus10)
   - [Supported Versions Of Node](#supported-versions-of-node)
-  - [Supported Versions Of Prisma Client](#supported-versions-of-prisma-client)
+  - [Supported Versions Of `@prisma/client`](#supported-versions-of-prismaclient)
+    - [Matrix Testing Policy](#matrix-testing-policy)
+    - [Patch Version Support Policy](#patch-version-support-policy)
 
 <!-- tocstop -->
 
@@ -931,10 +933,16 @@ We only officially support what we test.
 
 We test Node versions that are `Active LTS` and `Current`. For which versions of Node that equals you can refer to our tests or look here: https://nodejs.org/en/about/releases.
 
-### Supported Versions Of Prisma Client
+### Supported Versions Of `@prisma/client`
 
 We only officially support what we test.
 
-We test Prisma Client versions `2.30`, `2.29`.
+We test Prisma Client versions `2.30.x`, `2.29.x`.
 
-The latest versions of Prisma Client tested is tested against Node 16 and 14 on Ubuntu, macOS, and Windows. Meanwhile, the past versions are tested only against Node 16 on Ubuntu.
+#### Matrix Testing Policy
+
+We test the latest versions of `@prisma/client` against Node 16 and 14 on Ubuntu, macOS, and Windows while past versions of `@prisma/client` are tested only against Node 16 on Ubuntu. We do this to keep the CI test matris reasonable as the number of past `@prisma/client` versions supported could grow long.
+
+#### Patch Version Support Policy
+
+We only support the latest patch version of a minor series. For example imagine that there was a bug when `nexus-prisma` was integrated with `@prisma/client@2.30.1` but _not_ when integrated with `@prisma/client@2.30.2`. Our policy would be that users should upgrade to the latest `2.30.x` version, and that we would not release any no code changes of `nexus-prisma`.

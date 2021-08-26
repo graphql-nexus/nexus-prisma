@@ -26,7 +26,7 @@ jobs:
         run: yarn --frozen-lockfile
       - run: yarn -s lint:check
 
-  test:
+  test-latest-prisma:
     strategy:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
@@ -53,3 +53,26 @@ jobs:
         if: matrix.os == 'ubuntu-latest' && matrix.node-version == '16.x'
         with:
           directory: ./coverage
+
+  test-past-prisma:
+    strategy:
+      matrix:
+        os: ['ubuntu-latest']
+        prisma-client-version: ['2.29']
+        node-version: [16.x]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn global add yalc
+      - run: yarn --frozen-lockfile
+      - name: Set E2E DB Schema
+        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --github-env $GITHUB_ENV
+      - run: yarn -s build
+      - name: Install Prisma Client version
+        run: yarn -s add @prisma/client@${{ matrix.prisma-client-version }}
+      - run: yarn -s test:ci
+      

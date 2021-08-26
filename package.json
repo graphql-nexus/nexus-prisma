@@ -17,8 +17,7 @@
     "generator.js"
   ],
   "bin": {
-    "nexus-prisma": "./dist/cli/nexus-prisma.js",
-    "nexus_prisma": "./dist/cli/nexus-prisma.js"
+    "nexus-prisma": "./dist/cli/nexus-prisma.js"
   },
   "scripts": {
     "reflect:toc": "markdown-toc README.md -i --maxdepth 4 && prettier --write README.md",

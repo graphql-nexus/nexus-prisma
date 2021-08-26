@@ -35,6 +35,10 @@ it('when project does not have ts-node installed nexus-prisma generator still ge
   const result = await testProject.runOrThrowNpmScript(`build`)
 
   expect(
-    result.stdout.replaceAll(/\d+ms/g, '<SOME TIME>ms').replaceAll(/to.*in/g, 'to <SOME PATH> in')
+    result.stdout
+      .replaceAll(/\d+ms/g, '<SOME TIME>ms')
+      .replaceAll(/to.*in/g, 'to <SOME PATH> in')
+      .replaceAll(/loaded from.*/g, 'loaded from <SOME PATH>')
+      .replaceAll(/Generated Prisma Client \(.*\)/g, 'Generated Prisma Client (<SOME VERSION>)')
   ).toMatchSnapshot()
 })

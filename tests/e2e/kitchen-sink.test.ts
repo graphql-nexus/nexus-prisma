@@ -122,6 +122,10 @@ it('When bundled custom scalars are used the project type checks and generates e
             fooId  String?
           }
 
+          // This type "Qux" will not be projected
+          // This has ramifications for the type generation where Foo.quxs must handle
+          // that Nexus does not have Qux defined in the API.
+
           model Qux {
             id     String  @id
             fooId  String
@@ -146,7 +150,7 @@ it('When bundled custom scalars are used the project type checks and generates e
         async function main() {
           const prisma = new PrismaClient()
 
-          await prisma.$executeRaw('TRUNCATE "Foo", "Bar"')
+          await prisma.$executeRaw('TRUNCATE "Foo", "Bar", "Qux"')
           await prisma.foo.create({
             data: {
               id: 'foo1',

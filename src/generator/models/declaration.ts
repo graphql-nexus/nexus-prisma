@@ -221,7 +221,7 @@ function renderTypeScriptDeclarationForField({
       /**
        * The type of this field.
        */
-      type: ${renderNexusType2(field, settings)}
+      type: ${renderNexusType(field, settings)}
 
       /**
        * The documentation of this field.
@@ -236,24 +236,59 @@ function renderTypeScriptDeclarationForField({
   `
 }
 
-function renderNexusType2(field: DMMF.Field, settings: Gentime.Settings): string {
+function renderNexusType(field: DMMF.Field, settings: Gentime.Settings): string {
   const graphqlType = fieldTypeToGraphQLType(field, settings.data)
+  /**
+   * Relation fields can only work if the related field has been added to the API.
+   * If it has not, then Nexus will not "know" about it meaning it won't be valid
+   * within NexusCore.NexusNonNullDef<'...'> etc.
+   *
+   * Example:
+   *
+   *     model Foo {
+   *       bar Bar
+   *     }
+   *
+   *     model Bar {
+   *       ...
+   *     }
+   *
+   * `nexus-prisma` Foo.bar would not work unless the developer has put `Bar` into their API as well.
+   *
+   * Meanwhile, in the generated `nexus-prisma` types, to avoid static type errors, we must guard against the
+   * generated types to not _assume_ that `Bar` etc. has been put into the API.
+   *
+   * Thus, we use TS conditional types. We look to see if Nexus typegen has this type.
+   */
+  const typeLiteralMissingNexusOutputTypeErrorMessage = `'Warning/Error: The type \\'${graphqlType}\\' is not amoung the union of GetGen<\\'allNamedTypes\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\'${graphqlType}\\' to your GraphQL API.'`
+  const conditionalTypeCheck = `'${graphqlType}' extends NexusCore.GetGen<'allNamedTypes', string>`
 
   if (field.isList && field.isRequired) {
     return dedent`
-      NexusCore.NexusListDef<${graphqlType}> | NexusCore.NexusNonNullDef<${graphqlType}>
+      ${conditionalTypeCheck}
+        ? (NexusCore.NexusListDef<'${graphqlType}'> | NexusCore.NexusNonNullDef<'${graphqlType}'>)
+        : ${typeLiteralMissingNexusOutputTypeErrorMessage}
     `
   } else if (field.isList && !field.isRequired) {
     return dedent`
-      NexusCore.NexusListDef<${graphqlType}> | NexusCore.NexusNullDef<${graphqlType}>
+      ${conditionalTypeCheck}
+        ? NexusCore.NexusListDef<'${graphqlType}'> | NexusCore.NexusNullDef<'${graphqlType}'>
+        : ${typeLiteralMissingNexusOutputTypeErrorMessage}
+
     `
   } else if (field.isRequired) {
     return dedent`
-      NexusCore.NexusNonNullDef<'${graphqlType}'>
+      ${conditionalTypeCheck}
+        ? NexusCore.NexusNonNullDef<'${graphqlType}'>
+        : ${typeLiteralMissingNexusOutputTypeErrorMessage}
+
     `
   } else {
     return dedent`
-      NexusCore.NexusNullDef<'${graphqlType}'>
+      ${conditionalTypeCheck}
+        ? NexusCore.NexusNullDef<'${graphqlType}'>
+        : ${typeLiteralMissingNexusOutputTypeErrorMessage}
+
     `
   }
 }

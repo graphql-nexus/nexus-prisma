@@ -105,6 +105,10 @@ function getOutputSourceDir(params: { esm: boolean }): string {
       params.esm ? 'node_modules/nexus-prisma/dist-esm/runtime' : 'node_modules/nexus-prisma/dist-cjs/runtime'
     )
   } else {
+    /**
+     * At this point in the code we don't know if the CLI running is the CJS or ESM version.
+     * If it is the CJS version and we're doing an ESM build then we need to adjust the __dirname value.
+     */
     outputSourceDir = Path.join(
       params.esm ? __dirname.replace('dist-cjs', 'dist-esm') : __dirname,
       '../runtime'

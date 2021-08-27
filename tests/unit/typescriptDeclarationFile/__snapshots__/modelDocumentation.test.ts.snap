@@ -77,7 +77,9 @@ declare namespace $Types {
       /**
        * The type of this field.
        */
-      type: NexusCore.NexusNonNullDef<'ID'>
+      type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
+      ? NexusCore.NexusNonNullDef<'ID'>
+      : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
     
       /**
        * The documentation of this field.
@@ -292,7 +294,9 @@ declare namespace $Types {
       /**
        * The type of this field.
        */
-      type: NexusCore.NexusNonNullDef<'ID'>
+      type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
+      ? NexusCore.NexusNonNullDef<'ID'>
+      : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
     
       /**
        * The documentation of this field.
@@ -494,7 +498,9 @@ declare namespace $Types {
       /**
        * The type of this field.
        */
-      type: NexusCore.NexusNonNullDef<'ID'>
+      type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
+      ? NexusCore.NexusNonNullDef<'ID'>
+      : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
     
       /**
        * The documentation of this field.
@@ -696,7 +702,9 @@ declare namespace $Types {
       /**
        * The type of this field.
        */
-      type: NexusCore.NexusNonNullDef<'ID'>
+      type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
+      ? NexusCore.NexusNonNullDef<'ID'>
+      : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
     
       /**
        * The documentation of this field.

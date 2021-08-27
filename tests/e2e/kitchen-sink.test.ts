@@ -105,20 +105,31 @@ it('When bundled custom scalars are used the project type checks and generates e
       content: createPrismaSchema({
         content: dindist`
           model Foo {
-            id                String   @id
-            someJsonField     Json
-            someDateTimeField DateTime
-            someDecimalField  Decimal
-            someBytesField    Bytes
-            someBigIntField   BigInt
-            someEnumA         SomeEnumA
-            bar               Bar?
+            id                 String     @id
+            someJsonField      Json
+            someDateTimeField  DateTime
+            someDecimalField   Decimal
+            someBytesField     Bytes
+            someBigIntField    BigInt
+            someEnumA          SomeEnumA
+            bar                Bar?
+            quxs               Qux[]
           }
 
           model Bar {
-            id    String  @id
-            foo   Foo?    @relation(fields: [fooId], references: [id])
-            fooId String?
+            id     String   @id
+            foo    Foo?     @relation(fields: [fooId], references: [id])
+            fooId  String?
+          }
+
+          // This type "Qux" will not be projected
+          // This has ramifications for the type generation where Foo.quxs must handle
+          // that Nexus does not have Qux defined in the API.
+
+          model Qux {
+            id     String  @id
+            fooId  String
+            foo    Foo     @relation(fields: [fooId], references: [id])
           }
 
           enum SomeEnumA {
@@ -139,7 +150,7 @@ it('When bundled custom scalars are used the project type checks and generates e
         async function main() {
           const prisma = new PrismaClient()
 
-          await prisma.$executeRaw('TRUNCATE "Foo", "Bar"')
+          await prisma.$executeRaw('TRUNCATE "Foo", "Bar", "Qux"')
           await prisma.foo.create({
             data: {
               id: 'foo1',

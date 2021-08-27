@@ -33,6 +33,7 @@ Official Prisma plugin for Nexus.
   - [Prisma Schema Docs Propagation](#prisma-schema-docs-propagation)
     - [As GraphQL schema doc](#as-graphql-schema-doc)
     - [As JSDoc](#as-jsdoc)
+  - [ESM Support](#esm-support)
   - [Refined DX](#refined-dx)
 - [Recipes](#recipes)
   - [Project relation with custom resolver logic](#project-relation-with-custom-resolver-logic)
@@ -45,6 +46,7 @@ Official Prisma plugin for Nexus.
   - [For users of `nexus@=<1.0`](#for-users-of-nexus10)
   - [Supported Versions Of Node](#supported-versions-of-node)
   - [Supported Versions Of `@prisma/client`](#supported-versions-of-prismaclient)
+  - [Supported Versions Of `ts-node`](#supported-versions-of-ts-node)
     - [Matrix Testing Policy](#matrix-testing-policy)
     - [Patch Version Support Policy](#patch-version-support-policy)
 
@@ -795,6 +797,14 @@ import { User } from 'nexus-prisma'
 User // JSDoc: A user.
 User.id // JSDoc: A stable identifier to find users by.
 ```
+
+### ESM Support
+
+Nexus Prisma supports both [ESM](https://nodejs.org/api/esm.html) and CJS. There shouldn't be anything you need to "do", things should "just work". Here's the highlights of how it works though:
+
+- We publish both a CJS and ESM build to npm.
+- When the generator runs, it emits CJS code to the CJS build _and_ ESM code to the ESM build.
+- Nexus Prisma CLI exists both in the ESM and CJS builds but its built to not matter which is used. That said, the package manifest is setup to run the CJS of the CLI and so that is what ends up being used in practice.
 
 ### Refined DX
 

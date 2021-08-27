@@ -1,4 +1,4 @@
-import { DMMF } from '@prisma/client/runtime'
+import type { DMMF } from '@prisma/client/runtime'
 import dedent from 'dindist'
 import { chain, lowerFirst } from 'lodash'
 import * as Nexus from 'nexus'
@@ -37,13 +37,81 @@ export type Settings = {
 /**
  * Create the module specification for the JavaScript runtime.
  */
-export function createModuleSpec(gentimeSettings: Gentime.Settings): ModuleSpec {
+export function createModuleSpec(params: {
+  /**
+   * Resolved generator settings (whatever user supplied merged with defaults).
+   */
+  gentimeSettings: Gentime.Settings
+  /**
+   * Should the module be generated using ESM instead of CJS?
+   */
+  esm: boolean
+  /**
+   * Detailed data about the Prisma Schema contents and available operations over its models.
+   */
+  dmmf: DMMF.Document
+}): ModuleSpec {
+  const { esm, gentimeSettings, dmmf } = params
+
+  const esmModelExports =
+    dmmf.datamodel.models
+      .map((model) => {
+        return dedent`
+        export const ${model.name} = models['${model.name}']
+      `
+      })
+      .join('\n') || `// N/A -- You have not defined any models in your Prisma Schema.`
+
+  const esmEnumExports =
+    dmmf.datamodel.enums
+      .map((enum_) => {
+        return dedent`
+        export const ${enum_.name} = models['${enum_.name}']
+      `
+      })
+      .join('\n') || `// N/A -- You have not defined any enums in your Prisma Schema.`
+
+  const exports = esm
+    ? dedent`
+        //
+        // Exports
+        //
+
+        // Static API Exports
+
+        export const $settings = Runtime.settings.change
+
+        // Reflected Model Exports
+
+        ${esmModelExports}
+
+        // Reflected Enum Exports
+
+        ${esmEnumExports}
+      `
+    : dedent`
+        module.exports = {
+          $settings: Runtime.settings.change,
+          ...models,
+        }
+      `
+
+  const imports = esm
+    ? dedent`
+        import { getPrismaClientDmmf } from '../helpers/prisma'
+        import ModelsGenerator from '../generator/models'
+        import { Runtime } from '../generator/runtime/settingsSingleton'
+      `
+    : dedent`
+        const { getPrismaClientDmmf } = require('../helpers/prisma')
+        const ModelsGenerator = require('../generator/models')
+        const { Runtime } = require('../generator/runtime/settingsSingleton')
+      `
+
   return {
     fileName: 'index.js',
     content: dedent`
-      const { getPrismaClientDmmf } = require('../helpers/prisma')
-      const ModelsGenerator = require('../generator/models')
-      const { Runtime } = require('../generator/runtime/settingsSingleton')
+      ${imports}
 
       const gentimeSettings = ${JSON.stringify(gentimeSettings.data, null, 2)}
 
@@ -58,12 +126,7 @@ export function createModuleSpec(gentimeSettings: Gentime.Settings): ModuleSpec 
         gentime: gentimeSettings,
       })
 
-      const moduleExports = {
-        ...models,
-        $settings: Runtime.settings.change,
-      }
-
-      module.exports = moduleExports
+      ${exports}
     `,
   }
 }

@@ -1,23 +1,44 @@
 {
   "name": "nexus-prisma",
   "version": "0.0.0-dripip",
-  "main": "dist/index.js",
+  "main": "./dist-cjs/entrypoins/main.js",
   "repository": "git@github.com:prisma/nexus-prisma.git",
   "author": "Jason Kuhrt",
   "license": "MIT",
   "files": [
-    "dist",
-    "plugin.js",
-    "plugin.d.ts",
-    "scalars.js",
-    "scalars.d.ts",
-    "settings.d.ts",
-    "settings.js",
-    "generator.d.ts",
-    "generator.js"
+    "dist-cjs",
+    "dist-esm"
   ],
+  "exports": {
+    ".": {
+      "require": "./dist-cjs/entrypoints/main.js",
+      "import": "./dist-esm/entrypoints/main.js"
+    },
+    "./scalars": {
+      "require": "./dist-cjs/entrypoints/scalars.js",
+      "import": "./dist-esm/entrypoints/scalars.js"
+    },
+    "./generator": {
+      "require": "./dist-cjs/entrypoints/generator.js",
+      "import": "./dist-esm/entrypoints/generator.js"
+    }
+  },
+  "types": "./dist-esm/entrypoints/main.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist-esm/entrypoints/main.d.ts"
+      ],
+      "scalars": [
+        "./dist-esm/entrypoints/scalars.d.ts"
+      ],
+      "generator": [
+        "./dist-esm/entrypoints/generator.d.ts"
+      ]
+    }
+  },
   "bin": {
-    "nexus-prisma": "./dist/cli/nexus-prisma.js"
+    "nexus-prisma": "./dist-cjs/cli/nexus-prisma.js"
   },
   "scripts": {
     "reflect:toc": "markdown-toc README.md -i --maxdepth 4 && prettier --write README.md",
@@ -25,16 +46,15 @@
     "format:check": "prettier --check .",
     "lint": "eslint . --ext .ts,.tsx --fix",
     "lint:check": "eslint . --ext .ts,.tsx --max-warnings 0",
-    "dev": "tsc --build --watch",
+    "dev": "yarn -s clean && tsc --build --watch tsconfig.cjs.json tsconfig.esm.json",
     "dev:ts": "yarn dev",
-    "dev:yalc": "nodemon --delay 1.5 --exec 'yalc push --no-scripts' --watch 'dist/**/*'",
-    "build:module-facades": "ts-node scripts/build-module-facades",
-    "build": "yarn clean && yarn build:module-facades && tsc",
+    "dev:yalc": "nodemon --delay 1.5 --exec 'yalc push --no-scripts' --watch 'dist-*/**/*'",
+    "build": "yarn clean && tsc",
     "test": "cross-env DEBUG=e2e jest",
     "test:ci": "cross-env DEBUG='e2e' jest --coverage --forceExit --runInBand",
     "tdd": "jest --watch",
     "tdd:e2e:debug": "cross-env test_project_reuse=true jest --watch e2e",
-    "clean": "rm -rf dist && rm -rf node_modules/.cache",
+    "clean": "rm -rf dist-cjs dist-esm node_modules/.cache",
     "release:pr": "dripip pr",
     "release:canary": "dripip preview",
     "release:stable": "dripip stable",

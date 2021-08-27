@@ -1,11 +1,11 @@
 import { DMMF } from '@prisma/client/runtime'
 import dedent from 'dindist'
+import kleur from 'kleur'
 import ono from 'ono'
 import { inspect } from 'util'
 import { detectProjectPackageManager, renderRunBin } from '../lib/packageManager'
 import { d } from './debugNexusPrisma'
 import { GITHUB_NEW_DISCUSSION_LINK } from './errorMessages'
-import kleur = require('kleur')
 
 /**
  * Given a package loader, attempt to get the Prisma Client DMMF.

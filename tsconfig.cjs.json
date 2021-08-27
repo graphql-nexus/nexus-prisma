@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist-cjs",
+    "module": "commonjs",
+    "rootDir": "src",
+    "sourceMap": true,
+    // Already emitted for ESM build, we make TS read from there for all TS emits
+    // "declaration": false,
+    "declarationMap": false
+  },
+  "include": ["src"]
+}

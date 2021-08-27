@@ -36,7 +36,10 @@ beforeAll(() => {
     main: 'dist/index.js',
   })
 
-  testProject.fs.copy(`${process.cwd()}/dist`, `${testProject.fs.cwd()}/node_modules/${requireer.name}/dist`)
+  testProject.fs.copy(
+    `${process.cwd()}/dist-cjs`,
+    `${testProject.fs.cwd()}/node_modules/${requireer.name}/dist`
+  )
 
   testProject.fs.write(
     'validatePeerDependencies.js',

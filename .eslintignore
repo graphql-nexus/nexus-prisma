@@ -2,7 +2,7 @@
 .vscode
 .github
 node_modules
-dist
+dist-cjs
 dist-esm
 tests
 jest.config.ts

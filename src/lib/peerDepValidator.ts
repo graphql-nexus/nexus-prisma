@@ -1,11 +1,11 @@
 import dedent from 'dindist'
+import kleur from 'kleur'
 import * as Semver from 'semver'
 import { PackageJson } from 'type-fest'
 import { d } from '../helpers/debugNexusPrisma'
 import { isModuleNotFoundError } from '../helpers/utils'
 import { renderError, renderWarning } from './diagnostic'
 import { detectProjectPackageManager, renderAddDeps } from './packageManager'
-import kleur = require('kleur')
 
 export const envarSpecs = {
   NO_PEER_DEPENDENCY_CHECK: {

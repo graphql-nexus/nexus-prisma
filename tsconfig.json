@@ -23,6 +23,6 @@
     // for pluralize which we will remove once @prisma/client exports externalToInternal DMMF transformer
     "esModuleInterop": true
   },
-  "include": ["src", "tests"],
+  "include": ["src", "tests", "scripts"],
   "exclude": ["dist-*"]
 }

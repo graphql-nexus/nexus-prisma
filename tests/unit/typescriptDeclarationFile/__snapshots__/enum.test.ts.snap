@@ -82,33 +82,6 @@ export interface Foo {
 //
 //
 
-/**
-  * Generated Nexus \`enumType\` configuration based on your Prisma schema's enum \`Foo\`.
-  *
-  * ### ️⚠️ You have not writen documentation for enum Foo
-  * 
-  * Replace this default advisory JSDoc with your own documentation about enum Foo
-  * by documenting it in your Prisma schema. For example:
-  *
-  *
-  * \`\`\`prisma
-  * /// Lorem ipsum dolor sit amet...
-  * enum Foo {
-  *   a
-  * }
-  * \`\`\`
-  * 
-  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-  *
-  * Contains these members: a
-  *
-  * @example
-  *
-  * import { enumType } from 'nexus'
-  * import { Foo } from 'nexus-prisma'
-  *
-  * enumType(Foo)
-  */
 export const Foo: Foo
 
 //
@@ -224,20 +197,6 @@ export interface Foo {
 //
 //
 
-/**
-  * Generated Nexus \`enumType\` configuration based on your Prisma schema's enum \`Foo\`.
-  *
-  * Some documentation
-  *
-  * Contains these members: a
-  *
-  * @example
-  *
-  * import { enumType } from 'nexus'
-  * import { Foo } from 'nexus-prisma'
-  *
-  * enumType(Foo)
-  */
 export const Foo: Foo
 
 //

@@ -375,70 +375,8 @@ export interface Post {
 //
 //
 
-/**
-  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`User\`.
-  *
-  * ### ️⚠️ You have not writen documentation for model User
-  * 
-  * Replace this default advisory JSDoc with your own documentation about model User
-  * by documenting it in your Prisma schema. For example:
-  *
-  * 
-  * \`\`\`prisma
-  * /// Lorem ipsum dolor sit amet...
-  * model User {
-  *   foo  String
-  * }
-  * \`\`\`
-  * 
-  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-  *
-  * @example
-  *
-  * import { objectType } from 'nexus'
-  * import { User } from 'nexus-prisma'
-  *
-  * objectType({
-  *   name: User.$name
-  *   description: User.$description
-  *   definition(t) {
-  *     t.field(User.id)
-  *   }
-  * }) 
-  */
 export const User: User
 
-/**
-  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`Post\`.
-  *
-  * ### ️⚠️ You have not writen documentation for model Post
-  * 
-  * Replace this default advisory JSDoc with your own documentation about model Post
-  * by documenting it in your Prisma schema. For example:
-  *
-  * 
-  * \`\`\`prisma
-  * /// Lorem ipsum dolor sit amet...
-  * model Post {
-  *   foo  String
-  * }
-  * \`\`\`
-  * 
-  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-  *
-  * @example
-  *
-  * import { objectType } from 'nexus'
-  * import { Post } from 'nexus-prisma'
-  *
-  * objectType({
-  *   name: Post.$name
-  *   description: Post.$description
-  *   definition(t) {
-  *     t.field(Post.id)
-  *   }
-  * }) 
-  */
 export const Post: Post
 
 //

@@ -180,37 +180,6 @@ export interface SomeModel {
 //
 //
 
-/**
-  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
-  *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
-  * Replace this default advisory JSDoc with your own documentation about model SomeModel
-  * by documenting it in your Prisma schema. For example:
-  *
-  * 
-  * \`\`\`prisma
-  * /// Lorem ipsum dolor sit amet...
-  * model SomeModel {
-  *   foo  String
-  * }
-  * \`\`\`
-  * 
-  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-  *
-  * @example
-  *
-  * import { objectType } from 'nexus'
-  * import { SomeModel } from 'nexus-prisma'
-  *
-  * objectType({
-  *   name: SomeModel.$name
-  *   description: SomeModel.$description
-  *   definition(t) {
-  *     t.field(SomeModel.id)
-  *   }
-  * }) 
-  */
 export const SomeModel: SomeModel
 
 //
@@ -448,37 +417,6 @@ export interface SomeModel {
 //
 //
 
-/**
-  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
-  *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
-  * Replace this default advisory JSDoc with your own documentation about model SomeModel
-  * by documenting it in your Prisma schema. For example:
-  *
-  * 
-  * \`\`\`prisma
-  * /// Lorem ipsum dolor sit amet...
-  * model SomeModel {
-  *   foo  String
-  * }
-  * \`\`\`
-  * 
-  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-  *
-  * @example
-  *
-  * import { objectType } from 'nexus'
-  * import { SomeModel } from 'nexus-prisma'
-  *
-  * objectType({
-  *   name: SomeModel.$name
-  *   description: SomeModel.$description
-  *   definition(t) {
-  *     t.field(SomeModel.id)
-  *   }
-  * }) 
-  */
 export const SomeModel: SomeModel
 
 //
@@ -716,37 +654,6 @@ export interface SomeModel {
 //
 //
 
-/**
-  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
-  *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
-  * Replace this default advisory JSDoc with your own documentation about model SomeModel
-  * by documenting it in your Prisma schema. For example:
-  *
-  * 
-  * \`\`\`prisma
-  * /// Lorem ipsum dolor sit amet...
-  * model SomeModel {
-  *   foo  String
-  * }
-  * \`\`\`
-  * 
-  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-  *
-  * @example
-  *
-  * import { objectType } from 'nexus'
-  * import { SomeModel } from 'nexus-prisma'
-  *
-  * objectType({
-  *   name: SomeModel.$name
-  *   description: SomeModel.$description
-  *   definition(t) {
-  *     t.field(SomeModel.id)
-  *   }
-  * }) 
-  */
 export const SomeModel: SomeModel
 
 //
@@ -984,37 +891,6 @@ export interface SomeModel {
 //
 //
 
-/**
-  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
-  *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
-  * Replace this default advisory JSDoc with your own documentation about model SomeModel
-  * by documenting it in your Prisma schema. For example:
-  *
-  * 
-  * \`\`\`prisma
-  * /// Lorem ipsum dolor sit amet...
-  * model SomeModel {
-  *   foo  String
-  * }
-  * \`\`\`
-  * 
-  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-  *
-  * @example
-  *
-  * import { objectType } from 'nexus'
-  * import { SomeModel } from 'nexus-prisma'
-  *
-  * objectType({
-  *   name: SomeModel.$name
-  *   description: SomeModel.$description
-  *   definition(t) {
-  *     t.field(SomeModel.id)
-  *   }
-  * }) 
-  */
 export const SomeModel: SomeModel
 
 //
@@ -1252,37 +1128,6 @@ export interface SomeModel {
 //
 //
 
-/**
-  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
-  *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
-  * Replace this default advisory JSDoc with your own documentation about model SomeModel
-  * by documenting it in your Prisma schema. For example:
-  *
-  * 
-  * \`\`\`prisma
-  * /// Lorem ipsum dolor sit amet...
-  * model SomeModel {
-  *   foo  String
-  * }
-  * \`\`\`
-  * 
-  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-  *
-  * @example
-  *
-  * import { objectType } from 'nexus'
-  * import { SomeModel } from 'nexus-prisma'
-  *
-  * objectType({
-  *   name: SomeModel.$name
-  *   description: SomeModel.$description
-  *   definition(t) {
-  *     t.field(SomeModel.id)
-  *   }
-  * }) 
-  */
 export const SomeModel: SomeModel
 
 //
@@ -1520,37 +1365,6 @@ export interface SomeModel {
 //
 //
 
-/**
-  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
-  *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
-  * Replace this default advisory JSDoc with your own documentation about model SomeModel
-  * by documenting it in your Prisma schema. For example:
-  *
-  * 
-  * \`\`\`prisma
-  * /// Lorem ipsum dolor sit amet...
-  * model SomeModel {
-  *   foo  String
-  * }
-  * \`\`\`
-  * 
-  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-  *
-  * @example
-  *
-  * import { objectType } from 'nexus'
-  * import { SomeModel } from 'nexus-prisma'
-  *
-  * objectType({
-  *   name: SomeModel.$name
-  *   description: SomeModel.$description
-  *   definition(t) {
-  *     t.field(SomeModel.id)
-  *   }
-  * }) 
-  */
 export const SomeModel: SomeModel
 
 //
@@ -1735,37 +1549,6 @@ export interface SomeModel {
 //
 //
 
-/**
-  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
-  *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
-  * Replace this default advisory JSDoc with your own documentation about model SomeModel
-  * by documenting it in your Prisma schema. For example:
-  *
-  * 
-  * \`\`\`prisma
-  * /// Lorem ipsum dolor sit amet...
-  * model SomeModel {
-  *   foo  String
-  * }
-  * \`\`\`
-  * 
-  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-  *
-  * @example
-  *
-  * import { objectType } from 'nexus'
-  * import { SomeModel } from 'nexus-prisma'
-  *
-  * objectType({
-  *   name: SomeModel.$name
-  *   description: SomeModel.$description
-  *   definition(t) {
-  *     t.field(SomeModel.id)
-  *   }
-  * }) 
-  */
 export const SomeModel: SomeModel
 
 //
@@ -2003,37 +1786,6 @@ export interface SomeModel {
 //
 //
 
-/**
-  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
-  *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
-  * Replace this default advisory JSDoc with your own documentation about model SomeModel
-  * by documenting it in your Prisma schema. For example:
-  *
-  * 
-  * \`\`\`prisma
-  * /// Lorem ipsum dolor sit amet...
-  * model SomeModel {
-  *   foo  String
-  * }
-  * \`\`\`
-  * 
-  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-  *
-  * @example
-  *
-  * import { objectType } from 'nexus'
-  * import { SomeModel } from 'nexus-prisma'
-  *
-  * objectType({
-  *   name: SomeModel.$name
-  *   description: SomeModel.$description
-  *   definition(t) {
-  *     t.field(SomeModel.id)
-  *   }
-  * }) 
-  */
 export const SomeModel: SomeModel
 
 //
@@ -2218,37 +1970,6 @@ export interface SomeModel {
 //
 //
 
-/**
-  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
-  *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
-  * Replace this default advisory JSDoc with your own documentation about model SomeModel
-  * by documenting it in your Prisma schema. For example:
-  *
-  * 
-  * \`\`\`prisma
-  * /// Lorem ipsum dolor sit amet...
-  * model SomeModel {
-  *   foo  String
-  * }
-  * \`\`\`
-  * 
-  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-  *
-  * @example
-  *
-  * import { objectType } from 'nexus'
-  * import { SomeModel } from 'nexus-prisma'
-  *
-  * objectType({
-  *   name: SomeModel.$name
-  *   description: SomeModel.$description
-  *   definition(t) {
-  *     t.field(SomeModel.id)
-  *   }
-  * }) 
-  */
 export const SomeModel: SomeModel
 
 //

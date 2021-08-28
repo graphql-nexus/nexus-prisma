@@ -13,25 +13,57 @@ import * as NexusCore from 'nexus/dist/core'
 //
 //
 
-declare namespace $Types {
-  // Models
+// Models
 
+/**
+  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`User\`.
+  *
+  * ### ️⚠️ You have not writen documentation for model User
+  * 
+  * Replace this default advisory JSDoc with your own documentation about model User
+  * by documenting it in your Prisma schema. For example:
+  *
+  * 
+  * \`\`\`prisma
+  * /// Lorem ipsum dolor sit amet...
+  * model User {
+  *   foo  String
+  * }
+  * \`\`\`
+  * 
+  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  *
+  * @example
+  *
+  * import { objectType } from 'nexus'
+  * import { User } from 'nexus-prisma'
+  *
+  * objectType({
+  *   name: User.$name
+  *   description: User.$description
+  *   definition(t) {
+  *     t.field(User.id)
+  *   }
+  * }) 
+  */
+export interface User {
+  $name: 'User'
+  $description: undefined
   /**
-    * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`User\`.
+   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`User.id\`.
     *
     * ### ️⚠️ You have not writen documentation for model User
     * 
     * Replace this default advisory JSDoc with your own documentation about model User
     * by documenting it in your Prisma schema. For example:
     *
-    * 
     * \`\`\`prisma
-    * /// Lorem ipsum dolor sit amet...
     * model User {
-    *   foo  String
+    *   /// Lorem ipsum dolor sit amet.
+    *   id  Int
     * }
     * \`\`\`
-    * 
+    *
     * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
     *
     * @example
@@ -47,133 +79,133 @@ declare namespace $Types {
     *   }
     * }) 
     */
-  interface User {
-    $name: 'User'
-    $description: undefined
+  id: {
     /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`User.id\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model User
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model User
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model User {
-      *   /// Lorem ipsum dolor sit amet.
-      *   id  Int
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { User } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: User.$name
-      *   description: User.$description
-      *   definition(t) {
-      *     t.field(User.id)
-      *   }
-      * }) 
-      */
-    id: {
-      /**
-       * The name of this field.
-       */
-      name: 'id'
-    
-      /**
-       * The type of this field.
-       */
-      type: 'Int' extends NexusCore.GetGen<'allNamedTypes', string>
-      ? NexusCore.NexusNonNullDef<'Int'>
-      : 'Warning/Error: The type \\\\'Int\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'Int\\\\' to your GraphQL API.'
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'User', 'id'>
-    }
-    /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`User.posts\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model User
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model User
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model User {
-      *   /// Lorem ipsum dolor sit amet.
-      *   posts  Post
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { User } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: User.$name
-      *   description: User.$description
-      *   definition(t) {
-      *     t.field(User.posts)
-      *   }
-      * }) 
-      */
-    posts: {
-      /**
-       * The name of this field.
-       */
-      name: 'posts'
-    
-      /**
-       * The type of this field.
-       */
-      type: 'Post' extends NexusCore.GetGen<'allNamedTypes', string>
-      ? (NexusCore.NexusListDef<'Post'> | NexusCore.NexusNonNullDef<'Post'>)
-      : 'Warning/Error: The type \\\\'Post\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'Post\\\\' to your GraphQL API.'
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'User', 'posts'>
-    }
-  }
+     * The name of this field.
+     */
+    name: 'id'
   
+    /**
+     * The type of this field.
+     */
+    type: 'Int' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'Int'>
+    : 'Warning/Error: The type \\\\'Int\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'Int\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'User', 'id'>
+  }
   /**
-    * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`Post\`.
+   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`User.posts\`.
+    *
+    * ### ️⚠️ You have not writen documentation for model User
+    * 
+    * Replace this default advisory JSDoc with your own documentation about model User
+    * by documenting it in your Prisma schema. For example:
+    *
+    * \`\`\`prisma
+    * model User {
+    *   /// Lorem ipsum dolor sit amet.
+    *   posts  Post
+    * }
+    * \`\`\`
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { User } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: User.$name
+    *   description: User.$description
+    *   definition(t) {
+    *     t.field(User.posts)
+    *   }
+    * }) 
+    */
+  posts: {
+    /**
+     * The name of this field.
+     */
+    name: 'posts'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'Post' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? (NexusCore.NexusListDef<'Post'> | NexusCore.NexusNonNullDef<'Post'>)
+    : 'Warning/Error: The type \\\\'Post\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'Post\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'User', 'posts'>
+  }
+}
+
+/**
+  * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`Post\`.
+  *
+  * ### ️⚠️ You have not writen documentation for model Post
+  * 
+  * Replace this default advisory JSDoc with your own documentation about model Post
+  * by documenting it in your Prisma schema. For example:
+  *
+  * 
+  * \`\`\`prisma
+  * /// Lorem ipsum dolor sit amet...
+  * model Post {
+  *   foo  String
+  * }
+  * \`\`\`
+  * 
+  * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+  *
+  * @example
+  *
+  * import { objectType } from 'nexus'
+  * import { Post } from 'nexus-prisma'
+  *
+  * objectType({
+  *   name: Post.$name
+  *   description: Post.$description
+  *   definition(t) {
+  *     t.field(Post.id)
+  *   }
+  * }) 
+  */
+export interface Post {
+  $name: 'Post'
+  $description: undefined
+  /**
+   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`Post.id\`.
     *
     * ### ️⚠️ You have not writen documentation for model Post
     * 
     * Replace this default advisory JSDoc with your own documentation about model Post
     * by documenting it in your Prisma schema. For example:
     *
-    * 
     * \`\`\`prisma
-    * /// Lorem ipsum dolor sit amet...
     * model Post {
-    *   foo  String
+    *   /// Lorem ipsum dolor sit amet.
+    *   id  Int
     * }
     * \`\`\`
-    * 
+    *
     * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
     *
     * @example
@@ -189,182 +221,148 @@ declare namespace $Types {
     *   }
     * }) 
     */
-  interface Post {
-    $name: 'Post'
-    $description: undefined
+  id: {
     /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`Post.id\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model Post
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model Post
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model Post {
-      *   /// Lorem ipsum dolor sit amet.
-      *   id  Int
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { Post } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: Post.$name
-      *   description: Post.$description
-      *   definition(t) {
-      *     t.field(Post.id)
-      *   }
-      * }) 
-      */
-    id: {
-      /**
-       * The name of this field.
-       */
-      name: 'id'
-    
-      /**
-       * The type of this field.
-       */
-      type: 'Int' extends NexusCore.GetGen<'allNamedTypes', string>
-      ? NexusCore.NexusNonNullDef<'Int'>
-      : 'Warning/Error: The type \\\\'Int\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'Int\\\\' to your GraphQL API.'
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'Post', 'id'>
-    }
+     * The name of this field.
+     */
+    name: 'id'
+  
     /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`Post.author\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model Post
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model Post
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model Post {
-      *   /// Lorem ipsum dolor sit amet.
-      *   author  User?
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { Post } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: Post.$name
-      *   description: Post.$description
-      *   definition(t) {
-      *     t.field(Post.author)
-      *   }
-      * }) 
-      */
-    author: {
-      /**
-       * The name of this field.
-       */
-      name: 'author'
-    
-      /**
-       * The type of this field.
-       */
-      type: 'User' extends NexusCore.GetGen<'allNamedTypes', string>
-      ? NexusCore.NexusNullDef<'User'>
-      : 'Warning/Error: The type \\\\'User\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'User\\\\' to your GraphQL API.'
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'Post', 'author'>
-    }
+     * The type of this field.
+     */
+    type: 'Int' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'Int'>
+    : 'Warning/Error: The type \\\\'Int\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'Int\\\\' to your GraphQL API.'
+  
     /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`Post.authorId\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model Post
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model Post
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model Post {
-      *   /// Lorem ipsum dolor sit amet.
-      *   authorId  Int?
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { Post } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: Post.$name
-      *   description: Post.$description
-      *   definition(t) {
-      *     t.field(Post.authorId)
-      *   }
-      * }) 
-      */
-    authorId: {
-      /**
-       * The name of this field.
-       */
-      name: 'authorId'
-    
-      /**
-       * The type of this field.
-       */
-      type: 'Int' extends NexusCore.GetGen<'allNamedTypes', string>
-      ? NexusCore.NexusNullDef<'Int'>
-      : 'Warning/Error: The type \\\\'Int\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'Int\\\\' to your GraphQL API.'
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'Post', 'authorId'>
-    }
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'Post', 'id'>
   }
-
-  // Enums
-
-  // N/A –– You have not defined any models in your Prisma schema file.
+  /**
+   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`Post.author\`.
+    *
+    * ### ️⚠️ You have not writen documentation for model Post
+    * 
+    * Replace this default advisory JSDoc with your own documentation about model Post
+    * by documenting it in your Prisma schema. For example:
+    *
+    * \`\`\`prisma
+    * model Post {
+    *   /// Lorem ipsum dolor sit amet.
+    *   author  User?
+    * }
+    * \`\`\`
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { Post } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: Post.$name
+    *   description: Post.$description
+    *   definition(t) {
+    *     t.field(Post.author)
+    *   }
+    * }) 
+    */
+  author: {
+    /**
+     * The name of this field.
+     */
+    name: 'author'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'User' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNullDef<'User'>
+    : 'Warning/Error: The type \\\\'User\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'User\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'Post', 'author'>
+  }
+  /**
+   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`Post.authorId\`.
+    *
+    * ### ️⚠️ You have not writen documentation for model Post
+    * 
+    * Replace this default advisory JSDoc with your own documentation about model Post
+    * by documenting it in your Prisma schema. For example:
+    *
+    * \`\`\`prisma
+    * model Post {
+    *   /// Lorem ipsum dolor sit amet.
+    *   authorId  Int?
+    * }
+    * \`\`\`
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { Post } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: Post.$name
+    *   description: Post.$description
+    *   definition(t) {
+    *     t.field(Post.authorId)
+    *   }
+    * }) 
+    */
+  authorId: {
+    /**
+     * The name of this field.
+     */
+    name: 'authorId'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'Int' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNullDef<'Int'>
+    : 'Warning/Error: The type \\\\'Int\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'Int\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'Post', 'authorId'>
+  }
 }
 
+// Enums
+
+// N/A –– You have not defined any enums in your Prisma schema file.
+
 
 //
 //
-// EXPORTS
-// EXPORTS
-// EXPORTS
-// EXPORTS
+// TERMS
+// TERMS
+// TERMS
+// TERMS
 //
 //
 
@@ -408,7 +406,7 @@ declare namespace $Types {
   *   }
   * }) 
   */
-export const User: $Types.User
+export const User: User
 
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`Post\`.
@@ -441,7 +439,7 @@ export const User: $Types.User
   *   }
   * }) 
   */
-export const Post: $Types.Post
+export const Post: Post
 
 //
 //
@@ -452,7 +450,7 @@ export const Post: $Types.Post
 //
 //
 
-// N/A –– You have not defined any models in your Prisma schema file.
+// N/A –– You have not defined any enums in your Prisma schema file.
 
 //
 //

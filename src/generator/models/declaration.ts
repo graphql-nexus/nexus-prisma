@@ -19,11 +19,11 @@ export function createModuleSpec(dmmf: DMMF.Document, settings: Gentime.Settings
 }
 
 const NO_ENUMS_DEFINED_COMMENT = dedent`
-  // N/A –– You have not defined any models in your Prisma schema file.
+  // N/A –– You have not defined any enums in your Prisma schema file.
 `
 
 const NO_MODELS_DEFINED_COMMENT = dedent`
-  // N/A –– You have not defined any enums in your Prisma schema file.
+  // N/A –– You have not defined any models in your Prisma schema file.
 `
 
 export function renderTypeScriptDeclarationForDocumentModels(
@@ -35,19 +35,18 @@ export function renderTypeScriptDeclarationForDocumentModels(
 
   return (
     dedent`
-    import * as Nexus from 'nexus'
-    import * as NexusCore from 'nexus/dist/core'
+      import * as Nexus from 'nexus'
+      import * as NexusCore from 'nexus/dist/core'
 
-    //
-    //
-    // TYPES
-    // TYPES
-    // TYPES
-    // TYPES
-    //
-    //
+      //
+      //
+      // TYPES
+      // TYPES
+      // TYPES
+      // TYPES
+      //
+      //
 
-    declare namespace $Types {
       // Models
 
       ${
@@ -63,104 +62,103 @@ export function renderTypeScriptDeclarationForDocumentModels(
           ? NO_ENUMS_DEFINED_COMMENT
           : enums.map((enum_) => renderTypeScriptDeclarationForEnum(enum_, settings)).join('\n\n')
       }
-    }
 
 
-    //
-    //
-    // EXPORTS
-    // EXPORTS
-    // EXPORTS
-    // EXPORTS
-    //
-    //
+      //
+      //
+      // TERMS
+      // TERMS
+      // TERMS
+      // TERMS
+      //
+      //
 
-    //
-    //
-    // EXPORTS: PRISMA MODELS
-    // EXPORTS: PRISMA MODELS
-    // EXPORTS: PRISMA MODELS
-    // EXPORTS: PRISMA MODELS
-    //
-    //
+      //
+      //
+      // EXPORTS: PRISMA MODELS
+      // EXPORTS: PRISMA MODELS
+      // EXPORTS: PRISMA MODELS
+      // EXPORTS: PRISMA MODELS
+      //
+      //
 
-    ${
-      models.length === 0
-        ? NO_MODELS_DEFINED_COMMENT
-        : models
-            .map((model) => {
-              const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForModel(model) + '\n' : ''
-              return dedent`
-                ${jsdoc}export const ${model.name}: $Types.${model.name}
-              `
-            })
-            .join('\n\n')
-    }
+      ${
+        models.length === 0
+          ? NO_MODELS_DEFINED_COMMENT
+          : models
+              .map((model) => {
+                const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForModel(model) + '\n' : ''
+                return dedent`
+                  ${jsdoc}export const ${model.name}: ${model.name}
+                `
+              })
+              .join('\n\n')
+      }
 
-    //
-    //
-    // EXPORTS: PRISMA ENUMS
-    // EXPORTS: PRISMA ENUMS
-    // EXPORTS: PRISMA ENUMS
-    // EXPORTS: PRISMA ENUMS
-    //
-    //
+      //
+      //
+      // EXPORTS: PRISMA ENUMS
+      // EXPORTS: PRISMA ENUMS
+      // EXPORTS: PRISMA ENUMS
+      // EXPORTS: PRISMA ENUMS
+      //
+      //
 
-    ${
-      enums.length === 0
-        ? NO_ENUMS_DEFINED_COMMENT
-        : enums
-            .map((enum_) => {
-              const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForEnum(enum_) + '\n' : ''
-              return dedent`
-                ${jsdoc}export const ${enum_.name}: $Types.${enum_.name}
-              `
-            })
-            .join('\n\n')
-    }
+      ${
+        enums.length === 0
+          ? NO_ENUMS_DEFINED_COMMENT
+          : enums
+              .map((enum_) => {
+                const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForEnum(enum_) + '\n' : ''
+                return dedent`
+                  ${jsdoc}export const ${enum_.name}: ${enum_.name}
+                `
+              })
+              .join('\n\n')
+      }
 
-    //
-    //
-    // EXPORTS: OTHER
-    // EXPORTS: OTHER
-    // EXPORTS: OTHER
-    // EXPORTS: OTHER
-    //
-    //
+      //
+      //
+      // EXPORTS: OTHER
+      // EXPORTS: OTHER
+      // EXPORTS: OTHER
+      // EXPORTS: OTHER
+      //
+      //
 
-    import { Runtime } from '../generator/runtime/settingsSingleton'
+      import { Runtime } from '../generator/runtime/settingsSingleton'
 
-    /**
-     * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
-     * 
-     *
-     * @example
-     *
-     *     import { PrismaClient } from '@prisma/client'
-     *     import { ApolloServer } from 'apollo-server'
-     *     import { makeSchema } from 'nexus'
-     *     import { User, Post, $settings } from 'nexus-prisma'
-     *
-     *     new ApolloServer({
-     *       schema: makeSchema({
-     *         types: [],
-     *       }),
-     *       context() {
-     *         return {
-     *           db: new PrismaClient(), // <-- You put Prisma client on the "db" context property
-     *         }
-     *       },
-     *     })
-     *
-     *     $settings({
-     *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
-     *     })
-     *
-     * @remarks This is _different_ than Nexus Prisma's [_gentime_
-     *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
-     */
-    export const $settings: typeof Runtime.changeSettings
-  ` + OS.EOL
+      /**
+       * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
+       * 
+       *
+       * @example
+       *
+       *     import { PrismaClient } from '@prisma/client'
+       *     import { ApolloServer } from 'apollo-server'
+       *     import { makeSchema } from 'nexus'
+       *     import { User, Post, $settings } from 'nexus-prisma'
+       *
+       *     new ApolloServer({
+       *       schema: makeSchema({
+       *         types: [],
+       *       }),
+       *       context() {
+       *         return {
+       *           db: new PrismaClient(), // <-- You put Prisma client on the "db" context property
+       *         }
+       *       },
+       *     })
+       *
+       *     $settings({
+       *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
+       *     })
+       *
+       * @remarks This is _different_ than Nexus Prisma's [_gentime_
+       *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+       */
+      export const $settings: typeof Runtime.changeSettings
+    ` + OS.EOL
   )
 }
 
@@ -170,7 +168,7 @@ function renderTypeScriptDeclarationForEnum(enum_: DMMF.DatamodelEnum, settings:
     enum_.documentation && settings.data.docPropagation.GraphQLDocs ? `'${enum_.documentation}'` : 'undefined'
   }`
   return dedent`
-    ${jsdoc}interface ${enum_.name} {
+    ${jsdoc}export interface ${enum_.name} {
       name: '${enum_.name}'
       description: ${description}
       members: [${enum_.values.map((value) => `'${value.name}'`).join(', ')}]
@@ -184,7 +182,7 @@ function renderTypeScriptDeclarationForModel(model: DMMF.Model, settings: Gentim
     model.documentation && settings.data.docPropagation.GraphQLDocs ? `'${model.documentation}'` : 'undefined'
   }`
   return dedent`
-    ${jsdoc}interface ${model.name} {
+    ${jsdoc}export interface ${model.name} {
       $name: '${model.name}'
       $description: ${description}
       ${renderTypeScriptDeclarationForModelFields(model, settings)}

@@ -309,6 +309,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
   /**
    * Sanity checks around buildtime
    */
+  d(`assert various aspects of the buildtime results`)
 
   expect(results.runFirstBuild.exitCode).toBe(2)
 
@@ -375,11 +376,22 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
   const serverProcess = testProject.runAsync(`node build/server`, { reject: false })
   serverProcess.stdout!.pipe(process.stdout)
 
-  await new Promise((res) =>
-    serverProcess.stdout!.on('data', (data: Buffer) => {
-      if (data.toString().match(SERVER_READY_MESSAGE)) res(undefined)
-    })
-  )
+  const reuslt = await Promise.race<Promise<'timeout' | 'server_started'>>([
+    new Promise((res) =>
+      serverProcess.stdout!.on('data', (data: Buffer) => {
+        if (data.toString().match(SERVER_READY_MESSAGE)) res('server_started')
+      })
+    ),
+    new Promise((res) => {
+      setTimeout(() => res('timeout'), 10_000)
+    }),
+  ])
+
+  if (reuslt === 'timeout') {
+    throw new Error(
+      `server was not ready after 10 seconds. The output from child process was:\n\n${serverProcess.stdio}\n\n`
+    )
+  }
 
   d(`starting client queries`)
 

@@ -1,7 +1,7 @@
 {
   "name": "nexus-prisma",
   "version": "0.0.0-dripip",
-  "main": "./dist-cjs/entrypoins/main.js",
+  "main": "./dist-cjs/entrypoints/main.js",
   "repository": "git@github.com:prisma/nexus-prisma.git",
   "author": "Jason Kuhrt",
   "license": "MIT",

@@ -53,7 +53,7 @@
     "test": "cross-env DEBUG=e2e jest",
     "test:e2e": "cross-env NO_COLOR=true DEBUG=e2e jest --selectProjects e2e",
     "test:unit": "cross-env NO_COLOR=true jest --selectProjects unit",
-    "test:ci": "cross-env DEBUG='e2e' jest --coverage --forceExit --runInBand",
+    "test:ci": "cross-env DEBUG=e2e jest --coverage --forceExit --runInBand",
     "tdd": "jest --selectProjects unit --watch",
     "tdd:e2e:debug": "cross-env test_project_reuse=true jest --selectProjects e2e --watch",
     "clean": "rm -rf dist-cjs dist-esm node_modules/.cache",

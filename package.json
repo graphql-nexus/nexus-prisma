@@ -49,7 +49,7 @@
     "dev": "yarn -s clean && tsc --build --watch tsconfig.cjs.json tsconfig.esm.json",
     "dev:ts": "yarn dev",
     "dev:yalc": "nodemon --delay 1.5 --exec 'yalc push --no-scripts' --watch 'dist-*/**/*'",
-    "build": "yarn clean && tsc",
+    "build": "yarn clean && tsc --build tsconfig.cjs.json tsconfig.esm.json",
     "test": "cross-env DEBUG=e2e jest",
     "test:e2e": "cross-env NO_COLOR=true DEBUG=e2e jest --selectProjects e2e",
     "test:unit": "cross-env NO_COLOR=true jest --selectProjects unit",

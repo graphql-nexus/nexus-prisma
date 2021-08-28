@@ -7,7 +7,8 @@ import { Gentime } from './gentime/settingsSingleton'
 import * as ModelsGenerator from './models'
 import { ModuleSpec } from './types'
 
-const OUTPUT_SOURCE_DIR = getOutputSourceDir()
+const OUTPUT_SOURCE_DIR_ESM = getOutputSourceDir({ esm: true })
+const OUTPUT_SOURCE_DIR_CJS = getOutputSourceDir({ esm: false })
 
 /** Generate the Nexus Prisma runtime files and emit them into a "hole" in the internal package source tree. */
 export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Settings): void {
@@ -19,15 +20,43 @@ export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Se
     fs.write('dmmf.json', dmmf)
   }
 
-  const sourceFiles: ModuleSpec[] = [
-    ModelsGenerator.JS.createModuleSpec(settings),
-    ModelsGenerator.TS.createModuleSpec(dmmf, settings),
+  const declarationSourceFile = ModelsGenerator.TS.createModuleSpec(dmmf, settings)
+
+  // ESM
+
+  const esmSourceFiles: ModuleSpec[] = [
+    ModelsGenerator.JS.createModuleSpec({
+      gentimeSettings: settings,
+      esm: true,
+      dmmf,
+    }),
+    declarationSourceFile,
   ]
 
-  fs.remove(OUTPUT_SOURCE_DIR)
+  fs.remove(OUTPUT_SOURCE_DIR_ESM)
 
-  sourceFiles.forEach((sf) => {
-    const filePath = Path.join(OUTPUT_SOURCE_DIR, sf.fileName)
+  esmSourceFiles.forEach((sf) => {
+    const filePath = Path.join(OUTPUT_SOURCE_DIR_ESM, sf.fileName)
+    fs.remove(filePath)
+    fs.write(filePath, sf.content)
+    d(`did write ${filePath}`)
+  })
+
+  // CJS
+
+  fs.remove(OUTPUT_SOURCE_DIR_CJS)
+
+  const cjsSourceFiles: ModuleSpec[] = [
+    ModelsGenerator.JS.createModuleSpec({
+      gentimeSettings: settings,
+      esm: false,
+      dmmf,
+    }),
+    declarationSourceFile,
+  ]
+
+  cjsSourceFiles.forEach((sf) => {
+    const filePath = Path.join(OUTPUT_SOURCE_DIR_CJS, sf.fileName)
     fs.remove(filePath)
     fs.write(filePath, sf.content)
     d(`did write ${filePath}`)
@@ -39,7 +68,16 @@ export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Se
 /** Transform the given DMMF into JS source code with accompanying TS declarations. */
 export function generateRuntime(dmmf: DMMF.Document, settings: Gentime.Settings): ModuleSpec[] {
   const sourceFiles: ModuleSpec[] = [
-    ModelsGenerator.JS.createModuleSpec(settings),
+    ModelsGenerator.JS.createModuleSpec({
+      gentimeSettings: settings,
+      esm: true,
+      dmmf,
+    }),
+    ModelsGenerator.JS.createModuleSpec({
+      gentimeSettings: settings,
+      esm: false,
+      dmmf,
+    }),
     ModelsGenerator.TS.createModuleSpec(dmmf, settings),
   ]
 
@@ -52,7 +90,7 @@ export function generateRuntime(dmmf: DMMF.Document, settings: Gentime.Settings)
  * If the Yalc issue https://github.com/wclr/yalc/issues/156 is resolved then this should be as simple as
  * using __dirname.
  */
-function getOutputSourceDir(): string {
+function getOutputSourceDir(params: { esm: boolean }): string {
   let outputSourceDir: string
 
   if (process.env.npm_package_dependencies_nexus_prisma === 'file:.yalc/nexus-prisma') {
@@ -62,9 +100,19 @@ function getOutputSourceDir(): string {
         `Nexus Prisma error: Could not find the project root. Project root is the nearest ancestor directory to where this module is running (${__filename}) containing a package.json. Without this information Nexus Prisma does not know where to output its generated code.`
       )
     }
-    outputSourceDir = Path.join(Path.dirname(packageJsonFilePath), 'node_modules/nexus-prisma/dist/runtime')
+    outputSourceDir = Path.join(
+      Path.dirname(packageJsonFilePath),
+      params.esm ? 'node_modules/nexus-prisma/dist-esm/runtime' : 'node_modules/nexus-prisma/dist-cjs/runtime'
+    )
   } else {
-    outputSourceDir = Path.join(__dirname, '../runtime')
+    /**
+     * At this point in the code we don't know if the CLI running is the CJS or ESM version.
+     * If it is the CJS version and we're doing an ESM build then we need to adjust the __dirname value.
+     */
+    outputSourceDir = Path.join(
+      params.esm ? __dirname.replace('dist-cjs', 'dist-esm') : __dirname,
+      '../runtime'
+    )
   }
 
   d(`found outputSourceDir ${outputSourceDir}`)

@@ -1,10 +1,28 @@
 {
-  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "composite": true,
-    "outDir": "dist",
-    "rootDir": "src"
+    // Make the compiler stricter, catch more errors
+    "strict": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+
+    // Output
+    "target": "ES2018",
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "importHelpers": true,
+
+    // DX
+    "incremental": true,
+    "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo",
+    "noErrorTruncation": true,
+
+    // Other
+    //   Only enable this for applications.
+    //   Packages doing this force their consumers to.
+    // for pluralize which we will remove once @prisma/client exports externalToInternal DMMF transformer
+    "esModuleInterop": true
   },
-  "include": ["src"],
-  "exclude": ["src/**/*.spec.ts"]
+  "include": ["src", "tests", "scripts"],
+  "exclude": ["dist-*", "tests/e2e/fixtures"]
 }

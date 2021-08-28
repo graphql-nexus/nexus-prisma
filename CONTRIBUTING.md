@@ -47,7 +47,7 @@ Every-time:
 With all this in place, the chain reaction goes like this:
 
 1. You change `Nexus Prisma`
-1. `Nexus Prisma` TS in watch mode emits into `dist`
+1. `Nexus Prisma` TS in watch mode emits into `dist-esm` and `dist-cjs`
 1. `Nexus Prisma` `nodemon` reacts to this, runs `yalc push`, Yalc emits into `Project`'s `.yalc` dir
 1. `Project` `nodemon` reacts to this, runs `prisma generate`
 1. You try things out with newly generated Nexus Prisma in `Project`!

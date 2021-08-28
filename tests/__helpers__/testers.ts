@@ -260,17 +260,24 @@ export function createPrismaSchema({
 /**
  * For the given Prisma Schema generate the derived source code.
  */
-export async function generateModules(content: string): Promise<{ indexjs: string; indexdts: string }> {
+export async function generateModules(
+  content: string
+): Promise<{ indexjs_esm: string; indexjs_cjs: string; indexdts: string }> {
   const prismaSchemaContents = createPrismaSchema({ content })
 
   const dmmf = await PrismaSDK.getDMMF({
     datamodel: prismaSchemaContents,
   })
 
-  const [indexjs, indexdts] = generateRuntime(dmmf, Gentime.settings) as [ModuleSpec, ModuleSpec]
+  const [indexjs_esm, indexjs_cjs, indexdts] = generateRuntime(dmmf, Gentime.settings) as [
+    ModuleSpec,
+    ModuleSpec,
+    ModuleSpec
+  ]
 
   return {
     indexdts: indexdts.content,
-    indexjs: indexjs.content,
+    indexjs_esm: indexjs_esm.content,
+    indexjs_cjs: indexjs_cjs.content,
   }
 }

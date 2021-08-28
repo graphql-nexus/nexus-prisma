@@ -98,7 +98,9 @@ beforeAll(() => {
   testProject = setupTestNexusPrismaProject()
 })
 
-it('When bundled custom scalars are used the project type checks and generates expected GraphQL schema', async () => {
+// TODO add an ESM test
+
+it('A full-featured project type checks, generates expected GraphQL schema, and successfully resolves received GraphQL documents', async () => {
   const files: FileSpec[] = [
     {
       filePath: `prisma/schema.prisma`,
@@ -350,7 +352,13 @@ it('When bundled custom scalars are used the project type checks and generates e
    * Sanity check the Prisma Client import ID
    */
 
-  expect(testProject.fs.read('node_modules/nexus-prisma/dist/runtime/index.js')).toMatch(
+  expect(testProject.fs.read('node_modules/nexus-prisma/dist-cjs/runtime/index.js')).toMatch(
+    /.*"prismaClientImportId": "@prisma\/client".*/
+  )
+
+  // TODO once a dedicated ESM test exists, move this exlcusively to it
+  // For not this is a cheap sanity check
+  expect(testProject.fs.read('node_modules/nexus-prisma/dist-esm/runtime/index.js')).toMatch(
     /.*"prismaClientImportId": "@prisma\/client".*/
   )
 

@@ -1,23 +1,44 @@
 {
   "name": "nexus-prisma",
   "version": "0.0.0-dripip",
-  "main": "dist/index.js",
+  "main": "./dist-cjs/entrypoints/main.js",
   "repository": "git@github.com:prisma/nexus-prisma.git",
   "author": "Jason Kuhrt",
   "license": "MIT",
   "files": [
-    "dist",
-    "plugin.js",
-    "plugin.d.ts",
-    "scalars.js",
-    "scalars.d.ts",
-    "settings.d.ts",
-    "settings.js",
-    "generator.d.ts",
-    "generator.js"
+    "dist-cjs",
+    "dist-esm"
   ],
+  "exports": {
+    ".": {
+      "require": "./dist-cjs/entrypoints/main.js",
+      "import": "./dist-esm/entrypoints/main.js"
+    },
+    "./scalars": {
+      "require": "./dist-cjs/entrypoints/scalars.js",
+      "import": "./dist-esm/entrypoints/scalars.js"
+    },
+    "./generator": {
+      "require": "./dist-cjs/entrypoints/generator.js",
+      "import": "./dist-esm/entrypoints/generator.js"
+    }
+  },
+  "types": "./dist-cjs/entrypoints/main.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist-cjs/entrypoints/main.d.ts"
+      ],
+      "scalars": [
+        "./dist-cjs/entrypoints/scalars.d.ts"
+      ],
+      "generator": [
+        "./dist-cjs/entrypoints/generator.d.ts"
+      ]
+    }
+  },
   "bin": {
-    "nexus-prisma": "./dist/cli/nexus-prisma.js"
+    "nexus-prisma": "./dist-cjs/cli/nexus-prisma.js"
   },
   "scripts": {
     "reflect:toc": "markdown-toc README.md -i --maxdepth 4 && prettier --write README.md",
@@ -25,16 +46,17 @@
     "format:check": "prettier --check .",
     "lint": "eslint . --ext .ts,.tsx --fix",
     "lint:check": "eslint . --ext .ts,.tsx --max-warnings 0",
-    "dev": "tsc --build --watch",
+    "dev": "yarn -s clean && tsc --build --watch tsconfig.cjs.json tsconfig.esm.json",
     "dev:ts": "yarn dev",
-    "dev:yalc": "nodemon --delay 1.5 --exec 'yalc push --no-scripts' --watch 'dist/**/*'",
-    "build:module-facades": "ts-node scripts/build-module-facades",
-    "build": "yarn clean && yarn build:module-facades && tsc",
-    "test": "cross-env DEBUG=e2e jest",
-    "test:ci": "cross-env DEBUG='e2e' jest --coverage --forceExit --runInBand",
-    "tdd": "jest --watch",
-    "tdd:e2e:debug": "cross-env test_project_reuse=true jest --watch e2e",
-    "clean": "rm -rf dist && rm -rf node_modules/.cache",
+    "dev:yalc": "nodemon --delay 1.5 --exec 'yalc push --no-scripts' --watch 'dist-*/**/*'",
+    "build": "yarn clean && tsc --build tsconfig.cjs.json tsconfig.esm.json",
+    "test": "cross-env NO_COLOR=true DEBUG=e2e jest",
+    "test:e2e": "cross-env NO_COLOR=true DEBUG=e2e jest --selectProjects e2e",
+    "test:unit": "cross-env NO_COLOR=true jest --selectProjects unit",
+    "test:ci": "cross-env DEBUG=e2e jest --coverage --forceExit --runInBand",
+    "tdd": "jest --selectProjects unit --watch",
+    "tdd:e2e:debug": "cross-env test_project_reuse=true jest --selectProjects e2e --watch",
+    "clean": "rm -rf dist-cjs dist-esm node_modules/.cache",
     "release:pr": "dripip pr",
     "release:canary": "dripip preview",
     "release:stable": "dripip stable",
@@ -66,6 +88,7 @@
     "graphql-request": "^3.5.0",
     "graphql-tag": "^2.12.5",
     "jest": "27.0.6",
+    "jest-watch-select-projects": "^2.0.0",
     "jest-watch-typeahead": "0.6.4",
     "markdown-toc": "^1.2.0",
     "nexus": "^1.1.0",

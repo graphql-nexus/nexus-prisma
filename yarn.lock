@@ -1326,7 +1326,7 @@ ansi-colors@^4.1.1:
   resolved "https://registry.yarnpkg.com/ansi-colors/-/ansi-colors-4.1.1.tgz#cbb9ae256bf750af1eab344f229aa27fe94ba348"
   integrity sha512-JoX0apGbHaUJBNl6yF+p6JAFYZ666/hhCGKN5t9QFjbJQKUU/g8MNbFDbvfrgKXvI1QpZplPOnwIo99lX/AAmA==
 
-ansi-escapes@^4.2.1, ansi-escapes@^4.3.1:
+ansi-escapes@^4.2.1, ansi-escapes@^4.3.0, ansi-escapes@^4.3.1:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/ansi-escapes/-/ansi-escapes-4.3.2.tgz#6b2291d1db7d98b6521d5f1efa42d0f3a9feb65e"
   integrity sha512-gKXj5ALrKWQLsYG9jlTRmR/xKluxHV+Z9QEwNIgCfM1/uwPMCuzVVnh5mwTd+OuBZcwSIMbqssNWRm1lE51QaQ==
@@ -3848,6 +3848,15 @@ jest-validate@^27.0.6:
     leven "^3.1.0"
     pretty-format "^27.0.6"
 
+jest-watch-select-projects@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/jest-watch-select-projects/-/jest-watch-select-projects-2.0.0.tgz#4373d7e4de862aae28b46e036b669a4c913ea867"
+  integrity sha512-j00nW4dXc2NiCW6znXgFLF9g8PJ0zP25cpQ1xRro/HU2GBfZQFZD0SoXnAlaoKkIY4MlfTMkKGbNXFpvCdjl1w==
+  dependencies:
+    ansi-escapes "^4.3.0"
+    chalk "^3.0.0"
+    prompts "^2.2.1"
+
 jest-watch-typeahead@0.6.4:
   version "0.6.4"
   resolved "https://registry.yarnpkg.com/jest-watch-typeahead/-/jest-watch-typeahead-0.6.4.tgz#ea70bf1bec34bd4f55b5b72d471b02d997899c3e"
@@ -4812,7 +4821,7 @@ progress@^2.0.0, progress@^2.0.3:
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
-prompts@^2.0.1:
+prompts@^2.0.1, prompts@^2.2.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/prompts/-/prompts-2.4.1.tgz#befd3b1195ba052f9fd2fde8a486c4e82ee77f61"
   integrity sha512-EQyfIuO2hPDsX1L/blblV+H7I0knhgAd82cVneCwcdND9B8AuCDuRcBH6yIcG4dFzlOUqbazQqwGjx5xmsNLuQ==

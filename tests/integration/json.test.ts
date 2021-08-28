@@ -1,7 +1,7 @@
 import dedent from 'dindist'
 import gql from 'graphql-tag'
 import { list, objectType, queryType } from 'nexus'
-import NexusPrismaScalars from '../../scalars'
+import NexusPrismaScalars from '../../src/entrypoints/scalars'
 import { testIntegration } from '../__helpers__/testers'
 
 testIntegration({

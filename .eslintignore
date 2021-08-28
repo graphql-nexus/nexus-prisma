@@ -2,7 +2,6 @@
 .vscode
 .github
 node_modules
-dist
-dist-esm
+dist-*
 tests
-jest.config.ts
+jest.config.*

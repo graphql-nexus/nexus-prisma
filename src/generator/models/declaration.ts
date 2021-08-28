@@ -87,9 +87,8 @@ export function renderTypeScriptDeclarationForDocumentModels(
           ? NO_MODELS_DEFINED_COMMENT
           : models
               .map((model) => {
-                const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForModel(model) + '\n' : ''
                 return dedent`
-                  ${jsdoc}export const ${model.name}: ${model.name}
+                  export const ${model.name}: ${model.name}
                 `
               })
               .join('\n\n')
@@ -109,9 +108,8 @@ export function renderTypeScriptDeclarationForDocumentModels(
           ? NO_ENUMS_DEFINED_COMMENT
           : enums
               .map((enum_) => {
-                const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForEnum(enum_) + '\n' : ''
                 return dedent`
-                  ${jsdoc}export const ${enum_.name}: ${enum_.name}
+                  export const ${enum_.name}: ${enum_.name}
                 `
               })
               .join('\n\n')

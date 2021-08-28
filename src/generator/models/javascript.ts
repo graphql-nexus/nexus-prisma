@@ -99,7 +99,7 @@ export function createModuleSpec(params: {
   const imports = esm
     ? dedent`
         import { getPrismaClientDmmf } from '../helpers/prisma'
-        import ModelsGenerator from '../generator/models'
+        import * as ModelsGenerator from '../generator/models'
         import { Runtime } from '../generator/runtime/settingsSingleton'
       `
     : dedent`

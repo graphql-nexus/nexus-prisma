@@ -1023,7 +1023,7 @@ export interface SomeModel {
     *   name: SomeModel.$name
     *   description: SomeModel.$description
     *   definition(t) {
-    *     t.field(SomeModel.foo)
+    *     t.field(SomeModel.id)
     *   }
     * }) 
     */

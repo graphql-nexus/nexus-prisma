@@ -5,8 +5,7 @@
     "module": "commonjs",
     "rootDir": "src",
     "sourceMap": true,
-    // Already emitted for ESM build, we make TS read from there for all TS emits
-    // "declaration": false,
+    "declaration": true,
     "declarationMap": false
   },
   "include": ["src"]

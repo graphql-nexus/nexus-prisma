@@ -23,7 +23,7 @@ import * as NexusCore from 'nexus/dist/core'
   * Generated Nexus \`enumType\` configuration based on your Prisma schema's enum \`Foo\`.
   *
   * ### ️⚠️ You have not writen documentation for enum Foo
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about enum Foo
   * by documenting it in your Prisma schema. For example:
   *
@@ -97,7 +97,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -121,8 +120,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "
@@ -163,7 +161,7 @@ import * as NexusCore from 'nexus/dist/core'
   */
 export interface Foo {
   name: 'Foo'
-  description: 'Some documentation'
+  description: string
   members: ['a']
 }
 
@@ -212,7 +210,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -236,8 +233,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "

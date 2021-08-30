@@ -129,7 +129,6 @@ export function renderTypeScriptDeclarationForDocumentModels(
 
       /**
        * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
-       * 
        *
        * @example
        *

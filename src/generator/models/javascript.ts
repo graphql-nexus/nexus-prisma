@@ -68,8 +68,8 @@ export function createModuleSpec(params: {
     dmmf.datamodel.enums
       .map((enum_) => {
         return dedent`
-        export const ${enum_.name} = models['${enum_.name}']
-      `
+          export const ${enum_.name} = models['${enum_.name}']
+        `
       })
       .join('\n') || `// N/A -- You have not defined any enums in your Prisma Schema.`
 

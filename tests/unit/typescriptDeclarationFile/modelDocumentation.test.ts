@@ -22,6 +22,19 @@ testGeneratedModules({
 
 testGeneratedModules({
   description:
+    'When a model or model field has no documentation comment, and `jsdocPropagationDefault` is set to "none", then it does not get any default JSDoc and its description field is null',
+  settings: {
+    jsdocPropagationDefault: 'none',
+  },
+  databaseSchema: `
+    model SomeModel {
+      id String @id
+    }
+  `,
+})
+
+testGeneratedModules({
+  description:
     'When a model has a documentation comment, then it is used for the JSDoc of that model and its $description field',
   databaseSchema: `
     /// Some documentation

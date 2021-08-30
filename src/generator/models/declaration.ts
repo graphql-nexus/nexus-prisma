@@ -160,7 +160,7 @@ export function renderTypeScriptDeclarationForDocumentModels(
 }
 
 function renderTypeScriptDeclarationForEnum(enum_: DMMF.DatamodelEnum, settings: Gentime.Settings): string {
-  const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForEnum(enum_) + '\n' : ''
+  const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForEnum({ enum: enum_, settings }) + '\n' : ''
   const description = renderPrismaNodeDocumentationToDescription({ settings, node: enum_ })
 
   return dedent`
@@ -173,7 +173,7 @@ function renderTypeScriptDeclarationForEnum(enum_: DMMF.DatamodelEnum, settings:
 }
 
 function renderTypeScriptDeclarationForModel(model: DMMF.Model, settings: Gentime.Settings): string {
-  const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForModel(model) + '\n' : ''
+  const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForModel({ model, settings }) + '\n' : ''
   const description = renderPrismaNodeDocumentationToDescription({ settings, node: model })
 
   return dedent`
@@ -209,7 +209,7 @@ function renderTypeScriptDeclarationForField({
   model: DMMF.Model
   settings: Gentime.Settings
 }): string {
-  const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForField({ field, model }) + '\n' : ''
+  const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForField({ field, model, settings }) + '\n' : ''
   const description = renderPrismaNodeDocumentationToDescription({ settings, node: field })
   return dedent`
     ${jsdoc}${field.name}: {

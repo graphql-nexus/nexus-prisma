@@ -23,14 +23,13 @@ import * as NexusCore from 'nexus/dist/core'
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
-  * 
   * \`\`\`prisma
   * /// Lorem ipsum dolor sit amet...
   * model SomeModel {
   *   foo  String
   * }
   * \`\`\`
-  * 
+  *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
@@ -44,7 +43,7 @@ import * as NexusCore from 'nexus/dist/core'
   *   definition(t) {
   *     t.field(SomeModel.id)
   *   }
-  * }) 
+  * })
   */
 export interface SomeModel {
   $name: 'SomeModel'
@@ -56,7 +55,6 @@ export interface SomeModel {
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
-    *
     * \`\`\`prisma
     * model SomeModel {
     *   /// Lorem ipsum dolor sit amet.
@@ -77,7 +75,7 @@ export interface SomeModel {
     *   definition(t) {
     *     t.field(SomeModel.id)
     *   }
-    * }) 
+    * })
     */
   id: {
     /**
@@ -109,7 +107,6 @@ export interface SomeModel {
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
-    *
     * \`\`\`prisma
     * model SomeModel {
     *   /// Lorem ipsum dolor sit amet.
@@ -130,7 +127,7 @@ export interface SomeModel {
     *   definition(t) {
     *     t.field(SomeModel.foo)
     *   }
-    * }) 
+    * })
     */
   foo: {
     /**
@@ -258,14 +255,13 @@ import * as NexusCore from 'nexus/dist/core'
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
-  * 
   * \`\`\`prisma
   * /// Lorem ipsum dolor sit amet...
   * model SomeModel {
   *   foo  String
   * }
   * \`\`\`
-  * 
+  *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
@@ -279,7 +275,7 @@ import * as NexusCore from 'nexus/dist/core'
   *   definition(t) {
   *     t.field(SomeModel.id)
   *   }
-  * }) 
+  * })
   */
 export interface SomeModel {
   $name: 'SomeModel'
@@ -291,7 +287,6 @@ export interface SomeModel {
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
-    *
     * \`\`\`prisma
     * model SomeModel {
     *   /// Lorem ipsum dolor sit amet.
@@ -312,7 +307,7 @@ export interface SomeModel {
     *   definition(t) {
     *     t.field(SomeModel.id)
     *   }
-    * }) 
+    * })
     */
   id: {
     /**
@@ -344,7 +339,6 @@ export interface SomeModel {
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
-    *
     * \`\`\`prisma
     * model SomeModel {
     *   /// Lorem ipsum dolor sit amet.
@@ -365,7 +359,7 @@ export interface SomeModel {
     *   definition(t) {
     *     t.field(SomeModel.foo)
     *   }
-    * }) 
+    * })
     */
   foo: {
     /**
@@ -493,14 +487,13 @@ import * as NexusCore from 'nexus/dist/core'
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
-  * 
   * \`\`\`prisma
   * /// Lorem ipsum dolor sit amet...
   * model SomeModel {
   *   foo  String
   * }
   * \`\`\`
-  * 
+  *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
@@ -514,7 +507,7 @@ import * as NexusCore from 'nexus/dist/core'
   *   definition(t) {
   *     t.field(SomeModel.id)
   *   }
-  * }) 
+  * })
   */
 export interface SomeModel {
   $name: 'SomeModel'
@@ -526,7 +519,6 @@ export interface SomeModel {
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
-    *
     * \`\`\`prisma
     * model SomeModel {
     *   /// Lorem ipsum dolor sit amet.
@@ -547,7 +539,7 @@ export interface SomeModel {
     *   definition(t) {
     *     t.field(SomeModel.id)
     *   }
-    * }) 
+    * })
     */
   id: {
     /**
@@ -579,7 +571,6 @@ export interface SomeModel {
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
-    *
     * \`\`\`prisma
     * model SomeModel {
     *   /// Lorem ipsum dolor sit amet.
@@ -600,7 +591,7 @@ export interface SomeModel {
     *   definition(t) {
     *     t.field(SomeModel.foo)
     *   }
-    * }) 
+    * })
     */
   foo: {
     /**
@@ -728,14 +719,13 @@ import * as NexusCore from 'nexus/dist/core'
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
-  * 
   * \`\`\`prisma
   * /// Lorem ipsum dolor sit amet...
   * model SomeModel {
   *   foo  String
   * }
   * \`\`\`
-  * 
+  *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
@@ -749,7 +739,7 @@ import * as NexusCore from 'nexus/dist/core'
   *   definition(t) {
   *     t.field(SomeModel.id)
   *   }
-  * }) 
+  * })
   */
 export interface SomeModel {
   $name: 'SomeModel'
@@ -761,7 +751,6 @@ export interface SomeModel {
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
-    *
     * \`\`\`prisma
     * model SomeModel {
     *   /// Lorem ipsum dolor sit amet.
@@ -782,7 +771,7 @@ export interface SomeModel {
     *   definition(t) {
     *     t.field(SomeModel.id)
     *   }
-    * }) 
+    * })
     */
   id: {
     /**
@@ -814,7 +803,6 @@ export interface SomeModel {
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
-    *
     * \`\`\`prisma
     * model SomeModel {
     *   /// Lorem ipsum dolor sit amet.
@@ -835,7 +823,7 @@ export interface SomeModel {
     *   definition(t) {
     *     t.field(SomeModel.foo)
     *   }
-    * }) 
+    * })
     */
   foo: {
     /**
@@ -963,14 +951,13 @@ import * as NexusCore from 'nexus/dist/core'
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
-  * 
   * \`\`\`prisma
   * /// Lorem ipsum dolor sit amet...
   * model SomeModel {
   *   foo  String
   * }
   * \`\`\`
-  * 
+  *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
@@ -984,7 +971,7 @@ import * as NexusCore from 'nexus/dist/core'
   *   definition(t) {
   *     t.field(SomeModel.id)
   *   }
-  * }) 
+  * })
   */
 export interface SomeModel {
   $name: 'SomeModel'
@@ -996,7 +983,6 @@ export interface SomeModel {
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
-    *
     * \`\`\`prisma
     * model SomeModel {
     *   /// Lorem ipsum dolor sit amet.
@@ -1017,7 +1003,7 @@ export interface SomeModel {
     *   definition(t) {
     *     t.field(SomeModel.id)
     *   }
-    * }) 
+    * })
     */
   id: {
     /**
@@ -1049,7 +1035,6 @@ export interface SomeModel {
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
-    *
     * \`\`\`prisma
     * model SomeModel {
     *   /// Lorem ipsum dolor sit amet.
@@ -1070,7 +1055,7 @@ export interface SomeModel {
     *   definition(t) {
     *     t.field(SomeModel.foo)
     *   }
-    * }) 
+    * })
     */
   foo: {
     /**
@@ -1198,14 +1183,13 @@ import * as NexusCore from 'nexus/dist/core'
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
-  * 
   * \`\`\`prisma
   * /// Lorem ipsum dolor sit amet...
   * model SomeModel {
   *   foo  String
   * }
   * \`\`\`
-  * 
+  *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
@@ -1219,7 +1203,7 @@ import * as NexusCore from 'nexus/dist/core'
   *   definition(t) {
   *     t.field(SomeModel.id)
   *   }
-  * }) 
+  * })
   */
 export interface SomeModel {
   $name: 'SomeModel'
@@ -1231,7 +1215,6 @@ export interface SomeModel {
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
-    *
     * \`\`\`prisma
     * model SomeModel {
     *   /// Lorem ipsum dolor sit amet.
@@ -1252,7 +1235,7 @@ export interface SomeModel {
     *   definition(t) {
     *     t.field(SomeModel.id)
     *   }
-    * }) 
+    * })
     */
   id: {
     /**
@@ -1284,7 +1267,6 @@ export interface SomeModel {
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
-    *
     * \`\`\`prisma
     * model SomeModel {
     *   /// Lorem ipsum dolor sit amet.
@@ -1305,7 +1287,7 @@ export interface SomeModel {
     *   definition(t) {
     *     t.field(SomeModel.foo)
     *   }
-    * }) 
+    * })
     */
   foo: {
     /**
@@ -1433,14 +1415,13 @@ import * as NexusCore from 'nexus/dist/core'
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
-  * 
   * \`\`\`prisma
   * /// Lorem ipsum dolor sit amet...
   * model SomeModel {
   *   foo  String
   * }
   * \`\`\`
-  * 
+  *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
@@ -1454,7 +1435,7 @@ import * as NexusCore from 'nexus/dist/core'
   *   definition(t) {
   *     t.field(SomeModel.id)
   *   }
-  * }) 
+  * })
   */
 export interface SomeModel {
   $name: 'SomeModel'
@@ -1466,7 +1447,6 @@ export interface SomeModel {
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
-    *
     * \`\`\`prisma
     * model SomeModel {
     *   /// Lorem ipsum dolor sit amet.
@@ -1487,7 +1467,7 @@ export interface SomeModel {
     *   definition(t) {
     *     t.field(SomeModel.id)
     *   }
-    * }) 
+    * })
     */
   id: {
     /**
@@ -1615,14 +1595,13 @@ import * as NexusCore from 'nexus/dist/core'
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
-  * 
   * \`\`\`prisma
   * /// Lorem ipsum dolor sit amet...
   * model SomeModel {
   *   foo  String
   * }
   * \`\`\`
-  * 
+  *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
@@ -1636,7 +1615,7 @@ import * as NexusCore from 'nexus/dist/core'
   *   definition(t) {
   *     t.field(SomeModel.id)
   *   }
-  * }) 
+  * })
   */
 export interface SomeModel {
   $name: 'SomeModel'
@@ -1648,7 +1627,6 @@ export interface SomeModel {
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
-    *
     * \`\`\`prisma
     * model SomeModel {
     *   /// Lorem ipsum dolor sit amet.
@@ -1669,7 +1647,7 @@ export interface SomeModel {
     *   definition(t) {
     *     t.field(SomeModel.id)
     *   }
-    * }) 
+    * })
     */
   id: {
     /**
@@ -1701,7 +1679,6 @@ export interface SomeModel {
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
-    *
     * \`\`\`prisma
     * model SomeModel {
     *   /// Lorem ipsum dolor sit amet.
@@ -1722,7 +1699,7 @@ export interface SomeModel {
     *   definition(t) {
     *     t.field(SomeModel.foo)
     *   }
-    * }) 
+    * })
     */
   foo: {
     /**
@@ -1850,14 +1827,13 @@ import * as NexusCore from 'nexus/dist/core'
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
-  * 
   * \`\`\`prisma
   * /// Lorem ipsum dolor sit amet...
   * model SomeModel {
   *   foo  String
   * }
   * \`\`\`
-  * 
+  *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
@@ -1871,7 +1847,7 @@ import * as NexusCore from 'nexus/dist/core'
   *   definition(t) {
   *     t.field(SomeModel.id)
   *   }
-  * }) 
+  * })
   */
 export interface SomeModel {
   $name: 'SomeModel'
@@ -1883,7 +1859,6 @@ export interface SomeModel {
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
-    *
     * \`\`\`prisma
     * model SomeModel {
     *   /// Lorem ipsum dolor sit amet.
@@ -1904,7 +1879,7 @@ export interface SomeModel {
     *   definition(t) {
     *     t.field(SomeModel.id)
     *   }
-    * }) 
+    * })
     */
   id: {
     /**

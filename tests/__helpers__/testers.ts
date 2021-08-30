@@ -76,8 +76,19 @@ type IntegrationTestParams = IntegrationTestSpec & {
 /**
  * Test that the given Prisma schema generates the expected generated source code.
  */
-export function testGeneratedModules(params: { databaseSchema: string; description: string }) {
+export function testGeneratedModules(params: {
+  description: string
+  databaseSchema: string
+  /**
+   * The gentime settings to use.
+   */
+  settings?: Gentime.SettingsInput
+}) {
   it(params.description, async () => {
+    Gentime.settings.reset()
+    if (params.settings) {
+      Gentime.settings.change(params.settings)
+    }
     const { indexdts } = await generateModules(params.databaseSchema)
     expect(indexdts).toMatchSnapshot('index.d.ts')
   })

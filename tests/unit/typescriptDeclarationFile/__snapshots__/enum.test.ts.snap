@@ -27,14 +27,13 @@ import * as NexusCore from 'nexus/dist/core'
   * Replace this default advisory JSDoc with your own documentation about enum Foo
   * by documenting it in your Prisma schema. For example:
   *
-  *
   * \`\`\`prisma
   * /// Lorem ipsum dolor sit amet...
   * enum Foo {
   *   a
   * }
   * \`\`\`
-  * 
+  *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * Contains these members: a
@@ -49,119 +48,6 @@ import * as NexusCore from 'nexus/dist/core'
 export interface Foo {
   name: 'Foo'
   description: undefined
-  members: ['a']
-}
-
-
-//
-//
-// TERMS
-// TERMS
-// TERMS
-// TERMS
-//
-//
-
-//
-//
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-//
-//
-
-// N/A –– You have not defined any models in your Prisma schema file.
-
-//
-//
-// EXPORTS: PRISMA ENUMS
-// EXPORTS: PRISMA ENUMS
-// EXPORTS: PRISMA ENUMS
-// EXPORTS: PRISMA ENUMS
-//
-//
-
-export const Foo: Foo
-
-//
-//
-// EXPORTS: OTHER
-// EXPORTS: OTHER
-// EXPORTS: OTHER
-// EXPORTS: OTHER
-//
-//
-
-import { Runtime } from '../generator/runtime/settingsSingleton'
-
-/**
- * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- *
- * @example
- *
- *     import { PrismaClient } from '@prisma/client'
- *     import { ApolloServer } from 'apollo-server'
- *     import { makeSchema } from 'nexus'
- *     import { User, Post, $settings } from 'nexus-prisma'
- *
- *     new ApolloServer({
- *       schema: makeSchema({
- *         types: [],
- *       }),
- *       context() {
- *         return {
- *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
- *         }
- *       },
- *     })
- *
- *     $settings({
- *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
- *     })
- *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
- */
-export const $settings: typeof Runtime.changeSettings
-"
-`;
-
-exports[`When prisma enum has documentation then it is used for JSDoc and GraphQL enum description: index.d.ts 1`] = `
-"import * as Nexus from 'nexus'
-import * as NexusCore from 'nexus/dist/core'
-
-//
-//
-// TYPES
-// TYPES
-// TYPES
-// TYPES
-//
-//
-
-// Models
-
-// N/A –– You have not defined any models in your Prisma schema file.
-
-// Enums
-
-/**
-  * Generated Nexus \`enumType\` configuration based on your Prisma schema's enum \`Foo\`.
-  *
-  * Some documentation
-  *
-  * Contains these members: a
-  *
-  * @example
-  *
-  * import { enumType } from 'nexus'
-  * import { Foo } from 'nexus-prisma'
-  *
-  * enumType(Foo)
-  */
-export interface Foo {
-  name: 'Foo'
-  description: string
   members: ['a']
 }
 

@@ -1,30 +1,35 @@
 import { DMMF } from '@prisma/client/runtime'
 import dedent from 'dindist'
 import { PrismaDocumentation } from '../../lib/prisma-documnetation'
+import { Gentime } from '../gentime/settingsSingleton'
 
 type JSDoc = string
 
 type FieldModelParams = {
   field: DMMF.Field
   model: DMMF.Model
+  settings: Gentime.Settings
 }
+
+const jsdocIndent = '  '
+const jsdocEmptyLine = `\n${jsdocIndent}*\n`
 
 /**
  * Enum
  */
 
-export function jsDocForEnum(enum_: DMMF.DatamodelEnum): JSDoc {
-  return dedent`
-    /**
-      ${enumIntro(enum_)}
-      *
-      ${nodeDocumentation({ enum: enum_ })}
-      *
-      * Contains these members: ${enum_.values.map((value) => value.name).join(', ')}
-      *
-      ${enumExample(enum_)}
-      */
-  `
+export function jsDocForEnum(params: { enum: DMMF.DatamodelEnum; settings: Gentime.Settings }): JSDoc {
+  const sections = [
+    enumIntro(params.enum),
+    nodeDocumentation({
+      enum: params.enum,
+      settings: params.settings,
+    }),
+    `* Contains these members: ${params.enum.values.map((value) => value.name).join(', ')}`,
+    enumExample(params.enum),
+  ]
+  const jsdoc = jsDocBookends(joinSections(sections))
+  return jsdoc
 }
 
 function enumIntro(enum_: DMMF.DatamodelEnum): string {
@@ -44,7 +49,7 @@ function enumExample(enum_: DMMF.DatamodelEnum): string {
   `
 }
 
-function enumMissingDoc(enum_: DMMF.DatamodelEnum): string {
+function enumMissingDocGuide(enum_: DMMF.DatamodelEnum): string {
   return dedent`
     ${missingDocsIntro({ kind: 'enum', enum: enum_ })}
     *
@@ -63,16 +68,10 @@ function enumMissingDoc(enum_: DMMF.DatamodelEnum): string {
  * Model
  */
 
-export function jsDocForModel(model: DMMF.Model): JSDoc {
-  return dedent`
-    /**
-      ${modelIntro(model)}
-      *
-      ${nodeDocumentation({ model })}
-      *
-      ${modelExample(model)} 
-      */
-  `
+export function jsDocForModel(params: { model: DMMF.Model; settings: Gentime.Settings }): JSDoc {
+  const sections = [modelIntro(params.model), nodeDocumentation(params), modelExample(params.model)]
+  const jsdoc = jsDocBookends(joinSections(sections))
+  return jsdoc
 }
 
 function modelIntro(model: DMMF.Model): string {
@@ -82,8 +81,11 @@ function modelIntro(model: DMMF.Model): string {
 }
 
 const nodeDocumentation = (
-  params: { model: DMMF.Model } | { model: DMMF.Model; field: DMMF.Field } | { enum: DMMF.DatamodelEnum }
-): string | undefined => {
+  params:
+    | { settings: Gentime.Settings; model: DMMF.Model }
+    | { settings: Gentime.Settings; model: DMMF.Model; field: DMMF.Field }
+    | { settings: Gentime.Settings; enum: DMMF.DatamodelEnum }
+): string | null => {
   const documentation =
     'field' in params
       ? params.field.documentation
@@ -93,18 +95,28 @@ const nodeDocumentation = (
       ? params.enum.documentation
       : null
 
-  const doc = documentation
-    ? `* ${PrismaDocumentation.format(documentation)}`
-    : 'field' in params
-    ? fieldMissingDoc({ field: params.field, model: params.model })
-    : 'model' in params
-    ? modelMissingDoc(params.model)
-    : enumMissingDoc(params.enum)
+  if (documentation) {
+    return dedent`
+      * ${PrismaDocumentation.format(documentation)}
+    `
+  }
 
-  return doc
+  if (params.settings.data.jsdocPropagationDefault === 'guide') {
+    return 'field' in params
+      ? fieldMissingDocGuide({
+          field: params.field,
+          model: params.model,
+          settings: params.settings,
+        })
+      : 'model' in params
+      ? modelMissingDocGuide(params.model)
+      : enumMissingDocGuide(params.enum)
+  }
+
+  return null
 }
 
-function modelMissingDoc(model: DMMF.Model): string {
+function modelMissingDocGuide(model: DMMF.Model): string {
   // TODO once https://stackoverflow.com/questions/61893953/how-to-escape-symbol-in-jsdoc-for-vscode
   // is resolved then we can write better examples below like: id String @id
   return dedent`
@@ -142,16 +154,10 @@ function modelExample(model: DMMF.Model): string {
  * Field
  */
 
-export function jsDocForField({ field, model }: FieldModelParams): JSDoc {
-  return dedent`
-    /**
-      ${fieldIntro({ field, model })}
-      *
-      ${nodeDocumentation({ field, model })}
-      *
-      ${fieldExample({ field, model })} 
-      */
-  `
+export function jsDocForField(params: FieldModelParams): JSDoc {
+  const sections = [fieldIntro(params), nodeDocumentation(params), fieldExample(params)]
+  const jsdoc = jsDocBookends(joinSections(sections))
+  return jsdoc
 }
 
 function fieldIntro({ model, field }: FieldModelParams): string {
@@ -160,7 +166,7 @@ function fieldIntro({ model, field }: FieldModelParams): string {
   `
 }
 
-function fieldMissingDoc({ model, field }: FieldModelParams): string {
+function fieldMissingDocGuide({ model, field }: FieldModelParams): string {
   return dedent`
     ${missingDocsIntro({ kind: 'model', model })}
     * \`\`\`prisma
@@ -210,8 +216,33 @@ function missingDocsIntro(
      *
      * Replace this default advisory JSDoc with your own documentation about ${thisItem}
      * by documenting it in your Prisma schema. For example:
-     *
   `
 }
 
 const missingDocsOutro = `* Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).`
+
+/**
+ * Convert a list of JSDoc sections into a single unified JSDoc section.
+ *
+ * Each joined section is separated by an empty line.
+ *
+ * Each section being joined is expected to handle its own JSDoc "spine" (e.g. `* some content here`).
+ */
+const joinSections = (sections: (string | null)[]) => {
+  return sections.filter((section) => section !== null).join(jsdocEmptyLine + jsdocIndent)
+}
+
+const jsDocBookends = (content: string) => {
+  const start = `/**`
+  const end = '*/'
+  const body = prefixBlock(jsdocIndent, content)
+
+  return `${start}\n${body}\n${jsdocIndent}${end}`
+}
+
+const prefixBlock = (prefix: string, content: string): string => {
+  return content
+    .split('\n')
+    .map((_) => `${prefix}${_.trim()}`)
+    .join('\n')
+}

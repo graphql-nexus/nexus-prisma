@@ -9,13 +9,3 @@ testGeneratedModules({
     }
   `,
 })
-
-testGeneratedModules({
-  description: 'When prisma enum has documentation then it is used for JSDoc and GraphQL enum description',
-  databaseSchema: dedent`
-    /// Some documentation
-    enum Foo {
-      a
-    }
-  `,
-})

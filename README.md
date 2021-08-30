@@ -33,6 +33,7 @@ Official Prisma plugin for Nexus.
   - [Prisma Schema Docs Propagation](#prisma-schema-docs-propagation)
     - [As GraphQL schema doc](#as-graphql-schema-doc)
     - [As JSDoc](#as-jsdoc)
+    - [Rich Formatting](#rich-formatting)
   - [ESM Support](#esm-support)
   - [Refined DX](#refined-dx)
 - [Recipes](#recipes)
@@ -798,7 +799,40 @@ User // JSDoc: A user.
 User.id // JSDoc: A stable identifier to find users by.
 ```
 
-#### Note
+#### Rich Formatting
+
+It is possible to write multiline documentation in your Prisma Schema file. It is also possible to write markdown or whatever else you want.
+
+```prisma
+/// # Foo   _bar_
+/// qux
+///
+/// tot
+model Foo {
+  /// Foo   bar
+  /// qux
+  ///
+  /// tot
+  foo  String
+}
+```
+
+However, you should understand the formatting logic Nexus Prisma uses as it may limit what you want to achieve. The current logic is:
+
+1. Strip newlines
+1. Collapse multi-spaces spaces into single-space
+
+So the above would get extracted by Nexus Prisma as if it was written like this:
+
+```prisma
+/// # Foo _bar_ qux tot
+model Foo {
+  /// Foo bar qux tot
+  foo  String
+}
+```
+
+This formatting logic is conservative. We are open to making it less so, in order to support more expressivity. Please [open an issue](https://github.com/prisma/nexus-prisma/issues/new?assignees=&labels=type%2Ffeat&template=10-feature.md&title=Better%20extraction%20of%20Prisma%20documentation) if you have an idea.
 
 ### ESM Support
 

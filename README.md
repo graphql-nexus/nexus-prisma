@@ -798,6 +798,8 @@ User // JSDoc: A user.
 User.id // JSDoc: A stable identifier to find users by.
 ```
 
+#### Note
+
 ### ESM Support
 
 Nexus Prisma supports both [ESM](https://nodejs.org/api/esm.html) and CJS. There shouldn't be anything you need to "do", things should "just work". Here's the highlights of how it works though:

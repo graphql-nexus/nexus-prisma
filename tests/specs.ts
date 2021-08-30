@@ -46,7 +46,7 @@ export namespace Specs {
         }),
       ]
     },
-    async datasourceSeed(prisma) {
+    async setup(prisma) {
       await prisma.user.create({
         data: {
           id: 'user1',
@@ -111,7 +111,7 @@ export namespace Specs {
         }),
       ]
     },
-    async datasourceSeed(prisma) {
+    async setup(prisma) {
       await prisma.user.create({
         data: {
           id: 'user1',

@@ -630,7 +630,7 @@ If a `findOne` or `findUnique` for a non-nullable Prisma field return null for s
 
 #### Prisma Client `rejectOnNotFound` Handling
 
-Prisma Client's [`rejectOnNotFound` feature](https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#rejectOnNotFound) is effectively ignored by Nexus Prisma. For example if you [set `rejectOnNotFound` globally on your Prisma Client](https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#enable-globally-for-findunique-and-findfirst) it will not effect Nexus Prisma when it uses Prisma Client. This is because Nexus Prisma [sets `rejectOnNotFound: false` for every `findUnique`/`findFirst`](https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#remarks-2) request it sends.
+Prisma Client's [`rejectOnNotFound` feature](https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#rejectonnotfound) is effectively ignored by Nexus Prisma. For example if you [set `rejectOnNotFound` globally on your Prisma Client](https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#enable-globally-for-findunique-and-findfirst) it will not effect Nexus Prisma when it uses Prisma Client. This is because Nexus Prisma [sets `rejectOnNotFound: false` for every `findUnique`/`findFirst`](https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#remarks-2) request it sends.
 
 The reason for this design choice is that when Nexus Prisma's logic is handling a GraphQL resolver that includes how to handle nullability issues which it has full knowledge about.
 

@@ -39,7 +39,7 @@ testIntegration({
       }),
     ]
   },
-  async datasourceSeed(prisma) {
+  async setup(prisma) {
     await prisma.foo.create({
       data: {
         id: 'foo1',

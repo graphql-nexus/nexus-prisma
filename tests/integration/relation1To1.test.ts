@@ -42,7 +42,7 @@ testIntegration({
       }),
     ]
   },
-  async datasourceSeed(prisma) {
+  async setup(prisma) {
     await prisma.user.create({
       data: {
         id: 'user1',
@@ -109,7 +109,7 @@ testIntegration({
       }),
     ]
   },
-  async datasourceSeed(prisma) {
+  async setup(prisma) {
     await prisma.user.create({
       data: {
         id: 'user1',
@@ -181,7 +181,7 @@ testIntegration({
       }),
     ]
   },
-  async datasourceSeed(prisma) {
+  async setup(prisma) {
     await prisma.user.create({
       data: {
         id: 'user1',
@@ -255,7 +255,7 @@ testIntegration({
       }),
     ]
   },
-  async datasourceSeed(prisma) {
+  async setup(prisma) {
     await prisma.user.create({
       data: {
         id: 'user1',

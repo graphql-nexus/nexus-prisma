@@ -1,5 +1,3 @@
-// Remove this dep once we stop supporting Node 14.x
-import 'ts-replace-all'
 import { PackageJson } from 'type-fest'
 import { inspect } from 'util'
 import { enforceValidPeerDependencies } from '../lib/peerDepValidator'

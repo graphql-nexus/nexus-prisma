@@ -1,3 +1,7 @@
+## Links
+
+Sometimes links are placed into the README or in logs that we want to make as stable as possible and friendly to read. To achieve both we use short links like `pris.ly/foo`. We manage these for Nexus Prisma in the [`prisma/pris.ly` repo here](https://github.com/prisma/pris.ly/blob/main/_redirects#L175).
+
 ## Tests
 
 #### Running

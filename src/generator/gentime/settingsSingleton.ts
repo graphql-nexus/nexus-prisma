@@ -17,11 +17,11 @@ export namespace Gentime {
      *
      * The following modes are as follows:
      *
-     * 1. `none`
+     * 1. `'none'`
      *
      *     In this mode, no default JSDoc will be written.
      *
-     * 2. `guide`
+     * 2. `'guide'`
      *
      *     In this mode, guide content into your JSDoc that looks something like the following:
      *
@@ -35,7 +35,7 @@ export namespace Gentime {
      *     * ...
      *     ```
      *
-     * The default is `guide`.
+     * The default is `'guide'`.
      */
     jsdocPropagationDefault?: 'none' | 'guide'
     // TODO add some examples

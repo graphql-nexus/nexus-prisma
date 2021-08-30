@@ -29,7 +29,7 @@ Official Prisma plugin for Nexus.
     - [Related Issues](#related-issues)
   - [Runtime Settings](#runtime-settings)
     - [Reference](#reference)
-  - [Generator Settings](#generator-settings)
+  - [Gentime Settings](#gentime-settings)
     - [Usage](#usage-1)
     - [Reference](#reference-1)
   - [Prisma String @id fields project as GraphQL ID fields](#prisma-string-id-fields-project-as-graphql-id-fields)
@@ -704,7 +704,7 @@ If you have a use-case for different behaviour [please open a feature request](h
   })
   ```
 
-### Generator Settings
+### Gentime Settings
 
 You are able to control certain aspects of the Nexus Prisma code generation.
 
@@ -748,19 +748,48 @@ You are able to control certain aspects of the Nexus Prisma code generation.
 
 ##### `projectIdIntToGraphQL: 'ID' | 'Int'`
 
-- **`@summary`** Map Prisma model fields of type `Int` with attribute `@id` to `ID` or `Int`.
 - **`@default`** `Int`
+- **`@summary`** Map Prisma model fields of type `Int` with attribute `@id` to `ID` or `Int`.
+
+##### `jsdocPropagationDefault?: 'none' | 'guide'`
+
+- **`@default`** `'guide'`
+- **`@summary`**
+
+  Nexus Prisma will project your Prisma schema field/model/enum documentation into JSDoc of the generated Nexus Prisma API.
+
+  This setting controls what Nexus Prisma should do when you have not written documentation in your Prisma Schema for a field/model/enum.
+
+  The following modes are as follows:
+
+  1. `'none'`
+
+     In this mode, no default JSDoc will be written.
+
+  2. `'guide'`
+
+     In this mode, guide content into your JSDoc that looks something like the following:
+
+     ```
+     * ### ️⚠️ You have not writen documentation for ${thisItem}
+
+     * Replace this default advisory JSDoc with your own documentation about ${thisItem}
+     * by documenting it in your Prisma schema. For example:
+     * ...
+     * ...
+     * ...
+     ```
 
 ##### `docPropagation.JSDoc: boolean`
 
-- **`@summary`** Should Prisma Schema docs propagate as JSDoc?
 - **`@default`** `true`
+- **`@summary`** Should Prisma Schema docs propagate as JSDoc?
 
 ##### `docPropagation.GraphQLDocs: boolean`
 
+- **`@default`** `true`
 - **`@summary`** Should Prisma Schema docs propagate as GraphQL docs?
 - **`@remarks`** When this is disabled it will force `.description` property to be `undefined`. This is for convenience, allowing you to avoid post-generation data manipulation or consumption contortions.
-- **`@default`** `true`
 
 ### Prisma String @id fields project as GraphQL ID fields
 
@@ -1044,7 +1073,7 @@ We only officially support what we test.
 
 We test `ts-node` versions `10.x`.
 
-Reminder: `ts-node` is an optional peer dep required when you are working with the [generator settings](#generator-settings).
+Reminder: `ts-node` is an optional peer dep required when you are working with the [gentime settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
 
 #### Matrix Testing Policy
 

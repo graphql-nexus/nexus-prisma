@@ -36,8 +36,29 @@ export type IntegrationTestSpec = {
    * Note datasource and generator blocks are taken care of automatically for you.
    */
   datasourceSchema: string
+  /**
+   * Define the GraphQL API. All returned type defs are added to the final GraphQL schema.
+   */
   apiSchema: APISchemaSpec
-  datasourceSeed: (prismaClient: any) => Promise<void>
+  /**
+   * Access the Prisma Client instance and run some setup side-effects.
+   *
+   * Examples of things to do there:
+   *
+   * 1. Seed the database.
+   */
+  setup?: (prismaClient: any) => Promise<void>
+  /**
+   * Handle instantiation of a Prisma Client instance.
+   *
+   * Examples of things to do there:
+   *
+   * 1. Customize the Prisma Client settings.
+   */
+  setupPrismaClient?: (prismaClientPackage: any) => Promise<any>
+  /**
+   * A Graphql document to execute against the GraphQL API. The result is snapshoted.
+   */
   apiClientQuery: DocumentNode
 }
 
@@ -70,9 +91,9 @@ export function testIntegration(params: IntegrationTestParams) {
   if (params.skip && params.only)
     throw new Error(`Cannot specify to skip this test AND only run this test at the same time.`)
 
-  const itOrItOnlyOrItSkip = params.only ? it.only : params.skip ? it.skip : it
+  const test = params.only ? it.only : params.skip ? it.skip : it
 
-  itOrItOnlyOrItSkip(
+  test(
     params.description,
     async () => {
       const result = await integrationTest(params)
@@ -116,7 +137,8 @@ export function testGraphqlSchema(params: {
 export async function integrationTest({
   datasourceSchema,
   apiSchema,
-  datasourceSeed,
+  setup,
+  setupPrismaClient,
   apiClientQuery,
 }: IntegrationTestParams) {
   const dir = fs.tmpDir().cwd()
@@ -138,8 +160,13 @@ export async function integrationTest({
   execa.commandSync(`yarn -s prisma db push --force-reset --schema ${dir}/schema.prisma`)
 
   const prismaClientPackage = require(prismaClientImportId)
-  const prismaClient = new prismaClientPackage.PrismaClient()
-  await datasourceSeed(prismaClient)
+  const prismaClient = setupPrismaClient
+    ? setupPrismaClient(prismaClientPackage)
+    : new prismaClientPackage.PrismaClient()
+
+  if (setup) {
+    await setup(prismaClient)
+  }
 
   const dmmf = await PrismaSDK.getDMMF({
     datamodel: prismaSchemaContents,

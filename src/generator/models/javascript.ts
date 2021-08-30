@@ -4,6 +4,8 @@ import { chain, lowerFirst } from 'lodash'
 import * as Nexus from 'nexus'
 import { NexusEnumTypeConfig, NexusListDef, NexusNonNullDef, NexusNullDef } from 'nexus/dist/core'
 import { MaybePromise, RecordUnknown, Resolver } from '../../helpers/utils'
+import { PrismaDmmf } from '../../lib/prisma-dmmf'
+import { PrismaDocumentation } from '../../lib/prisma-documnetation'
 import { Gentime } from '../gentime/settingsSingleton'
 import {
   buildWhereUniqueInput,
@@ -66,8 +68,8 @@ export function createModuleSpec(params: {
     dmmf.datamodel.enums
       .map((enum_) => {
         return dedent`
-        export const ${enum_.name} = models['${enum_.name}']
-      `
+          export const ${enum_.name} = models['${enum_.name}']
+        `
       })
       .join('\n') || `// N/A -- You have not defined any enums in your Prisma Schema.`
 
@@ -166,13 +168,13 @@ function createNexusObjectTypeDefConfigurations(
     .map((model) => {
       return {
         $name: model.name,
-        $description: settings.gentime.docPropagation.GraphQLDocs ? model.documentation : undefined,
+        $description: prismaNodeDocumentationToDescription({ settings, node: model }),
         ...chain(model.fields)
           .map((field) => {
             return {
               name: field.name,
               type: prismaFieldToNexusType(field, settings),
-              description: settings.gentime.docPropagation.GraphQLDocs ? field.documentation : undefined,
+              description: prismaNodeDocumentationToDescription({ settings, node: field }),
               resolve: prismaFieldToNexusResolver(model, field, settings),
             }
           })
@@ -182,6 +184,15 @@ function createNexusObjectTypeDefConfigurations(
     })
     .keyBy('$name')
     .value()
+}
+
+const prismaNodeDocumentationToDescription = (params: {
+  settings: Settings
+  node: PrismaDmmf.DocumentableNode
+}): string | undefined => {
+  return params.settings.gentime.docPropagation.GraphQLDocs && params.node.documentation
+    ? PrismaDocumentation.format(params.node.documentation)
+    : undefined
 }
 
 // Complex return type I don't really understand how to easily work with manually.
@@ -295,7 +306,7 @@ function createNexusEnumTypeDefConfigurations(
     .map((enum_): AnyNexusEnumTypeConfig => {
       return {
         name: enum_.name,
-        description: settings.gentime.docPropagation.GraphQLDocs ? enum_.documentation : undefined,
+        description: prismaNodeDocumentationToDescription({ settings, node: enum_ }),
         members: enum_.values.map((val) => val.name),
       }
     })

@@ -19,7 +19,7 @@ import * as NexusCore from 'nexus/dist/core'
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`User\`.
   *
   * ### ️⚠️ You have not writen documentation for model User
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model User
   * by documenting it in your Prisma schema. For example:
   *
@@ -50,10 +50,10 @@ export interface User {
   $name: 'User'
   $description: undefined
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`User.id\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`User.id\`.
     *
     * ### ️⚠️ You have not writen documentation for model User
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model User
     * by documenting it in your Prisma schema. For example:
     *
@@ -103,10 +103,10 @@ export interface User {
     resolve: NexusCore.FieldResolver<'User', 'id'>
   }
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`User.posts\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`User.posts\`.
     *
     * ### ️⚠️ You have not writen documentation for model User
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model User
     * by documenting it in your Prisma schema. For example:
     *
@@ -161,7 +161,7 @@ export interface User {
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`Post\`.
   *
   * ### ️⚠️ You have not writen documentation for model Post
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model Post
   * by documenting it in your Prisma schema. For example:
   *
@@ -192,10 +192,10 @@ export interface Post {
   $name: 'Post'
   $description: undefined
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`Post.id\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`Post.id\`.
     *
     * ### ️⚠️ You have not writen documentation for model Post
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model Post
     * by documenting it in your Prisma schema. For example:
     *
@@ -245,10 +245,10 @@ export interface Post {
     resolve: NexusCore.FieldResolver<'Post', 'id'>
   }
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`Post.author\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`Post.author\`.
     *
     * ### ️⚠️ You have not writen documentation for model Post
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model Post
     * by documenting it in your Prisma schema. For example:
     *
@@ -298,10 +298,10 @@ export interface Post {
     resolve: NexusCore.FieldResolver<'Post', 'author'>
   }
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`Post.authorId\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`Post.authorId\`.
     *
     * ### ️⚠️ You have not writen documentation for model Post
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model Post
     * by documenting it in your Prisma schema. For example:
     *
@@ -403,7 +403,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -427,8 +426,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "

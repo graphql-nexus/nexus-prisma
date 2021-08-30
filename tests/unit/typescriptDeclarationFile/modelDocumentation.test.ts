@@ -41,3 +41,25 @@ testGeneratedModules({
     }
   `,
 })
+
+testGeneratedModules({
+  description:
+    'When a model field has a documentation comment across lines, then they are joined and then used for the JSDoc of that field and its $description field',
+  databaseSchema: `
+    /// Some documentation
+    /// on
+    ///
+    /// multiple
+    /// lines
+    ///
+    model SomeModel {
+      /// Some documentation
+      /// on
+      ///
+      /// multiple
+      /// lines
+      ///
+      id  String  @id
+    }
+  `,
+})

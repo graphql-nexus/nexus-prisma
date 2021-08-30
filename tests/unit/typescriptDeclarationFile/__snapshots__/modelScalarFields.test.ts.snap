@@ -19,7 +19,7 @@ import * as NexusCore from 'nexus/dist/core'
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
   * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
@@ -50,10 +50,10 @@ export interface SomeModel {
   $name: 'SomeModel'
   $description: undefined
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
     * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
     *
@@ -103,10 +103,10 @@ export interface SomeModel {
     resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
   }
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
     *
     * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
     *
@@ -206,7 +206,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -230,8 +229,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "
@@ -256,7 +254,7 @@ import * as NexusCore from 'nexus/dist/core'
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
   * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
@@ -287,10 +285,10 @@ export interface SomeModel {
   $name: 'SomeModel'
   $description: undefined
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
     * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
     *
@@ -340,10 +338,10 @@ export interface SomeModel {
     resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
   }
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
     *
     * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
     *
@@ -443,7 +441,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -467,8 +464,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "
@@ -493,7 +489,7 @@ import * as NexusCore from 'nexus/dist/core'
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
   * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
@@ -524,10 +520,10 @@ export interface SomeModel {
   $name: 'SomeModel'
   $description: undefined
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
     * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
     *
@@ -577,10 +573,10 @@ export interface SomeModel {
     resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
   }
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
     *
     * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
     *
@@ -680,7 +676,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -704,8 +699,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "
@@ -730,7 +724,7 @@ import * as NexusCore from 'nexus/dist/core'
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
   * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
@@ -761,10 +755,10 @@ export interface SomeModel {
   $name: 'SomeModel'
   $description: undefined
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
     * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
     *
@@ -814,10 +808,10 @@ export interface SomeModel {
     resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
   }
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
     *
     * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
     *
@@ -917,7 +911,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -941,8 +934,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "
@@ -967,7 +959,7 @@ import * as NexusCore from 'nexus/dist/core'
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
   * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
@@ -998,10 +990,10 @@ export interface SomeModel {
   $name: 'SomeModel'
   $description: undefined
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
     * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
     *
@@ -1051,10 +1043,10 @@ export interface SomeModel {
     resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
   }
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
     *
     * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
     *
@@ -1154,7 +1146,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -1178,8 +1169,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "
@@ -1204,7 +1194,7 @@ import * as NexusCore from 'nexus/dist/core'
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
   * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
@@ -1235,10 +1225,10 @@ export interface SomeModel {
   $name: 'SomeModel'
   $description: undefined
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
     * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
     *
@@ -1288,10 +1278,10 @@ export interface SomeModel {
     resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
   }
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
     *
     * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
     *
@@ -1391,7 +1381,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -1415,8 +1404,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "
@@ -1441,7 +1429,7 @@ import * as NexusCore from 'nexus/dist/core'
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
   * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
@@ -1472,10 +1460,10 @@ export interface SomeModel {
   $name: 'SomeModel'
   $description: undefined
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
     * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
     *
@@ -1575,7 +1563,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -1599,8 +1586,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "
@@ -1625,7 +1611,7 @@ import * as NexusCore from 'nexus/dist/core'
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
   * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
@@ -1656,10 +1642,10 @@ export interface SomeModel {
   $name: 'SomeModel'
   $description: undefined
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
     * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
     *
@@ -1709,10 +1695,10 @@ export interface SomeModel {
     resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
   }
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
     *
     * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
     *
@@ -1812,7 +1798,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -1836,8 +1821,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "
@@ -1862,7 +1846,7 @@ import * as NexusCore from 'nexus/dist/core'
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
   * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
@@ -1893,10 +1877,10 @@ export interface SomeModel {
   $name: 'SomeModel'
   $description: undefined
   /**
-   * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
     * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
+    *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
     *
@@ -1996,7 +1980,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -2020,8 +2003,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "

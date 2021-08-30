@@ -21,3 +21,25 @@ testGeneratedModules({
     }
   `,
 })
+
+testGeneratedModules({
+  description:
+    'When an enum has a documentation comment across lines, then they are joined and then used for the JSDoc of that field and its $description field',
+  databaseSchema: `
+    /// Some documentation
+    /// on
+    ///
+    /// multiple
+    /// lines
+    ///
+    enum SomeEnum {
+      /// Some documentation
+      /// on
+      ///
+      /// multiple
+      /// lines
+      ///
+      a
+    }
+  `,
+})

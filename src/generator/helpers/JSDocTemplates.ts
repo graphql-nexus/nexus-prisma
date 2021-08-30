@@ -1,5 +1,6 @@
 import { DMMF } from '@prisma/client/runtime'
 import dedent from 'dindist'
+import { PrismaDocumentation } from '../../lib/prisma-documnetation'
 
 type JSDoc = string
 
@@ -13,12 +14,11 @@ type FieldModelParams = {
  */
 
 export function jsDocForEnum(enum_: DMMF.DatamodelEnum): JSDoc {
-  const enumDoc = enum_.documentation ? `* ${enum_.documentation}` : enumMissingDoc(enum_)
   return dedent`
     /**
       ${enumIntro(enum_)}
       *
-      ${enumDoc}
+      ${nodeDocumentation({ enum: enum_ })}
       *
       * Contains these members: ${enum_.values.map((value) => value.name).join(', ')}
       *
@@ -64,12 +64,11 @@ function enumMissingDoc(enum_: DMMF.DatamodelEnum): string {
  */
 
 export function jsDocForModel(model: DMMF.Model): JSDoc {
-  const modelDoc = model.documentation ? `* ${model.documentation}` : modelMissingDoc(model)
   return dedent`
     /**
       ${modelIntro(model)}
       *
-      ${modelDoc}
+      ${nodeDocumentation({ model })}
       *
       ${modelExample(model)} 
       */
@@ -80,6 +79,29 @@ function modelIntro(model: DMMF.Model): string {
   return dedent`
     * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`${model.name}\`.
   `
+}
+
+const nodeDocumentation = (
+  params: { model: DMMF.Model } | { model: DMMF.Model; field: DMMF.Field } | { enum: DMMF.DatamodelEnum }
+): string | undefined => {
+  const documentation =
+    'field' in params
+      ? params.field.documentation
+      : 'model' in params
+      ? params.model.documentation
+      : 'enum' in params
+      ? params.enum.documentation
+      : null
+
+  const doc = documentation
+    ? `* ${PrismaDocumentation.format(documentation)}`
+    : 'field' in params
+    ? fieldMissingDoc({ field: params.field, model: params.model })
+    : 'model' in params
+    ? modelMissingDoc(params.model)
+    : enumMissingDoc(params.enum)
+
+  return doc
 }
 
 function modelMissingDoc(model: DMMF.Model): string {
@@ -121,12 +143,11 @@ function modelExample(model: DMMF.Model): string {
  */
 
 export function jsDocForField({ field, model }: FieldModelParams): JSDoc {
-  const fieldDocs = field.documentation ? `* ${field.documentation}` : fieldMissingDoc({ field, model })
   return dedent`
     /**
-     ${fieldIntro({ field, model })}
+      ${fieldIntro({ field, model })}
       *
-      ${fieldDocs}
+      ${nodeDocumentation({ field, model })}
       *
       ${fieldExample({ field, model })} 
       */
@@ -186,10 +207,10 @@ function missingDocsIntro(
 
   return dedent`
      * ### ️⚠️ You have not writen documentation for ${thisItem}
-     * 
+     *
      * Replace this default advisory JSDoc with your own documentation about ${thisItem}
      * by documenting it in your Prisma schema. For example:
-     * 
+     *
   `
 }
 

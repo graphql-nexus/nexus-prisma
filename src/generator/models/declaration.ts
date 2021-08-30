@@ -5,6 +5,7 @@ import { LiteralUnion } from 'type-fest'
 import { StandardGraphQLScalarType, StandardGraphQLScalarTypes } from '../../helpers/graphql'
 import { PrismaScalarType } from '../../helpers/prisma'
 import { allCasesHandled } from '../../helpers/utils'
+import { PrismaDmmf } from '../../lib/prisma-dmmf'
 import { Gentime } from '../gentime/settingsSingleton'
 import { jsDocForEnum, jsDocForField, jsDocForModel } from '../helpers/JSDocTemplates'
 import { ModuleSpec } from '../types'
@@ -128,7 +129,6 @@ export function renderTypeScriptDeclarationForDocumentModels(
 
       /**
        * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
-       * 
        *
        * @example
        *
@@ -152,8 +152,7 @@ export function renderTypeScriptDeclarationForDocumentModels(
        *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
        *     })
        *
-       * @remarks This is _different_ than Nexus Prisma's [_gentime_
-       *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+       * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
        */
       export const $settings: typeof Runtime.changeSettings
     ` + OS.EOL
@@ -162,9 +161,8 @@ export function renderTypeScriptDeclarationForDocumentModels(
 
 function renderTypeScriptDeclarationForEnum(enum_: DMMF.DatamodelEnum, settings: Gentime.Settings): string {
   const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForEnum(enum_) + '\n' : ''
-  const description = `${
-    enum_.documentation && settings.data.docPropagation.GraphQLDocs ? `'${enum_.documentation}'` : 'undefined'
-  }`
+  const description = renderPrismaNodeDocumentationToDescription({ settings, node: enum_ })
+
   return dedent`
     ${jsdoc}export interface ${enum_.name} {
       name: '${enum_.name}'
@@ -176,9 +174,8 @@ function renderTypeScriptDeclarationForEnum(enum_: DMMF.DatamodelEnum, settings:
 
 function renderTypeScriptDeclarationForModel(model: DMMF.Model, settings: Gentime.Settings): string {
   const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForModel(model) + '\n' : ''
-  const description = `${
-    model.documentation && settings.data.docPropagation.GraphQLDocs ? `'${model.documentation}'` : 'undefined'
-  }`
+  const description = renderPrismaNodeDocumentationToDescription({ settings, node: model })
+
   return dedent`
     ${jsdoc}export interface ${model.name} {
       $name: '${model.name}'
@@ -186,6 +183,15 @@ function renderTypeScriptDeclarationForModel(model: DMMF.Model, settings: Gentim
       ${renderTypeScriptDeclarationForModelFields(model, settings)}
     }
   `
+}
+
+const renderPrismaNodeDocumentationToDescription = (params: {
+  settings: Gentime.Settings
+  node: PrismaDmmf.DocumentableNode
+}): string => {
+  return `${
+    params.node.documentation && params.settings.data.docPropagation.GraphQLDocs ? `string` : `undefined`
+  }`
 }
 
 function renderTypeScriptDeclarationForModelFields(model: DMMF.Model, settings: Gentime.Settings): string {
@@ -204,9 +210,7 @@ function renderTypeScriptDeclarationForField({
   settings: Gentime.Settings
 }): string {
   const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForField({ field, model }) + '\n' : ''
-  const description = `${
-    field.documentation && settings.data.docPropagation.GraphQLDocs ? `string` : `undefined`
-  }`
+  const description = renderPrismaNodeDocumentationToDescription({ settings, node: field })
   return dedent`
     ${jsdoc}${field.name}: {
       /**

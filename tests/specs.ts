@@ -46,7 +46,7 @@ export namespace Specs {
         }),
       ]
     },
-    async datasourceSeed(prisma) {
+    async setup(prisma) {
       await prisma.user.create({
         data: {
           id: 'user1',
@@ -68,7 +68,7 @@ export namespace Specs {
     `,
   }
 
-  export const relation1ToNReverseAndOptional = {
+  export const relation1ToNReverseAndOptional: IntegrationTestSpec = {
     description:
       'can project user-to-posts relationship in reverse (access use via post author field). If Post.author IS optional than it IS nullable in the GraphQL API.',
     datasourceSchema: `
@@ -111,7 +111,7 @@ export namespace Specs {
         }),
       ]
     },
-    async datasourceSeed(prisma) {
+    async setup(prisma) {
       await prisma.user.create({
         data: {
           id: 'user1',

@@ -24,24 +24,35 @@ Official Prisma plugin for Nexus.
   - [Project 1:n Relation](#project-1n-relation)
     - [Example: Tests](#example-tests-1)
     - [Example: Full 1:n](#example-full-1n)
+  - [Projecting Nullability](#projecting-nullability)
+    - [Prisma Client `rejectOnNotFound` Handling](#prisma-client-rejectonnotfound-handling)
+    - [Related Issues](#related-issues)
   - [Runtime Settings](#runtime-settings)
     - [Reference](#reference)
-  - [Generator Settings](#generator-settings)
+  - [Gentime Settings](#gentime-settings)
     - [Usage](#usage-1)
     - [Reference](#reference-1)
   - [Prisma String @id fields project as GraphQL ID fields](#prisma-string-id-fields-project-as-graphql-id-fields)
   - [Prisma Schema Docs Propagation](#prisma-schema-docs-propagation)
     - [As GraphQL schema doc](#as-graphql-schema-doc)
     - [As JSDoc](#as-jsdoc)
+    - [Rich Formatting](#rich-formatting)
+  - [ESM Support](#esm-support)
   - [Refined DX](#refined-dx)
 - [Recipes](#recipes)
   - [Project relation with custom resolver logic](#project-relation-with-custom-resolver-logic)
   - [Supply custom custom scalars to your GraphQL schema](#supply-custom-custom-scalars-to-your-graphql-schema)
 - [Notes](#notes)
+  - [Working with Bundlers](#working-with-bundlers)
+    - [Disable Peer Dependency Check](#disable-peer-dependency-check)
+    - [General Support](#general-support)
   - [For users of `nexus-prisma@=<0.20`](#for-users-of-nexus-prisma020)
-  - [For users of `prisma@=<2.17`](#for-users-of-prisma217)
   - [For users of `nexus@=<1.0`](#for-users-of-nexus10)
-  - [Supported Versions Of Node & Prisma](#supported-versions-of-node--prisma)
+  - [Supported Versions Of Node](#supported-versions-of-node)
+  - [Supported Versions Of `@prisma/client`](#supported-versions-of-prismaclient)
+  - [Supported Versions Of `ts-node`](#supported-versions-of-ts-node)
+    - [Matrix Testing Policy](#matrix-testing-policy)
+    - [Patch Version Support Policy](#patch-version-support-policy)
 
 <!-- tocstop -->
 
@@ -60,8 +71,6 @@ Official Prisma plugin for Nexus.
 
 1. Add a `nexus-prisma` generator block to your Prisma Schema.
 
-   > If you are using `prisma@=<2.17` then you must use the Nexus Prisma Prisma generator name of `nexus_prisma` instead of `nexus-prisma`. See [notes](#notes) for more detail.
-
 1. Run `prisma generate` in your terminal.
 
 1. Import models from `nexus-prisma` and then pass them to your Nexus type definition and field definition configurations. In this way you will be effectively projecting models from your data layer into GraphQL types in your API layer.
@@ -76,7 +85,6 @@ generator client {
 
 generator nexusPrisma {
    provider = "nexus-prisma"
-// provider = "nexus_prisma"    <-- For prisma@=<2.17 users
 }
 
 /// This is a user!
@@ -124,7 +132,7 @@ export const schema = makeSchema({
 ##### Shortterm
 
 - [x] ([#59](https://github.com/prisma/nexus-prisma/issues/59)) Support for Prisma Model field type `BigInt`
-- [ ] ([#94](https://github.com/prisma/nexus-prisma/issues/94)) Support for Prisma Model field type `Decimal`
+- [x] ([#94](https://github.com/prisma/nexus-prisma/issues/94)) Support for Prisma Model field type `Decimal`
 - [ ] Improved JSDoc for relation 1:1 & 1:n fields
 
 ##### Midterm
@@ -227,8 +235,9 @@ However some of the Prisma scalars do not have a natural standard representation
 | `DateTime` | `DateTime` | `dateTime`       | [DateTime](https://www.graphql-scalars.dev/docs/scalars/datetime)     |                                                                                                              |
 | `BigInt`   | `BigInt`   | `bigInt`         | [BigInt](https://www.graphql-scalars.dev/docs/scalars/big-int)        | [JavaScript BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) |
 | `Bytes`    | `Bytes`    | `bytes`          | [Byte](https://www.graphql-scalars.dev/docs/scalars/byte/)            | [Node.js Buffer](https://nodejs.org/api/buffer.html#buffer_buffer)                                           |
+| `Decimal`  | `Decimal`  | `decimal`        | (internal)                                                            | Uses [Decimal.js](https://github.com/MikeMcl/decimal.js)                                                     |
 
-> **Note:** Not all Prisma scalar mappings are implemented yet: `Decimal`, `Unsupported`
+> **Note:** Not all Prisma scalar mappings are implemented yet: `Unsupported`
 
 > **Note:** BigInt is supported in Node.js since version [10.4.0](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt#browser_compatibility) however to support BigInt in `JSON.parse`/`JSON.stringify` you must use [`json-bigint-patch`](https://github.com/ardatan/json-bigint-patch) otherwise BigInt values will be serialized as strings.
 
@@ -583,6 +592,54 @@ query {
 }
 ```
 
+### Projecting Nullability
+
+Currently nullability projection is not configurable. This section describes how Nexus Prsisma handles it.
+
+```
+                      Nexus Prisma Projects
+                                │
+                                │
+DB Layer (Prisma)           → → ┴ → →           API Layer (GraphQL)
+–––––––––––––––––                               –––––––––––––––––––
+
+Nullable Field Relation                         Nullable Field Relation
+
+model A {                                       type A {
+  foo Foo?                                        foo: Foo
+}                                               }
+
+
+
+Non-Nullable Field Relation                     Non-Nullable Field Relation
+
+model A {                                       type A {
+  foo Foo                                         foo: Foo!
+}                                               }
+
+
+
+List Field Relation                             Non-Nullable Field Relation Within Non-Nullable List
+
+model A {                                       type A {
+  foos Foo[]                                      foo: [Foo!]!
+}                                               }
+```
+
+If a `findOne` or `findUnique` for a non-nullable Prisma field return null for some reason (e.g. data corruption in the database) then the standard [GraphQL `null` propagation](https://medium.com/@calebmer/when-to-use-graphql-non-null-fields-4059337f6fc8) will kick in.
+
+#### Prisma Client `rejectOnNotFound` Handling
+
+Prisma Client's [`rejectOnNotFound` feature](https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#rejectonnotfound) is effectively ignored by Nexus Prisma. For example if you [set `rejectOnNotFound` globally on your Prisma Client](https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#enable-globally-for-findunique-and-findfirst) it will not effect Nexus Prisma when it uses Prisma Client. This is because Nexus Prisma [sets `rejectOnNotFound: false` for every `findUnique`/`findFirst`](https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#remarks-2) request it sends.
+
+The reason for this design choice is that when Nexus Prisma's logic is handling a GraphQL resolver that includes how to handle nullability issues which it has full knowledge about.
+
+If you have a use-case for different behaviour [please open a feature request](https://github.com/prisma/nexus-prisma/issues/new?assignees=&labels=type%2Ffeat&template=10-feature.md&title=Better%20rejectOnNotFound%20Handling). Also, remember, you can always override the Nexus Prisma resolvers with your own logic ([receipe](#Project-relation-with-custom-resolver-logic)).
+
+#### Related Issues
+
+- [`#98` Always set rejectOnNotFound to false](https://github.com/prisma/nexus-prisma/issues/98)
+
 ### Runtime Settings
 
 #### Reference
@@ -647,7 +704,7 @@ query {
   })
   ```
 
-### Generator Settings
+### Gentime Settings
 
 You are able to control certain aspects of the Nexus Prisma code generation.
 
@@ -675,7 +732,9 @@ You are able to control certain aspects of the Nexus Prisma code generation.
         └── package.json
       ```
 
-2. Import the settings singleton and make your desired changes. Example:
+2. If you have not already, install [`ts-node`](https://github.com/TypeStrong/ts-node) which `nexus-prisma` will use to read your configuration module.
+
+3. Import the settings singleton and make your desired changes. Example:
 
    ```ts
    import { settings } from 'nexus-prisma/generator'
@@ -689,19 +748,48 @@ You are able to control certain aspects of the Nexus Prisma code generation.
 
 ##### `projectIdIntToGraphQL: 'ID' | 'Int'`
 
-- **`@summary`** Map Prisma model fields of type `Int` with attribute `@id` to `ID` or `Int`.
 - **`@default`** `Int`
+- **`@summary`** Map Prisma model fields of type `Int` with attribute `@id` to `ID` or `Int`.
+
+##### `jsdocPropagationDefault?: 'none' | 'guide'`
+
+- **`@default`** `'guide'`
+- **`@summary`**
+
+  Nexus Prisma will project your Prisma schema field/model/enum documentation into JSDoc of the generated Nexus Prisma API.
+
+  This setting controls what Nexus Prisma should do when you have not written documentation in your Prisma Schema for a field/model/enum.
+
+  The following modes are as follows:
+
+  1. `'none'`
+
+     In this mode, no default JSDoc will be written.
+
+  2. `'guide'`
+
+     In this mode, guide content into your JSDoc that looks something like the following:
+
+     ```
+     * ### ️⚠️ You have not writen documentation for ${thisItem}
+
+     * Replace this default advisory JSDoc with your own documentation about ${thisItem}
+     * by documenting it in your Prisma schema. For example:
+     * ...
+     * ...
+     * ...
+     ```
 
 ##### `docPropagation.JSDoc: boolean`
 
-- **`@summary`** Should Prisma Schema docs propagate as JSDoc?
 - **`@default`** `true`
+- **`@summary`** Should Prisma Schema docs propagate as JSDoc?
 
 ##### `docPropagation.GraphQLDocs: boolean`
 
+- **`@default`** `true`
 - **`@summary`** Should Prisma Schema docs propagate as GraphQL docs?
 - **`@remarks`** When this is disabled it will force `.description` property to be `undefined`. This is for convenience, allowing you to avoid post-generation data manipulation or consumption contortions.
-- **`@default`** `true`
 
 ### Prisma String @id fields project as GraphQL ID fields
 
@@ -791,6 +879,49 @@ User // JSDoc: A user.
 User.id // JSDoc: A stable identifier to find users by.
 ```
 
+#### Rich Formatting
+
+It is possible to write multiline documentation in your Prisma Schema file. It is also possible to write markdown or whatever else you want.
+
+```prisma
+/// # Foo   _bar_
+/// qux
+///
+/// tot
+model Foo {
+  /// Foo   bar
+  /// qux
+  ///
+  /// tot
+  foo  String
+}
+```
+
+However, you should understand the formatting logic Nexus Prisma uses as it may limit what you want to achieve. The current logic is:
+
+1. Strip newlines
+1. Collapse multi-spaces spaces into single-space
+
+So the above would get extracted by Nexus Prisma as if it was written like this:
+
+```prisma
+/// # Foo _bar_ qux tot
+model Foo {
+  /// Foo bar qux tot
+  foo  String
+}
+```
+
+This formatting logic is conservative. We are open to making it less so, in order to support more expressivity. Please [open an issue](https://github.com/prisma/nexus-prisma/issues/new?assignees=&labels=type%2Ffeat&template=10-feature.md&title=Better%20extraction%20of%20Prisma%20documentation) if you have an idea.
+
+### ESM Support
+
+Nexus Prisma supports both [ESM](https://nodejs.org/api/esm.html) and CJS. There shouldn't be anything you need to "do", things should "just work". Here's the highlights of how it works though:
+
+- We publish both a CJS and ESM build to npm.
+- When the generator runs, it emits CJS code to the CJS build _and_ ESM code to the ESM build.
+- Nexus Prisma CLI exists both in the ESM and CJS builds but its built to not matter which is used. That said, the package manifest is setup to run the CJS of the CLI and so that is what ends up being used in practice.
+
 ### Refined DX
 
 These are finer points that aren't perhaps worth a top-level point but none the less add up toward a thoughtful developer experience.
@@ -808,7 +939,7 @@ When your project is in a state where the generated Nexus Prisma part is missing
 
 When `nexus-prisma` is imported it will validate that your project has peer dependencies setup correctly.
 
-If a peer dependency is not installed it `nexus-prisma` will log an error and then exit 1. If its version does not satify the range supported by the current version of `nexus-prisma` that you have installed, then a warning will be logged. If you want to opt-out of this validation then set an envar as follows:
+If a peer dependency is not installed it `nexus-prisma` will log an error and then exit 1. If its version does not satify the range supported by the current version of `nexus-prisma` that you have installed, then a warning will be logged. If you want to opt-out of this validation (e.g. you're [using a bundler](#Disable-Peer-Dependency-Check)) then set an envar as follows:
 
 ```
 NO_PEER_DEPENDENCY_CHECK=true|1
@@ -886,13 +1017,21 @@ makeSchema({
 
 ## Notes
 
+### Working with Bundlers
+
+#### Disable Peer Dependency Check
+
+When working with bundlers, it probably makes sense to disable the rutnime peer dependency check system since the bundle step is merging the dependency tree into a single file and may be moved to run standalone away from the original project manifest (e.g. in a docker container).
+
+Instructions to do this can be found [here](#Peer-Dependency-Validation).
+
+#### General Support
+
+`nexus-prisma` has tests showing that it supports `ncc`. Other bundlers are not tested and may or may not work. It is our goal however that nexus-prisma not be the reason for any popular bundler to not work on your project. So if you encounter a problem with one (e.g. `parcel`), open an issue here and we'll fix the issue including an addition to our test suite.
+
 ### For users of `nexus-prisma@=<0.20`
 
 Versions of `nexus-prisma` package prior to `0.20` were a completely different version of the API, and had also become deprecated at one point to migrate to `nexus-plugin-prisma` when Nexus Framework was being worked on. All of that is history.
-
-### For users of `prisma@=<2.17`
-
-If you are using `prisma@=<2.17` then you must use the Nexus Prisma Prisma generator name of `nexus_prisma` instead of `nexus-prisma`. This is because prior to `prisma@2.18` there was a hardcode check for `nexus-prisma` that would fail with an error message about a now-old migration.
 
 ### For users of `nexus@=<1.0`
 
@@ -916,12 +1055,30 @@ export const schema = makeSchema({
 })
 ```
 
-### Supported Versions Of Node & Prisma
+### Supported Versions Of Node
 
 We only officially support what we test.
 
 We test Node versions that are `Active LTS` and `Current`. For which versions of Node that equals you can refer to our tests or look here: https://nodejs.org/en/about/releases.
 
-We test Prisma versions `2.27`. More Prisma versions are planned to be tested, refer to [#69](https://github.com/prisma/nexus-prisma/issues/69).
+### Supported Versions Of `@prisma/client`
 
-We do not currently maintain a historical matrix of what past versions of Prisma supported what vesrions of Prisma and Node.
+We only officially support what we test.
+
+We test Prisma Client versions `2.30.x`, `2.29.x`.
+
+### Supported Versions Of `ts-node`
+
+We only officially support what we test.
+
+We test `ts-node` versions `10.x`.
+
+Reminder: `ts-node` is an optional peer dep required when you are working with the [gentime settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+
+#### Matrix Testing Policy
+
+We test the latest versions of `@prisma/client` against Node 16 and 14 on Ubuntu, macOS, and Windows while past versions of `@prisma/client` are tested only against Node 16 on Ubuntu. We do this to keep the CI test matris reasonable as the number of past `@prisma/client` versions supported could grow long.
+
+#### Patch Version Support Policy
+
+We only support the latest patch version of a minor series. For example imagine that there was a bug when `nexus-prisma` was integrated with `@prisma/client@2.30.1` but _not_ when integrated with `@prisma/client@2.30.2`. Our policy would be that users should upgrade to the latest `2.30.x` version, and that we would not release any no code changes of `nexus-prisma`.

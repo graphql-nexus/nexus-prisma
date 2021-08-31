@@ -5,6 +5,7 @@ import { LiteralUnion } from 'type-fest'
 import { StandardGraphQLScalarType, StandardGraphQLScalarTypes } from '../../helpers/graphql'
 import { PrismaScalarType } from '../../helpers/prisma'
 import { allCasesHandled } from '../../helpers/utils'
+import { PrismaDmmf } from '../../lib/prisma-dmmf'
 import { Gentime } from '../gentime/settingsSingleton'
 import { jsDocForEnum, jsDocForField, jsDocForModel } from '../helpers/JSDocTemplates'
 import { ModuleSpec } from '../types'
@@ -19,11 +20,11 @@ export function createModuleSpec(dmmf: DMMF.Document, settings: Gentime.Settings
 }
 
 const NO_ENUMS_DEFINED_COMMENT = dedent`
-  // N/A –– You have not defined any models in your Prisma schema file.
+  // N/A –– You have not defined any enums in your Prisma schema file.
 `
 
 const NO_MODELS_DEFINED_COMMENT = dedent`
-  // N/A –– You have not defined any enums in your Prisma schema file.
+  // N/A –– You have not defined any models in your Prisma schema file.
 `
 
 export function renderTypeScriptDeclarationForDocumentModels(
@@ -35,19 +36,18 @@ export function renderTypeScriptDeclarationForDocumentModels(
 
   return (
     dedent`
-    import * as Nexus from 'nexus'
-    import * as NexusCore from 'nexus/dist/core'
+      import * as Nexus from 'nexus'
+      import * as NexusCore from 'nexus/dist/core'
 
-    //
-    //
-    // TYPES
-    // TYPES
-    // TYPES
-    // TYPES
-    //
-    //
+      //
+      //
+      // TYPES
+      // TYPES
+      // TYPES
+      // TYPES
+      //
+      //
 
-    declare namespace $Types {
       // Models
 
       ${
@@ -63,114 +63,108 @@ export function renderTypeScriptDeclarationForDocumentModels(
           ? NO_ENUMS_DEFINED_COMMENT
           : enums.map((enum_) => renderTypeScriptDeclarationForEnum(enum_, settings)).join('\n\n')
       }
-    }
 
 
-    //
-    //
-    // EXPORTS
-    // EXPORTS
-    // EXPORTS
-    // EXPORTS
-    //
-    //
+      //
+      //
+      // TERMS
+      // TERMS
+      // TERMS
+      // TERMS
+      //
+      //
 
-    //
-    //
-    // EXPORTS: PRISMA MODELS
-    // EXPORTS: PRISMA MODELS
-    // EXPORTS: PRISMA MODELS
-    // EXPORTS: PRISMA MODELS
-    //
-    //
+      //
+      //
+      // EXPORTS: PRISMA MODELS
+      // EXPORTS: PRISMA MODELS
+      // EXPORTS: PRISMA MODELS
+      // EXPORTS: PRISMA MODELS
+      //
+      //
 
-    ${
-      models.length === 0
-        ? NO_MODELS_DEFINED_COMMENT
-        : models
-            .map((model) => {
-              const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForModel(model) + '\n' : ''
-              return dedent`
-                ${jsdoc}export const ${model.name}: $Types.${model.name}
-              `
-            })
-            .join('\n\n')
-    }
+      ${
+        models.length === 0
+          ? NO_MODELS_DEFINED_COMMENT
+          : models
+              .map((model) => {
+                return dedent`
+                  export const ${model.name}: ${model.name}
+                `
+              })
+              .join('\n\n')
+      }
 
-    //
-    //
-    // EXPORTS: PRISMA ENUMS
-    // EXPORTS: PRISMA ENUMS
-    // EXPORTS: PRISMA ENUMS
-    // EXPORTS: PRISMA ENUMS
-    //
-    //
+      //
+      //
+      // EXPORTS: PRISMA ENUMS
+      // EXPORTS: PRISMA ENUMS
+      // EXPORTS: PRISMA ENUMS
+      // EXPORTS: PRISMA ENUMS
+      //
+      //
 
-    ${
-      enums.length === 0
-        ? NO_ENUMS_DEFINED_COMMENT
-        : enums
-            .map((enum_) => {
-              const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForEnum(enum_) + '\n' : ''
-              return dedent`
-                ${jsdoc}export const ${enum_.name}: $Types.${enum_.name}
-              `
-            })
-            .join('\n\n')
-    }
+      ${
+        enums.length === 0
+          ? NO_ENUMS_DEFINED_COMMENT
+          : enums
+              .map((enum_) => {
+                return dedent`
+                  export const ${enum_.name}: ${enum_.name}
+                `
+              })
+              .join('\n\n')
+      }
 
-    //
-    //
-    // EXPORTS: OTHER
-    // EXPORTS: OTHER
-    // EXPORTS: OTHER
-    // EXPORTS: OTHER
-    //
-    //
+      //
+      //
+      // EXPORTS: OTHER
+      // EXPORTS: OTHER
+      // EXPORTS: OTHER
+      // EXPORTS: OTHER
+      //
+      //
 
-    import { Runtime } from '../generator/runtime/settingsSingleton'
+      import { Runtime } from '../generator/runtime/settingsSingleton'
 
-    /**
-     * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
-     * 
-     *
-     * @example
-     *
-     *     import { PrismaClient } from '@prisma/client'
-     *     import { ApolloServer } from 'apollo-server'
-     *     import { makeSchema } from 'nexus'
-     *     import { User, Post, $settings } from 'nexus-prisma'
-     *
-     *     new ApolloServer({
-     *       schema: makeSchema({
-     *         types: [],
-     *       }),
-     *       context() {
-     *         return {
-     *           db: new PrismaClient(), // <-- You put Prisma client on the "db" context property
-     *         }
-     *       },
-     *     })
-     *
-     *     $settings({
-     *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
-     *     })
-     *
-     * @remarks This is _different_ than Nexus Prisma's [_gentime_
-     *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
-     */
-    export const $settings: typeof Runtime.changeSettings
-  ` + OS.EOL
+      /**
+       * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
+       *
+       * @example
+       *
+       *     import { PrismaClient } from '@prisma/client'
+       *     import { ApolloServer } from 'apollo-server'
+       *     import { makeSchema } from 'nexus'
+       *     import { User, Post, $settings } from 'nexus-prisma'
+       *
+       *     new ApolloServer({
+       *       schema: makeSchema({
+       *         types: [],
+       *       }),
+       *       context() {
+       *         return {
+       *           db: new PrismaClient(), // <-- You put Prisma client on the "db" context property
+       *         }
+       *       },
+       *     })
+       *
+       *     $settings({
+       *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
+       *     })
+       *
+       * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+       */
+      export const $settings: typeof Runtime.changeSettings
+    ` + OS.EOL
   )
 }
 
 function renderTypeScriptDeclarationForEnum(enum_: DMMF.DatamodelEnum, settings: Gentime.Settings): string {
-  const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForEnum(enum_) + '\n' : ''
-  const description = `${
-    enum_.documentation && settings.data.docPropagation.GraphQLDocs ? `'${enum_.documentation}'` : 'undefined'
-  }`
+  const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForEnum({ enum: enum_, settings }) + '\n' : ''
+  const description = renderPrismaNodeDocumentationToDescription({ settings, node: enum_ })
+
   return dedent`
-    ${jsdoc}interface ${enum_.name} {
+    ${jsdoc}export interface ${enum_.name} {
       name: '${enum_.name}'
       description: ${description}
       members: [${enum_.values.map((value) => `'${value.name}'`).join(', ')}]
@@ -179,17 +173,25 @@ function renderTypeScriptDeclarationForEnum(enum_: DMMF.DatamodelEnum, settings:
 }
 
 function renderTypeScriptDeclarationForModel(model: DMMF.Model, settings: Gentime.Settings): string {
-  const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForModel(model) + '\n' : ''
-  const description = `${
-    model.documentation && settings.data.docPropagation.GraphQLDocs ? `'${model.documentation}'` : 'undefined'
-  }`
+  const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForModel({ model, settings }) + '\n' : ''
+  const description = renderPrismaNodeDocumentationToDescription({ settings, node: model })
+
   return dedent`
-    ${jsdoc}interface ${model.name} {
+    ${jsdoc}export interface ${model.name} {
       $name: '${model.name}'
       $description: ${description}
       ${renderTypeScriptDeclarationForModelFields(model, settings)}
     }
   `
+}
+
+const renderPrismaNodeDocumentationToDescription = (params: {
+  settings: Gentime.Settings
+  node: PrismaDmmf.DocumentableNode
+}): string => {
+  return `${
+    params.node.documentation && params.settings.data.docPropagation.GraphQLDocs ? `string` : `undefined`
+  }`
 }
 
 function renderTypeScriptDeclarationForModelFields(model: DMMF.Model, settings: Gentime.Settings): string {
@@ -207,10 +209,8 @@ function renderTypeScriptDeclarationForField({
   model: DMMF.Model
   settings: Gentime.Settings
 }): string {
-  const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForField({ field, model }) + '\n' : ''
-  const description = `${
-    field.documentation && settings.data.docPropagation.GraphQLDocs ? `string` : `undefined`
-  }`
+  const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForField({ field, model, settings }) + '\n' : ''
+  const description = renderPrismaNodeDocumentationToDescription({ settings, node: field })
   return dedent`
     ${jsdoc}${field.name}: {
       /**
@@ -221,7 +221,7 @@ function renderTypeScriptDeclarationForField({
       /**
        * The type of this field.
        */
-      type: ${renderNexusType2(field, settings)}
+      type: ${renderNexusType(field, settings)}
 
       /**
        * The documentation of this field.
@@ -236,24 +236,59 @@ function renderTypeScriptDeclarationForField({
   `
 }
 
-function renderNexusType2(field: DMMF.Field, settings: Gentime.Settings): string {
+function renderNexusType(field: DMMF.Field, settings: Gentime.Settings): string {
   const graphqlType = fieldTypeToGraphQLType(field, settings.data)
+  /**
+   * Relation fields can only work if the related field has been added to the API.
+   * If it has not, then Nexus will not "know" about it meaning it won't be valid
+   * within NexusCore.NexusNonNullDef<'...'> etc.
+   *
+   * Example:
+   *
+   *     model Foo {
+   *       bar Bar
+   *     }
+   *
+   *     model Bar {
+   *       ...
+   *     }
+   *
+   * `nexus-prisma` Foo.bar would not work unless the developer has put `Bar` into their API as well.
+   *
+   * Meanwhile, in the generated `nexus-prisma` types, to avoid static type errors, we must guard against the
+   * generated types to not _assume_ that `Bar` etc. has been put into the API.
+   *
+   * Thus, we use TS conditional types. We look to see if Nexus typegen has this type.
+   */
+  const typeLiteralMissingNexusOutputTypeErrorMessage = `'Warning/Error: The type \\'${graphqlType}\\' is not amoung the union of GetGen<\\'allNamedTypes\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\'${graphqlType}\\' to your GraphQL API.'`
+  const conditionalTypeCheck = `'${graphqlType}' extends NexusCore.GetGen<'allNamedTypes', string>`
 
   if (field.isList && field.isRequired) {
     return dedent`
-      NexusCore.NexusListDef<${graphqlType}> | NexusCore.NexusNonNullDef<${graphqlType}>
+      ${conditionalTypeCheck}
+        ? (NexusCore.NexusListDef<'${graphqlType}'> | NexusCore.NexusNonNullDef<'${graphqlType}'>)
+        : ${typeLiteralMissingNexusOutputTypeErrorMessage}
     `
   } else if (field.isList && !field.isRequired) {
     return dedent`
-      NexusCore.NexusListDef<${graphqlType}> | NexusCore.NexusNullDef<${graphqlType}>
+      ${conditionalTypeCheck}
+        ? NexusCore.NexusListDef<'${graphqlType}'> | NexusCore.NexusNullDef<'${graphqlType}'>
+        : ${typeLiteralMissingNexusOutputTypeErrorMessage}
+
     `
   } else if (field.isRequired) {
     return dedent`
-      NexusCore.NexusNonNullDef<'${graphqlType}'>
+      ${conditionalTypeCheck}
+        ? NexusCore.NexusNonNullDef<'${graphqlType}'>
+        : ${typeLiteralMissingNexusOutputTypeErrorMessage}
+
     `
   } else {
     return dedent`
-      NexusCore.NexusNullDef<'${graphqlType}'>
+      ${conditionalTypeCheck}
+        ? NexusCore.NexusNullDef<'${graphqlType}'>
+        : ${typeLiteralMissingNexusOutputTypeErrorMessage}
+
     `
   }
 }
@@ -306,7 +341,7 @@ export function fieldTypeToGraphQLType(
           return 'Bytes'
         }
         case 'Decimal': {
-          return StandardGraphQLScalarTypes.String
+          return 'Decimal'
         }
         default: {
           return allCasesHandled(typeName)

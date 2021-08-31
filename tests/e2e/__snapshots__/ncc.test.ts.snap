@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`works with ncc 1`] = `
+"type Foo {
+  id: ID!
+}
+
+type Query {
+  foos: [Foo]
+}
+"
+`;

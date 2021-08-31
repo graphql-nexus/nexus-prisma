@@ -8,6 +8,36 @@ export namespace Gentime {
      * @default 'Int'
      */
     projectIdIntToGraphQL?: 'ID' | 'Int'
+    // TODO once fixed https://github.com/homer0/packages/issues/21
+    // use @default tag in this JSDoc block
+    /**
+     * Nexus Prisma will project your Prisma schema field/model/enum documentation into JSDoc of the generated Nexus Prisma API.
+     *
+     * This setting controls what Nexus Prisma should do when you have not written documentation in your Prisma Schema for a field/model/enum.
+     *
+     * The following modes are as follows:
+     *
+     * 1. `'none'`
+     *
+     *     In this mode, no default JSDoc will be written.
+     *
+     * 2. `'guide'`
+     *
+     *     In this mode, guide content into your JSDoc that looks something like the following:
+     *
+     *     ```
+     *     * ### ️⚠️ You have not writen documentation for ${thisItem}
+     *
+     *     * Replace this default advisory JSDoc with your own documentation about ${thisItem}
+     *     * by documenting it in your Prisma schema. For example:
+     *     * ...
+     *     * ...
+     *     * ...
+     *     ```
+     *
+     * The default is `'guide'`.
+     */
+    jsdocPropagationDefault?: 'none' | 'guide'
     // TODO add some examples
     /**
      * Should Prisma Schema docs propagate as docs?
@@ -62,6 +92,9 @@ export namespace Gentime {
     fields: {
       projectIdIntToGraphQL: {
         initial: () => 'Int',
+      },
+      jsdocPropagationDefault: {
+        initial: () => 'guide',
       },
       docPropagation: {
         shorthand: (enabled) => ({

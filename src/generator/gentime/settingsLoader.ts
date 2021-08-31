@@ -1,15 +1,10 @@
 import * as fs from 'fs'
+import kleur from 'kleur'
+import type * as TSNode from 'ts-node'
 import { d } from '../../helpers/debugNexusPrisma'
+import { renderError } from '../../lib/diagnostic'
 
 export function loadUserGentimeSettings(): void {
-  // eslint-disable-next-line
-  const tsNode = require('ts-node')
-
-  // eslint-disable-next-line
-  tsNode.register({
-    compilerOptions: { module: 'commonjs' },
-  })
-
   const userSettingsModulePath = pickFirstExisting(
     [
       'nexus-prisma.ts',
@@ -21,11 +16,41 @@ export function loadUserGentimeSettings(): void {
     ].map((path) => `${process.cwd()}/${path}`)
   )
 
-  /**
-   * Load the user's settings module for side-effects against the setset instance.
-   */
-
   if (userSettingsModulePath) {
+    // Now that we know a TS config file is present, try loading ts-node
+
+    let tsNode: typeof TSNode
+
+    try {
+      // eslint-disable-next-line
+      tsNode = require('ts-node')
+    } catch (error) {
+      const nexusPrisma = `${kleur.yellow(`nexus-prisma`)}`
+      const tsNode = `${kleur.yellow(`ts-node`)}`
+      console.log(
+        renderError({
+          title: `Failed to read configuration module`,
+          reason: `${nexusPrisma} uses ${tsNode} to read your generator configuration module, but there was an error while trying to import ${tsNode}: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
+          consequence: `${nexusPrisma} will stop generation.`,
+          solution: `Fix the ${tsNode} import error (missing dependency?) or stop using ${nexusPrisma} generator configuration module.`,
+          code: 'nexus_prisma_ts_node_import',
+        })
+      )
+
+      throw error
+    }
+
+    // eslint-disable-next-line
+    tsNode.register({
+      compilerOptions: {
+        module: 'commonjs',
+      },
+    })
+
+    // Load the user's settings module for side-effects against the setset instance.
+
     d(`Loaded configuration from ${userSettingsModulePath}`)
     require(userSettingsModulePath)
   }

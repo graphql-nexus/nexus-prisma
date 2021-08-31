@@ -13,187 +13,23 @@ import * as NexusCore from 'nexus/dist/core'
 //
 //
 
-declare namespace $Types {
-  // Models
-
-  /**
-    * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
-    *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
-    * Replace this default advisory JSDoc with your own documentation about model SomeModel
-    * by documenting it in your Prisma schema. For example:
-    *
-    * 
-    * \`\`\`prisma
-    * /// Lorem ipsum dolor sit amet...
-    * model SomeModel {
-    *   foo  String
-    * }
-    * \`\`\`
-    * 
-    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-    *
-    * @example
-    *
-    * import { objectType } from 'nexus'
-    * import { SomeModel } from 'nexus-prisma'
-    *
-    * objectType({
-    *   name: SomeModel.$name
-    *   description: SomeModel.$description
-    *   definition(t) {
-    *     t.field(SomeModel.id)
-    *   }
-    * }) 
-    */
-  interface SomeModel {
-    $name: 'SomeModel'
-    $description: undefined
-    /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model SomeModel
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model SomeModel
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model SomeModel {
-      *   /// Lorem ipsum dolor sit amet.
-      *   id  String
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { SomeModel } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: SomeModel.$name
-      *   description: SomeModel.$description
-      *   definition(t) {
-      *     t.field(SomeModel.id)
-      *   }
-      * }) 
-      */
-    id: {
-      /**
-       * The name of this field.
-       */
-      name: 'id'
-    
-      /**
-       * The type of this field.
-       */
-      type: NexusCore.NexusNonNullDef<'ID'>
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
-    }
-    /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model SomeModel
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model SomeModel
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model SomeModel {
-      *   /// Lorem ipsum dolor sit amet.
-      *   foo  BigInt
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { SomeModel } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: SomeModel.$name
-      *   description: SomeModel.$description
-      *   definition(t) {
-      *     t.field(SomeModel.foo)
-      *   }
-      * }) 
-      */
-    foo: {
-      /**
-       * The name of this field.
-       */
-      name: 'foo'
-    
-      /**
-       * The type of this field.
-       */
-      type: NexusCore.NexusNonNullDef<'BigInt'>
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'SomeModel', 'foo'>
-    }
-  }
-
-  // Enums
-
-  // N/A –– You have not defined any models in your Prisma schema file.
-}
-
-
-//
-//
-// EXPORTS
-// EXPORTS
-// EXPORTS
-// EXPORTS
-//
-//
-
-//
-//
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-//
-//
+// Models
 
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
   * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
-  * 
   * \`\`\`prisma
   * /// Lorem ipsum dolor sit amet...
   * model SomeModel {
   *   foo  String
   * }
   * \`\`\`
-  * 
+  *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
@@ -207,9 +43,141 @@ declare namespace $Types {
   *   definition(t) {
   *     t.field(SomeModel.id)
   *   }
-  * }) 
+  * })
   */
-export const SomeModel: $Types.SomeModel
+export interface SomeModel {
+  $name: 'SomeModel'
+  $description: undefined
+  /**
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
+    *
+    * ### ️⚠️ You have not writen documentation for model SomeModel
+    *
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
+    * \`\`\`prisma
+    * model SomeModel {
+    *   /// Lorem ipsum dolor sit amet.
+    *   id  String
+    * }
+    * \`\`\`
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id)
+    *   }
+    * })
+    */
+  id: {
+    /**
+     * The name of this field.
+     */
+    name: 'id'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'ID'>
+    : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
+  }
+  /**
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
+    *
+    * ### ️⚠️ You have not writen documentation for model SomeModel
+    *
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
+    * \`\`\`prisma
+    * model SomeModel {
+    *   /// Lorem ipsum dolor sit amet.
+    *   foo  BigInt
+    * }
+    * \`\`\`
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.foo)
+    *   }
+    * })
+    */
+  foo: {
+    /**
+     * The name of this field.
+     */
+    name: 'foo'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'BigInt' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'BigInt'>
+    : 'Warning/Error: The type \\\\'BigInt\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'BigInt\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'SomeModel', 'foo'>
+  }
+}
+
+// Enums
+
+// N/A –– You have not defined any enums in your Prisma schema file.
+
+
+//
+//
+// TERMS
+// TERMS
+// TERMS
+// TERMS
+//
+//
+
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
+
+export const SomeModel: SomeModel
 
 //
 //
@@ -220,7 +188,7 @@ export const SomeModel: $Types.SomeModel
 //
 //
 
-// N/A –– You have not defined any models in your Prisma schema file.
+// N/A –– You have not defined any enums in your Prisma schema file.
 
 //
 //
@@ -235,7 +203,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -259,8 +226,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "
@@ -279,187 +245,23 @@ import * as NexusCore from 'nexus/dist/core'
 //
 //
 
-declare namespace $Types {
-  // Models
-
-  /**
-    * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
-    *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
-    * Replace this default advisory JSDoc with your own documentation about model SomeModel
-    * by documenting it in your Prisma schema. For example:
-    *
-    * 
-    * \`\`\`prisma
-    * /// Lorem ipsum dolor sit amet...
-    * model SomeModel {
-    *   foo  String
-    * }
-    * \`\`\`
-    * 
-    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-    *
-    * @example
-    *
-    * import { objectType } from 'nexus'
-    * import { SomeModel } from 'nexus-prisma'
-    *
-    * objectType({
-    *   name: SomeModel.$name
-    *   description: SomeModel.$description
-    *   definition(t) {
-    *     t.field(SomeModel.id)
-    *   }
-    * }) 
-    */
-  interface SomeModel {
-    $name: 'SomeModel'
-    $description: undefined
-    /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model SomeModel
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model SomeModel
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model SomeModel {
-      *   /// Lorem ipsum dolor sit amet.
-      *   id  String
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { SomeModel } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: SomeModel.$name
-      *   description: SomeModel.$description
-      *   definition(t) {
-      *     t.field(SomeModel.id)
-      *   }
-      * }) 
-      */
-    id: {
-      /**
-       * The name of this field.
-       */
-      name: 'id'
-    
-      /**
-       * The type of this field.
-       */
-      type: NexusCore.NexusNonNullDef<'ID'>
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
-    }
-    /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model SomeModel
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model SomeModel
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model SomeModel {
-      *   /// Lorem ipsum dolor sit amet.
-      *   foo  Boolean
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { SomeModel } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: SomeModel.$name
-      *   description: SomeModel.$description
-      *   definition(t) {
-      *     t.field(SomeModel.foo)
-      *   }
-      * }) 
-      */
-    foo: {
-      /**
-       * The name of this field.
-       */
-      name: 'foo'
-    
-      /**
-       * The type of this field.
-       */
-      type: NexusCore.NexusNonNullDef<'Boolean'>
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'SomeModel', 'foo'>
-    }
-  }
-
-  // Enums
-
-  // N/A –– You have not defined any models in your Prisma schema file.
-}
-
-
-//
-//
-// EXPORTS
-// EXPORTS
-// EXPORTS
-// EXPORTS
-//
-//
-
-//
-//
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-//
-//
+// Models
 
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
   * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
-  * 
   * \`\`\`prisma
   * /// Lorem ipsum dolor sit amet...
   * model SomeModel {
   *   foo  String
   * }
   * \`\`\`
-  * 
+  *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
@@ -473,9 +275,141 @@ declare namespace $Types {
   *   definition(t) {
   *     t.field(SomeModel.id)
   *   }
-  * }) 
+  * })
   */
-export const SomeModel: $Types.SomeModel
+export interface SomeModel {
+  $name: 'SomeModel'
+  $description: undefined
+  /**
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
+    *
+    * ### ️⚠️ You have not writen documentation for model SomeModel
+    *
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
+    * \`\`\`prisma
+    * model SomeModel {
+    *   /// Lorem ipsum dolor sit amet.
+    *   id  String
+    * }
+    * \`\`\`
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id)
+    *   }
+    * })
+    */
+  id: {
+    /**
+     * The name of this field.
+     */
+    name: 'id'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'ID'>
+    : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
+  }
+  /**
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
+    *
+    * ### ️⚠️ You have not writen documentation for model SomeModel
+    *
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
+    * \`\`\`prisma
+    * model SomeModel {
+    *   /// Lorem ipsum dolor sit amet.
+    *   foo  Boolean
+    * }
+    * \`\`\`
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.foo)
+    *   }
+    * })
+    */
+  foo: {
+    /**
+     * The name of this field.
+     */
+    name: 'foo'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'Boolean' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'Boolean'>
+    : 'Warning/Error: The type \\\\'Boolean\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'Boolean\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'SomeModel', 'foo'>
+  }
+}
+
+// Enums
+
+// N/A –– You have not defined any enums in your Prisma schema file.
+
+
+//
+//
+// TERMS
+// TERMS
+// TERMS
+// TERMS
+//
+//
+
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
+
+export const SomeModel: SomeModel
 
 //
 //
@@ -486,7 +420,7 @@ export const SomeModel: $Types.SomeModel
 //
 //
 
-// N/A –– You have not defined any models in your Prisma schema file.
+// N/A –– You have not defined any enums in your Prisma schema file.
 
 //
 //
@@ -501,7 +435,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -525,8 +458,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "
@@ -545,187 +477,23 @@ import * as NexusCore from 'nexus/dist/core'
 //
 //
 
-declare namespace $Types {
-  // Models
-
-  /**
-    * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
-    *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
-    * Replace this default advisory JSDoc with your own documentation about model SomeModel
-    * by documenting it in your Prisma schema. For example:
-    *
-    * 
-    * \`\`\`prisma
-    * /// Lorem ipsum dolor sit amet...
-    * model SomeModel {
-    *   foo  String
-    * }
-    * \`\`\`
-    * 
-    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-    *
-    * @example
-    *
-    * import { objectType } from 'nexus'
-    * import { SomeModel } from 'nexus-prisma'
-    *
-    * objectType({
-    *   name: SomeModel.$name
-    *   description: SomeModel.$description
-    *   definition(t) {
-    *     t.field(SomeModel.id)
-    *   }
-    * }) 
-    */
-  interface SomeModel {
-    $name: 'SomeModel'
-    $description: undefined
-    /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model SomeModel
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model SomeModel
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model SomeModel {
-      *   /// Lorem ipsum dolor sit amet.
-      *   id  String
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { SomeModel } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: SomeModel.$name
-      *   description: SomeModel.$description
-      *   definition(t) {
-      *     t.field(SomeModel.id)
-      *   }
-      * }) 
-      */
-    id: {
-      /**
-       * The name of this field.
-       */
-      name: 'id'
-    
-      /**
-       * The type of this field.
-       */
-      type: NexusCore.NexusNonNullDef<'ID'>
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
-    }
-    /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model SomeModel
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model SomeModel
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model SomeModel {
-      *   /// Lorem ipsum dolor sit amet.
-      *   foo  Bytes
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { SomeModel } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: SomeModel.$name
-      *   description: SomeModel.$description
-      *   definition(t) {
-      *     t.field(SomeModel.foo)
-      *   }
-      * }) 
-      */
-    foo: {
-      /**
-       * The name of this field.
-       */
-      name: 'foo'
-    
-      /**
-       * The type of this field.
-       */
-      type: NexusCore.NexusNonNullDef<'Bytes'>
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'SomeModel', 'foo'>
-    }
-  }
-
-  // Enums
-
-  // N/A –– You have not defined any models in your Prisma schema file.
-}
-
-
-//
-//
-// EXPORTS
-// EXPORTS
-// EXPORTS
-// EXPORTS
-//
-//
-
-//
-//
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-//
-//
+// Models
 
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
   * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
-  * 
   * \`\`\`prisma
   * /// Lorem ipsum dolor sit amet...
   * model SomeModel {
   *   foo  String
   * }
   * \`\`\`
-  * 
+  *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
@@ -739,9 +507,141 @@ declare namespace $Types {
   *   definition(t) {
   *     t.field(SomeModel.id)
   *   }
-  * }) 
+  * })
   */
-export const SomeModel: $Types.SomeModel
+export interface SomeModel {
+  $name: 'SomeModel'
+  $description: undefined
+  /**
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
+    *
+    * ### ️⚠️ You have not writen documentation for model SomeModel
+    *
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
+    * \`\`\`prisma
+    * model SomeModel {
+    *   /// Lorem ipsum dolor sit amet.
+    *   id  String
+    * }
+    * \`\`\`
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id)
+    *   }
+    * })
+    */
+  id: {
+    /**
+     * The name of this field.
+     */
+    name: 'id'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'ID'>
+    : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
+  }
+  /**
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
+    *
+    * ### ️⚠️ You have not writen documentation for model SomeModel
+    *
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
+    * \`\`\`prisma
+    * model SomeModel {
+    *   /// Lorem ipsum dolor sit amet.
+    *   foo  Bytes
+    * }
+    * \`\`\`
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.foo)
+    *   }
+    * })
+    */
+  foo: {
+    /**
+     * The name of this field.
+     */
+    name: 'foo'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'Bytes' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'Bytes'>
+    : 'Warning/Error: The type \\\\'Bytes\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'Bytes\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'SomeModel', 'foo'>
+  }
+}
+
+// Enums
+
+// N/A –– You have not defined any enums in your Prisma schema file.
+
+
+//
+//
+// TERMS
+// TERMS
+// TERMS
+// TERMS
+//
+//
+
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
+
+export const SomeModel: SomeModel
 
 //
 //
@@ -752,7 +652,7 @@ export const SomeModel: $Types.SomeModel
 //
 //
 
-// N/A –– You have not defined any models in your Prisma schema file.
+// N/A –– You have not defined any enums in your Prisma schema file.
 
 //
 //
@@ -767,7 +667,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -791,8 +690,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "
@@ -811,187 +709,23 @@ import * as NexusCore from 'nexus/dist/core'
 //
 //
 
-declare namespace $Types {
-  // Models
-
-  /**
-    * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
-    *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
-    * Replace this default advisory JSDoc with your own documentation about model SomeModel
-    * by documenting it in your Prisma schema. For example:
-    *
-    * 
-    * \`\`\`prisma
-    * /// Lorem ipsum dolor sit amet...
-    * model SomeModel {
-    *   foo  String
-    * }
-    * \`\`\`
-    * 
-    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-    *
-    * @example
-    *
-    * import { objectType } from 'nexus'
-    * import { SomeModel } from 'nexus-prisma'
-    *
-    * objectType({
-    *   name: SomeModel.$name
-    *   description: SomeModel.$description
-    *   definition(t) {
-    *     t.field(SomeModel.id)
-    *   }
-    * }) 
-    */
-  interface SomeModel {
-    $name: 'SomeModel'
-    $description: undefined
-    /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model SomeModel
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model SomeModel
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model SomeModel {
-      *   /// Lorem ipsum dolor sit amet.
-      *   id  String
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { SomeModel } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: SomeModel.$name
-      *   description: SomeModel.$description
-      *   definition(t) {
-      *     t.field(SomeModel.id)
-      *   }
-      * }) 
-      */
-    id: {
-      /**
-       * The name of this field.
-       */
-      name: 'id'
-    
-      /**
-       * The type of this field.
-       */
-      type: NexusCore.NexusNonNullDef<'ID'>
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
-    }
-    /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model SomeModel
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model SomeModel
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model SomeModel {
-      *   /// Lorem ipsum dolor sit amet.
-      *   foo  DateTime
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { SomeModel } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: SomeModel.$name
-      *   description: SomeModel.$description
-      *   definition(t) {
-      *     t.field(SomeModel.foo)
-      *   }
-      * }) 
-      */
-    foo: {
-      /**
-       * The name of this field.
-       */
-      name: 'foo'
-    
-      /**
-       * The type of this field.
-       */
-      type: NexusCore.NexusNonNullDef<'DateTime'>
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'SomeModel', 'foo'>
-    }
-  }
-
-  // Enums
-
-  // N/A –– You have not defined any models in your Prisma schema file.
-}
-
-
-//
-//
-// EXPORTS
-// EXPORTS
-// EXPORTS
-// EXPORTS
-//
-//
-
-//
-//
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-//
-//
+// Models
 
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
   * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
-  * 
   * \`\`\`prisma
   * /// Lorem ipsum dolor sit amet...
   * model SomeModel {
   *   foo  String
   * }
   * \`\`\`
-  * 
+  *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
@@ -1005,9 +739,141 @@ declare namespace $Types {
   *   definition(t) {
   *     t.field(SomeModel.id)
   *   }
-  * }) 
+  * })
   */
-export const SomeModel: $Types.SomeModel
+export interface SomeModel {
+  $name: 'SomeModel'
+  $description: undefined
+  /**
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
+    *
+    * ### ️⚠️ You have not writen documentation for model SomeModel
+    *
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
+    * \`\`\`prisma
+    * model SomeModel {
+    *   /// Lorem ipsum dolor sit amet.
+    *   id  String
+    * }
+    * \`\`\`
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id)
+    *   }
+    * })
+    */
+  id: {
+    /**
+     * The name of this field.
+     */
+    name: 'id'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'ID'>
+    : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
+  }
+  /**
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
+    *
+    * ### ️⚠️ You have not writen documentation for model SomeModel
+    *
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
+    * \`\`\`prisma
+    * model SomeModel {
+    *   /// Lorem ipsum dolor sit amet.
+    *   foo  DateTime
+    * }
+    * \`\`\`
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.foo)
+    *   }
+    * })
+    */
+  foo: {
+    /**
+     * The name of this field.
+     */
+    name: 'foo'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'DateTime' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'DateTime'>
+    : 'Warning/Error: The type \\\\'DateTime\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'DateTime\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'SomeModel', 'foo'>
+  }
+}
+
+// Enums
+
+// N/A –– You have not defined any enums in your Prisma schema file.
+
+
+//
+//
+// TERMS
+// TERMS
+// TERMS
+// TERMS
+//
+//
+
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
+
+export const SomeModel: SomeModel
 
 //
 //
@@ -1018,7 +884,7 @@ export const SomeModel: $Types.SomeModel
 //
 //
 
-// N/A –– You have not defined any models in your Prisma schema file.
+// N/A –– You have not defined any enums in your Prisma schema file.
 
 //
 //
@@ -1033,7 +899,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -1057,8 +922,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "
@@ -1077,187 +941,23 @@ import * as NexusCore from 'nexus/dist/core'
 //
 //
 
-declare namespace $Types {
-  // Models
-
-  /**
-    * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
-    *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
-    * Replace this default advisory JSDoc with your own documentation about model SomeModel
-    * by documenting it in your Prisma schema. For example:
-    *
-    * 
-    * \`\`\`prisma
-    * /// Lorem ipsum dolor sit amet...
-    * model SomeModel {
-    *   foo  String
-    * }
-    * \`\`\`
-    * 
-    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-    *
-    * @example
-    *
-    * import { objectType } from 'nexus'
-    * import { SomeModel } from 'nexus-prisma'
-    *
-    * objectType({
-    *   name: SomeModel.$name
-    *   description: SomeModel.$description
-    *   definition(t) {
-    *     t.field(SomeModel.id)
-    *   }
-    * }) 
-    */
-  interface SomeModel {
-    $name: 'SomeModel'
-    $description: undefined
-    /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model SomeModel
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model SomeModel
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model SomeModel {
-      *   /// Lorem ipsum dolor sit amet.
-      *   id  String
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { SomeModel } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: SomeModel.$name
-      *   description: SomeModel.$description
-      *   definition(t) {
-      *     t.field(SomeModel.id)
-      *   }
-      * }) 
-      */
-    id: {
-      /**
-       * The name of this field.
-       */
-      name: 'id'
-    
-      /**
-       * The type of this field.
-       */
-      type: NexusCore.NexusNonNullDef<'ID'>
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
-    }
-    /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model SomeModel
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model SomeModel
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model SomeModel {
-      *   /// Lorem ipsum dolor sit amet.
-      *   foo  Float
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { SomeModel } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: SomeModel.$name
-      *   description: SomeModel.$description
-      *   definition(t) {
-      *     t.field(SomeModel.foo)
-      *   }
-      * }) 
-      */
-    foo: {
-      /**
-       * The name of this field.
-       */
-      name: 'foo'
-    
-      /**
-       * The type of this field.
-       */
-      type: NexusCore.NexusNonNullDef<'Float'>
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'SomeModel', 'foo'>
-    }
-  }
-
-  // Enums
-
-  // N/A –– You have not defined any models in your Prisma schema file.
-}
-
-
-//
-//
-// EXPORTS
-// EXPORTS
-// EXPORTS
-// EXPORTS
-//
-//
-
-//
-//
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-//
-//
+// Models
 
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
   * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
-  * 
   * \`\`\`prisma
   * /// Lorem ipsum dolor sit amet...
   * model SomeModel {
   *   foo  String
   * }
   * \`\`\`
-  * 
+  *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
@@ -1271,9 +971,141 @@ declare namespace $Types {
   *   definition(t) {
   *     t.field(SomeModel.id)
   *   }
-  * }) 
+  * })
   */
-export const SomeModel: $Types.SomeModel
+export interface SomeModel {
+  $name: 'SomeModel'
+  $description: undefined
+  /**
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
+    *
+    * ### ️⚠️ You have not writen documentation for model SomeModel
+    *
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
+    * \`\`\`prisma
+    * model SomeModel {
+    *   /// Lorem ipsum dolor sit amet.
+    *   id  String
+    * }
+    * \`\`\`
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id)
+    *   }
+    * })
+    */
+  id: {
+    /**
+     * The name of this field.
+     */
+    name: 'id'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'ID'>
+    : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
+  }
+  /**
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
+    *
+    * ### ️⚠️ You have not writen documentation for model SomeModel
+    *
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
+    * \`\`\`prisma
+    * model SomeModel {
+    *   /// Lorem ipsum dolor sit amet.
+    *   foo  Float
+    * }
+    * \`\`\`
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.foo)
+    *   }
+    * })
+    */
+  foo: {
+    /**
+     * The name of this field.
+     */
+    name: 'foo'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'Float' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'Float'>
+    : 'Warning/Error: The type \\\\'Float\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'Float\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'SomeModel', 'foo'>
+  }
+}
+
+// Enums
+
+// N/A –– You have not defined any enums in your Prisma schema file.
+
+
+//
+//
+// TERMS
+// TERMS
+// TERMS
+// TERMS
+//
+//
+
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
+
+export const SomeModel: SomeModel
 
 //
 //
@@ -1284,7 +1116,7 @@ export const SomeModel: $Types.SomeModel
 //
 //
 
-// N/A –– You have not defined any models in your Prisma schema file.
+// N/A –– You have not defined any enums in your Prisma schema file.
 
 //
 //
@@ -1299,7 +1131,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -1323,8 +1154,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "
@@ -1343,187 +1173,23 @@ import * as NexusCore from 'nexus/dist/core'
 //
 //
 
-declare namespace $Types {
-  // Models
-
-  /**
-    * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
-    *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
-    * Replace this default advisory JSDoc with your own documentation about model SomeModel
-    * by documenting it in your Prisma schema. For example:
-    *
-    * 
-    * \`\`\`prisma
-    * /// Lorem ipsum dolor sit amet...
-    * model SomeModel {
-    *   foo  String
-    * }
-    * \`\`\`
-    * 
-    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-    *
-    * @example
-    *
-    * import { objectType } from 'nexus'
-    * import { SomeModel } from 'nexus-prisma'
-    *
-    * objectType({
-    *   name: SomeModel.$name
-    *   description: SomeModel.$description
-    *   definition(t) {
-    *     t.field(SomeModel.id)
-    *   }
-    * }) 
-    */
-  interface SomeModel {
-    $name: 'SomeModel'
-    $description: undefined
-    /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model SomeModel
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model SomeModel
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model SomeModel {
-      *   /// Lorem ipsum dolor sit amet.
-      *   id  String
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { SomeModel } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: SomeModel.$name
-      *   description: SomeModel.$description
-      *   definition(t) {
-      *     t.field(SomeModel.id)
-      *   }
-      * }) 
-      */
-    id: {
-      /**
-       * The name of this field.
-       */
-      name: 'id'
-    
-      /**
-       * The type of this field.
-       */
-      type: NexusCore.NexusNonNullDef<'ID'>
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
-    }
-    /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model SomeModel
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model SomeModel
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model SomeModel {
-      *   /// Lorem ipsum dolor sit amet.
-      *   foo  Int
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { SomeModel } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: SomeModel.$name
-      *   description: SomeModel.$description
-      *   definition(t) {
-      *     t.field(SomeModel.foo)
-      *   }
-      * }) 
-      */
-    foo: {
-      /**
-       * The name of this field.
-       */
-      name: 'foo'
-    
-      /**
-       * The type of this field.
-       */
-      type: NexusCore.NexusNonNullDef<'Int'>
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'SomeModel', 'foo'>
-    }
-  }
-
-  // Enums
-
-  // N/A –– You have not defined any models in your Prisma schema file.
-}
-
-
-//
-//
-// EXPORTS
-// EXPORTS
-// EXPORTS
-// EXPORTS
-//
-//
-
-//
-//
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-//
-//
+// Models
 
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
   * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
-  * 
   * \`\`\`prisma
   * /// Lorem ipsum dolor sit amet...
   * model SomeModel {
   *   foo  String
   * }
   * \`\`\`
-  * 
+  *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
@@ -1537,9 +1203,141 @@ declare namespace $Types {
   *   definition(t) {
   *     t.field(SomeModel.id)
   *   }
-  * }) 
+  * })
   */
-export const SomeModel: $Types.SomeModel
+export interface SomeModel {
+  $name: 'SomeModel'
+  $description: undefined
+  /**
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
+    *
+    * ### ️⚠️ You have not writen documentation for model SomeModel
+    *
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
+    * \`\`\`prisma
+    * model SomeModel {
+    *   /// Lorem ipsum dolor sit amet.
+    *   id  String
+    * }
+    * \`\`\`
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id)
+    *   }
+    * })
+    */
+  id: {
+    /**
+     * The name of this field.
+     */
+    name: 'id'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'ID'>
+    : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
+  }
+  /**
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
+    *
+    * ### ️⚠️ You have not writen documentation for model SomeModel
+    *
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
+    * \`\`\`prisma
+    * model SomeModel {
+    *   /// Lorem ipsum dolor sit amet.
+    *   foo  Int
+    * }
+    * \`\`\`
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.foo)
+    *   }
+    * })
+    */
+  foo: {
+    /**
+     * The name of this field.
+     */
+    name: 'foo'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'Int' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'Int'>
+    : 'Warning/Error: The type \\\\'Int\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'Int\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'SomeModel', 'foo'>
+  }
+}
+
+// Enums
+
+// N/A –– You have not defined any enums in your Prisma schema file.
+
+
+//
+//
+// TERMS
+// TERMS
+// TERMS
+// TERMS
+//
+//
+
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
+
+export const SomeModel: SomeModel
 
 //
 //
@@ -1550,7 +1348,7 @@ export const SomeModel: $Types.SomeModel
 //
 //
 
-// N/A –– You have not defined any models in your Prisma schema file.
+// N/A –– You have not defined any enums in your Prisma schema file.
 
 //
 //
@@ -1565,7 +1363,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -1589,8 +1386,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "
@@ -1609,136 +1405,23 @@ import * as NexusCore from 'nexus/dist/core'
 //
 //
 
-declare namespace $Types {
-  // Models
-
-  /**
-    * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
-    *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
-    * Replace this default advisory JSDoc with your own documentation about model SomeModel
-    * by documenting it in your Prisma schema. For example:
-    *
-    * 
-    * \`\`\`prisma
-    * /// Lorem ipsum dolor sit amet...
-    * model SomeModel {
-    *   foo  String
-    * }
-    * \`\`\`
-    * 
-    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-    *
-    * @example
-    *
-    * import { objectType } from 'nexus'
-    * import { SomeModel } from 'nexus-prisma'
-    *
-    * objectType({
-    *   name: SomeModel.$name
-    *   description: SomeModel.$description
-    *   definition(t) {
-    *     t.field(SomeModel.id)
-    *   }
-    * }) 
-    */
-  interface SomeModel {
-    $name: 'SomeModel'
-    $description: undefined
-    /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model SomeModel
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model SomeModel
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model SomeModel {
-      *   /// Lorem ipsum dolor sit amet.
-      *   id  Int
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { SomeModel } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: SomeModel.$name
-      *   description: SomeModel.$description
-      *   definition(t) {
-      *     t.field(SomeModel.id)
-      *   }
-      * }) 
-      */
-    id: {
-      /**
-       * The name of this field.
-       */
-      name: 'id'
-    
-      /**
-       * The type of this field.
-       */
-      type: NexusCore.NexusNonNullDef<'Int'>
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
-    }
-  }
-
-  // Enums
-
-  // N/A –– You have not defined any models in your Prisma schema file.
-}
-
-
-//
-//
-// EXPORTS
-// EXPORTS
-// EXPORTS
-// EXPORTS
-//
-//
-
-//
-//
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-//
-//
+// Models
 
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
   * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
-  * 
   * \`\`\`prisma
   * /// Lorem ipsum dolor sit amet...
   * model SomeModel {
   *   foo  String
   * }
   * \`\`\`
-  * 
+  *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
@@ -1752,9 +1435,89 @@ declare namespace $Types {
   *   definition(t) {
   *     t.field(SomeModel.id)
   *   }
-  * }) 
+  * })
   */
-export const SomeModel: $Types.SomeModel
+export interface SomeModel {
+  $name: 'SomeModel'
+  $description: undefined
+  /**
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
+    *
+    * ### ️⚠️ You have not writen documentation for model SomeModel
+    *
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
+    * \`\`\`prisma
+    * model SomeModel {
+    *   /// Lorem ipsum dolor sit amet.
+    *   id  Int
+    * }
+    * \`\`\`
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id)
+    *   }
+    * })
+    */
+  id: {
+    /**
+     * The name of this field.
+     */
+    name: 'id'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'Int' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'Int'>
+    : 'Warning/Error: The type \\\\'Int\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'Int\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
+  }
+}
+
+// Enums
+
+// N/A –– You have not defined any enums in your Prisma schema file.
+
+
+//
+//
+// TERMS
+// TERMS
+// TERMS
+// TERMS
+//
+//
+
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
+
+export const SomeModel: SomeModel
 
 //
 //
@@ -1765,7 +1528,7 @@ export const SomeModel: $Types.SomeModel
 //
 //
 
-// N/A –– You have not defined any models in your Prisma schema file.
+// N/A –– You have not defined any enums in your Prisma schema file.
 
 //
 //
@@ -1780,7 +1543,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -1804,8 +1566,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "
@@ -1824,187 +1585,23 @@ import * as NexusCore from 'nexus/dist/core'
 //
 //
 
-declare namespace $Types {
-  // Models
-
-  /**
-    * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
-    *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
-    * Replace this default advisory JSDoc with your own documentation about model SomeModel
-    * by documenting it in your Prisma schema. For example:
-    *
-    * 
-    * \`\`\`prisma
-    * /// Lorem ipsum dolor sit amet...
-    * model SomeModel {
-    *   foo  String
-    * }
-    * \`\`\`
-    * 
-    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-    *
-    * @example
-    *
-    * import { objectType } from 'nexus'
-    * import { SomeModel } from 'nexus-prisma'
-    *
-    * objectType({
-    *   name: SomeModel.$name
-    *   description: SomeModel.$description
-    *   definition(t) {
-    *     t.field(SomeModel.id)
-    *   }
-    * }) 
-    */
-  interface SomeModel {
-    $name: 'SomeModel'
-    $description: undefined
-    /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model SomeModel
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model SomeModel
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model SomeModel {
-      *   /// Lorem ipsum dolor sit amet.
-      *   id  String
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { SomeModel } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: SomeModel.$name
-      *   description: SomeModel.$description
-      *   definition(t) {
-      *     t.field(SomeModel.id)
-      *   }
-      * }) 
-      */
-    id: {
-      /**
-       * The name of this field.
-       */
-      name: 'id'
-    
-      /**
-       * The type of this field.
-       */
-      type: NexusCore.NexusNonNullDef<'ID'>
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
-    }
-    /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model SomeModel
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model SomeModel
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model SomeModel {
-      *   /// Lorem ipsum dolor sit amet.
-      *   foo  Json
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { SomeModel } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: SomeModel.$name
-      *   description: SomeModel.$description
-      *   definition(t) {
-      *     t.field(SomeModel.foo)
-      *   }
-      * }) 
-      */
-    foo: {
-      /**
-       * The name of this field.
-       */
-      name: 'foo'
-    
-      /**
-       * The type of this field.
-       */
-      type: NexusCore.NexusNonNullDef<'Json'>
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'SomeModel', 'foo'>
-    }
-  }
-
-  // Enums
-
-  // N/A –– You have not defined any models in your Prisma schema file.
-}
-
-
-//
-//
-// EXPORTS
-// EXPORTS
-// EXPORTS
-// EXPORTS
-//
-//
-
-//
-//
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-//
-//
+// Models
 
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
   * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
-  * 
   * \`\`\`prisma
   * /// Lorem ipsum dolor sit amet...
   * model SomeModel {
   *   foo  String
   * }
   * \`\`\`
-  * 
+  *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
@@ -2018,9 +1615,141 @@ declare namespace $Types {
   *   definition(t) {
   *     t.field(SomeModel.id)
   *   }
-  * }) 
+  * })
   */
-export const SomeModel: $Types.SomeModel
+export interface SomeModel {
+  $name: 'SomeModel'
+  $description: undefined
+  /**
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
+    *
+    * ### ️⚠️ You have not writen documentation for model SomeModel
+    *
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
+    * \`\`\`prisma
+    * model SomeModel {
+    *   /// Lorem ipsum dolor sit amet.
+    *   id  String
+    * }
+    * \`\`\`
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id)
+    *   }
+    * })
+    */
+  id: {
+    /**
+     * The name of this field.
+     */
+    name: 'id'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'ID'>
+    : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
+  }
+  /**
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
+    *
+    * ### ️⚠️ You have not writen documentation for model SomeModel
+    *
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
+    * \`\`\`prisma
+    * model SomeModel {
+    *   /// Lorem ipsum dolor sit amet.
+    *   foo  Json
+    * }
+    * \`\`\`
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.foo)
+    *   }
+    * })
+    */
+  foo: {
+    /**
+     * The name of this field.
+     */
+    name: 'foo'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'Json' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'Json'>
+    : 'Warning/Error: The type \\\\'Json\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'Json\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'SomeModel', 'foo'>
+  }
+}
+
+// Enums
+
+// N/A –– You have not defined any enums in your Prisma schema file.
+
+
+//
+//
+// TERMS
+// TERMS
+// TERMS
+// TERMS
+//
+//
+
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
+
+export const SomeModel: SomeModel
 
 //
 //
@@ -2031,7 +1760,7 @@ export const SomeModel: $Types.SomeModel
 //
 //
 
-// N/A –– You have not defined any models in your Prisma schema file.
+// N/A –– You have not defined any enums in your Prisma schema file.
 
 //
 //
@@ -2046,7 +1775,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -2070,8 +1798,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "
@@ -2090,136 +1817,23 @@ import * as NexusCore from 'nexus/dist/core'
 //
 //
 
-declare namespace $Types {
-  // Models
-
-  /**
-    * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
-    *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
-    * 
-    * Replace this default advisory JSDoc with your own documentation about model SomeModel
-    * by documenting it in your Prisma schema. For example:
-    *
-    * 
-    * \`\`\`prisma
-    * /// Lorem ipsum dolor sit amet...
-    * model SomeModel {
-    *   foo  String
-    * }
-    * \`\`\`
-    * 
-    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-    *
-    * @example
-    *
-    * import { objectType } from 'nexus'
-    * import { SomeModel } from 'nexus-prisma'
-    *
-    * objectType({
-    *   name: SomeModel.$name
-    *   description: SomeModel.$description
-    *   definition(t) {
-    *     t.field(SomeModel.id)
-    *   }
-    * }) 
-    */
-  interface SomeModel {
-    $name: 'SomeModel'
-    $description: undefined
-    /**
-     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
-      *
-      * ### ️⚠️ You have not writen documentation for model SomeModel
-      * 
-      * Replace this default advisory JSDoc with your own documentation about model SomeModel
-      * by documenting it in your Prisma schema. For example:
-      *
-      * \`\`\`prisma
-      * model SomeModel {
-      *   /// Lorem ipsum dolor sit amet.
-      *   id  String
-      * }
-      * \`\`\`
-      *
-      * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
-      *
-      * @example
-      *
-      * import { objectType } from 'nexus'
-      * import { SomeModel } from 'nexus-prisma'
-      *
-      * objectType({
-      *   name: SomeModel.$name
-      *   description: SomeModel.$description
-      *   definition(t) {
-      *     t.field(SomeModel.id)
-      *   }
-      * }) 
-      */
-    id: {
-      /**
-       * The name of this field.
-       */
-      name: 'id'
-    
-      /**
-       * The type of this field.
-       */
-      type: NexusCore.NexusNonNullDef<'ID'>
-    
-      /**
-       * The documentation of this field.
-       */
-      description: undefined
-    
-      /**
-       * The resolver of this field
-       */
-      resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
-    }
-  }
-
-  // Enums
-
-  // N/A –– You have not defined any models in your Prisma schema file.
-}
-
-
-//
-//
-// EXPORTS
-// EXPORTS
-// EXPORTS
-// EXPORTS
-//
-//
-
-//
-//
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-// EXPORTS: PRISMA MODELS
-//
-//
+// Models
 
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
   * ### ️⚠️ You have not writen documentation for model SomeModel
-  * 
+  *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
   *
-  * 
   * \`\`\`prisma
   * /// Lorem ipsum dolor sit amet...
   * model SomeModel {
   *   foo  String
   * }
   * \`\`\`
-  * 
+  *
   * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
   *
   * @example
@@ -2233,9 +1847,89 @@ declare namespace $Types {
   *   definition(t) {
   *     t.field(SomeModel.id)
   *   }
-  * }) 
+  * })
   */
-export const SomeModel: $Types.SomeModel
+export interface SomeModel {
+  $name: 'SomeModel'
+  $description: undefined
+  /**
+    * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
+    *
+    * ### ️⚠️ You have not writen documentation for model SomeModel
+    *
+    * Replace this default advisory JSDoc with your own documentation about model SomeModel
+    * by documenting it in your Prisma schema. For example:
+    * \`\`\`prisma
+    * model SomeModel {
+    *   /// Lorem ipsum dolor sit amet.
+    *   id  String
+    * }
+    * \`\`\`
+    *
+    * Learn more about documentation comments in Prisma schema files [here](https://www.prisma.io/docs/concepts/components/prisma-schema#comments).
+    *
+    * @example
+    *
+    * import { objectType } from 'nexus'
+    * import { SomeModel } from 'nexus-prisma'
+    *
+    * objectType({
+    *   name: SomeModel.$name
+    *   description: SomeModel.$description
+    *   definition(t) {
+    *     t.field(SomeModel.id)
+    *   }
+    * })
+    */
+  id: {
+    /**
+     * The name of this field.
+     */
+    name: 'id'
+  
+    /**
+     * The type of this field.
+     */
+    type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
+    ? NexusCore.NexusNonNullDef<'ID'>
+    : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
+  
+    /**
+     * The documentation of this field.
+     */
+    description: undefined
+  
+    /**
+     * The resolver of this field
+     */
+    resolve: NexusCore.FieldResolver<'SomeModel', 'id'>
+  }
+}
+
+// Enums
+
+// N/A –– You have not defined any enums in your Prisma schema file.
+
+
+//
+//
+// TERMS
+// TERMS
+// TERMS
+// TERMS
+//
+//
+
+//
+//
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+// EXPORTS: PRISMA MODELS
+//
+//
+
+export const SomeModel: SomeModel
 
 //
 //
@@ -2246,7 +1940,7 @@ export const SomeModel: $Types.SomeModel
 //
 //
 
-// N/A –– You have not defined any models in your Prisma schema file.
+// N/A –– You have not defined any enums in your Prisma schema file.
 
 //
 //
@@ -2261,7 +1955,6 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
- * 
  *
  * @example
  *
@@ -2285,8 +1978,7 @@ import { Runtime } from '../generator/runtime/settingsSingleton'
  *       prismaClientContextField: 'db', // <-- Tell Nexus Prisma
  *     })
  *
- * @remarks This is _different_ than Nexus Prisma's [_gentime_
- *          settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
+ * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
 export const $settings: typeof Runtime.changeSettings
 "

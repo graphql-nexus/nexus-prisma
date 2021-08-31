@@ -1,3 +1,7 @@
+## Links
+
+Sometimes links are placed into the README or in logs that we want to make as stable as possible and friendly to read. To achieve both we use short links like `pris.ly/foo`. We manage these for Nexus Prisma in the [`prisma/pris.ly` repo here](https://github.com/prisma/pris.ly/blob/main/_redirects#L175).
+
 ## Tests
 
 #### Running
@@ -47,7 +51,7 @@ Every-time:
 With all this in place, the chain reaction goes like this:
 
 1. You change `Nexus Prisma`
-1. `Nexus Prisma` TS in watch mode emits into `dist`
+1. `Nexus Prisma` TS in watch mode emits into `dist-esm` and `dist-cjs`
 1. `Nexus Prisma` `nodemon` reacts to this, runs `yalc push`, Yalc emits into `Project`'s `.yalc` dir
 1. `Project` `nodemon` reacts to this, runs `prisma generate`
 1. You try things out with newly generated Nexus Prisma in `Project`!

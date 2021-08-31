@@ -1,20 +1,16 @@
 import debug from 'debug'
-import dedent from 'dindist'
+import dindist from 'dindist'
 import * as Execa from 'execa'
 import { gql } from 'graphql-request'
+import * as GQLScalars from 'graphql-scalars'
 import stripAnsi from 'strip-ansi'
 import { inspect } from 'util'
+import { envarSpecs } from '../../src/lib/peerDepValidator'
 import { assertBuildPresent } from '../__helpers__/helpers'
 import { createPrismaSchema } from '../__helpers__/testers'
-import { setupTestProject, TestProject } from '../__helpers__/testProject'
-import * as GQLScalars from 'graphql-scalars'
+import { FileSpec, setupTestProject, TestProject } from '../__helpers__/testProject'
 
 const d = debug('e2e')
-
-interface FileSpec {
-  filePath: string
-  content: string
-}
 
 interface ProjectResult {
   runFirstBuild: Execa.ExecaSyncReturnValue<string>
@@ -56,48 +52,40 @@ function runTestProjectBuild(testProject: TestProject): ProjectResult {
 
 function setupTestNexusPrismaProject(): TestProject {
   const testProject = setupTestProject({
-    tsconfigJson: {},
-    packageJson: {
-      license: 'MIT',
-      scripts: {
-        reflect: 'yarn -s reflect:prisma && yarn -s reflect:nexus',
-        'reflect:prisma': "cross-env DEBUG='*' prisma generate",
-        // peer dependency check will fail since we're using yalc, e.g.:
-        // " ... nexus-prisma@0.0.0-dripip+c2653557 does not officially support @prisma/client@2.22.1 ... "
-        'reflect:nexus': 'cross-env REFLECT=true ts-node --transpile-only src/schema',
-        build: 'tsc',
-        start: 'node build/server',
-        'dev:server': 'yarn ts-node-dev --transpile-only server',
-        'db:migrate': 'prisma db push --force-reset && ts-node prisma/seed',
-      },
-      dependencies: {
-        dotenv: '^9.0.0',
-        'apollo-server': '^2.24.0',
-        'cross-env': '^7.0.1',
-        '@prisma/client': '^2.18.0',
-        '@types/node': '^14.14.32',
-        graphql: '^15.5.0',
-        nexus: '^1.0.0',
-        prisma: '^2.18.0',
-        'ts-node': '^9.1.1',
-        'ts-node-dev': '^1.1.6',
-        typescript: '^4.2.3',
+    files: {
+      tsconfigJson: {},
+      packageJson: {
+        license: 'MIT',
+        scripts: {
+          reflect: 'yarn -s reflect:prisma && yarn -s reflect:nexus',
+          'reflect:prisma': "cross-env DEBUG='*' prisma generate",
+          // peer dependency check will fail since we're using yalc, e.g.:
+          // " ... nexus-prisma@0.0.0-dripip+c2653557 does not officially support @prisma/client@2.22.1 ... "
+          'reflect:nexus': 'cross-env REFLECT=true ts-node --transpile-only src/schema',
+          build: 'tsc',
+          start: 'node build/server',
+          'dev:server': 'yarn ts-node-dev --transpile-only server',
+          'db:migrate': 'prisma db push --force-reset && ts-node prisma/seed',
+        },
+        dependencies: {
+          dotenv: '^9.0.0',
+          'apollo-server': '^2.24.0',
+          'cross-env': '^7.0.1',
+          '@prisma/client': '^2.18.0',
+          '@types/node': '^14.14.32',
+          graphql: '^15.5.0',
+          nexus: '^1.0.0',
+          prisma: '^2.18.0',
+          'ts-node': '^9.1.1',
+          'ts-node-dev': '^1.1.6',
+          typescript: '^4.2.3',
+        },
       },
     },
   })
 
   if (testProject.info.isReusing) {
-    d(`starting project setup cleanup for reuse`)
     testProject.fs.remove(TYPEGEN_FILE_PATH)
-    testProject.fs.remove('node_modules/nexus-prisma')
-    testProject.runOrThrow(`yalc add nexus-prisma`)
-    d(`done project setup cleanup for reuse`)
-  } else {
-    d(`starting project setup`)
-    Execa.commandSync(`yalc publish --no-scripts`, { stdio: 'inherit' })
-    testProject.runOrThrow(`yalc add nexus-prisma`, { stdio: 'inherit' })
-    testProject.runOrThrow(`npm install`, { stdio: 'inherit' })
-    d(`done project setup`)
   }
 
   return testProject
@@ -110,26 +98,40 @@ beforeAll(() => {
   testProject = setupTestNexusPrismaProject()
 })
 
-it('When bundled custom scalars are used the project type checks and generates expected GraphQL schema', async () => {
+// TODO add an ESM test
+
+it('A full-featured project type checks, generates expected GraphQL schema, and successfully resolves received GraphQL documents', async () => {
   const files: FileSpec[] = [
     {
       filePath: `prisma/schema.prisma`,
       content: createPrismaSchema({
-        content: dedent`
+        content: dindist`
           model Foo {
-            id                String   @id
-            someJsonField     Json
-            someDateTimeField DateTime
-            someBytesField    Bytes
-            someBigIntField   BigInt
-            someEnumA         SomeEnumA
-            bar               Bar?
+            id                 String     @id
+            someJsonField      Json
+            someDateTimeField  DateTime
+            someDecimalField   Decimal
+            someBytesField     Bytes
+            someBigIntField    BigInt
+            someEnumA          SomeEnumA
+            bar                Bar?
+            quxs               Qux[]
           }
 
           model Bar {
-            id    String  @id
-            foo   Foo?    @relation(fields: [fooId], references: [id])
-            fooId String?
+            id     String   @id
+            foo    Foo?     @relation(fields: [fooId], references: [id])
+            fooId  String?
+          }
+
+          // This type "Qux" will not be projected
+          // This has ramifications for the type generation where Foo.quxs must handle
+          // that Nexus does not have Qux defined in the API.
+
+          model Qux {
+            id     String  @id
+            fooId  String
+            foo    Foo     @relation(fields: [fooId], references: [id])
           }
 
           enum SomeEnumA {
@@ -142,19 +144,20 @@ it('When bundled custom scalars are used the project type checks and generates e
     },
     {
       filePath: `prisma/seed.ts`,
-      content: dedent/*ts*/ `
-        import { PrismaClient } from '@prisma/client'
+      content: dindist`
+        import { PrismaClient, Prisma } from '@prisma/client'
 
         main()
 
         async function main() {
           const prisma = new PrismaClient()
 
-          await prisma.$executeRaw('TRUNCATE "Foo", "Bar"')
+          await prisma.$executeRaw('TRUNCATE "Foo", "Bar", "Qux"')
           await prisma.foo.create({
             data: {
               id: 'foo1',
               someDateTimeField: new Date("2021-05-10T20:42:46.609Z"),
+              someDecimalField: 24.454545,
               someBytesField: Buffer.from([]),
               someJsonField: {},
               someBigIntField: BigInt(9007199254740991),
@@ -173,7 +176,7 @@ it('When bundled custom scalars are used the project type checks and generates e
     },
     {
       filePath: `src/schema.ts`,
-      content: dedent/*ts*/ `
+      content: dindist`
         require('dotenv').config()
 
         import { makeSchema, objectType, enumType, queryType } from 'nexus'
@@ -214,11 +217,13 @@ it('When bundled custom scalars are used the project type checks and generates e
               t.json('JsonManually')
               t.dateTime('DateTimeManually')
               t.bytes('BytesManually')
+              t.decimal('DecimalManually')
               t.bigInt('BigIntManually')
               t.field(Foo.someBigIntField)
               t.field(Foo.someJsonField)
               t.field(Foo.someDateTimeField)
               t.field(Foo.someBytesField)
+              t.field(Foo.someDecimalField)
             },
           }),
         ]
@@ -241,7 +246,7 @@ it('When bundled custom scalars are used the project type checks and generates e
     },
     {
       filePath: `src/context.ts`,
-      content: dedent/*ts*/ `
+      content: dindist`
         import { PrismaClient } from '@prisma/client'
 
         const prisma = new PrismaClient()
@@ -262,7 +267,7 @@ it('When bundled custom scalars are used the project type checks and generates e
     },
     {
       filePath: `src/server.ts`,
-      content: dedent/*ts*/ `
+      content: dindist`
         require('dotenv').config()
 
         import { ApolloServer } from 'apollo-server'
@@ -281,11 +286,10 @@ it('When bundled custom scalars are used the project type checks and generates e
     },
     {
       filePath: `.env`,
-      content: dedent`
-        DB_URL="postgres://bcnfshogmxsukp:e31b6ddc8b9d85f8964b6671e4b578c58f0d13e15f637513207d44268eabc950@ec2-54-196-33-23.compute-1.amazonaws.com:5432/d17vadgam0dtao?schema=${
-          process.env.E2E_DB_SCHEMA ?? 'local'
-        }"
-        NO_PEER_DEPENDENCY_CHECK="true"
+      // prettier-ignore
+      content: dindist`
+        DB_URL="postgres://bcnfshogmxsukp:e31b6ddc8b9d85f8964b6671e4b578c58f0d13e15f637513207d44268eabc950@ec2-54-196-33-23.compute-1.amazonaws.com:5432/d17vadgam0dtao?schema=${process.env.E2E_DB_SCHEMA ?? 'local'}"
+        ${envarSpecs.NO_PEER_DEPENDENCY_CHECK.name}="true"
       `,
     },
   ]
@@ -305,6 +309,7 @@ it('When bundled custom scalars are used the project type checks and generates e
   /**
    * Sanity checks around buildtime
    */
+  d(`assert various aspects of the buildtime results`)
 
   expect(results.runFirstBuild.exitCode).toBe(2)
 
@@ -348,7 +353,13 @@ it('When bundled custom scalars are used the project type checks and generates e
    * Sanity check the Prisma Client import ID
    */
 
-  expect(testProject.fs.read('node_modules/nexus-prisma/dist/runtime/index.js')).toMatch(
+  expect(testProject.fs.read('node_modules/nexus-prisma/dist-cjs/runtime/index.js')).toMatch(
+    /.*"prismaClientImportId": "@prisma\/client".*/
+  )
+
+  // TODO once a dedicated ESM test exists, move this exlcusively to it
+  // For not this is a cheap sanity check
+  expect(testProject.fs.read('node_modules/nexus-prisma/dist-esm/runtime/index.js')).toMatch(
     /.*"prismaClientImportId": "@prisma\/client".*/
   )
 
@@ -365,11 +376,22 @@ it('When bundled custom scalars are used the project type checks and generates e
   const serverProcess = testProject.runAsync(`node build/server`, { reject: false })
   serverProcess.stdout!.pipe(process.stdout)
 
-  await new Promise((res) =>
-    serverProcess.stdout!.on('data', (data: Buffer) => {
-      if (data.toString().match(SERVER_READY_MESSAGE)) res(undefined)
-    })
-  )
+  const reuslt = await Promise.race<Promise<'timeout' | 'server_started'>>([
+    new Promise((res) =>
+      serverProcess.stdout!.on('data', (data: Buffer) => {
+        if (data.toString().match(SERVER_READY_MESSAGE)) res('server_started')
+      })
+    ),
+    new Promise((res) => {
+      setTimeout(() => res('timeout'), 10_000)
+    }),
+  ])
+
+  if (reuslt === 'timeout') {
+    throw new Error(
+      `server was not ready after 10 seconds. The output from child process was:\n\n${serverProcess.stdio}\n\n`
+    )
+  }
 
   d(`starting client queries`)
 
@@ -380,11 +402,13 @@ it('When bundled custom scalars are used the project type checks and generates e
           JsonManually
           DateTimeManually
           BytesManually
+          DecimalManually
           BigIntManually
           someEnumA
           someJsonField
           someDateTimeField
           someBytesField
+          someDecimalField
           someBigIntField
         }
       }

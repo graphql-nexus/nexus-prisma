@@ -1,7 +1,7 @@
 import dedent from 'dindist'
 import gql from 'graphql-tag'
 import { list, objectType, queryType } from 'nexus'
-import NexusPrismaScalars from '../../scalars'
+import NexusPrismaScalars from '../../src/entrypoints/scalars'
 import { testIntegration } from '../__helpers__/testers'
 
 testIntegration({
@@ -18,6 +18,7 @@ testIntegration({
       NexusPrismaScalars.Bytes,
       NexusPrismaScalars.BigInt,
       NexusPrismaScalars.DateTime,
+      NexusPrismaScalars.Decimal,
       NexusPrismaScalars.Json,
       objectType({
         name: Foo.$name,
@@ -38,7 +39,7 @@ testIntegration({
       }),
     ]
   },
-  async datasourceSeed(prisma) {
+  async setup(prisma) {
     await prisma.foo.create({
       data: {
         id: 'foo1',

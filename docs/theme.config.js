@@ -12,7 +12,7 @@ export default {
   customSearch: null, // customizable, you can use algolia for example
   darkMode: true,
   footer: true,
-  footerText: `MIT ${new Date().getFullYear()} © Prisma.`,
+  footerText: `MIT ${new Date().getFullYear()} © Prisma Data Inc.`,
   footerEditOnGitHubLink: true, // will link to the docs repo
   logo: (
     <>

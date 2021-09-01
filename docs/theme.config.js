@@ -13,7 +13,7 @@ export default {
   darkMode: true,
   footer: true,
   footerText: `MIT ${new Date().getFullYear()} © Prisma Data Inc.`,
-  footerEditOnGitHubLink: true, // will link to the docs repo
+  footerEditOnGitHubLink: false, // will link to the docs repo
   logo: (
     <>
       <svg>...</svg>

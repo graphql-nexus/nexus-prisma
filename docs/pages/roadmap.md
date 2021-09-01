@@ -1,0 +1,30 @@
+## Roadmap
+
+##### Done
+
+- [x] ([#4](https://github.com/prisma/nexus-prisma/issues/4)) Support for Prisma Model field types that map to standard GraphQL scalars
+- [x] ([#8](https://github.com/prisma/nexus-prisma/issues/8)) Support for Prisma Model field types of `DateTime` & `Json`
+- [x] ([#16](https://github.com/prisma/nexus-prisma/issues/16)) Support for Prisma enums
+- [x] ([#25](https://github.com/prisma/nexus-prisma/pull/25), [#36](https://github.com/prisma/nexus-prisma/issues/36)) Basic support for Prisma Model field types relating to other Models 1:1
+- [x] ([#38](https://github.com/prisma/nexus-prisma/pull/38)) Basic support for Prisma Model field types relating to other Models 1:n
+- [x] ([#43](https://github.com/prisma/nexus-prisma/issues/43)) Support for runtime and gentime settings
+- [x] ([#61](https://github.com/prisma/nexus-prisma/issues/61)) JSDoc for settings/$settings
+- [x] ([#68](https://github.com/prisma/nexus-prisma/issues/68)) Support for Prisma Model field type `Bytes`
+
+##### Shortterm
+
+- [x] ([#59](https://github.com/prisma/nexus-prisma/issues/59)) Support for Prisma Model field type `BigInt`
+- [x] ([#94](https://github.com/prisma/nexus-prisma/issues/94)) Support for Prisma Model field type `Decimal`
+- [ ] Improved JSDoc for relation 1:1 & 1:n fields
+
+##### Midterm
+
+- [ ] Support for Prisma Model field types relating to other Models n:n
+- [ ] Support for relation field ordering parameters
+- [ ] ([#83](https://github.com/prisma/nexus-prisma/issues/83)) Support for relation field filtering parameters
+- [ ] Support for relation field pagination parameters
+
+##### Longterm
+
+- [ ] Nexus Plugin? `t.model`? `t.crud`?
+- [ ] ...

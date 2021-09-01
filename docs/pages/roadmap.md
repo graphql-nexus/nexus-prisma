@@ -1,5 +1,3 @@
-## Roadmap
-
 ##### Done
 
 - [x] ([#4](https://github.com/prisma/nexus-prisma/issues/4)) Support for Prisma Model field types that map to standard GraphQL scalars

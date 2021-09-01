@@ -1,6 +1,3 @@
-
-## Notes
-
 ### Working with Bundlers
 
 #### Disable Peer Dependency Check

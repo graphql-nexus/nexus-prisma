@@ -1,8 +1,8 @@
 /* eslint-disable */
 
 export default {
-  repository: 'https://github.com/prisma/nexus-prisma', // project repo
-  docsRepository: 'https://github.com/prisma/nexus-prisma', // docs repo
+  github: 'https://github.com/prisma/nexus-prisma',
+  docsRepositoryBase: 'https://github.com/prisma/nexus-prisma/blob/master',
   branch: 'main', // branch of docs
   path: '/', // path of docs
   titleSuffix: ' – nexus-prisma',
@@ -13,7 +13,7 @@ export default {
   darkMode: true,
   footer: true,
   footerText: `MIT ${new Date().getFullYear()} © Prisma Data Inc.`,
-  footerEditOnGitHubLink: false, // will link to the docs repo
+  footerEditLink: '',
   logo: (
     <>
       <svg>...</svg>

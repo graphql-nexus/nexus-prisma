@@ -1,3 +1,5 @@
+# Architecture
+
 ![nexus-prisma-architecture](https://user-images.githubusercontent.com/284476/118728589-70fce780-b802-11eb-8c8b-4328ef5d6fb5.png)
 
 1. You or a script (CI, programmatic, etc.) run `$ prisma generate`.

@@ -1,3 +1,5 @@
+# Recipes
+
 ### Project relation with custom resolver logic
 
 Nexus Prisma generates default GraphQL resolvers for your model _relation fields_. However you may want to run custom logic in the resolver. This is easy to do. The following show a few ways.

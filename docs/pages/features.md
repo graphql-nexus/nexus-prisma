@@ -433,7 +433,7 @@ query {
 
 ### Projecting Nullability
 
-Currently nullability projection is not configurable. This section describes how Nexus Prsisma handles it.
+Currently nullability projection is not configurable. This section describes how Nexus Prisma handles it.
 
 ```
                       Nexus Prisma Projects

@@ -118,9 +118,9 @@ export function createModuleSpec(params: {
       const gentimeSettings = ${JSON.stringify(gentimeSettings.data, null, 2)}
 
       const dmmf = getPrismaClientDmmf({
-        require: () => require('${gentimeSettings.data.prismaClientImportId}'),
+        require: () => require(${JSON.stringify(gentimeSettings.data.prismaClientImportId)}),
         importId: gentimeSettings.prismaClientImportId,
-        importIdResolved: require.resolve('${gentimeSettings.data.prismaClientImportId}')
+        importIdResolved: require.resolve(${JSON.stringify(gentimeSettings.data.prismaClientImportId)})
       })
 
       const models = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {

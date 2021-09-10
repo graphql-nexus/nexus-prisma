@@ -1,5 +1,39 @@
 # Notes
 
+### Which should I use? `plugin-nexus-prisma` vs `nexus-prisma` vs Vanilla Nexus
+
+#### Vanilla Nexus
+
+[npm](https://npmjs.org/nexus) | [github](https://github.com/graphql-nexus/nexus)
+
+If stability is the most important thing for you then Prisma+Nexus vanilla is probably good for you.
+
+- pro: flexible
+- pro: stable
+- con: If you have a lot of boilerplate CRUD then might feel painful
+
+#### `plugin-nexus-prisma`
+
+[npm](http://npmjs.org/plugin-nexus-prisma) | [github](https://github.com/graphql-nexus/nexus-plugin-prisma)
+
+If automatic CRUD is the most important thing for you then maybe stick with the old nexus-prisma.
+
+- pro: rich automated CRUD featureset
+- con: not flexible
+- con: not being actively maintained
+- con: not kept up to date with Prisma
+- con: buggy
+
+#### `nexus-prisma`
+
+[npm](http://npmjs.org/nexus-prisma) | [github](https://github.com/prisma/nexus-prisma)
+
+If you would benefit from model projection features and are ok with using early access software then consider `nexus-prisma`.
+
+- pro: flexible
+- pro: maintained
+- con: early access, things may change, bugs may be present, features may be incomplete.
+
 ### Working with Bundlers
 
 #### Disable Peer Dependency Check

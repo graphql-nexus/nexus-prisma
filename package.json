@@ -65,7 +65,7 @@
   "devDependencies": {
     "@homer0/prettier-plugin-jsdoc": "^4.0.5",
     "@prisma-labs/prettier-config": "0.1.0",
-    "@prisma/client": "2.30.0",
+    "@prisma/client": "3.0.2",
     "@prisma/sdk": "^3.0.2",
     "@types/debug": "^4.1.7",
     "@types/expand-tilde": "^2.0.0",

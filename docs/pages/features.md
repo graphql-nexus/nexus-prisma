@@ -473,7 +473,7 @@ Prisma Client's [`rejectOnNotFound` feature](https://www.prisma.io/docs/referenc
 
 The reason for this design choice is that when Nexus Prisma's logic is handling a GraphQL resolver that includes how to handle nullability issues which it has full knowledge about.
 
-If you have a use-case for different behaviour [please open a feature request](https://github.com/prisma/nexus-prisma/issues/new?assignees=&labels=type%2Ffeat&template=10-feature.md&title=Better%20rejectOnNotFound%20Handling). Also, remember, you can always override the Nexus Prisma resolvers with your own logic ([receipe](#Project-relation-with-custom-resolver-logic)).
+If you have a use-case for different behaviour [please open a feature request](https://github.com/prisma/nexus-prisma/issues/new?assignees=&labels=type%2Ffeat&template=10-feature.md&title=Better%20rejectOnNotFound%20Handling). Also, remember, you can always override the Nexus Prisma resolvers with your own logic ([recipe](/recipes#project-relation-with-custom-resolver-logic)).
 
 #### Related Issues
 
@@ -778,7 +778,7 @@ When your project is in a state where the generated Nexus Prisma part is missing
 
 When `nexus-prisma` is imported it will validate that your project has peer dependencies setup correctly.
 
-If a peer dependency is not installed it `nexus-prisma` will log an error and then exit 1. If its version does not satify the range supported by the current version of `nexus-prisma` that you have installed, then a warning will be logged. If you want to opt-out of this validation (e.g. you're [using a bundler](#Disable-Peer-Dependency-Check)) then set an envar as follows:
+If a peer dependency is not installed it `nexus-prisma` will log an error and then exit 1. If its version does not satify the range supported by the current version of `nexus-prisma` that you have installed, then a warning will be logged. If you want to opt-out of this validation (e.g. you're [using a bundler](/notes#disable-peer-dependency-check)) then set an envar as follows:
 
 ```
 NO_PEER_DEPENDENCY_CHECK=true|1

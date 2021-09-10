@@ -40,7 +40,7 @@ If you would benefit from model projection features and are ok with using early 
 
 When working with bundlers, it probably makes sense to disable the rutnime peer dependency check system since the bundle step is merging the dependency tree into a single file and may be moved to run standalone away from the original project manifest (e.g. in a docker container).
 
-Instructions to do this can be found [here](#Peer-Dependency-Validation).
+Instructions to do this can be found [here](/features#peer-dependency-validation).
 
 #### General Support
 

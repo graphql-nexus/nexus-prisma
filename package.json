@@ -66,7 +66,7 @@
     "@homer0/prettier-plugin-jsdoc": "^4.0.5",
     "@prisma-labs/prettier-config": "0.1.0",
     "@prisma/client": "2.30.0",
-    "@prisma/sdk": "2.30.0",
+    "@prisma/sdk": "^3.0.2",
     "@types/debug": "^4.1.7",
     "@types/expand-tilde": "^2.0.0",
     "@types/jest": "26.0.24",
@@ -94,7 +94,7 @@
     "nexus": "^1.1.0",
     "nodemon": "^2.0.12",
     "prettier": "2.3.2",
-    "prisma": "2.30.0",
+    "prisma": "3.0.2",
     "strip-ansi": "^6",
     "ts-jest": "27.0.4",
     "ts-node": "^10.1.0",
@@ -104,7 +104,7 @@
   },
   "prettier": "@prisma-labs/prettier-config",
   "peerDependencies": {
-    "@prisma/client": "2.29.x || 2.30.x",
+    "@prisma/client": "2.29.x || 2.30.x || 3.x",
     "nexus": "^1.0.0",
     "ts-node": "^10.0.0"
   },
@@ -117,7 +117,7 @@
     "comment-parser": "1.1.5"
   },
   "dependencies": {
-    "@prisma/generator-helper": "^2.29.x",
+    "@prisma/generator-helper": "^3.0.2",
     "debug": "^4.3.2",
     "decimal.js": "^10.3.1",
     "dindist": "^1.0.2",

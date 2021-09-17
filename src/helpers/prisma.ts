@@ -47,7 +47,7 @@ export const getPrismaClientDmmf = (packageLoader: {
     prismaClientPackage = packageLoader.require()
   } catch (error) {
     // prettier-ignore
-    throw ono(error, dedent`
+    throw ono(error as Error, dedent`
       Failed to get Prisma Client DMMF. An error occured while trying to import it from ${printedImportId}.
     `)
   }

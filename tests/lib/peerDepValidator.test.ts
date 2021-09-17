@@ -1,12 +1,11 @@
 import dedent from 'dindist'
+import { kont } from 'kont'
+import { Providers } from 'kont/providers'
 import { merge, omit } from 'lodash'
 import { PackageJson } from 'type-fest'
-import { kont } from '../../../../prisma-labs/kont/dist-cjs'
 import { envarSpecs } from '../../src/lib/peerDepValidator'
 import { assertBuildPresent } from '../__helpers__/helpers'
 import { project } from '../__providers__/project'
-import { run } from '../__providers__/run'
-import { tmpDir } from '../__providers__/tmpDir'
 
 /** Setup */
 
@@ -20,7 +19,11 @@ const peerDep = {
   name: 'charlie',
 }
 
-const ctx = kont().useBeforeAll(tmpDir()).useBeforeAll(run()).useBeforeAll(project()).done()
+const ctx = kont()
+  .useBeforeAll(Providers.Dir.create())
+  .useBeforeAll(Providers.Run.create())
+  .useBeforeAll(project())
+  .done()
 
 beforeAll(() => {
   assertBuildPresent()

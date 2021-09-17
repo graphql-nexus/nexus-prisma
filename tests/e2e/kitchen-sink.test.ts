@@ -5,12 +5,21 @@ import { gql } from 'graphql-request'
 import * as GQLScalars from 'graphql-scalars'
 import stripAnsi from 'strip-ansi'
 import { inspect } from 'util'
+import { kont } from '../../../../prisma-labs/kont/dist-cjs'
 import { envarSpecs } from '../../src/lib/peerDepValidator'
 import { assertBuildPresent } from '../__helpers__/helpers'
 import { createPrismaSchema } from '../__helpers__/testers'
-import { FileSpec, setupTestProject, TestProject } from '../__helpers__/testProject'
+import { graphQLClient } from '../__providers__/graphqlClient'
+import { project } from '../__providers__/project'
+import { run } from '../__providers__/run'
+import { tmpDir } from '../__providers__/tmpDir'
 
 const d = debug('e2e')
+
+type FileSpec = {
+  filePath: string
+  content: string
+}
 
 interface ProjectResult {
   runFirstBuild: Execa.ExecaSyncReturnValue<string>
@@ -28,17 +37,17 @@ const GRAPHQL_SCHEMA_FILE_PATH = `schema.graphql`
 
 const SERVER_READY_MESSAGE = `GraphQL API ready at http://localhost:4000/graphql`
 
-function runTestProjectBuild(testProject: TestProject): ProjectResult {
+function runTestProjectBuild(): ProjectResult {
   const commandConfig: Execa.SyncOptions = {
     reject: false,
-    cwd: testProject.fs.cwd(),
+    cwd: ctx.fs.cwd(),
   }
   const runFirstBuild = Execa.commandSync(`npm run build`, commandConfig)
   const runReflectPrisma = Execa.commandSync(`npm run reflect:prisma`, commandConfig)
   const runReflectNexus = Execa.commandSync(`npm run reflect:nexus`, commandConfig)
   const runSecondBuild = Execa.commandSync(`npm run build`, commandConfig)
-  const fileGraphqlSchema = testProject.fs.read(GRAPHQL_SCHEMA_FILE_PATH)
-  const fileTypegen = testProject.fs.read(TYPEGEN_FILE_PATH)
+  const fileGraphqlSchema = ctx.fs.read(GRAPHQL_SCHEMA_FILE_PATH)
+  const fileTypegen = ctx.fs.read(TYPEGEN_FILE_PATH)
 
   return {
     runFirstBuild,
@@ -50,52 +59,42 @@ function runTestProjectBuild(testProject: TestProject): ProjectResult {
   }
 }
 
-function setupTestNexusPrismaProject(): TestProject {
-  const testProject = setupTestProject({
-    files: {
-      tsconfigJson: {},
-      packageJson: {
-        license: 'MIT',
-        scripts: {
-          reflect: 'yarn -s reflect:prisma && yarn -s reflect:nexus',
-          'reflect:prisma': "cross-env DEBUG='*' prisma generate",
-          // peer dependency check will fail since we're using yalc, e.g.:
-          // " ... nexus-prisma@0.0.0-dripip+c2653557 does not officially support @prisma/client@2.22.1 ... "
-          'reflect:nexus': 'cross-env REFLECT=true ts-node --transpile-only src/schema',
-          build: 'tsc',
-          start: 'node build/server',
-          'dev:server': 'yarn ts-node-dev --transpile-only server',
-          'db:migrate': 'prisma db push --force-reset && ts-node prisma/seed',
-        },
-        dependencies: {
-          dotenv: '^9.0.0',
-          'apollo-server': '^2.24.0',
-          'cross-env': '^7.0.1',
-          '@prisma/client': '^2.18.0',
-          '@types/node': '^14.14.32',
-          graphql: '^15.5.0',
-          nexus: '^1.0.0',
-          prisma: '^2.18.0',
-          'ts-node': '^9.1.1',
-          'ts-node-dev': '^1.1.6',
-          typescript: '^4.2.3',
-        },
-      },
-    },
-  })
-
-  if (testProject.info.isReusing) {
-    testProject.fs.remove(TYPEGEN_FILE_PATH)
-  }
-
-  return testProject
-}
-
-let testProject: TestProject
+const ctx = kont()
+  .useBeforeEach(tmpDir())
+  .useBeforeEach(run())
+  .useBeforeEach(project())
+  .useBeforeEach(graphQLClient())
+  .done()
 
 beforeAll(() => {
   assertBuildPresent()
-  testProject = setupTestNexusPrismaProject()
+  ctx.packageJson.merge({
+    license: 'MIT',
+    scripts: {
+      reflect: 'yarn -s reflect:prisma && yarn -s reflect:nexus',
+      'reflect:prisma': "cross-env DEBUG='*' prisma generate",
+      // peer dependency check will fail since we're using yalc, e.g.:
+      // " ... nexus-prisma@0.0.0-dripip+c2653557 does not officially support @prisma/client@2.22.1 ... "
+      'reflect:nexus': 'cross-env REFLECT=true ts-node --transpile-only src/schema',
+      build: 'tsc',
+      start: 'node build/server',
+      'dev:server': 'yarn ts-node-dev --transpile-only server',
+      'db:migrate': 'prisma db push --force-reset && ts-node prisma/seed',
+    },
+    dependencies: {
+      dotenv: '^9.0.0',
+      'apollo-server': '^2.24.0',
+      'cross-env': '^7.0.1',
+      '@prisma/client': '^2.18.0',
+      '@types/node': '^14.14.32',
+      graphql: '^15.5.0',
+      nexus: '^1.0.0',
+      prisma: '^2.18.0',
+      'ts-node': '^9.1.1',
+      'ts-node-dev': '^1.1.6',
+      typescript: '^4.2.3',
+    },
+  })
 })
 
 // TODO add an ESM test
@@ -294,14 +293,14 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
     },
   ]
 
-  files.forEach((fileSpec) => testProject.fs.write(fileSpec.filePath, fileSpec.content))
+  files.forEach((fileSpec) => ctx.fs.write(fileSpec.filePath, fileSpec.content))
 
   // todo api server & database & seed that allows for testing that prisma runtime usage works
 
   // uncomment this to see dir (helpful to go there yourself and manually debug)
-  console.log(`e2e test project at: ${testProject.fs.cwd()}`)
+  console.log(`e2e test project at: ${ctx.fs.cwd()}`)
 
-  const results = runTestProjectBuild(testProject)
+  const results = runTestProjectBuild()
 
   // uncomment this to see the raw results (helpful for debugging)
   console.log(`e2e output:\n`, inspect(results, { depth: 10, colors: true }))
@@ -353,13 +352,13 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
    * Sanity check the Prisma Client import ID
    */
 
-  expect(testProject.fs.read('node_modules/nexus-prisma/dist-cjs/runtime/index.js')).toMatch(
+  expect(ctx.fs.read('node_modules/nexus-prisma/dist-cjs/runtime/index.js')).toMatch(
     /.*"prismaClientImportId": "@prisma\/client".*/
   )
 
   // TODO once a dedicated ESM test exists, move this exlcusively to it
   // For not this is a cheap sanity check
-  expect(testProject.fs.read('node_modules/nexus-prisma/dist-esm/runtime/index.js')).toMatch(
+  expect(ctx.fs.read('node_modules/nexus-prisma/dist-esm/runtime/index.js')).toMatch(
     /.*"prismaClientImportId": "@prisma\/client".*/
   )
 
@@ -369,11 +368,11 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
 
   d(`migrating database`)
 
-  testProject.runOrThrow(`npm run db:migrate`)
+  ctx.runOrThrow(`npm run db:migrate`)
 
   d(`starting server`)
 
-  const serverProcess = testProject.runAsync(`node build/server`, { reject: false })
+  const serverProcess = ctx.runAsync(`node build/server`, { reject: false })
   serverProcess.stdout!.pipe(process.stdout)
 
   const reuslt = await Promise.race<Promise<'timeout' | 'server_started'>>([
@@ -395,7 +394,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
 
   d(`starting client queries`)
 
-  const data = await testProject.client.request(gql`
+  const data = await ctx.graphQLClient.request(gql`
     query {
       bars {
         foo {

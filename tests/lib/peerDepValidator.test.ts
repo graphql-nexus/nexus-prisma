@@ -1,10 +1,12 @@
 import dedent from 'dindist'
-import * as Execa from 'execa'
 import { merge, omit } from 'lodash'
 import { PackageJson } from 'type-fest'
+import { kont } from '../../../../prisma-labs/kont/dist-cjs'
 import { envarSpecs } from '../../src/lib/peerDepValidator'
 import { assertBuildPresent } from '../__helpers__/helpers'
-import { setupTestProject, TestProject } from '../__helpers__/testProject'
+import { project } from '../__providers__/project'
+import { run } from '../__providers__/run'
+import { tmpDir } from '../__providers__/tmpDir'
 
 /** Setup */
 
@@ -18,30 +20,24 @@ const peerDep = {
   name: 'charlie',
 }
 
-let testProject: TestProject
+const ctx = kont().useBeforeAll(tmpDir()).useBeforeAll(run()).useBeforeAll(project()).done()
 
 beforeAll(() => {
   assertBuildPresent()
-  testProject = setupTestProject()
 
   // setup alpha dep that has peer dep requirements
 
-  Execa.commandSync(`yarn add kleur semver tslib debug fs-jetpack dindist --production`, {
-    cwd: testProject.fs.cwd(),
-  })
+  ctx.runOrThrow(`yarn add kleur semver tslib debug fs-jetpack dindist --production`)
 
-  testProject.fs.write(`node_modules/${requireer.name}/package.json`, {
+  ctx.fs.write(`node_modules/${requireer.name}/package.json`, {
     name: requireer.name,
     version: '1.0.0',
     main: 'dist/index.js',
   })
 
-  testProject.fs.copy(
-    `${process.cwd()}/dist-cjs`,
-    `${testProject.fs.cwd()}/node_modules/${requireer.name}/dist`
-  )
+  ctx.fs.copy(`${process.cwd()}/dist-cjs`, `${ctx.fs.cwd()}/node_modules/${requireer.name}/dist`)
 
-  testProject.fs.write(
+  ctx.fs.write(
     'validatePeerDependencies.js',
     dedent`
       const assert = require('assert')
@@ -58,7 +54,7 @@ beforeAll(() => {
     `
   )
 
-  testProject.fs.write(
+  ctx.fs.write(
     'enforceValidPeerDependencies.js',
     dedent`
       const assert = require('assert')
@@ -81,7 +77,7 @@ beforeEach(() => {
     optional: false,
   })
 
-  testProject.fs.remove(`node_modules/${peerDep.name}`)
+  ctx.fs.remove(`node_modules/${peerDep.name}`)
 })
 
 /** Helpers */
@@ -98,8 +94,8 @@ function setupDep({
   packageJson?: (defaultPackageJson: PackageJson) => PackageJson | string
 }): void {
   const depdir = `node_modules/${name}`
-  testProject.fs.write(`${depdir}/package.json`, packageJson({ name, version, main: './index.js' }))
-  testProject.fs.write(`${depdir}/index.js`, main)
+  ctx.fs.write(`${depdir}/package.json`, packageJson({ name, version, main: './index.js' }))
+  ctx.fs.write(`${depdir}/index.js`, main)
 }
 
 function setupPeerDepRequirement({
@@ -111,8 +107,8 @@ function setupPeerDepRequirement({
   range: string
   optional: boolean
 }) {
-  const old = testProject.fs.read(`node_modules/${requireer.name}/package.json`, 'json')
-  testProject.fs.write(
+  const old = ctx.fs.read(`node_modules/${requireer.name}/package.json`, 'json')
+  ctx.fs.write(
     `node_modules/${requireer.name}/package.json`,
     merge(old, {
       peerDependencies: {
@@ -126,7 +122,7 @@ function setupPeerDepRequirement({
 }
 
 function runValidatePeerDependencies() {
-  return testProject.run('node validatePeerDependencies.js', {
+  return ctx.runOrThrow('node validatePeerDependencies.js', {
     env: {
       ...process.env,
       FORCE_COLOR: '0',
@@ -135,7 +131,7 @@ function runValidatePeerDependencies() {
 }
 
 function runEnforceValidPeerDependencies(params?: { env?: Record<string, string> }) {
-  return testProject.run('node enforceValidPeerDependencies.js', {
+  return ctx.runOrThrow('node enforceValidPeerDependencies.js', {
     env: {
       ...process.env,
       FORCE_COLOR: '0',

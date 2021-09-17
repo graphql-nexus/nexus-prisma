@@ -1,44 +1,45 @@
 import dindist from 'dindist'
 import 'ts-replace-all'
+import { kont } from '../../../../prisma-labs/kont/dist-cjs'
 import { createPrismaSchema } from '../__helpers__/testers'
-import { setupTestProject } from '../__helpers__/testProject'
+import { project } from '../__providers__/project'
+import { run } from '../__providers__/run'
+import { tmpDir } from '../__providers__/tmpDir'
+
+const ctx = kont().useBeforeEach(tmpDir()).useBeforeEach(run()).useBeforeEach(project()).done()
 
 it('when project does not have ts-node installed nexus-prisma generator still generates if there are no TS generator config files present', async () => {
-  const testProject = setupTestProject({
-    files: {
-      packageJson: {
-        scripts: {
-          build: 'prisma generate',
-        },
-        dependencies: {
-          '@prisma/client': '2.30',
-          graphql: '15.5.1',
-          nexus: '1.1.0',
-          prisma: '2.30',
-        },
-      },
-      other: [
-        {
-          filePath: `prisma/schema.prisma`,
-          content: createPrismaSchema({
-            content: dindist`
-							model Foo {
-								id  String  @id
-							}
-						`,
-          }),
-        },
-        {
-          filePath: 'prisma/nexus-prisma.ts',
-          content: dindist`
-            throw new Error('Oops, something unexpected happened.')
-          `,
-        },
-      ],
+  ctx.packageJson.merge({
+    scripts: {
+      build: 'prisma generate',
+    },
+    dependencies: {
+      '@prisma/client': '2.30',
+      graphql: '15.5.1',
+      nexus: '1.1.0',
+      prisma: '2.30',
     },
   })
 
-  const result = await testProject.runNpmScript(`build`)
+  ctx.fs.write(
+    `prisma/schema.prisma`,
+    createPrismaSchema({
+      content: dindist`
+      model Foo {
+        id  String  @id
+      }
+    `,
+    })
+  )
+
+  ctx.fs.write(
+    'prisma/nexus-prisma.ts',
+    dindist`
+      throw new Error('Oops, something unexpected happened.')
+    `
+  )
+
+  const result = await ctx.runNpmScript(`build`)
 
   expect(normalizeGeneratorOutput(result.stderr)).toMatchSnapshot('stderr')
   expect(normalizeGeneratorOutput(result.stdout)).toMatchSnapshot('stdout')

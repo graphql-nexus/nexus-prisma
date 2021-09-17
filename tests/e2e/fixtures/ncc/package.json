@@ -5,12 +5,11 @@
     "build": "npm run build:prisma && npm run build:ncc",
     "build:prisma": "prisma generate",
     "build:ncc": "ncc build --no-cache main.ts",
-    "start:dist": "cross-env NO_PEER_DEPENDENCY_CHECK=true node ./dist",
+    "start:dist": "node ./dist",
     "start:ts": "ts-node main"
   },
   "dependencies": {
     "@prisma/client": "2.30",
-    "cross-env": "7.0.1",
     "@vercel/ncc": "0.29.2",
     "graphql": "15.5.1",
     "nexus": "1.1.0",

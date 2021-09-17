@@ -1,12 +1,11 @@
-import * as Execa from 'execa'
 import { createDynamicProvider } from 'kont'
 import { Providers } from 'kont/providers'
 import { merge } from 'lodash'
 import readPkgUp from 'read-pkg-up'
 import { PackageJson, TsConfigJson } from 'type-fest'
-import { d } from '../../src/helpers/debugNexusPrisma'
 
 type Project = {
+  thisPackageName: string
   fixture: {
     use(path: string): void
   }
@@ -36,6 +35,7 @@ export const project = () =>
       const thisPackageName = thisPackageJson.name
 
       const api: Project = {
+        thisPackageName,
         fixture: {
           use: (path) => {
             ctx.fs.copy(path, ctx.fs.cwd(), {
@@ -87,11 +87,11 @@ export const project = () =>
         include: ['src'],
       })
 
-      d(`starting project setup`)
-      Execa.commandSync(`yalc publish --no-scripts`) // , , { stdio: 'inherit' } <-- enable in a debug mode?
-      ctx.runOrThrow(`yalc add ${thisPackageName}`) // , { stdio: 'inherit' } <-- enable in a debug mode?
-      ctx.runOrThrow(`npm install --legacy-peer-deps`) // , { stdio: 'inherit' } <-- enable in a debug mode?
-      d(`done project setup`)
+      // d(`starting project setup`)
+      // Execa.commandSync(`yalc publish --no-scripts`)
+      // ctx.runOrThrow(`yalc add ${thisPackageName}`)
+      // ctx.runOrThrow(`npm install --legacy-peer-deps`)
+      // d(`done project setup`)
 
       return api
     })

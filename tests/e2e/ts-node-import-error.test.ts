@@ -1,12 +1,15 @@
 import dindist from 'dindist'
+import { kont } from 'kont'
+import { Providers } from 'kont/providers'
 import 'ts-replace-all'
-import { kont } from '../../../../prisma-labs/kont/dist-cjs'
 import { createPrismaSchema } from '../__helpers__/testers'
 import { project } from '../__providers__/project'
-import { run } from '../__providers__/run'
-import { tmpDir } from '../__providers__/tmpDir'
 
-const ctx = kont().useBeforeEach(tmpDir()).useBeforeEach(run()).useBeforeEach(project()).done()
+const ctx = kont()
+  .useBeforeEach(Providers.Dir.create())
+  .useBeforeEach(Providers.Run.create())
+  .useBeforeEach(project())
+  .done()
 
 it('when project does not have ts-node installed nexus-prisma generator still generates if there are no TS generator config files present', async () => {
   ctx.packageJson.merge({
@@ -39,7 +42,7 @@ it('when project does not have ts-node installed nexus-prisma generator still ge
     `
   )
 
-  const result = await ctx.runNpmScript(`build`)
+  const result = await ctx.runPackageScript(`build`)
 
   expect(normalizeGeneratorOutput(result.stderr)).toMatchSnapshot('stderr')
   expect(normalizeGeneratorOutput(result.stdout)).toMatchSnapshot('stdout')

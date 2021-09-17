@@ -1,11 +1,10 @@
 import * as Execa from 'execa'
 import { createDynamicProvider } from 'kont'
+import { Providers } from 'kont/providers'
 import { merge } from 'lodash'
 import readPkgUp from 'read-pkg-up'
 import { PackageJson, TsConfigJson } from 'type-fest'
 import { d } from '../../src/helpers/debugNexusPrisma'
-import * as RunProvider from './run'
-import * as TmpDirProvider from './tmpDir'
 
 type Project = {
   fixture: {
@@ -21,7 +20,7 @@ type Project = {
   }
 }
 
-export type Needs = TmpDirProvider.Contributes & RunProvider.Contributes
+export type Needs = Providers.Dir.Contributes & Providers.Run.Contributes
 
 export type Contributes = Project
 

@@ -4,6 +4,7 @@ import * as Execa from 'execa'
 import { gql } from 'graphql-request'
 import * as GQLScalars from 'graphql-scalars'
 import { kont } from 'kont'
+import { Providers } from 'kont/providers'
 import stripAnsi from 'strip-ansi'
 import { inspect } from 'util'
 import { envarSpecs } from '../../src/lib/peerDepValidator'
@@ -11,8 +12,6 @@ import { assertBuildPresent } from '../__helpers__/helpers'
 import { createPrismaSchema } from '../__helpers__/testers'
 import { graphQLClient } from '../__providers__/graphqlClient'
 import { project } from '../__providers__/project'
-import { run } from '../__providers__/run'
-import { tmpDir } from '../__providers__/tmpDir'
 
 const d = debug('e2e')
 
@@ -60,8 +59,8 @@ function runTestProjectBuild(): ProjectResult {
 }
 
 const ctx = kont()
-  .useBeforeEach(tmpDir())
-  .useBeforeEach(run())
+  .useBeforeEach(Providers.Dir.create())
+  .useBeforeEach(Providers.Run.create())
   .useBeforeEach(project())
   .useBeforeEach(graphQLClient())
   .done()

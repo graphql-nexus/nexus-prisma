@@ -1,7 +1,7 @@
 import * as Execa from 'execa'
 import { createDynamicProvider } from 'kont'
 import { merge } from 'lodash'
-import { readPackageUpSync } from 'read-pkg-up'
+import readPkgUp from 'read-pkg-up'
 import { PackageJson, TsConfigJson } from 'type-fest'
 import { d } from '../../src/helpers/debugNexusPrisma'
 import * as RunProvider from './run'
@@ -28,7 +28,7 @@ export type Contributes = Project
 export const project = () =>
   createDynamicProvider<Needs, Contributes>((register) =>
     register.before((ctx) => {
-      const thisPackageJson = readPackageUpSync({ cwd: __dirname })?.packageJson
+      const thisPackageJson = readPkgUp.sync({ cwd: __dirname })?.packageJson
 
       if (!thisPackageJson) {
         throw new Error(`Failed to get own package.json`)

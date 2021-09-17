@@ -213,8 +213,6 @@ describe('enforceValidPeerDependencies', () => {
   })
 
   it('if peer dependency is missing, than logs and process exits 1', () => {
-    const result = runEnforceValidPeerDependencies()
-    expect(result.exitCode).toEqual(1)
-    expect(result.stderr).toMatchSnapshot()
+    expect(() => runEnforceValidPeerDependencies()).toThrowErrorMatchingSnapshot()
   })
 })

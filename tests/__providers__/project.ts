@@ -88,9 +88,9 @@ export const project = () =>
       })
 
       d(`starting project setup`)
-      Execa.commandSync(`yalc publish --no-scripts`, { stdio: 'inherit' })
-      ctx.runOrThrow(`yalc add ${thisPackageName}`, { stdio: 'inherit' })
-      ctx.runOrThrow(`npm install --legacy-peer-deps`, { stdio: 'inherit' })
+      Execa.commandSync(`yalc publish --no-scripts`) // , , { stdio: 'inherit' } <-- enable in a debug mode?
+      ctx.runOrThrow(`yalc add ${thisPackageName}`) // , { stdio: 'inherit' } <-- enable in a debug mode?
+      ctx.runOrThrow(`npm install --legacy-peer-deps`) // , { stdio: 'inherit' } <-- enable in a debug mode?
       d(`done project setup`)
 
       return api

@@ -103,7 +103,7 @@ dist-*
 # TernJS port file
 .tern-port
 
-# Facades
+# Simulated Package Exports
 scalars.d.ts
 scalars.js
 generator.d.ts

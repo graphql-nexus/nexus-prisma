@@ -7,7 +7,11 @@
   "license": "MIT",
   "files": [
     "dist-cjs",
-    "dist-esm"
+    "dist-esm",
+    "scalars.d.ts",
+    "scalars.js",
+    "generator.d.ts",
+    "generator.js"
   ],
   "exports": {
     ".": {

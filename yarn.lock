@@ -3921,10 +3921,10 @@ kleur@^4.1.4:
   resolved "https://registry.npmjs.org/kleur/-/kleur-4.1.4.tgz"
   integrity sha512-8QADVssbrFjivHWQU7KkMgptGTl6WAcSdlbBPY4uNF+mWr6DGcKrvY2w4FQJoXch7+fKMjj0dRrL75vk3k23OA==
 
-kont@^0.0.0-pr.2.6.ec05290:
-  version "0.0.0-pr.2.6.ec05290"
-  resolved "https://registry.yarnpkg.com/kont/-/kont-0.0.0-pr.2.6.ec05290.tgz#f2eaaa246ca1af87fce089e1a35b138d8837f646"
-  integrity sha512-yKaCmrLp/aKi8B1YOkG0oxFExIh7v6nAlatTRpRt7DYji5L1tNBhc3Yf+GdOmiJeSAkKRwO3FHOOmif7yX0I7g==
+kont@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/kont/-/kont-0.2.0.tgz#44c025c74df5967c7e508a7f84b4ce1c0ba982ab"
+  integrity sha512-SbuEU08oUSriLKCcg+OHtrcsVwT1J1KhqWGanjDAgLt9h6gXGkgUIgaXj6Dhmz1qE2XcZ8Z3yVNU141JIUM/2A==
   dependencies:
     "@jsdevtools/ono" "^7.1.3"
     execa "^5.1.1"

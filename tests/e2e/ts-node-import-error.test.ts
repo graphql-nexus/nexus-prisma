@@ -42,6 +42,9 @@ it('when project does not have ts-node installed nexus-prisma generator still ge
     `
   )
 
+  ctx.runOrThrow(`yalc add ${ctx.thisPackageName}`)
+  ctx.runOrThrow(`npm install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
+
   const result = await ctx.runPackageScript(`build`)
 
   expect(normalizeGeneratorOutput(result.stderr)).toMatchSnapshot('stderr')

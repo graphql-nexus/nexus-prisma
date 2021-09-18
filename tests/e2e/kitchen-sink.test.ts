@@ -65,8 +65,7 @@ const ctx = kont()
   .useBeforeEach(graphQLClient())
   .done()
 
-beforeAll(() => {
-  assertBuildPresent()
+beforeEach(() => {
   ctx.packageJson.merge({
     license: 'MIT',
     scripts: {
@@ -94,6 +93,8 @@ beforeAll(() => {
       typescript: '^4.2.3',
     },
   })
+  ctx.runOrThrow(`yalc add ${ctx.thisPackageName}`)
+  ctx.runOrThrow(`npm install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
 })
 
 // TODO add an ESM test

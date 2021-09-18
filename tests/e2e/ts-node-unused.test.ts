@@ -31,6 +31,8 @@ const ctx = kont()
         `,
       })
     )
+    ctx.runOrThrow(`yalc add ${ctx.thisPackageName}`)
+    ctx.runOrThrow(`npm install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
     return ctx
   })
   .done()

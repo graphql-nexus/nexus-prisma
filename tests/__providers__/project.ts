@@ -1,8 +1,10 @@
+import * as Execa from 'execa'
 import { createDynamicProvider } from 'kont'
 import { Providers } from 'kont/providers'
 import { merge } from 'lodash'
 import readPkgUp from 'read-pkg-up'
 import { PackageJson, TsConfigJson } from 'type-fest'
+import { assertBuildPresent } from '../__helpers__/helpers'
 
 type Project = {
   thisPackageName: string
@@ -26,6 +28,9 @@ export type Contributes = Project
 export const project = () =>
   createDynamicProvider<Needs, Contributes>((register) =>
     register.before((ctx) => {
+      assertBuildPresent()
+      Execa.commandSync(`yalc publish --no-scripts`)
+
       const thisPackageJson = readPkgUp.sync({ cwd: __dirname })?.packageJson
 
       if (!thisPackageJson) {

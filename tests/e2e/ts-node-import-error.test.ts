@@ -1,44 +1,51 @@
 import dindist from 'dindist'
+import { kont } from 'kont'
+import { Providers } from 'kont/providers'
 import 'ts-replace-all'
 import { createPrismaSchema } from '../__helpers__/testers'
-import { setupTestProject } from '../__helpers__/testProject'
+import { project } from '../__providers__/project'
+
+const ctx = kont()
+  .useBeforeEach(Providers.Dir.create())
+  .useBeforeEach(Providers.Run.create())
+  .useBeforeEach(project())
+  .done()
 
 it('when project does not have ts-node installed nexus-prisma generator still generates if there are no TS generator config files present', async () => {
-  const testProject = setupTestProject({
-    files: {
-      packageJson: {
-        scripts: {
-          build: 'prisma generate',
-        },
-        dependencies: {
-          '@prisma/client': '2.30',
-          graphql: '15.5.1',
-          nexus: '1.1.0',
-          prisma: '2.30',
-        },
-      },
-      other: [
-        {
-          filePath: `prisma/schema.prisma`,
-          content: createPrismaSchema({
-            content: dindist`
-							model Foo {
-								id  String  @id
-							}
-						`,
-          }),
-        },
-        {
-          filePath: 'prisma/nexus-prisma.ts',
-          content: dindist`
-            throw new Error('Oops, something unexpected happened.')
-          `,
-        },
-      ],
+  ctx.packageJson.merge({
+    scripts: {
+      build: 'prisma generate',
+    },
+    dependencies: {
+      '@prisma/client': '2.30',
+      graphql: '15.5.1',
+      nexus: '1.1.0',
+      prisma: '2.30',
     },
   })
 
-  const result = await testProject.runNpmScript(`build`)
+  ctx.fs.write(
+    `prisma/schema.prisma`,
+    createPrismaSchema({
+      content: dindist`
+      model Foo {
+        id  String  @id
+      }
+    `,
+    })
+  )
+
+  ctx.fs.write(
+    'prisma/nexus-prisma.ts',
+    dindist`
+      throw new Error('Oops, something unexpected happened.')
+    `
+  )
+
+  ctx.runOrThrow(`yalc add ${ctx.thisPackageName}`)
+  ctx.runOrThrow(`npm install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
+
+  const result = await ctx.runPackageScript(`build`)
 
   expect(normalizeGeneratorOutput(result.stderr)).toMatchSnapshot('stderr')
   expect(normalizeGeneratorOutput(result.stdout)).toMatchSnapshot('stdout')

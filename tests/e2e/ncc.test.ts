@@ -1,18 +1,25 @@
+import { kont } from 'kont'
+import { Providers } from 'kont/providers'
 import * as Path from 'path'
-import { setupTestProject } from '../__helpers__/testProject'
+import { project } from '../__providers__/project'
 
-it('works with ncc', async () => {
-  const testProject = setupTestProject({
-    fixture: Path.join(__dirname, 'fixtures/ncc'),
-  })
+const ctx = kont()
+  .useBeforeEach(Providers.Dir.create())
+  .useBeforeEach(Providers.Run.create())
+  .useBeforeEach(project())
+  .done()
 
-  await testProject.runOrThrowNpmScript(`build`)
+it('works with ncc', () => {
+  ctx.fixture.use(Path.join(__dirname, 'fixtures/ncc'))
+  ctx.runOrThrow(`yalc add ${ctx.thisPackageName}`)
+  ctx.runOrThrow(`npm install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
+  ctx.runOrThrowPackageScript(`build`)
 
   // Remove this to ensure that when the ncc build is run in the next step
   // it is truly running independent of any node_modules.
-  await testProject.fs.remove('node_modules')
+  ctx.fs.remove('node_modules')
 
-  const result = await testProject.runOrThrowNpmScript(`start:dist`)
+  const result = ctx.runOrThrowPackageScript(`start:dist`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
 
   expect(result.stdout).toMatchSnapshot()
 })

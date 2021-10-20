@@ -86,9 +86,9 @@ function getPrismaClientImportIdForItsGeneratorOutputConfig(
      *
      * How this works:
      *
-     * 1. Get the Prisma Client generatour output path minus the trailing node_moudles/@prisma/client (if present, it could be totally custom).
+     * 1. Get the Prisma Client generator output path minus the trailing node_modules/@prisma/client (if present, it could be totally custom).
      *
-     * Note that even if the user has not explicitly configured an output path in their PSL file by the time we get the geneator config from
+     * Note that even if the user has not explicitly configured an output path in their PSL file by the time we get the generator config from
      * Prisma generator system the output default has been supplied so we always have a value here to work with.
      *
      * 2. Get the Nexus Prisma package path on the user's machine by starting from this module and going four directories up. Four directories
@@ -98,7 +98,7 @@ function getPrismaClientImportIdForItsGeneratorOutputConfig(
      * Nexus Prisma is placed into <project>/.yalc rather than <project>/node_modules. And therefore, the check we want to achieve here would
      * fail when it shouldn't.
      *
-     * 3. With the two paths we check what the relative path between them is. If its an empty string, it means they are the same.
+     * 3. With the two paths we check what the relative path between them is. If it's an empty string, it means they are the same.
      *
      * Note this technique is better than string comparison because it guards against meaningless path difference details like windows vs posix.
      * We're not certain what path standard we'll get from Prisma for example and ideally we don't care. Path.relative function should let us not

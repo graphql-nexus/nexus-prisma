@@ -1,6 +1,5 @@
 import dedent from 'dindist'
-import { kont } from 'kont'
-import { Providers } from 'kont/providers'
+import { konn, providers } from 'konn'
 import { merge, omit } from 'lodash'
 import { PackageJson } from 'type-fest'
 import { envarSpecs } from '../../src/lib/peerDepValidator'
@@ -19,11 +18,7 @@ const peerDep = {
   name: 'charlie',
 }
 
-const ctx = kont()
-  .useBeforeAll(Providers.Dir.create())
-  .useBeforeAll(Providers.Run.create())
-  .useBeforeAll(project())
-  .done()
+const ctx = konn().useBeforeAll(providers.dir()).useBeforeAll(providers.run()).useBeforeAll(project()).done()
 
 beforeAll(() => {
   assertBuildPresent()

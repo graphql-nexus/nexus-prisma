@@ -4,8 +4,8 @@ import dindist from 'dindist'
 import * as Execa from 'execa'
 import { gql } from 'graphql-request'
 import * as GQLScalars from 'graphql-scalars'
-import { kont } from 'kont'
-import { Providers } from 'kont/providers'
+import { konn, providers } from 'konn'
+import { Providers } from 'konn/providers'
 import stripAnsi from 'strip-ansi'
 import { inspect } from 'util'
 import { envarSpecs } from '../../src/lib/peerDepValidator'
@@ -59,9 +59,9 @@ function runTestProjectBuild(): ProjectResult {
   }
 }
 
-const ctx = kont()
-  .useBeforeEach(Providers.Dir.create())
-  .useBeforeEach(Providers.Run.create())
+const ctx = konn()
+  .useBeforeEach(providers.dir())
+  .useBeforeEach(providers.run())
   .useBeforeEach(project())
   .useBeforeEach(graphQLClient())
   .done()

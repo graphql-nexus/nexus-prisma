@@ -1,6 +1,6 @@
 import * as Execa from 'execa'
-import { createDynamicProvider } from 'kont'
-import { Providers } from 'kont/providers'
+import { provider } from 'konn'
+import { Providers } from 'konn/providers'
 import { merge } from 'lodash'
 import readPkgUp from 'read-pkg-up'
 import { PackageJson, TsConfigJson } from 'type-fest'
@@ -26,8 +26,9 @@ export type Needs = Providers.Dir.Contributes & Providers.Run.Contributes
 export type Contributes = Project
 
 export const project = () =>
-  createDynamicProvider<Needs, Contributes>((register) =>
-    register.name('project').before((ctx) => {
+  provider<Needs, Contributes>()
+    .name('project')
+    .before((ctx) => {
       assertBuildPresent()
       Execa.commandSync(`yarn -s yalc publish --no-scripts`)
 
@@ -100,4 +101,4 @@ export const project = () =>
 
       return api
     })
-  )
+    .done()

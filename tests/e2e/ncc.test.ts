@@ -1,11 +1,11 @@
-import { kont } from 'kont'
-import { Providers } from 'kont/providers'
+import { konn, providers } from 'konn'
+import { Providers } from 'konn/providers'
 import * as Path from 'path'
 import { project } from '../__providers__/project'
 
-const ctx = kont()
-  .useBeforeEach(Providers.Dir.create())
-  .useBeforeEach(Providers.Run.create())
+const ctx = konn()
+  .useBeforeEach(providers.dir())
+  .useBeforeEach(providers.run())
   .useBeforeEach(project())
   .done()
 

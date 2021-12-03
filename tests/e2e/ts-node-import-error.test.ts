@@ -1,13 +1,12 @@
 import dindist from 'dindist'
-import { kont } from 'kont'
-import { Providers } from 'kont/providers'
+import { konn, providers } from 'konn'
 import 'ts-replace-all'
 import { createPrismaSchema } from '../__helpers__/testers'
 import { project } from '../__providers__/project'
 
-const ctx = kont()
-  .useBeforeEach(Providers.Dir.create())
-  .useBeforeEach(Providers.Run.create())
+const ctx = konn()
+  .useBeforeEach(providers.dir())
+  .useBeforeEach(providers.run())
   .useBeforeEach(project())
   .done()
 

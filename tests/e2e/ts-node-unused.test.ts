@@ -1,14 +1,13 @@
 import * as Path from 'path'
 import dindist from 'dindist'
-import { kont } from 'kont'
-import { Providers } from 'kont/providers'
+import { konn, providers } from 'konn'
 import 'ts-replace-all'
 import { createPrismaSchema } from '../__helpers__/testers'
 import { project } from '../__providers__/project'
 
-const ctx = kont()
-  .useBeforeAll(Providers.Dir.create())
-  .useBeforeAll(Providers.Run.create())
+const ctx = konn()
+  .useBeforeAll(providers.dir())
+  .useBeforeAll(providers.run())
   .useBeforeAll(project())
   .beforeAll((ctx) => {
     ctx.packageJson.merge({

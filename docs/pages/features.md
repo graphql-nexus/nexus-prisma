@@ -80,7 +80,7 @@ However some of the Prisma scalars do not have a natural standard representation
 
 > **Note:** BigInt is supported in Node.js since version [10.4.0](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt#browser_compatibility) however to support BigInt in `JSON.parse`/`JSON.stringify` you must use [`json-bigint-patch`](https://github.com/ardatan/json-bigint-patch) otherwise BigInt values will be serialized as strings.
 
-You can use your own GraphQL Scalar Implementation, however, you _must adhear to the above Prisma/GraphQL name mapping defined above_.
+You can use your own GraphQL Scalar Implementation, however, you _must adhere to the above Prisma/GraphQL name mapping defined above_.
 
 Here is an example using Nexus Prisma's pre-defined GraphQL custom scalars:
 

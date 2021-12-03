@@ -376,7 +376,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
   const serverProcess = ctx.runAsync(`node build/server`, { reject: false })
   serverProcess.stdout!.pipe(process.stdout)
 
-  const reuslt = await Promise.race<Promise<'timeout' | 'server_started'>>([
+  const result = await Promise.race<'timeout' | 'server_started'>([
     new Promise((res) =>
       serverProcess.stdout!.on('data', (data: Buffer) => {
         if (data.toString().match(SERVER_READY_MESSAGE)) res('server_started')
@@ -387,7 +387,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
     }),
   ])
 
-  if (reuslt === 'timeout') {
+  if (result === 'timeout') {
     throw new Error(
       `server was not ready after 10 seconds. The output from child process was:\n\n${serverProcess.stdio}\n\n`
     )

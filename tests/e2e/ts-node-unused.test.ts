@@ -1,3 +1,4 @@
+import * as Path from 'path'
 import dindist from 'dindist'
 import { kont } from 'kont'
 import { Providers } from 'kont/providers'
@@ -31,7 +32,7 @@ const ctx = kont()
         `,
       })
     )
-    ctx.runOrThrow(`yalc add ${ctx.thisPackageName}`)
+    ctx.runOrThrow(`${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`)
     ctx.runOrThrow(`npm install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
     return ctx
   })

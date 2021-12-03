@@ -1,3 +1,4 @@
+import * as Path from 'path'
 import debug from 'debug'
 import dindist from 'dindist'
 import * as Execa from 'execa'
@@ -93,7 +94,7 @@ beforeEach(() => {
       typescript: '^4.2.3',
     },
   })
-  ctx.runOrThrow(`yalc add ${ctx.thisPackageName}`)
+  ctx.runOrThrow(`${Path.join(process.cwd(), `node_modules/.bin/yalc`)} add ${ctx.thisPackageName}`)
   ctx.runOrThrow(`npm install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
 })
 

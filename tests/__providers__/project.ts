@@ -27,9 +27,9 @@ export type Contributes = Project
 
 export const project = () =>
   createDynamicProvider<Needs, Contributes>((register) =>
-    register.before((ctx) => {
+    register.name('project').before((ctx) => {
       assertBuildPresent()
-      Execa.commandSync(`yalc publish --no-scripts`)
+      Execa.commandSync(`yarn -s yalc publish --no-scripts`)
 
       const thisPackageJson = readPkgUp.sync({ cwd: __dirname })?.packageJson
 

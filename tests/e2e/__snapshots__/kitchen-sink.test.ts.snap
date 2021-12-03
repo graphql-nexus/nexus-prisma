@@ -10,7 +10,7 @@ Object {
         "DateTimeManually": null,
         "DecimalManually": null,
         "JsonManually": null,
-        "someBigIntField": "9007199254740991",
+        "someBigIntField": 9007199254740991,
         "someBytesField": Object {
           "data": Array [],
           "type": "Buffer",

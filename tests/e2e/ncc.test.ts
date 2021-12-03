@@ -11,7 +11,7 @@ const ctx = kont()
 
 it('works with ncc', () => {
   ctx.fixture.use(Path.join(__dirname, 'fixtures/ncc'))
-  ctx.runOrThrow(`yalc add ${ctx.thisPackageName}`)
+  ctx.runOrThrow(`${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`)
   ctx.runOrThrow(`npm install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
   ctx.runOrThrowPackageScript(`build`)
 

@@ -11,7 +11,7 @@ import { project } from '../__providers__/project'
 
 const badJson = ';'
 
-const requireer = {
+const importer = {
   name: 'alpha',
 }
 
@@ -32,21 +32,21 @@ beforeAll(() => {
 
   ctx.runOrThrow(`yarn add kleur semver tslib debug fs-jetpack dindist --production`)
 
-  ctx.fs.write(`node_modules/${requireer.name}/package.json`, {
-    name: requireer.name,
+  ctx.fs.write(`node_modules/${importer.name}/package.json`, {
+    name: importer.name,
     version: '1.0.0',
     main: 'dist/index.js',
   })
 
-  ctx.fs.copy(`${process.cwd()}/dist-cjs`, `${ctx.fs.cwd()}/node_modules/${requireer.name}/dist`)
+  ctx.fs.copy(`${process.cwd()}/dist-cjs`, `${ctx.fs.cwd()}/node_modules/${importer.name}/dist`)
 
   ctx.fs.write(
     'validatePeerDependencies.js',
     dedent`
       const assert = require('assert')
-      const { validatePeerDependencies } = require('${requireer.name}/dist/lib/peerDepValidator')
+      const { validatePeerDependencies } = require('${importer.name}/dist/lib/peerDepValidator')
 
-      const packageJson = require('${requireer.name}/package.json')
+      const packageJson = require('${importer.name}/package.json')
       assert(packageJson)
 
       const failure = validatePeerDependencies({
@@ -61,9 +61,9 @@ beforeAll(() => {
     'enforceValidPeerDependencies.js',
     dedent`
       const assert = require('assert')
-      const { enforceValidPeerDependencies } = require('${requireer.name}/dist/lib/peerDepValidator')
+      const { enforceValidPeerDependencies } = require('${importer.name}/dist/lib/peerDepValidator')
 
-      const packageJson = require('${requireer.name}/package.json')
+      const packageJson = require('${importer.name}/package.json')
       assert(packageJson)
 
       enforceValidPeerDependencies({
@@ -96,9 +96,9 @@ function setupDep({
   main?: string
   packageJson?: (defaultPackageJson: PackageJson) => PackageJson | string
 }): void {
-  const depdir = `node_modules/${name}`
-  ctx.fs.write(`${depdir}/package.json`, packageJson({ name, version, main: './index.js' }))
-  ctx.fs.write(`${depdir}/index.js`, main)
+  const depDir = `node_modules/${name}`
+  ctx.fs.write(`${depDir}/package.json`, packageJson({ name, version, main: './index.js' }))
+  ctx.fs.write(`${depDir}/index.js`, main)
 }
 
 function setupPeerDepRequirement({
@@ -110,9 +110,9 @@ function setupPeerDepRequirement({
   range: string
   optional: boolean
 }) {
-  const old = ctx.fs.read(`node_modules/${requireer.name}/package.json`, 'json')
+  const old = ctx.fs.read(`node_modules/${importer.name}/package.json`, 'json')
   ctx.fs.write(
-    `node_modules/${requireer.name}/package.json`,
+    `node_modules/${importer.name}/package.json`,
     merge(old, {
       peerDependencies: {
         [name]: range,

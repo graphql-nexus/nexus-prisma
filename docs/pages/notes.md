@@ -1,6 +1,6 @@
 # Notes
 
-### Which should I use? `plugin-nexus-prisma` vs `nexus-prisma` vs Vanilla Nexus
+### Which should I use? `nexus-plugin-prisma` vs `nexus-prisma` vs Vanilla Nexus
 
 #### Vanilla Nexus
 
@@ -12,9 +12,9 @@ If stability is the most important thing for you then Prisma+Nexus vanilla is pr
 - pro: stable
 - con: If you have a lot of boilerplate CRUD then might feel painful
 
-#### `plugin-nexus-prisma`
+#### `nexus-plugin-prisma`
 
-[npm](http://npmjs.org/plugin-nexus-prisma) | [github](https://github.com/graphql-nexus/nexus-plugin-prisma)
+[npm](https://npmjs.org/nexus-plugin-prisma) | [github](https://github.com/graphql-nexus/nexus-plugin-prisma)
 
 If automatic CRUD is the most important thing for you then maybe stick with the old nexus-prisma.
 

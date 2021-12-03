@@ -303,9 +303,7 @@ export function fieldTypeToGraphQLType(
   field: DMMF.Field,
   settings: Gentime.SettingsData
 ): LiteralUnion<StandardGraphQLScalarType, string> {
-  const fieldKind = field.kind
-
-  switch (fieldKind) {
+  switch (field.kind) {
     case 'scalar': {
       const typeName = field.type as PrismaScalarType
 
@@ -349,15 +347,21 @@ export function fieldTypeToGraphQLType(
       }
     }
     case 'enum': {
-      return field.type
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion -- But it does change the expression's type...
+      const typeName = field.type as string
+      return typeName
     }
     case 'object': {
-      return field.type
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion -- But it does change the expression's type...
+      const typeName = field.type as string
+      return typeName
     }
     case 'unsupported': {
-      return field.type
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion -- But it does change the expression's type...
+      const typeName = field.type as string
+      return typeName
     }
     default:
-      allCasesHandled(fieldKind)
+      allCasesHandled(field.kind)
   }
 }

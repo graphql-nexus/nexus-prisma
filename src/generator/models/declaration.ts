@@ -296,8 +296,8 @@ function renderNexusType(field: DMMF.Field, settings: Gentime.Settings): string 
 /**
  * Map the fields type to a GraphQL type.
  *
- * @remarks The `settings` param type uses settings data instead of setset instance because this helper
- *          is used at runtime too where we don't have a Setset instane for gentime.
+ * @remarks The `settings` param type uses settings data instead of Setset instance because this helper
+ *          is used at runtime too where we don't have a Setset instance for gentime.
  */
 export function fieldTypeToGraphQLType(
   field: DMMF.Field,

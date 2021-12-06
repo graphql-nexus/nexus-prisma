@@ -303,17 +303,22 @@ export function fieldTypeToGraphQLType(
   field: DMMF.Field,
   settings: Gentime.SettingsData
 ): LiteralUnion<StandardGraphQLScalarType, string> {
+  // TODO remove once PC is fixed https://prisma-company.slack.com/archives/C016KUHB1R6/p1638816683155000?thread_ts=1638563060.145800&cid=C016KUHB1R6
+  if (typeof field.type !== 'string') {
+    throw new TypeError(`field.type is supposed to always be a string.`)
+  }
+
   switch (field.kind) {
     case 'scalar': {
-      const typeName = field.type as PrismaScalarType
-
       if (field.isId) {
         if (field.type === 'String' || (field.type === 'Int' && settings.projectIdIntToGraphQL === 'ID')) {
           return StandardGraphQLScalarTypes.ID
         }
       }
 
-      switch (typeName) {
+      const fieldType = field.type as PrismaScalarType
+
+      switch (fieldType) {
         case 'String': {
           return StandardGraphQLScalarTypes.String
         }
@@ -342,24 +347,18 @@ export function fieldTypeToGraphQLType(
           return 'Decimal'
         }
         default: {
-          return allCasesHandled(typeName)
+          return allCasesHandled(fieldType)
         }
       }
     }
     case 'enum': {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion -- But it does change the expression's type...
-      const typeName = field.type as string
-      return typeName
+      return field.type
     }
     case 'object': {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion -- But it does change the expression's type...
-      const typeName = field.type as string
-      return typeName
+      return field.type
     }
     case 'unsupported': {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion -- But it does change the expression's type...
-      const typeName = field.type as string
-      return typeName
+      return field.type
     }
     default:
       allCasesHandled(field.kind)

@@ -1,1 +1,1 @@
-export * as PrismaUtils from './index_';
+export * as PrismaUtils from './index_'

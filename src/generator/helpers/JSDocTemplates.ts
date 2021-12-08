@@ -1,6 +1,6 @@
 import { DMMF } from '@prisma/client/runtime'
 import dedent from 'dindist'
-import { PrismaDocumentation } from '../../lib/prisma-documnetation'
+import { PrismaDocumentation } from '../../lib/prisma-documentation'
 import { Gentime } from '../gentime/settingsSingleton'
 
 type JSDoc = string

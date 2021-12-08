@@ -1,17 +1,14 @@
 import type { DMMF } from '@prisma/client/runtime'
 import dedent from 'dindist'
-import { chain, lowerFirst } from 'lodash'
+import { chain } from 'lodash'
 import * as Nexus from 'nexus'
 import { NexusEnumTypeConfig, NexusListDef, NexusNonNullDef, NexusNullDef } from 'nexus/dist/core'
 import { MaybePromise, RecordUnknown, Resolver } from '../../helpers/utils'
 import { PrismaDmmf } from '../../lib/prisma-dmmf'
-import { PrismaDocumentation } from '../../lib/prisma-documnetation'
+import { PrismaDocumentation } from '../../lib/prisma-documentation'
+import { PrismaUtils } from '../../lib/prisma-utils'
 import { Gentime } from '../gentime/settingsSingleton'
-import {
-  buildWhereUniqueInput,
-  findMissingUniqueIdentifiers,
-  resolveUniqueIdentifiers,
-} from '../helpers/constraints'
+import { createWhereUniqueInput } from '../../lib/prisma-utils/whereUniqueInput'
 import { Runtime } from '../runtime/settingsSingleton'
 import { ModuleSpec } from '../types'
 import { fieldTypeToGraphQLType } from './declaration'
@@ -178,7 +175,7 @@ function createNexusObjectTypeDefConfigurations(
               name: field.name,
               type: prismaFieldToNexusType(field, settings),
               description: prismaNodeDocumentationToDescription({ settings, node: field }),
-              resolve: prismaFieldToNexusResolver(model, field, settings),
+              resolve: nexusResolverFromPrismaField(model, field, settings),
             }
           })
           .keyBy('name')
@@ -212,49 +209,45 @@ export function prismaFieldToNexusType(field: DMMF.Field, settings: Settings) {
   }
 }
 
-export function prismaFieldToNexusResolver(
+/**
+ * Create a GraphQL resolver for the given Prisma field. If the Prisma field is a scalar then no resolver is
+ * returned and instead the Nexus default is relied upon.
+ *
+ * @remarks Allow Nexus default resolver to handle resolving scalars.
+ *
+ *          By using Nexus default we also affect its generated types, assuming there are not explicit
+ *          source types setup which actually for Nexus Prisma projects there usually will be (the Prisma
+ *          model types). Still, using the Nexus default is a bit more idiomatic and provides the better
+ *          _default_ type generation experience of scalars being expected to come down from the source
+ *          type (aka. parent).
+ *
+ *          So:
+ *
+ *          ```ts ...
+ *          t.field(M1.Foo.bar)
+ *          ```
+ *
+ *          where `bar` is a scalar prisma field would have NO resolve generated and thus default Nexus
+ *          as mentioned would think that `bar` field WILL be present on the source type. This is, again,
+ *          mostly moot since most Nexus Prisma users WILL setup the Prisma source types e.g.:
+ *
+ *          ```ts ...
+ *          sourceTypes: { modules: [{ module: '.prisma/client', alias: 'PrismaClient' }]},
+ *          ```
+ *
+ *          but this is overall the better way to handle this detail it seems.
+ */
+export function nexusResolverFromPrismaField(
   model: DMMF.Model,
   field: DMMF.Field,
   settings: Settings
 ): undefined | Resolver {
-  /**
-   * Allow Nexus default resolver to handle resolving scalars.
-   *
-   * By using Nexus default we also affect its generated types, assuming there are not explicit source types setup
-   * which actually for Nexus Prisma projects there usually will be (the Prisma model types). Still, using the Nexus
-   * default is a bit more idiomatic and provides the better _default_ type generation experience of scalars being
-   * expected to come down from the source type (aka. parent).
-   *
-   * So:
-   *
-   *     t.field(M1.Foo.bar)
-   *
-   * where `bar` is a scalar prisma field would have NO resolve generated and thus default Nexus as mentioned would
-   * think that `bar` field WILL be present on the source type. This is, again, mostly moot since most Nexus Prisma
-   * users WILL setup the Prisma source types e.g.:
-   *
-   *     sourceTypes: {
-   *       modules: [{ module: '.prisma/client', alias: 'PrismaClient' }],
-   *     },
-   *
-   * but this is overall the better way to handle this detail it seems.
-   */
   if (field.kind !== 'object') {
     return undefined
   }
 
-  return (root: RecordUnknown, _args: RecordUnknown, ctx: RecordUnknown): MaybePromise<unknown> => {
-    const uniqueIdentifiers = resolveUniqueIdentifiers(model)
-    const missingIdentifiers = findMissingUniqueIdentifiers(root, uniqueIdentifiers)
-
-    if (missingIdentifiers !== null) {
-      // TODO rich errors
-      throw new Error(
-        `Resolver ${model.name}.${
-          field.name
-        } is missing the following unique identifiers: ${missingIdentifiers.join(', ')}`
-      )
-    }
+  return (source: RecordUnknown, _args: RecordUnknown, ctx: RecordUnknown): MaybePromise<unknown> => {
+    const whereUnique = createWhereUniqueInput(source, model)
 
     // eslint-disable-next-line
     const PrismaClientPackage = require(settings.gentime.prismaClientImportId)
@@ -267,11 +260,10 @@ export function prismaFieldToNexusResolver(
       )
     }
 
-    const propertyModelName = lowerFirst(model.name)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const prisma: any = ctx[settings.runtime.data.prismaClientContextField]
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    const prismaModel = prisma[propertyModelName]
+    const prismaModel = prisma[PrismaUtils.typeScriptOrmModelPropertyNameFromModelName(model.name)]
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (typeof prismaModel.findUnique !== 'function') {
@@ -283,12 +275,12 @@ export function prismaFieldToNexusResolver(
     const findUnique = prismaModel.findUnique as (query: unknown) => MaybePromise<unknown>
 
     const result: unknown = findUnique({
-      where: buildWhereUniqueInput(root, uniqueIdentifiers),
+      where: whereUnique,
       /**
        *
        * The user might have configured Prisma Client globally to rejectOnNotFound.
        * In the context of this Nexus Prisma managed resolver, we don't want that setting to
-       * be a behavioural factor. Instead, Nexus Prisma has its own documented rules about the logic
+       * be a behavioral factor. Instead, Nexus Prisma has its own documented rules about the logic
        * it uses to project nullability from the database to the api.
        *
        * More details about this design can be found in the README.

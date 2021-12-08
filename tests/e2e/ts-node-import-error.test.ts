@@ -52,7 +52,7 @@ it('when project does not have ts-node installed nexus-prisma generator still ge
 
 const normalizeGeneratorOutput = (output: string) =>
   output
-    .replaceAll(/\d+ms/g, '<SOME TIME>ms')
+    .replaceAll(/\d+(ms|s)/g, '<SOME TIME>$1')
     .replaceAll(/ to .* in /g, ' to <SOME PATH> in ')
     .replaceAll(/loaded from.*/g, 'loaded from <SOME PATH>')
     .replaceAll(/Generated Prisma Client \(.*\)/g, 'Generated Prisma Client (<SOME VERSION>)')

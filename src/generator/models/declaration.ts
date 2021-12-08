@@ -10,7 +10,7 @@ import { Gentime } from '../gentime/settingsSingleton'
 import { jsDocForEnum, jsDocForField, jsDocForModel } from '../helpers/JSDocTemplates'
 import { ModuleSpec } from '../types'
 
-export function createModuleSpec(dmmf: DMMF.Document, settings: Gentime.Settings): ModuleSpec {
+export const createModuleSpec = (dmmf: DMMF.Document, settings: Gentime.Settings): ModuleSpec => {
   return {
     fileName: 'index.d.ts',
     content: dedent`

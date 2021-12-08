@@ -25,7 +25,11 @@
     "./generator": {
       "require": "./dist-cjs/entrypoints/generator.js",
       "import": "./dist-esm/entrypoints/generator.js"
-    }
+    },
+    "./_/*": {
+      "require": "./dist-cjs/*.js",
+      "import": "./dist-esm/*.js"
+   }
   },
   "types": "./dist-cjs/entrypoints/main.d.ts",
   "typesVersions": {

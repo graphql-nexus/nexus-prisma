@@ -95,16 +95,17 @@ export function createModuleSpec(params: {
         }
       `
 
+  const importSpecifierToNexusPrismaSourceDirectory = gentimeSettings.data.output ? `nexus-prisma/_` : `..`
   const imports = esm
     ? dedent`
-        import { getPrismaClientDmmf } from '../helpers/prisma'
-        import * as ModelsGenerator from '../generator/models'
-        import { Runtime } from '../generator/runtime/settingsSingleton'
+        import { getPrismaClientDmmf } from '${importSpecifierToNexusPrismaSourceDirectory}/helpers/prisma'
+        import * as ModelsGenerator from '${importSpecifierToNexusPrismaSourceDirectory}/generator/models'
+        import { Runtime } from '${importSpecifierToNexusPrismaSourceDirectory}/generator/runtime/settingsSingleton'
       `
     : dedent`
-        const { getPrismaClientDmmf } = require('../helpers/prisma')
-        const ModelsGenerator = require('../generator/models')
-        const { Runtime } = require('../generator/runtime/settingsSingleton')
+        const { getPrismaClientDmmf } = require('${importSpecifierToNexusPrismaSourceDirectory}/helpers/prisma')
+        const ModelsGenerator = require('${importSpecifierToNexusPrismaSourceDirectory}/generator/models')
+        const { Runtime } = require('${importSpecifierToNexusPrismaSourceDirectory}/generator/runtime/settingsSingleton')
       `
 
   return {

@@ -28,7 +28,7 @@ generatorHandler({
   },
   // async required by interface
   // eslint-disable-next-line
-  async onGenerate({ dmmf, otherGenerators }) {
+  async onGenerate({ dmmf, otherGenerators, generator }) {
     const prismaClientGenerator = otherGenerators.find((g) => g.provider.value === 'prisma-client-js')
 
     // TODO test showing this pretty error in action
@@ -37,6 +37,18 @@ generatorHandler({
       throw new Error(
         `Nexus Prisma cannot be used without Prisma Client. Please add it to your Prisma Schema file.`
       )
+    }
+
+    // TODO If the user is using nexus-prisma.config.ts then that should be the preferred source for this configuration because it is type safe. Give them a warning so they are aware.
+    if (generator.isCustomOutput) {
+      if (!generator.output) {
+        throw new Error(`Failed to read the custom output path.`)
+      }
+      Gentime.changeSettings({
+        output: {
+          directory: generator.output.value,
+        },
+      })
     }
 
     // WARNING: Make sure this logic comes before `loadUserGentimeSettings` below

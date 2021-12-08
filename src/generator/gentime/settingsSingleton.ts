@@ -82,14 +82,60 @@ export namespace Gentime {
      * @default '@prisma/client'
      */
     prismaClientImportId?: string
+    /**
+     * Where to output the Nexus Prisma runtime and if it should use ESM or CJS module system.
+     *
+     * By default Nexus Prisma runtime is output into its installed node_modules location and supports both ESM and CJS.
+     *
+     * When you explicitly configure this setting Nexus Prisma only supports outputting ESM OR CJS, not both.
+     *
+     * Passing `string` is shorthand for `{ directory: string }`
+     */
+    output?:
+      | string
+      | {
+          /**
+           * The directory to output the Nexus Prisma runtime into.
+           *
+           * If a relative path is given then it is considered relative to the Prisma Schema file.
+           *
+           * By default Nexus Prisma runtime is output into its installed node_modules location.
+           */
+          directory: string
+          /**
+           * The module system to use for the output modules.
+           *
+           * @default 'cjs'
+           */
+          moduleSystem?: 'esm' | 'cjs'
+        }
   }
 
-  export type SettingsData = Setset.InferDataFromInput<SettingsInput>
+  export type SettingsData = Omit<Setset.InferDataFromInput<SettingsInput>, 'output'> & {
+    output?: {
+      directory: string
+      moduleSystem: 'esm' | 'cjs'
+    }
+  }
 
   export type Settings = Setset.Manager<SettingsInput, SettingsData>
 
   export const settings = Setset.create<SettingsInput, SettingsData>({
     fields: {
+      output: {
+        shorthand: (directory) => ({ directory }),
+        fields: {
+          directory: {
+            fixup: (directory) => ({
+              // TODO if relative, make absolute, from PSL file
+              value: directory,
+            }),
+          },
+          moduleSystem: {
+            initial: () => 'cjs',
+          },
+        },
+      },
       projectIdIntToGraphQL: {
         initial: () => 'Int',
       },

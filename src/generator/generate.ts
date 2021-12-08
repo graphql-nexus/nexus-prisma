@@ -10,80 +10,6 @@ import { ModuleSpec } from './types'
 const OUTPUT_SOURCE_DIR_ESM = getOutputSourceDir({ esm: true })
 const OUTPUT_SOURCE_DIR_CJS = getOutputSourceDir({ esm: false })
 
-/** Generate the Nexus Prisma runtime files and emit them into a "hole" in the internal package source tree. */
-export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Settings): void {
-  d('start generateRuntime with configuration %j', settings)
-
-  d('start generateRuntime')
-
-  if (process.env.NP_DEBUG) {
-    fs.write('dmmf.json', dmmf)
-  }
-
-  const declarationSourceFile = ModelsGenerator.TS.createModuleSpec(dmmf, settings)
-
-  // ESM
-
-  const esmSourceFiles: ModuleSpec[] = [
-    ModelsGenerator.JS.createModuleSpec({
-      gentimeSettings: settings,
-      esm: true,
-      dmmf,
-    }),
-    declarationSourceFile,
-  ]
-
-  fs.remove(OUTPUT_SOURCE_DIR_ESM)
-
-  esmSourceFiles.forEach((sf) => {
-    const filePath = Path.join(OUTPUT_SOURCE_DIR_ESM, sf.fileName)
-    fs.remove(filePath)
-    fs.write(filePath, sf.content)
-    d(`did write ${filePath}`)
-  })
-
-  // CJS
-
-  fs.remove(OUTPUT_SOURCE_DIR_CJS)
-
-  const cjsSourceFiles: ModuleSpec[] = [
-    ModelsGenerator.JS.createModuleSpec({
-      gentimeSettings: settings,
-      esm: false,
-      dmmf,
-    }),
-    declarationSourceFile,
-  ]
-
-  cjsSourceFiles.forEach((sf) => {
-    const filePath = Path.join(OUTPUT_SOURCE_DIR_CJS, sf.fileName)
-    fs.remove(filePath)
-    fs.write(filePath, sf.content)
-    d(`did write ${filePath}`)
-  })
-
-  d(`done writing all emitted files`)
-}
-
-/** Transform the given DMMF into JS source code with accompanying TS declarations. */
-export function generateRuntime(dmmf: DMMF.Document, settings: Gentime.Settings): ModuleSpec[] {
-  const sourceFiles: ModuleSpec[] = [
-    ModelsGenerator.JS.createModuleSpec({
-      gentimeSettings: settings,
-      esm: true,
-      dmmf,
-    }),
-    ModelsGenerator.JS.createModuleSpec({
-      gentimeSettings: settings,
-      esm: false,
-      dmmf,
-    }),
-    ModelsGenerator.TS.createModuleSpec(dmmf, settings),
-  ]
-
-  return sourceFiles
-}
-
 /**
  * Find the output source directory. When using the Yalc workflow some additional hacking around is required.
  *
@@ -118,4 +44,100 @@ function getOutputSourceDir(params: { esm: boolean }): string {
   d(`found outputSourceDir ${outputSourceDir}`)
 
   return outputSourceDir
+}
+
+/** Generate the Nexus Prisma runtime files and emit them into a "hole" in the internal package source tree. */
+export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Settings): void {
+  d('start generateRuntime with configuration %j', settings)
+
+  d('start generateRuntime')
+
+  if (process.env.NP_DEBUG) {
+    fs.write('dmmf.json', dmmf)
+  }
+
+  const declarationSourceFile = ModelsGenerator.TS.createModuleSpec(dmmf, settings)
+
+  if (settings.data.output) {
+    const outputDir = settings.data.output.directory
+
+    const sourceFiles = [
+      ModelsGenerator.JS.createModuleSpec({
+        gentimeSettings: settings,
+        esm: settings.data.output?.moduleSystem === 'esm',
+        dmmf,
+      }),
+      declarationSourceFile,
+    ]
+
+    fs.remove(outputDir)
+
+    sourceFiles.forEach((sf) => {
+      const filePath = Path.join(outputDir, sf.fileName)
+      fs.remove(filePath)
+      fs.write(filePath, sf.content)
+      d(`did write ${filePath}`)
+    })
+  } else {
+    // ESM
+
+    const esmSourceFiles = [
+      ModelsGenerator.JS.createModuleSpec({
+        gentimeSettings: settings,
+        esm: true,
+        dmmf,
+      }),
+      declarationSourceFile,
+    ]
+
+    fs.remove(OUTPUT_SOURCE_DIR_ESM)
+
+    esmSourceFiles.forEach((sf) => {
+      const filePath = Path.join(OUTPUT_SOURCE_DIR_ESM, sf.fileName)
+      fs.remove(filePath)
+      fs.write(filePath, sf.content)
+      d(`did write ${filePath}`)
+    })
+
+    // CJS
+
+    const cjsSourceFiles = [
+      ModelsGenerator.JS.createModuleSpec({
+        gentimeSettings: settings,
+        esm: false,
+        dmmf,
+      }),
+      declarationSourceFile,
+    ]
+
+    fs.remove(OUTPUT_SOURCE_DIR_CJS)
+
+    cjsSourceFiles.forEach((sf) => {
+      const filePath = Path.join(OUTPUT_SOURCE_DIR_CJS, sf.fileName)
+      fs.remove(filePath)
+      fs.write(filePath, sf.content)
+      d(`did write ${filePath}`)
+    })
+  }
+
+  d(`done writing all emitted files`)
+}
+
+/** Transform the given DMMF into JS source code with accompanying TS declarations. */
+export function generateRuntime(dmmf: DMMF.Document, settings: Gentime.Settings): ModuleSpec[] {
+  const sourceFiles: ModuleSpec[] = [
+    ModelsGenerator.JS.createModuleSpec({
+      gentimeSettings: settings,
+      esm: true,
+      dmmf,
+    }),
+    ModelsGenerator.JS.createModuleSpec({
+      gentimeSettings: settings,
+      esm: false,
+      dmmf,
+    }),
+    ModelsGenerator.TS.createModuleSpec(dmmf, settings),
+  ]
+
+  return sourceFiles
 }

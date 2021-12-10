@@ -3,8 +3,8 @@
 1. Install dependencies
 
    ```
-   npm add nexus-prisma nexus graphql @prisma/client
-   npm add --dev prisma
+   npm install nexus-prisma nexus graphql @prisma/client
+   npm install --dev prisma
    ```
 
    > `nexus` `graphql` and `@prisma/client` are peer dependencies. `prisma` is for the Prisma CLI which you'll probably want during development.

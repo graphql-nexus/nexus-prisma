@@ -57,28 +57,10 @@ export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Se
   }
 
   const declarationSourceFile = ModelsGenerator.TS.createModuleSpec(dmmf, settings)
+  process.stdout.write('1')
+  process.stdout.write(JSON.stringify(settings.data.output))
 
-  if (settings.data.output) {
-    const outputDir = settings.data.output.directory
-
-    const sourceFiles = [
-      ModelsGenerator.JS.createModuleSpec({
-        gentimeSettings: settings,
-        esm: settings.data.output?.moduleSystem === 'esm',
-        dmmf,
-      }),
-      declarationSourceFile,
-    ]
-
-    fs.remove(outputDir)
-
-    sourceFiles.forEach((sf) => {
-      const filePath = Path.join(outputDir, sf.fileName)
-      fs.remove(filePath)
-      fs.write(filePath, sf.content)
-      d(`did write ${filePath}`)
-    })
-  } else {
+  if (settings.data.output.directory === 'default') {
     // ESM
 
     const esmSourceFiles = [
@@ -90,7 +72,7 @@ export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Se
       declarationSourceFile,
     ]
 
-    fs.remove(OUTPUT_SOURCE_DIR_ESM)
+    // fs.remove(OUTPUT_SOURCE_DIR_ESM)
 
     esmSourceFiles.forEach((sf) => {
       const filePath = Path.join(OUTPUT_SOURCE_DIR_ESM, sf.fileName)
@@ -114,6 +96,27 @@ export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Se
 
     cjsSourceFiles.forEach((sf) => {
       const filePath = Path.join(OUTPUT_SOURCE_DIR_CJS, sf.fileName)
+      fs.remove(filePath)
+      fs.write(filePath, sf.content)
+      d(`did write ${filePath}`)
+    })
+  } else {
+    const outputDir = settings.data.output.directory
+
+    const sourceFiles = [
+      ModelsGenerator.JS.createModuleSpec({
+        gentimeSettings: settings,
+        esm: settings.data.output?.moduleSystem === 'esm',
+        dmmf,
+      }),
+      declarationSourceFile,
+    ]
+
+    // fs.remove(outputDir)
+
+    sourceFiles.forEach((sf) => {
+      const filePath = Path.join(outputDir, sf.fileName)
+      // process.stderr.write(filePath)
       fs.remove(filePath)
       fs.write(filePath, sf.content)
       d(`did write ${filePath}`)

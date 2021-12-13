@@ -95,7 +95,12 @@ export function createModuleSpec(params: {
         }
       `
 
-  const importSpecifierToNexusPrismaSourceDirectory = gentimeSettings.data.output ? `nexus-prisma/_` : `..`
+  const importSpecifierToNexusPrismaSourceDirectory =
+    gentimeSettings.data.output.directory === 'default'
+      ? `..`
+      : esm
+      ? `nexus-prisma/dist-esm`
+      : `nexus-prisma/dist-cjs`
   const imports = esm
     ? dedent`
         import { getPrismaClientDmmf } from '${importSpecifierToNexusPrismaSourceDirectory}/helpers/prisma'

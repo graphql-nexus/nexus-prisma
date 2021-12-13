@@ -165,14 +165,7 @@ export namespace Gentime {
         }
   }
 
-  export type SettingsData = Omit<Setset.InferDataFromInput<SettingsInput>, 'output'> & {
-    output?: {
-      directory: string
-      name: string
-      type: 'ts' | 'js'
-      moduleSystem: 'esm' | 'cjs'
-    }
-  }
+  export type SettingsData = Setset.InferDataFromInput<SettingsInput>
 
   export type Settings = Setset.Manager<SettingsInput, SettingsData>
 
@@ -180,8 +173,15 @@ export namespace Gentime {
     fields: {
       output: {
         shorthand: (directory) => ({ directory }),
+        initial: () => ({
+          directory: 'default',
+          name: 'index',
+          type: 'ts',
+          moduleSystem: 'esm',
+        }),
         fields: {
           directory: {
+            initial: () => 'default',
             fixup: (directory) => ({
               // TODO if relative, make absolute, from PSL file
               value: directory,

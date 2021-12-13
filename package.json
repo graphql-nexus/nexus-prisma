@@ -27,8 +27,7 @@
       "import": "./dist-esm/entrypoints/generator.js"
     },
     "./*": {
-      "require": "./dist-cjs/*.js",
-      "import": "./dist-esm/*.js"
+      "default": "./*.js"
     }
   },
   "types": "./dist-cjs/entrypoints/main.d.ts",

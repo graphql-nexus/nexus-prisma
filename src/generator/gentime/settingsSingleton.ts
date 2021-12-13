@@ -83,19 +83,61 @@ export namespace Gentime {
      */
     prismaClientImportId?: string
     /**
-     * Where to output the Nexus Prisma runtime and if it should use ESM or CJS module system.
+     * Configure various details about the Nexus Prisma generated runtime such as file location, name, type
+     * and module system to use.
      *
-     * By default Nexus Prisma runtime is output into its installed node_modules location and supports both ESM and CJS.
+     * By default is output into the installed node_modules location of Nexus Prisma itself and supports both
+     * ESM and CJS.
      *
-     * When you explicitly configure this setting Nexus Prisma only supports outputting ESM OR CJS, not both.
+     * If you explicitly configure this setting, then you can only output ESM _or_ CJS, not both,
+     * since as the project maintainer you will be in a position to know which one you want to use.
      *
-     * Passing `string` is shorthand for `{ directory: string }`
+     * The following files will be output into the target directory:
+     *
+     * ```
+     * Description | Default Name | Default Extension |
+     * ----------------------------------------------------
+     * A runtime file | index | .ts |
+     * A type file | index | .d.ts |
+     * ```
+     *
+     * Passing `string` is a path to the target directory to output to, shorthand for `{ directory: string,
+     * moduleSystem: 'esm', type: 'ts' }`
+     *
+     * If a relative path is given then it is considered relative to the Prisma Schema file.
+     *
+     * @example
+     *
+     * // Default
+     *   // prisma/nexus-prisma.config.ts
+     *   import { settings } from 'nexus-prisma/generator'
+     *
+     *   settings({
+     *     output: undefined // The default
+     *   })
+     *
+     *   // src/schema.ts
+     *   import { ... } from 'nexus-prisma'
+     *
+     * @example
+     *
+     * // Custom
+     *   // prisma/nexus-prisma.config.ts
+     *   import { settings } from 'nexus-prisma/generator'
+     *
+     *   settings({
+     *     output: '../src/generated/nexus-prisma'
+     *   })
+     *
+     *   // src/schema.ts
+     *   import { ... } from './generated/nexus-prisma'
+     *
      */
     output?:
       | string
       | {
           /**
-           * The directory to output the Nexus Prisma runtime into.
+           * The directory to output the generated modules into.
            *
            * If a relative path is given then it is considered relative to the Prisma Schema file.
            *
@@ -103,9 +145,21 @@ export namespace Gentime {
            */
           directory: string
           /**
-           * The module system to use for the output modules.
+           * The name to use for the generated modules.
            *
-           * @default 'cjs'
+           * @default 'index'
+           */
+          name?: string
+          /**
+           * The file extension to use for the generated runtime module.
+           *
+           * @default 'ts'
+           */
+          type?: 'ts' | 'js'
+          /**
+           * The module system to use for the generated runtime module.
+           *
+           * @default 'esm'
            */
           moduleSystem?: 'esm' | 'cjs'
         }
@@ -114,6 +168,8 @@ export namespace Gentime {
   export type SettingsData = Omit<Setset.InferDataFromInput<SettingsInput>, 'output'> & {
     output?: {
       directory: string
+      name: string
+      type: 'ts' | 'js'
       moduleSystem: 'esm' | 'cjs'
     }
   }
@@ -132,7 +188,13 @@ export namespace Gentime {
             }),
           },
           moduleSystem: {
-            initial: () => 'cjs',
+            initial: () => 'esm',
+          },
+          name: {
+            initial: () => 'index',
+          },
+          type: {
+            initial: () => 'ts',
           },
         },
       },

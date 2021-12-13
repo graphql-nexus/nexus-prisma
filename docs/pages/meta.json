@@ -2,8 +2,10 @@
   "index": "Introduction",
   "usage": "Usage",
   "roadmap": "Roadmap",
-  "architecture": "Architecture",
   "features": "Features",
+  "settings-gentime": "Settings (Gentime)",
+  "settings-runtime": "Settings (Runtime)",
   "recipes": "Recipes",
-  "notes": "Notes"
+  "notes": "Notes",
+  "architecture": "Architecture"
 }

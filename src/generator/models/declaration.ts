@@ -36,7 +36,6 @@ export function renderTypeScriptDeclarationForDocumentModels(
 
   return (
     dedent`
-      import * as Nexus from 'nexus'
       import * as NexusCore from 'nexus/dist/core'
 
       //
@@ -125,7 +124,13 @@ export function renderTypeScriptDeclarationForDocumentModels(
       //
       //
 
-      import { Runtime } from '../generator/runtime/settingsSingleton'
+      import { Runtime } from ${
+        settings.data.output.directory === 'default'
+          ? `'../generator/runtime/settingsSingleton'`
+          : settings.data.output.moduleSystem === 'esm'
+          ? `'nexus-prisma/dist-esm/generator/runtime/settingsSingleton'`
+          : `'nexus-prisma/dist-cjs/generator/runtime/settingsSingleton'`
+      }
 
       /**
        * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).

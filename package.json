@@ -33,7 +33,7 @@
   "types": "./dist-cjs/entrypoints/main.d.ts",
   "typesVersions": {
     "*": {
-      "*": [
+      "index.d.ts": [
         "./dist-cjs/entrypoints/main.d.ts"
       ],
       "scalars": [
@@ -41,6 +41,9 @@
       ],
       "generator": [
         "./dist-cjs/entrypoints/generator.d.ts"
+      ],
+      "*": [
+        "./*"
       ]
     }
   },

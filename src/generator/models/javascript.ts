@@ -104,16 +104,17 @@ export function createModuleSpec(params: {
   const imports = esm
     ? dedent`
         import { getPrismaClientDmmf } from '${importSpecifierToNexusPrismaSourceDirectory}/helpers/prisma'
-        import * as ModelsGenerator from '${importSpecifierToNexusPrismaSourceDirectory}/generator/models'
+        import * as ModelsGenerator from '${importSpecifierToNexusPrismaSourceDirectory}/generator/models/index'
         import { Runtime } from '${importSpecifierToNexusPrismaSourceDirectory}/generator/runtime/settingsSingleton'
       `
     : dedent`
         const { getPrismaClientDmmf } = require('${importSpecifierToNexusPrismaSourceDirectory}/helpers/prisma')
-        const ModelsGenerator = require('${importSpecifierToNexusPrismaSourceDirectory}/generator/models')
+        const ModelsGenerator = require('${importSpecifierToNexusPrismaSourceDirectory}/generator/models/index')
         const { Runtime } = require('${importSpecifierToNexusPrismaSourceDirectory}/generator/runtime/settingsSingleton')
       `
 
   return {
+    // TODO this is no longer used, just return content
     fileName: 'index.js',
     content: dedent`
       ${imports}

@@ -1,16 +1,13 @@
 {
-  "name": "nexus-prisma-fixture-ncc",
+  "name": "nexus-prisma-fixture-basic",
   "version": "0.0.0",
   "scripts": {
-    "build": "npm run build:prisma && npm run build:ncc",
+    "build": "npm run build:prisma",
     "build:prisma": "prisma generate",
-    "build:ncc": "ncc build --no-cache main.ts",
-    "start:dist": "node ./dist",
-    "start:ts": "ts-node main"
+    "dev": "ts-node main"
   },
   "dependencies": {
     "@prisma/client": "__dynamic__",
-    "@vercel/ncc": "0.29.2",
     "graphql": "15.5.1",
     "nexus": "1.1.0",
     "prisma": "__dynamic__",

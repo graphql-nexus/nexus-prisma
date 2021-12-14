@@ -5,6 +5,7 @@ import { merge } from 'lodash'
 import readPkgUp from 'read-pkg-up'
 import { PackageJson, TsConfigJson } from 'type-fest'
 import { assertBuildPresent } from '../__helpers__/helpers'
+import * as Package from '../../package.json'
 
 type Project = {
   thisPackageName: string
@@ -46,6 +47,12 @@ export const project = () =>
           use: (path) => {
             ctx.fs.copy(path, ctx.fs.cwd(), {
               overwrite: true,
+            })
+            api.packageJson.merge({
+              dependencies: {
+                '@prisma/client': Package.devDependencies['@prisma/client'],
+                prisma: Package.devDependencies.prisma,
+              },
             })
           },
         },

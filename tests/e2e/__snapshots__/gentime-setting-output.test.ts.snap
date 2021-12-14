@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gentime setting output: custom directory 1`] = `
+"type Foo {
+  id: ID!
+}
+
+type Query {
+  foos: [Foo]
+}
+"
+`;

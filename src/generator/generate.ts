@@ -99,8 +99,6 @@ export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Se
       d(`did write ${filePath}`)
     })
   } else {
-    const outputDir = settings.data.output.directory
-
     const sourceFiles = [
       ModelsGenerator.JS.createModuleSpec({
         gentimeSettings: settings,
@@ -113,8 +111,12 @@ export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Se
     // fs.remove(outputDir)
 
     sourceFiles.forEach((sf) => {
-      const filePath = Path.join(outputDir, sf.fileName)
-      // process.stderr.write(filePath)
+      const filePath = Path.join(
+        settings.data.output.directory,
+        sf.fileName.endsWith('d.ts')
+          ? `${settings.data.output.name}.d.ts`
+          : `${settings.data.output.name}.${settings.data.output.type}`
+      )
       fs.remove(filePath)
       fs.write(filePath, sf.content)
       d(`did write ${filePath}`)

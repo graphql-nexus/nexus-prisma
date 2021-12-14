@@ -153,13 +153,13 @@ export namespace Gentime {
           /**
            * The file extension to use for the generated runtime module.
            *
-           * @default 'ts'
+           * @default 'js'
            */
           type?: 'ts' | 'js'
           /**
            * The module system to use for the generated runtime module.
            *
-           * @default 'esm'
+           * @default 'cjs'
            */
           moduleSystem?: 'esm' | 'cjs'
         }
@@ -182,19 +182,15 @@ export namespace Gentime {
         fields: {
           directory: {
             initial: () => 'default',
-            fixup: (directory) => ({
-              // TODO if relative, make absolute, from PSL file
-              value: directory,
-            }),
           },
           moduleSystem: {
-            initial: () => 'esm',
+            initial: () => 'cjs',
           },
           name: {
             initial: () => 'index',
           },
           type: {
-            initial: () => 'ts',
+            initial: () => 'js',
           },
         },
       },

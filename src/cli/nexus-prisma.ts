@@ -28,7 +28,7 @@ generatorHandler({
   },
   // async required by interface
   // eslint-disable-next-line
-  async onGenerate({ dmmf, otherGenerators, generator }) {
+  async onGenerate({ dmmf, otherGenerators, generator, schemaPath }) {
     const prismaClientGenerator = otherGenerators.find((g) => g.provider.value === 'prisma-client-js')
 
     // TODO test showing this pretty error in action
@@ -39,7 +39,7 @@ generatorHandler({
       )
     }
 
-    // TODO If the user is using nexus-prisma.config.ts then that should be the preferred source for this configuration because it is type safe. Give them a warning so they are aware.
+    // TODO If the user is using nexus-prisma.ts then that should be the preferred source for this configuration because it is type safe. Give them a warning so they are aware.
     if (generator.isCustomOutput) {
       if (!generator.output) {
         throw new Error(`Failed to read the custom output path.`)
@@ -58,8 +58,25 @@ generatorHandler({
     })
 
     const internalDMMF = externalToInternalDmmf(dmmf)
+
     loadUserGentimeSettings()
+
+    /**
+     * If the output path is some explicit relative path then make it absolute relative to the Prisma Schema file directory.
+     */
+    if (
+      Gentime.settings.data.output.directory !== 'default' &&
+      !Path.isAbsolute(Gentime.settings.data.output.directory)
+    ) {
+      Gentime.settings.change({
+        output: {
+          directory: Path.join(Path.dirname(schemaPath), Gentime.settings.data.output.directory),
+        },
+      })
+    }
+
     generateRuntimeAndEmit(internalDMMF, Gentime.settings)
+
     process.stdout.write(
       `You can now start using Nexus Prisma in your code. Reference: https://pris.ly/d/nexus-prisma\n`
     )
@@ -71,11 +88,11 @@ generatorHandler({
  */
 
 /**
- * Get the appropiate import ID for Prisma Client.
+ * Get the appropriate import ID for Prisma Client.
  *
  * When generator output is set to its default location within node_modules, then we return the import ID of just its npm moniker "@prisma/client".
  *
- * Othewise we return an import ID as an absolute path to the output location.
+ * Otherwise we return an import ID as an absolute path to the output location.
  */
 function getPrismaClientImportIdForItsGeneratorOutputConfig(
   prismaClientGeneratorConfig: GeneratorConfig
@@ -141,4 +158,8 @@ function getPrismaClientImportIdForItsGeneratorOutputConfig(
   }
 
   return prismaClientGeneratorConfig.output.value
+}
+
+const absoluteify = (path: string, prefixAbsolutePath: string) => {
+  return Path.isAbsolute(path) ? path : Path.join(prefixAbsolutePath, path)
 }

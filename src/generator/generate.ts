@@ -57,8 +57,6 @@ export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Se
   }
 
   const declarationSourceFile = ModelsGenerator.TS.createModuleSpec(dmmf, settings)
-  process.stdout.write('1')
-  process.stdout.write(JSON.stringify(settings.data.output))
 
   if (settings.data.output.directory === 'default') {
     // ESM

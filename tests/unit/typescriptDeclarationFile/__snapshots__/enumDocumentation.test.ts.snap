@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`When an enum has a documentation comment across lines, then they are joined and then used for the JSDoc of that field and its $description field: index.d.ts 1`] = `
-"import * as Nexus from 'nexus'
-import * as NexusCore from 'nexus/dist/core'
+"import * as NexusCore from 'nexus/dist/core'
 
 //
 //
@@ -114,8 +113,7 @@ export const $settings: typeof Runtime.changeSettings
 `;
 
 exports[`When an enum has a documentation comment, then it is used for the JSDoc of that enum and its $description field: index.d.ts 1`] = `
-"import * as Nexus from 'nexus'
-import * as NexusCore from 'nexus/dist/core'
+"import * as NexusCore from 'nexus/dist/core'
 
 //
 //
@@ -227,8 +225,7 @@ export const $settings: typeof Runtime.changeSettings
 `;
 
 exports[`When an enum has no documentation comment, and \`jsdocPropagationDefault\` is set to "none", then it does not get any default JSDoc and its description field is null: index.d.ts 1`] = `
-"import * as Nexus from 'nexus'
-import * as NexusCore from 'nexus/dist/core'
+"import * as NexusCore from 'nexus/dist/core'
 
 //
 //
@@ -338,8 +335,7 @@ export const $settings: typeof Runtime.changeSettings
 `;
 
 exports[`When an enum has no documentation comment, then it gets the default JSDoc and its description field is null: index.d.ts 1`] = `
-"import * as Nexus from 'nexus'
-import * as NexusCore from 'nexus/dist/core'
+"import * as NexusCore from 'nexus/dist/core'
 
 //
 //

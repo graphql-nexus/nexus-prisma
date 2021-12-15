@@ -150,18 +150,6 @@ export namespace Gentime {
            * @default 'index'
            */
           name?: string
-          /**
-           * The file extension to use for the generated runtime module.
-           *
-           * @default 'js'
-           */
-          type?: 'ts' | 'js'
-          /**
-           * The module system to use for the generated runtime module.
-           *
-           * @default 'cjs'
-           */
-          moduleSystem?: 'esm' | 'cjs'
         }
   }
 
@@ -176,21 +164,13 @@ export namespace Gentime {
         initial: () => ({
           directory: 'default',
           name: 'index',
-          type: 'ts',
-          moduleSystem: 'esm',
         }),
         fields: {
           directory: {
             initial: () => 'default',
           },
-          moduleSystem: {
-            initial: () => 'cjs',
-          },
           name: {
             initial: () => 'index',
-          },
-          type: {
-            initial: () => 'js',
           },
         },
       },

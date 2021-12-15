@@ -102,7 +102,7 @@ export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Se
     const sourceFiles = [
       ModelsGenerator.JS.createModuleSpec({
         gentimeSettings: settings,
-        esm: settings.data.output?.moduleSystem === 'esm',
+        esm: false,
         dmmf,
       }),
       declarationSourceFile,
@@ -113,9 +113,7 @@ export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Se
     sourceFiles.forEach((sf) => {
       const filePath = Path.join(
         settings.data.output.directory,
-        sf.fileName.endsWith('d.ts')
-          ? `${settings.data.output.name}.d.ts`
-          : `${settings.data.output.name}.${settings.data.output.type}`
+        sf.fileName.endsWith('d.ts') ? `${settings.data.output.name}.d.ts` : `${settings.data.output.name}.js`
       )
       fs.remove(filePath)
       fs.write(filePath, sf.content)

@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`An enum maps to a Nexus enum type definition: index.d.ts 1`] = `
-"import * as Nexus from 'nexus'
-import * as NexusCore from 'nexus/dist/core'
+"import * as NexusCore from 'nexus/dist/core'
 
 //
 //

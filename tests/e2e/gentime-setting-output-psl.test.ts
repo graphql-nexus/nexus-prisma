@@ -9,7 +9,6 @@ const ctx = konn()
   .done()
 
 it('gentime setting output: custom directory', () => {
-  console.log(ctx.fs.cwd())
   ctx.fixture.use(Path.join(__dirname, 'fixtures/basic'))
   ctx.fs.remove('prisma/nexus-prisma.ts')
   ctx.fs.write(

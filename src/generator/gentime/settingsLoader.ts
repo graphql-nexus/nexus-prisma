@@ -1,9 +1,8 @@
 import * as fs from 'fs'
-import * as Path from 'path'
 import kleur from 'kleur'
 import type * as TSNode from 'ts-node'
 import { d } from '../../helpers/debugNexusPrisma'
-import { renderError, renderWarning } from '../../lib/diagnostic'
+import { renderError } from '../../lib/diagnostic'
 
 export const supportedSettingsModulePaths = [
   'nexus-prisma.ts',
@@ -22,6 +21,7 @@ export function loadUserGentimeSettings(): void {
 
   const userSettingsModulePath = userSettingsModulePaths[0]
 
+  // TODO
   // if (userSettingsModulePaths.length > 1) {
   //   console.log(
   //     // prettier-ignore

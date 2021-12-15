@@ -83,26 +83,21 @@ export namespace Gentime {
      */
     prismaClientImportId?: string
     /**
-     * Configure various details about the Nexus Prisma generated runtime such as file location, name, type
-     * and module system to use.
+     * Configure various details about the Nexus Prisma generated runtime such as file name and location.
      *
      * By default is output into the installed node_modules location of Nexus Prisma itself and supports both
      * ESM and CJS.
      *
-     * If you explicitly configure this setting, then you can only output ESM _or_ CJS, not both,
-     * since as the project maintainer you will be in a position to know which one you want to use.
-     *
      * The following files will be output into the target directory:
      *
      * ```
-     * Description | Default Name | Default Extension |
+     * Description | Default Name | Extension |
      * ----------------------------------------------------
-     * A runtime file | index | .ts |
+     * A runtime file | index | .js |
      * A type file | index | .d.ts |
      * ```
      *
-     * Passing `string` is a path to the target directory to output to, shorthand for `{ directory: string,
-     * moduleSystem: 'esm', type: 'ts' }`
+     * Passing `string` is a path to the target directory to output to, shorthand for `{ directory: string }`
      *
      * If a relative path is given then it is considered relative to the Prisma Schema file.
      *

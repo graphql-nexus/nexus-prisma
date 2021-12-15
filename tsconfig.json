@@ -21,7 +21,8 @@
     //   Only enable this for applications.
     //   Packages doing this force their consumers to.
     // for pluralize which we will remove once @prisma/client exports externalToInternal DMMF transformer
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "resolveJsonModule": true
   },
   "include": ["src", "tests", "scripts"],
   "exclude": ["dist-*", "tests/e2e/fixtures", "docs"]

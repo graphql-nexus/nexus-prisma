@@ -9,16 +9,32 @@ type DiagnosticInfo = {
   disable?: string
 }
 
+export const renderList = (items: string[]): string => {
+  return items.map((item) => `→ ${item}`).join('\n')
+}
+
+export const renderTitle = (title: string) => {
+  return `${kleur.bold(title.toUpperCase())}:`
+}
+
 export function renderError(params: DiagnosticInfo): string {
-  const solution = params.solution ? `\n\nSOLUTION: ${params.solution}` : ''
-  const disable = params.disable ? `\n\nHOW TO DISABLE: ${params.disable}` : ''
+  const solution = params.solution ? `\n\n${renderTitle('solution')} ${params.solution}` : ''
+  const disable = params.disable ? `\n\n${renderTitle('how to disable')} ${params.disable}` : ''
   // prettier-ignore
-  return `${kleur.red('ERROR:')} ${params.title}\n\nREASON: ${params.reason}\n\nCONSEQUENCE: ${params.consequence}${solution}${disable}\n\nCODE: ${params.code}`
+  return `${kleur.red(renderTitle('error'))} ${params.title}\n\n${renderTitle('reason')} ${params.reason}\n\n${renderTitle('consequence')} ${params.consequence}${solution}${disable}\n\n${renderTitle('code')} ${params.code}`
 }
 
 export function renderWarning(params: DiagnosticInfo): string {
-  const solution = params.solution ? `\n\nSOLUTION: ${params.solution}` : ''
-  const disable = params.disable ? `\n\nHOW TO DISABLE: ${params.disable}` : ''
+  const solution = params.solution ? `\n\n${renderTitle('solution')} ${params.solution}` : ''
+  const disable = params.disable ? `\n\n${renderTitle('how to disable')} ${params.disable}` : ''
   // prettier-ignore
-  return `${kleur.yellow('WARNING:')} ${params.title}\n\nREASON: ${params.reason}\n\nCONSEQUENCE: ${params.consequence}${solution}${disable}\n\nCODE: ${params.code}`
+  return `${kleur.yellow(renderTitle('warning'))} ${params.title}\n\n${renderTitle('reason')} ${params.reason}\n\n${renderTitle('consequence')} ${params.consequence}${solution}${disable}\n\n${renderTitle('code')} ${params.code}`
+}
+
+export const renderCodeInline = (code: string): string => {
+  return `\`${kleur.cyan(code)}\``
+}
+
+export const renderCodeBlock = (code: string): string => {
+  return `\`\`\`\n${kleur.cyan(code)}\n\`\`\``
 }

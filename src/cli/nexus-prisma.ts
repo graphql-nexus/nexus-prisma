@@ -5,14 +5,16 @@
 process.env.DEBUG_COLORS = 'true'
 process.env.DEBUG_HIDE_DATE = 'true'
 import { GeneratorConfig, generatorHandler } from '@prisma/generator-helper'
+import dindist from 'dindist'
 import expandTilde from 'expand-tilde'
 import * as Path from 'path'
 import { generateRuntimeAndEmit } from '../generator'
-import { loadUserGentimeSettings } from '../generator/gentime/settingsLoader'
+import { loadUserGentimeSettings, supportedSettingsModulePaths } from '../generator/gentime/settingsLoader'
 import { Gentime } from '../generator/gentime/settingsSingleton'
 import { d } from '../helpers/debugNexusPrisma'
 import { externalToInternalDmmf } from '../helpers/prismaExternalToInternalDMMF'
 import { resolveGitHubActionsWindowsPathTilde } from '../helpers/utils'
+import { renderCodeBlock, renderList, renderWarning } from '../lib/diagnostic'
 
 // todo by default error in ci and warn in local
 // enforceValidPeerDependencies({
@@ -28,7 +30,7 @@ generatorHandler({
   },
   // async required by interface
   // eslint-disable-next-line
-  async onGenerate({ dmmf, otherGenerators }) {
+  async onGenerate({ dmmf, otherGenerators, generator, schemaPath }) {
     const prismaClientGenerator = otherGenerators.find((g) => g.provider.value === 'prisma-client-js')
 
     // TODO test showing this pretty error in action
@@ -39,6 +41,36 @@ generatorHandler({
       )
     }
 
+    if (generator.isCustomOutput) {
+      if (!generator.output) {
+        throw new Error(`Failed to read the custom output path.`)
+      }
+
+      Gentime.changeSettings({
+        output: {
+          directory: generator.output.value,
+        },
+      })
+
+      // TODO capture this output in a test
+      process.stdout.write(
+        // prettier-ignore
+        renderWarning({
+          code: `nexus_prisma_prefer_config_file`,
+          title: `It is preferred to use the Nexus Prisma configuration file to set the output directory.`,
+          reason: `Using the Nexus Prisma configuration file gives you access to autocomplete and inline JSDoc documentation.`,
+          consequence: `Your developer experience may be degraded.`,
+          solution: `Create a configuration file in one of the following locations:\n\n${renderList(supportedSettingsModulePaths)}\n\nThen add the following code:\n\n${renderCodeBlock(dindist`
+            import { settings } from 'nexus-prisma/generator'
+
+            settings.change({
+              output: '${generator.output.value}'
+            })
+        `)}`,
+        }) + '\n'
+      )
+    }
+
     // WARNING: Make sure this logic comes before `loadUserGentimeSettings` below
     // otherwise we will overwrite the user's choice for this setting if they have set it.
     Gentime.settings.change({
@@ -46,8 +78,25 @@ generatorHandler({
     })
 
     const internalDMMF = externalToInternalDmmf(dmmf)
+
     loadUserGentimeSettings()
+
+    /**
+     * If the output path is some explicit relative path then make it absolute relative to the Prisma Schema file directory.
+     */
+    if (
+      Gentime.settings.data.output.directory !== 'default' &&
+      !Path.isAbsolute(Gentime.settings.data.output.directory)
+    ) {
+      Gentime.settings.change({
+        output: {
+          directory: Path.join(Path.dirname(schemaPath), Gentime.settings.data.output.directory),
+        },
+      })
+    }
+
     generateRuntimeAndEmit(internalDMMF, Gentime.settings)
+
     process.stdout.write(
       `You can now start using Nexus Prisma in your code. Reference: https://pris.ly/d/nexus-prisma\n`
     )
@@ -59,11 +108,11 @@ generatorHandler({
  */
 
 /**
- * Get the appropiate import ID for Prisma Client.
+ * Get the appropriate import ID for Prisma Client.
  *
  * When generator output is set to its default location within node_modules, then we return the import ID of just its npm moniker "@prisma/client".
  *
- * Othewise we return an import ID as an absolute path to the output location.
+ * Otherwise we return an import ID as an absolute path to the output location.
  */
 function getPrismaClientImportIdForItsGeneratorOutputConfig(
   prismaClientGeneratorConfig: GeneratorConfig

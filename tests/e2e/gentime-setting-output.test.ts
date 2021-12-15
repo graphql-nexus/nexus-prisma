@@ -8,17 +8,11 @@ const ctx = konn()
   .useBeforeEach(project())
   .done()
 
-it('works with ncc', () => {
-  ctx.fixture.use(Path.join(__dirname, 'fixtures/ncc'))
+it('gentime setting output: custom directory', () => {
+  ctx.fixture.use(Path.join(__dirname, 'fixtures/basic'))
   ctx.runOrThrow(`${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`)
   ctx.runOrThrow(`npm install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
-  ctx.runOrThrowPackageScript(`build`)
-
-  // Remove this to ensure that when the ncc build is run in the next step
-  // it is truly running independent of any node_modules.
-  ctx.fs.remove('node_modules')
-
-  const result = ctx.runOrThrowPackageScript(`start:dist`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
-
+  ctx.runOrThrow(`npx prisma generate`)
+  const result = ctx.runOrThrowPackageScript(`dev`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
   expect(result.stdout).toMatchSnapshot()
 })

@@ -82,6 +82,70 @@ export namespace Gentime {
      * @default '@prisma/client'
      */
     prismaClientImportId?: string
+    /**
+     * Configure various details about the Nexus Prisma generated runtime such as file name and location.
+     *
+     * By default is output into the installed node_modules location of Nexus Prisma itself and supports both
+     * ESM and CJS.
+     *
+     * The following files will be output into the target directory:
+     *
+     * ```
+     * Description | Default Name | Extension |
+     * ----------------------------------------------------
+     * A runtime file | index | .js |
+     * A type file | index | .d.ts |
+     * ```
+     *
+     * Passing `string` is a path to the target directory to output to, shorthand for `{ directory: string }`
+     *
+     * If a relative path is given then it is considered relative to the Prisma Schema file.
+     *
+     * @example
+     *
+     * // Default
+     *   // prisma/nexus-prisma.config.ts
+     *   import { settings } from 'nexus-prisma/generator'
+     *
+     *   settings({
+     *     output: undefined // The default
+     *   })
+     *
+     *   // src/schema.ts
+     *   import { ... } from 'nexus-prisma'
+     *
+     * @example
+     *
+     * // Custom
+     *   // prisma/nexus-prisma.config.ts
+     *   import { settings } from 'nexus-prisma/generator'
+     *
+     *   settings({
+     *     output: '../src/generated/nexus-prisma'
+     *   })
+     *
+     *   // src/schema.ts
+     *   import { ... } from './generated/nexus-prisma'
+     *
+     */
+    output?:
+      | string
+      | {
+          /**
+           * The directory to output the generated modules into.
+           *
+           * If a relative path is given then it is considered relative to the Prisma Schema file.
+           *
+           * By default Nexus Prisma runtime is output into its installed node_modules location.
+           */
+          directory: string
+          /**
+           * The name to use for the generated modules.
+           *
+           * @default 'index'
+           */
+          name?: string
+        }
   }
 
   export type SettingsData = Setset.InferDataFromInput<SettingsInput>
@@ -90,6 +154,21 @@ export namespace Gentime {
 
   export const settings = Setset.create<SettingsInput, SettingsData>({
     fields: {
+      output: {
+        shorthand: (directory) => ({ directory }),
+        initial: () => ({
+          directory: 'default',
+          name: 'index',
+        }),
+        fields: {
+          directory: {
+            initial: () => 'default',
+          },
+          name: {
+            initial: () => 'index',
+          },
+        },
+      },
       projectIdIntToGraphQL: {
         initial: () => 'Int',
       },

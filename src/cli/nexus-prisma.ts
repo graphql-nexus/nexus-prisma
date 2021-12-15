@@ -159,7 +159,3 @@ function getPrismaClientImportIdForItsGeneratorOutputConfig(
 
   return prismaClientGeneratorConfig.output.value
 }
-
-const absoluteify = (path: string, prefixAbsolutePath: string) => {
-  return Path.isAbsolute(path) ? path : Path.join(prefixAbsolutePath, path)
-}

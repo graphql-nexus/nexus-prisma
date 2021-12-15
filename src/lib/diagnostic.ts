@@ -21,14 +21,14 @@ export function renderError(params: DiagnosticInfo): string {
   const solution = params.solution ? `\n\n${renderTitle('solution')} ${params.solution}` : ''
   const disable = params.disable ? `\n\n${renderTitle('how to disable')} ${params.disable}` : ''
   // prettier-ignore
-  return `${kleur.red(renderTitle('error'))} ${params.title}\n\n${renderTitle('reason')} ${params.reason}\n\n${renderTitle('consequence')} ${params.consequence}${solution}${disable}\n\n${renderTitle('code')}: ${params.code}`
+  return `${kleur.red(renderTitle('error'))} ${params.title}\n\n${renderTitle('reason')} ${params.reason}\n\n${renderTitle('consequence')} ${params.consequence}${solution}${disable}\n\n${renderTitle('code')} ${params.code}`
 }
 
 export function renderWarning(params: DiagnosticInfo): string {
   const solution = params.solution ? `\n\n${renderTitle('solution')} ${params.solution}` : ''
   const disable = params.disable ? `\n\n${renderTitle('how to disable')} ${params.disable}` : ''
   // prettier-ignore
-  return `${kleur.yellow(renderTitle('warning'))} ${params.title}\n\n${renderTitle('reason')}: ${params.reason}\n\n${renderTitle('consequence')} ${params.consequence}${solution}${disable}\n\n${renderTitle('code')} ${params.code}`
+  return `${kleur.yellow(renderTitle('warning'))} ${params.title}\n\n${renderTitle('reason')} ${params.reason}\n\n${renderTitle('consequence')} ${params.consequence}${solution}${disable}\n\n${renderTitle('code')} ${params.code}`
 }
 
 export const renderCodeInline = (code: string): string => {

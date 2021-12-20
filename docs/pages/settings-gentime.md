@@ -19,7 +19,7 @@ You are able to control certain aspects of the Nexus Prisma code generation.
         └── package.json
       ```
 
-   2. **Primsa Directory** – The directory containing your Prisma schema. Example:
+   2. **Prisma Directory** – The directory containing your Prisma schema. Example:
 
       ```
         ├── prisma/nexus-prisma.ts

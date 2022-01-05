@@ -45,7 +45,7 @@ export namespace Runtime {
        *
        * @default true
        */
-      prismaClientOnContext?:
+      PrismaClientOnContext?:
         | boolean
         | {
             /**
@@ -73,7 +73,7 @@ export namespace Runtime {
       },
       checks: {
         fields: {
-          prismaClientOnContext: {
+          PrismaClientOnContext: {
             shorthand: (enabled) => ({ enabled }),
             fields: {
               enabled: {

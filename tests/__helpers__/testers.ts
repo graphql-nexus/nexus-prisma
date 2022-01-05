@@ -203,7 +203,14 @@ export async function integrationTest({
     document: apiClientQuery,
   })
 
-  await prismaClient.$disconnect()
+  /**
+   * Automatically await disconnect. However only if it is actually a Prisma Client instance.
+   *
+   * Sometimes tests might pass bad data on purpose to test our checks system.
+   */
+  if (prismaClient instanceof prismaClientPackage.PrismaClient) {
+    await prismaClient.$disconnect()
+  }
 
   if (graphqlOperationExecutionResult.errors) {
     throw new Error(

@@ -262,7 +262,7 @@ export function nexusResolverFromPrismaField(
     const prisma: any = ctx[settings.runtime.data.prismaClientContextField]
     const prismaOrmModelPropertyName = PrismaUtils.typeScriptOrmModelPropertyNameFromModelName(model.name)
 
-    if (settings.runtime.data.checks.prismaClientOnContext.enabled) {
+    if (settings.runtime.data.checks.PrismaClientOnContext.enabled) {
       // eslint-disable-next-line
       let PrismaClientPackage: any
       try {
@@ -282,7 +282,7 @@ export function nexusResolverFromPrismaField(
           PrismaClientPackage !== null &&
           typeof PrismaClientPackage === 'object' &&
           // eslint-disable-next-line
-          typeof PrismaClientPackage.PrismaClient !== 'function'
+          typeof PrismaClientPackage.PrismaClient === 'function'
         )
       ) {
         // TODO rich errors
@@ -304,7 +304,7 @@ export function nexusResolverFromPrismaField(
             `Check "PrismaClientOnContext" failed. The GraphQL context.${settings.runtime.data.prismaClientContextField} value is not an instance of the Prisma Client.`
           )
         } else {
-          if (settings.runtime.data.checks.prismaClientOnContext.warnWhenInstanceofStrategyFails) {
+          if (settings.runtime.data.checks.PrismaClientOnContext.warnWhenInstanceofStrategyFails) {
             Messenger.showWarning({
               code: 'PrismaClientOnContextInstanceOfStrategyFailed',
               title: `Prisma Client on GraphQL context failed being checked using instanceof`,
@@ -316,8 +316,10 @@ export function nexusResolverFromPrismaField(
       }
     }
 
+    console.log(1)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const prismaModel = prisma[prismaOrmModelPropertyName]
+    console.log(2)
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (typeof prismaModel.findUnique !== 'function') {
@@ -327,7 +329,7 @@ export function nexusResolverFromPrismaField(
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const findUnique = prismaModel.findUnique as (query: unknown) => MaybePromise<unknown>
-
+    console.log(3)
     const result: unknown = findUnique({
       where: whereUnique,
       /**

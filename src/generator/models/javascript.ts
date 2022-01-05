@@ -271,7 +271,9 @@ export function nexusResolverFromPrismaField(
       } catch (e) {
         // TODO rich errors
         throw new Error(
-          `Could not perform "PrismaClientOnContext" check because there was an error while trying to import Prisma Client:\n\n${e}`
+          `Could not perform "PrismaClientOnContext" check because there was an error while trying to import Prisma Client:\n\n${String(
+            e
+          )}`
         )
       }
 

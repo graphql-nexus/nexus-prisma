@@ -12,6 +12,8 @@ import { createWhereUniqueInput } from '../../lib/prisma-utils/whereUniqueInput'
 import { Runtime } from '../runtime/settingsSingleton'
 import { ModuleSpec } from '../types'
 import { fieldTypeToGraphQLType } from './declaration'
+import { inspect } from 'util'
+import { Messenger } from '../../lib/messenger'
 
 type PrismaEnumName = string
 
@@ -256,21 +258,64 @@ export function nexusResolverFromPrismaField(
   return (source: RecordUnknown, _args: RecordUnknown, ctx: RecordUnknown): MaybePromise<unknown> => {
     const whereUnique = createWhereUniqueInput(source, model)
 
-    // eslint-disable-next-line
-    const PrismaClientPackage = require(settings.gentime.prismaClientImportId)
-
-    // eslint-disable-next-line
-    if (!(ctx[settings.runtime.data.prismaClientContextField] instanceof PrismaClientPackage.PrismaClient)) {
-      // TODO rich errors
-      throw new Error(
-        `The GraphQL context.${settings.runtime.data.prismaClientContextField} value is not an instance of the Prisma Client (class reference for check imported from ${settings.gentime.prismaClientImportId}).`
-      )
-    }
-
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const prisma: any = ctx[settings.runtime.data.prismaClientContextField]
+    const prismaOrmModelPropertyName = PrismaUtils.typeScriptOrmModelPropertyNameFromModelName(model.name)
+
+    if (settings.runtime.data.checks.prismaClientOnContext.enabled) {
+      // eslint-disable-next-line
+      let PrismaClientPackage: any
+      try {
+        // eslint-disable-next-line
+        PrismaClientPackage = require(settings.gentime.prismaClientImportId)
+      } catch (e) {
+        // TODO rich errors
+        throw new Error(
+          `Could not perform "PrismaClientOnContext" check because there was an error while trying to import Prisma Client:\n\n${e}`
+        )
+      }
+
+      if (
+        !(
+          PrismaClientPackage !== null &&
+          typeof PrismaClientPackage === 'object' &&
+          // eslint-disable-next-line
+          typeof PrismaClientPackage.PrismaClient !== 'function'
+        )
+      ) {
+        // TODO rich errors
+        throw new Error(
+          `Could not perform "PrismaClientOnContext" check because could not get a reference to a valid Prisma Client class. Found:\n\n${inspect(
+            PrismaClientPackage
+          )}`
+        )
+      }
+
+      // eslint-disable-next-line
+      if (!(prisma instanceof PrismaClientPackage.PrismaClient)) {
+        /**
+         * Fallback to duck typing check. Sometimes `instanceof` does not work for obscure reasons outside the user's control.
+         */
+        if (!PrismaUtils.duckTypeIsPrismaClient(prisma, prismaOrmModelPropertyName)) {
+          // TODO rich errors
+          throw new Error(
+            `Check "PrismaClientOnContext" failed. The GraphQL context.${settings.runtime.data.prismaClientContextField} value is not an instance of the Prisma Client.`
+          )
+        } else {
+          if (settings.runtime.data.checks.prismaClientOnContext.warnWhenInstanceofStrategyFails) {
+            Messenger.showWarning({
+              code: 'PrismaClientOnContextInstanceOfStrategyFailed',
+              title: `Prisma Client on GraphQL context failed being checked using instanceof`,
+              reason: `The Prisma Client class reference imported from ${settings.gentime.prismaClientImportId} is not the same class used by you to create your Prisma Client instance.`,
+              consequence: `Maybe none since duck typing fallback indicates that the Prisma Client on the GraphQL context is actually valid. However relying on duck typing is hacky.`,
+            })
+          }
+        }
+      }
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    const prismaModel = prisma[PrismaUtils.typeScriptOrmModelPropertyNameFromModelName(model.name)]
+    const prismaModel = prisma[prismaOrmModelPropertyName]
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (typeof prismaModel.findUnique !== 'function') {

@@ -316,10 +316,8 @@ export function nexusResolverFromPrismaField(
       }
     }
 
-    console.log(1)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const prismaModel = prisma[prismaOrmModelPropertyName]
-    console.log(2)
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (typeof prismaModel.findUnique !== 'function') {
@@ -329,7 +327,6 @@ export function nexusResolverFromPrismaField(
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const findUnique = prismaModel.findUnique as (query: unknown) => MaybePromise<unknown>
-    console.log(3)
     const result: unknown = findUnique({
       where: whereUnique,
       /**

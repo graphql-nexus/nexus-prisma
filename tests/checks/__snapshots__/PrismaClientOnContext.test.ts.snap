@@ -3,8 +3,15 @@
 exports[`error thrown when instanceof check and duck typing fails: graphqlOperationExecutionResult 1`] = `
 Object {
   "data": Object {
-    "users": Array [],
+    "users": Array [
+      Object {
+        "profile": null,
+      },
+    ],
   },
+  "errors": Array [
+    [GraphQLError: Check "PrismaClientOnContext" failed. The GraphQL context.prisma value is not an instance of the Prisma Client.],
+  ],
 }
 `;
 
@@ -15,6 +22,11 @@ type Query {
 }
 
 type User {
+  id: ID!
+  profile: Profile
+}
+
+type Profile {
   id: ID!
 }
 "

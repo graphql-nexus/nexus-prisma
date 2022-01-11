@@ -1,0 +1,22 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./db.sqlite"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output = "./client"
+}
+
+
+
+
+    model User {
+      id        String   @id
+			profile   Profile? @relation(fields: [profileId], references: [id])
+			profileId String
+    }
+		model Profile {
+      id    String  @id
+			user  User
+		}

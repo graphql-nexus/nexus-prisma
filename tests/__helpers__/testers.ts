@@ -12,6 +12,8 @@ import * as ModelsGenerator from '../../src/generator/models'
 import { Settings } from '../../src/generator/models/javascript'
 import { Runtime } from '../../src/generator/runtime/settingsSingleton'
 import { ModuleSpec } from '../../src/generator/types'
+import { DMMF } from '@prisma/generator-helper'
+import slug from 'slug'
 
 const settingsDefaults: Settings = {
   gentime: Gentime.settings.data,
@@ -55,9 +57,9 @@ export type IntegrationTestSpec = {
    *
    * 1. Customize the Prisma Client settings.
    */
-  setupPrismaClient?: (prismaClientPackage: any) => Promise<any>
+  prismaClient?: (prismaClientPackage: any) => Promise<any>
   /**
-   * A Graphql document to execute against the GraphQL API. The result is snapshoted.
+   * A Graphql document to execute against the GraphQL API. The result is snapshotted.
    */
   apiClientQuery: DocumentNode
 }
@@ -98,7 +100,7 @@ export function testGeneratedModules(params: {
  * Test that the given Prisma schema + API Schema + data seed + GraphQL document lead to the expected
  * GraphQL schema and execution result.
  */
-export function testIntegration(params: IntegrationTestParams) {
+export const testIntegration = (params: IntegrationTestParams) => {
   if (params.skip && params.only)
     throw new Error(`Cannot specify to skip this test AND only run this test at the same time.`)
 
@@ -116,7 +118,7 @@ export function testIntegration(params: IntegrationTestParams) {
 }
 
 /**
- * Test that the given Prisma schema + API Scheam lead to the expected GraphQL schema.
+ * Test that the given Prisma schema + API Schema lead to the expected GraphQL schema.
  */
 export function testGraphqlSchema(params: {
   datasourceSchema: string
@@ -145,32 +147,49 @@ export function testGraphqlSchema(params: {
 /**
  * Given a Prisma schema and Nexus type definitions return a GraphQL schema.
  */
-export async function integrationTest({
+export const integrationTest = async ({
   datasourceSchema,
   apiSchema,
   setup,
-  setupPrismaClient,
+  prismaClient: setupPrismaClient,
   apiClientQuery,
-}: IntegrationTestParams) {
-  const dir = fs.tmpDir().cwd()
-  const dirRelativePrismaClientOutput = './client'
-  const prismaClientImportId = Path.posix.join(dir, dirRelativePrismaClientOutput)
+  description,
+}: IntegrationTestParams) => {
+  const outputDir = Path.join(process.cwd(), 'tests/__cache__/integration/', slug(description))
+  const prismaClientOutputDir = './client'
+  const prismaClientOutputDirAbsolute = Path.posix.join(outputDir, prismaClientOutputDir)
+  const sqliteDatabaseFileOutput = './db.sqlite'
+  const sqliteDatabaseFileOutputAbsolute = Path.join(outputDir, sqliteDatabaseFileOutput)
+  const dmmfFileOutputAbsolute = Path.join(outputDir, 'dmmf.json')
   const prismaSchemaContents = createPrismaSchema({
     content: datasourceSchema,
     datasourceProvider: {
       provider: 'sqlite',
-      url: `file:./db.sqlite`,
+      url: `file:${sqliteDatabaseFileOutput}`,
     },
     nexusPrisma: false,
-    clientOutput: dirRelativePrismaClientOutput,
+    clientOutput: prismaClientOutputDir,
   })
 
-  fs.write(`${dir}/schema.prisma`, prismaSchemaContents)
+  const cacheHit = fs.exists(prismaClientOutputDirAbsolute)
+  let dmmf: DMMF.Document
 
-  // This will run the prisma generators
-  execa.commandSync(`yarn -s prisma db push --force-reset --schema ${dir}/schema.prisma`)
+  if (!cacheHit) {
+    fs.write(`${outputDir}/schema.prisma`, prismaSchemaContents)
+    execa.commandSync(`yarn -s prisma db push --force-reset --schema ${outputDir}/schema.prisma`)
+    fs.copy(sqliteDatabaseFileOutputAbsolute, `${sqliteDatabaseFileOutputAbsolute}.bak`)
+    dmmf = await PrismaSDK.getDMMF({
+      datamodel: prismaSchemaContents,
+    })
+    fs.write(dmmfFileOutputAbsolute, dmmf)
+  } else {
+    // restore empty database
+    fs.copy(`${sqliteDatabaseFileOutputAbsolute}.bak`, sqliteDatabaseFileOutputAbsolute, { overwrite: true })
+    dmmf = fs.read(dmmfFileOutputAbsolute, 'json')
+  }
 
-  const prismaClientPackage = require(prismaClientImportId)
+  const prismaClientPackage = require(prismaClientOutputDirAbsolute)
+
   const prismaClient = setupPrismaClient
     ? setupPrismaClient(prismaClientPackage)
     : new prismaClientPackage.PrismaClient()
@@ -179,15 +198,11 @@ export async function integrationTest({
     await setup(prismaClient)
   }
 
-  const dmmf = await PrismaSDK.getDMMF({
-    datamodel: prismaSchemaContents,
-  })
-
   const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {
     ...settingsDefaults,
     gentime: {
       ...settingsDefaults.gentime,
-      prismaClientImportId: prismaClientImportId,
+      prismaClientImportId: prismaClientOutputDirAbsolute,
     },
   }) as any
 
@@ -212,11 +227,11 @@ export async function integrationTest({
     await prismaClient.$disconnect()
   }
 
-  if (graphqlOperationExecutionResult.errors) {
-    throw new Error(
-      `GraphQL operation failed:\n\n  - ${graphqlOperationExecutionResult.errors.join('\n  - ')}`
-    )
-  }
+  // if (graphqlOperationExecutionResult.errors) {
+  //   throw new Error(
+  //     `GraphQL operation failed:\n\n  - ${graphqlOperationExecutionResult.errors.join('\n  - ')}`
+  //   )
+  // }
 
   return {
     graphqlSchemaSDL: prepareGraphQLSDLForSnapshot(printSchema(schema)),

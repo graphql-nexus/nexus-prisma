@@ -42,7 +42,7 @@ testIntegration({
       }),
     ]
   },
-  setupPrismaClient(prismaClientPackage) {
+  prismaClient(prismaClientPackage) {
     // This global setting should have no effect on Nexus Prisma
     return new prismaClientPackage.PrismaClient({
       rejectOnNotFound: true,

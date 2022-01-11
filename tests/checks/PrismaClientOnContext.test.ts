@@ -43,7 +43,7 @@ testIntegration({
       }),
     ]
   },
-  setupPrismaClient(prismaClientPackage) {
+  prismaClient(prismaClientPackage) {
     return 'should be prisma client instance but is not' as any
   },
   apiClientQuery: gql`
@@ -97,7 +97,7 @@ testIntegration({
       }),
     ]
   },
-  setupPrismaClient(prismaClientPackage) {
+  prismaClient(prismaClientPackage) {
     // Break the instanceof check but duck typing will succeed.
     const prisma = new prismaClientPackage.PrismaClient()
     return { ...prisma }

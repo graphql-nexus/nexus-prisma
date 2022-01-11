@@ -12,7 +12,7 @@ testIntegration({
     }
     model Profile {
       id      String  @id
-      user    User?
+      user    User?   @relation
     }
   `,
   apiSchema({ User, Profile }) {

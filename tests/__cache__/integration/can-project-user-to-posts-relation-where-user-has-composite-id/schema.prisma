@@ -1,0 +1,25 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./db.sqlite"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output = "./client"
+}
+
+
+
+
+    model User {
+      id1    String
+      id2    String
+      posts  Post[]
+      @@id(fields: [id1, id2])
+    }
+    model Post {
+      id         String  @id
+      author     User?   @relation(fields: [authorId1, authorId2], references: [id1, id2])
+      authorId1  String
+      authorId2  String
+    }

@@ -157,12 +157,9 @@ export const integrationTest = async ({
   description,
 }: IntegrationTestParams) => {
   /**
-   * On windows "File name too long" errors can occur. For that reason we do not pass through the test description which may be very long.
-   * If that is desired, an environment variable can be used to enable that mode.
+   * On windows "File name too long" errors can occur. For that reason we do not pass through the test description which may be very long when on Windows.
    */
-  const outputDirName = process.env.PRETTY_TEST_CACHE
-    ? `__pretty__/${slug(description)}`
-    : objectHash({ description })
+  const outputDirName = process.platform === 'win32' ? objectHash({ description }) : slug(description)
   const outputDirPath = Path.join(process.cwd(), 'tests/__cache__/integration/', outputDirName)
   const prismaClientOutputDir = './client'
   const prismaClientOutputDirAbsolute = Path.posix.join(outputDirPath, prismaClientOutputDir)

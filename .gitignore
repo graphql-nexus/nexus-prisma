@@ -109,4 +109,4 @@ scalars.js
 generator.d.ts
 generator.js
 
-tests/__cache__/integration/__pretty__
+tests/__cache__

@@ -6,11 +6,11 @@ import { StandardGraphQLScalarType, StandardGraphQLScalarTypes } from '../../hel
 import { PrismaScalarType } from '../../helpers/prisma'
 import { allCasesHandled } from '../../helpers/utils'
 import { PrismaDmmf } from '../../lib/prisma-dmmf'
-import { Gentime } from '../gentime/settingsSingleton'
+import { Gentime } from '../gentime'
 import { jsDocForEnum, jsDocForField, jsDocForModel } from '../helpers/JSDocTemplates'
 import { ModuleSpec } from '../types'
 
-export const createModuleSpec = (dmmf: DMMF.Document, settings: Gentime.Settings): ModuleSpec => {
+export const createModuleSpec = (dmmf: DMMF.Document, settings: Gentime.Settings.Manager): ModuleSpec => {
   return {
     fileName: 'index.d.ts',
     content: dedent`
@@ -29,7 +29,7 @@ const NO_MODELS_DEFINED_COMMENT = dedent`
 
 export function renderTypeScriptDeclarationForDocumentModels(
   dmmf: DMMF.Document,
-  settings: Gentime.Settings
+  settings: Gentime.Settings.Manager
 ): string {
   const models = dmmf.datamodel.models
   const enums = dmmf.datamodel.enums
@@ -162,7 +162,10 @@ export function renderTypeScriptDeclarationForDocumentModels(
   )
 }
 
-function renderTypeScriptDeclarationForEnum(enum_: DMMF.DatamodelEnum, settings: Gentime.Settings): string {
+function renderTypeScriptDeclarationForEnum(
+  enum_: DMMF.DatamodelEnum,
+  settings: Gentime.Settings.Manager
+): string {
   const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForEnum({ enum: enum_, settings }) + '\n' : ''
   const description = renderPrismaNodeDocumentationToDescription({ settings, node: enum_ })
 
@@ -175,7 +178,7 @@ function renderTypeScriptDeclarationForEnum(enum_: DMMF.DatamodelEnum, settings:
   `
 }
 
-function renderTypeScriptDeclarationForModel(model: DMMF.Model, settings: Gentime.Settings): string {
+function renderTypeScriptDeclarationForModel(model: DMMF.Model, settings: Gentime.Settings.Manager): string {
   const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForModel({ model, settings }) + '\n' : ''
   const description = renderPrismaNodeDocumentationToDescription({ settings, node: model })
 
@@ -189,7 +192,7 @@ function renderTypeScriptDeclarationForModel(model: DMMF.Model, settings: Gentim
 }
 
 const renderPrismaNodeDocumentationToDescription = (params: {
-  settings: Gentime.Settings
+  settings: Gentime.Settings.Manager
   node: PrismaDmmf.DocumentableNode
 }): string => {
   return `${
@@ -197,7 +200,10 @@ const renderPrismaNodeDocumentationToDescription = (params: {
   }`
 }
 
-function renderTypeScriptDeclarationForModelFields(model: DMMF.Model, settings: Gentime.Settings): string {
+function renderTypeScriptDeclarationForModelFields(
+  model: DMMF.Model,
+  settings: Gentime.Settings.Manager
+): string {
   return model.fields
     .map((field) => renderTypeScriptDeclarationForField({ field, model, settings }))
     .join('\n')
@@ -210,7 +216,7 @@ function renderTypeScriptDeclarationForField({
 }: {
   field: DMMF.Field
   model: DMMF.Model
-  settings: Gentime.Settings
+  settings: Gentime.Settings.Manager
 }): string {
   const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForField({ field, model, settings }) + '\n' : ''
   const description = renderPrismaNodeDocumentationToDescription({ settings, node: field })
@@ -239,7 +245,7 @@ function renderTypeScriptDeclarationForField({
   `
 }
 
-function renderNexusType(field: DMMF.Field, settings: Gentime.Settings): string {
+function renderNexusType(field: DMMF.Field, settings: Gentime.Settings.Manager): string {
   const graphqlType = fieldTypeToGraphQLType(field, settings.data)
   /**
    * Relation fields can only work if the related field has been added to the API.
@@ -304,7 +310,7 @@ function renderNexusType(field: DMMF.Field, settings: Gentime.Settings): string 
  */
 export function fieldTypeToGraphQLType(
   field: DMMF.Field,
-  settings: Gentime.SettingsData
+  settings: Gentime.Settings.Data
 ): LiteralUnion<StandardGraphQLScalarType, string> {
   // TODO remove once PC is fixed https://prisma-company.slack.com/archives/C016KUHB1R6/p1638816683155000?thread_ts=1638563060.145800&cid=C016KUHB1R6
   if (typeof field.type !== 'string') {

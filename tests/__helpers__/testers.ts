@@ -7,19 +7,14 @@ import { core } from 'nexus'
 import { AllNexusTypeDefs } from 'nexus/dist/core'
 import * as Path from 'path'
 import { generateRuntime } from '../../src/generator/generate'
-import { Gentime } from '../../src/generator/gentime/settingsSingleton'
+import { Gentime } from '../../src/generator/gentime'
 import * as ModelsGenerator from '../../src/generator/models'
 import { Settings } from '../../src/generator/models/javascript'
-import { Runtime } from '../../src/generator/runtime/settingsSingleton'
+import { Runtime } from '../../src/generator/runtime'
 import { ModuleSpec } from '../../src/generator/types'
 import { DMMF } from '@prisma/generator-helper'
 import slug from 'slug'
 import objectHash from 'object-hash'
-
-const settingsDefaults: Settings = {
-  gentime: Gentime.settings.data,
-  runtime: Runtime.settings,
-}
 
 /**
  * Define Nexus type definitions based on the Nexus Prisma configurations
@@ -43,6 +38,10 @@ export type IntegrationTestSpec = {
    * Define the GraphQL API. All returned type defs are added to the final GraphQL schema.
    */
   apiSchema: APISchemaSpec
+  /**
+   * Get access to the gentime settings like you would in the gentime config file.
+   */
+  gentimeConfig?(settings: Gentime.Settings.Manager): void
   /**
    * Access the Prisma Client instance and run some setup side-effects.
    *
@@ -85,7 +84,7 @@ export function testGeneratedModules(params: {
   /**
    * The gentime settings to use.
    */
-  settings?: Gentime.SettingsInput
+  settings?: Gentime.Settings.Input
 }) {
   it(params.description, async () => {
     Gentime.settings.reset()
@@ -131,7 +130,13 @@ export function testGraphqlSchema(params: {
       datamodel: createPrismaSchema({ content: params.datasourceSchema }),
     })
 
-    const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, settingsDefaults) as any
+    const runtimeSettings = Runtime.Settings.create()
+    const gentimeSettings = Gentime.Settings.create()
+
+    const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {
+      gentime: gentimeSettings.data,
+      runtime: runtimeSettings,
+    }) as any
 
     const { schema } = await core.generateSchema.withArtifacts({
       types: params.apiSchema(nexusPrisma),
@@ -148,18 +153,12 @@ export function testGraphqlSchema(params: {
 /**
  * Given a Prisma schema and Nexus type definitions return a GraphQL schema.
  */
-export const integrationTest = async ({
-  datasourceSchema,
-  apiSchema,
-  setup,
-  prismaClient: setupPrismaClient,
-  apiClientQuery,
-  description,
-}: IntegrationTestParams) => {
+export const integrationTest = async (params: IntegrationTestParams) => {
   /**
    * On windows "File name too long" errors can occur. For that reason we do not pass through the test description which may be very long when on Windows.
    */
-  const outputDirName = process.platform === 'win32' ? objectHash({ description }) : slug(description)
+  const outputDirName =
+    process.platform === 'win32' ? objectHash({ description: params.description }) : slug(params.description)
   const outputDirPath = Path.join(process.cwd(), 'tests/__cache__/integration/', outputDirName)
   const prismaClientOutputDir = './client'
   const prismaClientOutputDirAbsolute = Path.posix.join(outputDirPath, prismaClientOutputDir)
@@ -167,7 +166,7 @@ export const integrationTest = async ({
   const sqliteDatabaseFileOutputAbsolute = Path.join(outputDirPath, sqliteDatabaseFileOutput)
   const dmmfFileOutputAbsolute = Path.join(outputDirPath, 'dmmf.json')
   const prismaSchemaContents = createPrismaSchema({
-    content: datasourceSchema,
+    content: params.datasourceSchema,
     datasourceProvider: {
       provider: 'sqlite',
       url: `file:${sqliteDatabaseFileOutput}`,
@@ -195,24 +194,32 @@ export const integrationTest = async ({
 
   const prismaClientPackage = require(prismaClientOutputDirAbsolute)
 
-  const prismaClient = setupPrismaClient
-    ? setupPrismaClient(prismaClientPackage)
+  const prismaClient = params.prismaClient
+    ? params.prismaClient(prismaClientPackage)
     : new prismaClientPackage.PrismaClient()
 
-  if (setup) {
-    await setup(prismaClient)
+  if (params.setup) {
+    await params.setup(prismaClient)
+  }
+
+  const runtimeSettings = Runtime.Settings.create()
+  const genTimeSettings = Gentime.Settings.create()
+
+  genTimeSettings.change({
+    prismaClientImportId: prismaClientOutputDirAbsolute,
+  })
+
+  if (params.gentimeConfig) {
+    params.gentimeConfig(genTimeSettings)
   }
 
   const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {
-    ...settingsDefaults,
-    gentime: {
-      ...settingsDefaults.gentime,
-      prismaClientImportId: prismaClientOutputDirAbsolute,
-    },
+    runtime: runtimeSettings,
+    gentime: genTimeSettings.data,
   }) as any
 
   const { schema } = await core.generateSchema.withArtifacts({
-    types: apiSchema(nexusPrisma),
+    types: params.apiSchema(nexusPrisma),
   })
 
   const graphqlOperationExecutionResult = await execute({
@@ -220,7 +227,7 @@ export const integrationTest = async ({
       prisma: prismaClient,
     },
     schema: schema,
-    document: apiClientQuery,
+    document: params.apiClientQuery,
   })
 
   /**

@@ -7,9 +7,9 @@ import { MaybePromise, RecordUnknown, Resolver } from '../../helpers/utils'
 import { PrismaDmmf } from '../../lib/prisma-dmmf'
 import { PrismaDocumentation } from '../../lib/prisma-documentation'
 import { PrismaUtils } from '../../lib/prisma-utils'
-import { Gentime } from '../gentime/settingsSingleton'
+import { Gentime } from '../gentime'
 import { createWhereUniqueInput } from '../../lib/prisma-utils/whereUniqueInput'
-import { Runtime } from '../runtime/settingsSingleton'
+import { Runtime } from '../runtime'
 import { ModuleSpec } from '../types'
 import { fieldTypeToGraphQLType } from './declaration'
 import { inspect } from 'util'
@@ -31,8 +31,8 @@ type NexusTypeDefConfigurations = Record<
 >
 
 export type Settings = {
-  runtime: Runtime.Settings
-  gentime: Gentime.SettingsData
+  runtime: Runtime.Settings.Manager
+  gentime: Gentime.Settings.Data
 }
 
 /**
@@ -42,7 +42,7 @@ export function createModuleSpec(params: {
   /**
    * Resolved generator settings (whatever user supplied merged with defaults).
    */
-  gentimeSettings: Gentime.Settings
+  gentimeSettings: Gentime.Settings.Manager
   /**
    * Should the module be generated using ESM instead of CJS?
    */

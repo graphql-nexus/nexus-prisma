@@ -14,6 +14,7 @@ import { Runtime } from '../../src/generator/runtime/settingsSingleton'
 import { ModuleSpec } from '../../src/generator/types'
 import { DMMF } from '@prisma/generator-helper'
 import slug from 'slug'
+import objectHash from 'object-hash'
 
 const settingsDefaults: Settings = {
   gentime: Gentime.settings.data,
@@ -155,12 +156,19 @@ export const integrationTest = async ({
   apiClientQuery,
   description,
 }: IntegrationTestParams) => {
-  const outputDir = Path.join(process.cwd(), 'tests/__cache__/integration/', slug(description))
+  /**
+   * On windows "File name too long" errors can occur. For that reason we do not pass through the test description which may be very long.
+   * If that is desired, an environment variable can be used to enable that mode.
+   */
+  const outputDirName = process.env.PRETTY_TEST_CACHE
+    ? `__pretty__/${slug(description)}`
+    : objectHash({ description })
+  const outputDirPath = Path.join(process.cwd(), 'tests/__cache__/integration/', outputDirName)
   const prismaClientOutputDir = './client'
-  const prismaClientOutputDirAbsolute = Path.posix.join(outputDir, prismaClientOutputDir)
+  const prismaClientOutputDirAbsolute = Path.posix.join(outputDirPath, prismaClientOutputDir)
   const sqliteDatabaseFileOutput = './db.sqlite'
-  const sqliteDatabaseFileOutputAbsolute = Path.join(outputDir, sqliteDatabaseFileOutput)
-  const dmmfFileOutputAbsolute = Path.join(outputDir, 'dmmf.json')
+  const sqliteDatabaseFileOutputAbsolute = Path.join(outputDirPath, sqliteDatabaseFileOutput)
+  const dmmfFileOutputAbsolute = Path.join(outputDirPath, 'dmmf.json')
   const prismaSchemaContents = createPrismaSchema({
     content: datasourceSchema,
     datasourceProvider: {
@@ -175,8 +183,8 @@ export const integrationTest = async ({
   let dmmf: DMMF.Document
 
   if (!cacheHit) {
-    fs.write(`${outputDir}/schema.prisma`, prismaSchemaContents)
-    execa.commandSync(`yarn -s prisma db push --force-reset --schema ${outputDir}/schema.prisma`)
+    fs.write(`${outputDirPath}/schema.prisma`, prismaSchemaContents)
+    execa.commandSync(`yarn -s prisma db push --force-reset --schema ${outputDirPath}/schema.prisma`)
     fs.copy(sqliteDatabaseFileOutputAbsolute, `${sqliteDatabaseFileOutputAbsolute}.bak`)
     dmmf = await PrismaSDK.getDMMF({
       datamodel: prismaSchemaContents,

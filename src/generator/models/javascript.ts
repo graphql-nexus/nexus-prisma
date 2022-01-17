@@ -80,7 +80,7 @@ export function createModuleSpec(params: {
 
         // Static API Exports
 
-        export const $settings = Runtime.settings.change
+        export const $settings = Runtime.changeSettings
 
         // Reflected Model Exports
 
@@ -92,7 +92,7 @@ export function createModuleSpec(params: {
       `
     : dedent`
         module.exports = {
-          $settings: Runtime.settings.change,
+          $settings: Runtime.changeSettings,
           ...models,
         }
       `
@@ -107,12 +107,12 @@ export function createModuleSpec(params: {
     ? dedent`
         import { getPrismaClientDmmf } from '${importSpecifierToNexusPrismaSourceDirectory}/helpers/prisma'
         import * as ModelsGenerator from '${importSpecifierToNexusPrismaSourceDirectory}/generator/models/index'
-        import { Runtime } from '${importSpecifierToNexusPrismaSourceDirectory}/generator/runtime/settingsSingleton'
+        import { Runtime } from '${importSpecifierToNexusPrismaSourceDirectory}/generator/runtime'
       `
     : dedent`
         const { getPrismaClientDmmf } = require('${importSpecifierToNexusPrismaSourceDirectory}/helpers/prisma')
         const ModelsGenerator = require('${importSpecifierToNexusPrismaSourceDirectory}/generator/models/index')
-        const { Runtime } = require('${importSpecifierToNexusPrismaSourceDirectory}/generator/runtime/settingsSingleton')
+        const { Runtime } = require('${importSpecifierToNexusPrismaSourceDirectory}/generator/runtime')
       `
 
   return {

@@ -1,9 +1,8 @@
 import { gql } from 'graphql-tag'
 import { nonNull, objectType, queryType } from 'nexus'
-import { testIntegration } from '../__helpers__/testers'
+import { testIntegration, testIntegrationPartial } from '../__helpers__/testers'
 
-testIntegration({
-  description: 'can project user-to-profile relationship',
+const base = testIntegrationPartial({
   datasourceSchema: `
     model User {
       id         String    @id
@@ -15,6 +14,22 @@ testIntegration({
       user    User?   @relation
     }
   `,
+  async setup(prisma) {
+    await prisma.user.create({
+      data: {
+        id: 'user1',
+        profile: {
+          create: {
+            id: 'profile1',
+          },
+        },
+      },
+    })
+  },
+})
+
+testIntegration({
+  description: 'can project user-to-profile relationship',
   apiSchema({ User, Profile }) {
     return [
       queryType({
@@ -42,18 +57,6 @@ testIntegration({
       }),
     ]
   },
-  async setup(prisma) {
-    await prisma.user.create({
-      data: {
-        id: 'user1',
-        profile: {
-          create: {
-            id: 'profile1',
-          },
-        },
-      },
-    })
-  },
   apiClientQuery: gql`
     query {
       users {
@@ -64,23 +67,13 @@ testIntegration({
       }
     }
   `,
+  ...base,
 })
 
 // https://github.com/prisma/nexus-prisma/issues/34
 testIntegration({
   description:
     'can project relationship in opposite direction of where @relation is defined, but the field will be nullable',
-  datasourceSchema: `
-    model User {
-      id         String    @id
-      profile    Profile   @relation(fields: [profileId], references: [id])
-      profileId  String
-    }
-    model Profile {
-      id      String  @id
-      user    User?
-    }
-  `,
   apiSchema({ User, Profile }) {
     return [
       queryType({
@@ -109,18 +102,6 @@ testIntegration({
       }),
     ]
   },
-  async setup(prisma) {
-    await prisma.user.create({
-      data: {
-        id: 'user1',
-        profile: {
-          create: {
-            id: 'profile1',
-          },
-        },
-      },
-    })
-  },
   apiClientQuery: gql`
     query {
       users {
@@ -134,22 +115,12 @@ testIntegration({
       }
     }
   `,
+  ...base,
 })
 
 testIntegration({
   description:
     'Nullable on Without-Relation-Scalar Side limitation can be worked around by wrapping type in an explicit nonNull',
-  datasourceSchema: `
-      model User {
-        id         String    @id
-        profile    Profile   @relation(fields: [profileId], references: [id])
-        profileId  String
-      }
-      model Profile {
-        id      String  @id
-        user    User?
-      }
-    `,
   apiSchema({ User, Profile }) {
     return [
       queryType({
@@ -181,18 +152,6 @@ testIntegration({
       }),
     ]
   },
-  async setup(prisma) {
-    await prisma.user.create({
-      data: {
-        id: 'user1',
-        profile: {
-          create: {
-            id: 'profile1',
-          },
-        },
-      },
-    })
-  },
   apiClientQuery: gql`
     query {
       users {
@@ -206,6 +165,7 @@ testIntegration({
       }
     }
   `,
+  ...base,
 })
 
 testIntegration({
@@ -220,7 +180,7 @@ testIntegration({
       model Profile {
         id1   String
         id2   String
-        user  User?
+        user  User? @relation
         @@id(fields: [id1, id2])
       }
     `,

@@ -117,7 +117,7 @@ export const testIntegration = (params: TestIntegrationParams) => {
   )
 }
 
-export const testIntegrationPartial = <T extends Omit<TestIntegrationParams, 'description'>>(
+export const testIntegrationPartial = <T extends Partial<Omit<TestIntegrationParams, 'description'>>>(
   params: T
 ): T => {
   return params

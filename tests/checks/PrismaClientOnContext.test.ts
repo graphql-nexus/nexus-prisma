@@ -122,3 +122,13 @@ testIntegration({
   },
   ...base,
 })
+
+testIntegration({
+  description: `If prisma client import succeeds but what is imported is not a valid prisma client then the check cannot perform its instanceof strategy and thus throws an error`,
+  nexusPrismaGentimeConfig(settings) {
+    settings.change({
+      prismaClientImportId: __filename,
+    })
+  },
+  ...base,
+})

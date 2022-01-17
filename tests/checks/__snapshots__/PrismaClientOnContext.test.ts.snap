@@ -36,6 +36,42 @@ type Profile {
 
 exports[`If prisma client import fails then the check cannot perform its instanceof strategy and thus throws an error: logs 1`] = `Array []`;
 
+exports[`If prisma client import succeeds but what is imported is not a valid prisma client then the check cannot perform its instanceof strategy and thus throws an error: graphqlOperationExecutionResult 1`] = `
+Object {
+  "data": Object {
+    "users": Array [
+      Object {
+        "profile": null,
+      },
+    ],
+  },
+  "errors": Array [
+    [GraphQLError: Could not perform "PrismaClientOnContext" check because could not get a reference to a valid Prisma Client class. Found:
+
+{}],
+  ],
+}
+`;
+
+exports[`If prisma client import succeeds but what is imported is not a valid prisma client then the check cannot perform its instanceof strategy and thus throws an error: graphqlSchemaSDL 1`] = `
+"
+type Query {
+  users: [User!]!
+}
+
+type User {
+  id: ID!
+  profile: Profile
+}
+
+type Profile {
+  id: ID!
+}
+"
+`;
+
+exports[`If prisma client import succeeds but what is imported is not a valid prisma client then the check cannot perform its instanceof strategy and thus throws an error: logs 1`] = `Array []`;
+
 exports[`error thrown when both instanceof check and duck typing fails: graphqlOperationExecutionResult 1`] = `
 Object {
   "data": Object {

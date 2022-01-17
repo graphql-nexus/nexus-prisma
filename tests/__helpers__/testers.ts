@@ -1,5 +1,4 @@
 import * as PrismaSDK from '@prisma/sdk'
-import dedent from 'dindist'
 import execa from 'execa'
 import * as fs from 'fs-jetpack'
 import { DocumentNode, execute, printSchema } from 'graphql'
@@ -14,7 +13,7 @@ import { ModuleSpec } from '../../src/generator/types'
 import { DMMF } from '@prisma/generator-helper'
 import slug from 'slug'
 import objectHash from 'object-hash'
-import { createConsoleLogCapture } from './helpers'
+import { createConsoleLogCapture, createPrismaSchema, prepareGraphQLSDLForSnapshot } from './helpers'
 
 /**
  * Define Nexus type definitions based on the Nexus Prisma configurations
@@ -79,14 +78,14 @@ export type TestIntegrationParams = IntegrationTestSpec & {
 /**
  * Test that the given Prisma schema generates the expected generated source code.
  */
-export function testGeneratedModules(params: {
+export const testGeneratedModules = (params: {
   description: string
   databaseSchema: string
   /**
    * The gentime settings to use.
    */
   settings?: Gentime.Settings.Input
-}) {
+}) => {
   it(params.description, async () => {
     Gentime.settings.reset()
     if (params.settings) {
@@ -128,14 +127,14 @@ export const testIntegrationPartial = <T extends Partial<Omit<TestIntegrationPar
 /**
  * Test that the given Prisma schema + API Schema lead to the expected GraphQL schema.
  */
-export function testGraphqlSchema(params: {
-  datasourceSchema: string
-  description: string
-  apiSchema: APISchemaSpec
-}) {
+export const testGraphqlSchema = (
+  params: Pick<TestIntegrationParams, 'api' | 'description' | 'database'>
+) => {
   it(params.description, async () => {
     const dmmf = await PrismaSDK.getDMMF({
-      datamodel: createPrismaSchema({ content: params.datasourceSchema }),
+      datamodel: createPrismaSchema({
+        content: params.database,
+      }),
     })
 
     const runtimeSettings = Runtime.Settings.create()
@@ -147,7 +146,7 @@ export function testGraphqlSchema(params: {
     }) as any
 
     const { schema } = await core.generateSchema.withArtifacts({
-      types: params.apiSchema(nexusPrisma),
+      types: params.api(nexusPrisma),
     })
 
     expect(prepareGraphQLSDLForSnapshot(printSchema(schema))).toMatchSnapshot('graphqlSchema')
@@ -280,84 +279,6 @@ export const integrationTest = async (params: TestIntegrationParams) => {
     graphqlOperationExecutionResult,
     logs: logCap.logs,
   }
-}
-
-function prepareGraphQLSDLForSnapshot(sdl: string): string {
-  return '\n' + stripNexusQueryOk(sdl).trim() + '\n'
-}
-
-function stripNexusQueryOk(sdl: string): string {
-  return sdl.replace(
-    dedent`
-      type Query {
-        ok: Boolean!
-      }
-    `,
-    ''
-  )
-}
-
-/**
- * Create the contents of a Prisma Schema file.
- */
-export function createPrismaSchema({
-  content,
-  datasourceProvider,
-  clientOutput,
-  nexusPrisma,
-}: {
-  content: string
-  /**
-   * The datasource provider block. Defaults to postgres provider with DB_URL envar lookup.
-   */
-  datasourceProvider?: { provider: 'sqlite'; url: string } | { provider: 'postgres'; url: string }
-  /**
-   * Specify the prisma client generator block output configuration. By default is unspecified and uses the Prisma client generator default.
-   */
-  clientOutput?: string
-  /**
-   * Should the Nexus Prisma generator block be added.
-   *
-   * @default true
-   */
-  nexusPrisma?: boolean
-}): string {
-  const outputConfiguration = clientOutput ? `\n  output = "${clientOutput}"` : ''
-  const nexusPrisma_ = nexusPrisma ?? true
-  const datasourceProvider_ = datasourceProvider
-    ? {
-        ...datasourceProvider,
-        url: datasourceProvider.url.startsWith('env')
-          ? datasourceProvider.url
-          : `"${datasourceProvider.url}"`,
-      }
-    : {
-        provider: 'postgres',
-        url: 'env("DB_URL")',
-      }
-
-  return dedent`
-    datasource db {
-      provider = "${datasourceProvider_.provider}"
-      url      = ${datasourceProvider_.url}
-    }
-
-    generator client {
-      provider = "prisma-client-js"${outputConfiguration}
-    }
-
-    ${
-      nexusPrisma_
-        ? dedent`
-            generator nexusPrisma {
-              provider = "nexus-prisma"
-            }
-          `
-        : ``
-    }
-
-    ${content}
-  `
 }
 
 /**

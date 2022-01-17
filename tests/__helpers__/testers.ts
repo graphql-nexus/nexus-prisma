@@ -14,7 +14,7 @@ import { ModuleSpec } from '../../src/generator/types'
 import { DMMF } from '@prisma/generator-helper'
 import slug from 'slug'
 import objectHash from 'object-hash'
-import { createLogCapture } from './helpers'
+import { createConsoleLogCapture } from './helpers'
 
 /**
  * Define Nexus type definitions based on the Nexus Prisma configurations
@@ -232,7 +232,7 @@ export const integrationTest = async (params: TestIntegrationParams) => {
    * Log output can be an important part of DX. It also can be a strong indicator of what logic has been run.
    */
 
-  const logCap = createLogCapture()
+  const logCap = createConsoleLogCapture()
   let graphqlOperationExecutionResult
   let schema
   try {

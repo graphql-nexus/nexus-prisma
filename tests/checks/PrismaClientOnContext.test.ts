@@ -81,13 +81,27 @@ testIntegration({
 
 testIntegration({
   description:
-    'when check is disabled then warning NOT emitted when instanceof check fails but duck typing succeeds',
+    'when check is disabled then warning NOT emitted when instanceof check fails OR duck typing fails',
+  prismaClient: duckTypeFailingPrismaClient,
+  runtimeConfig(settings) {
+    settings.change({
+      checks: {
+        PrismaClientOnContext: false,
+      },
+    })
+  },
+  ...base,
+})
+
+testIntegration({
+  description:
+    'when check instanceof strategy is disabled then warning NOT emitted when instanceof check fails but duck typing succeeds',
   prismaClient: instanceOfFailingPrismaClient,
   runtimeConfig(settings) {
     settings.change({
       checks: {
         PrismaClientOnContext: {
-          enabled: false,
+          warnWhenInstanceofStrategyFails: false,
         },
       },
     })

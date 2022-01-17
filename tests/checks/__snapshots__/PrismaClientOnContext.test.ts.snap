@@ -75,7 +75,7 @@ CODE: PrismaClientOnContextInstanceOfStrategyFailed",
 ]
 `;
 
-exports[`when check is disabled then warning NOT emitted when instanceof check fails but duck typing succeeds: graphqlOperationExecutionResult 1`] = `
+exports[`when check instanceof strategy is disabled then warning NOT emitted when instanceof check fails but duck typing succeeds: graphqlOperationExecutionResult 1`] = `
 Object {
   "data": Object {
     "users": Array [
@@ -87,7 +87,7 @@ Object {
 }
 `;
 
-exports[`when check is disabled then warning NOT emitted when instanceof check fails but duck typing succeeds: graphqlSchemaSDL 1`] = `
+exports[`when check instanceof strategy is disabled then warning NOT emitted when instanceof check fails but duck typing succeeds: graphqlSchemaSDL 1`] = `
 "
 type Query {
   users: [User!]!
@@ -104,4 +104,38 @@ type Profile {
 "
 `;
 
-exports[`when check is disabled then warning NOT emitted when instanceof check fails but duck typing succeeds: logs 1`] = `Array []`;
+exports[`when check instanceof strategy is disabled then warning NOT emitted when instanceof check fails but duck typing succeeds: logs 1`] = `Array []`;
+
+exports[`when check is disabled then warning NOT emitted when instanceof check fails OR duck typing fails: graphqlOperationExecutionResult 1`] = `
+Object {
+  "data": Object {
+    "users": Array [
+      Object {
+        "profile": null,
+      },
+    ],
+  },
+  "errors": Array [
+    [GraphQLError: Cannot read properties of undefined (reading 'findUnique')],
+  ],
+}
+`;
+
+exports[`when check is disabled then warning NOT emitted when instanceof check fails OR duck typing fails: graphqlSchemaSDL 1`] = `
+"
+type Query {
+  users: [User!]!
+}
+
+type User {
+  id: ID!
+  profile: Profile
+}
+
+type Profile {
+  id: ID!
+}
+"
+`;
+
+exports[`when check is disabled then warning NOT emitted when instanceof check fails OR duck typing fails: logs 1`] = `Array []`;

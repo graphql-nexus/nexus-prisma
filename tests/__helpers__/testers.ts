@@ -64,7 +64,7 @@ export type IntegrationTestSpec = {
   apiClientQuery: DocumentNode
 }
 
-type IntegrationTestParams = IntegrationTestSpec & {
+export type TestIntegrationParams = IntegrationTestSpec & {
   /**
    * Proxy for it.only
    */
@@ -100,7 +100,7 @@ export function testGeneratedModules(params: {
  * Test that the given Prisma schema + API Schema + data seed + GraphQL document lead to the expected
  * GraphQL schema and execution result.
  */
-export const testIntegration = (params: IntegrationTestParams) => {
+export const testIntegration = (params: TestIntegrationParams) => {
   if (params.skip && params.only)
     throw new Error(`Cannot specify to skip this test AND only run this test at the same time.`)
 
@@ -115,6 +115,12 @@ export const testIntegration = (params: IntegrationTestParams) => {
     },
     30_000
   )
+}
+
+export const testIntegrationPartial = <T extends Omit<TestIntegrationParams, 'description'>>(
+  params: T
+): T => {
+  return params
 }
 
 /**
@@ -153,7 +159,7 @@ export function testGraphqlSchema(params: {
 /**
  * Given a Prisma schema and Nexus type definitions return a GraphQL schema.
  */
-export const integrationTest = async (params: IntegrationTestParams) => {
+export const integrationTest = async (params: TestIntegrationParams) => {
   /**
    * On windows "File name too long" errors can occur. For that reason we do not pass through the test description which may be very long when on Windows.
    */

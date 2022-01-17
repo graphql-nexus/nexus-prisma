@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`error thrown when instanceof check and duck typing fails: graphqlOperationExecutionResult 1`] = `
+exports[`error thrown when both instanceof check and duck typing fails: graphqlOperationExecutionResult 1`] = `
 Object {
   "data": Object {
     "users": Array [
@@ -15,7 +15,7 @@ Object {
 }
 `;
 
-exports[`error thrown when instanceof check and duck typing fails: graphqlSchemaSDL 1`] = `
+exports[`error thrown when both instanceof check and duck typing fails: graphqlSchemaSDL 1`] = `
 "
 type Query {
   users: [User!]!
@@ -32,7 +32,7 @@ type Profile {
 "
 `;
 
-exports[`warning emitted when instanceof check but duck typing succeeds: graphqlOperationExecutionResult 1`] = `
+exports[`warning emitted when instanceof check fails but duck typing succeeds: graphqlOperationExecutionResult 1`] = `
 Object {
   "data": Object {
     "users": Array [
@@ -44,7 +44,7 @@ Object {
 }
 `;
 
-exports[`warning emitted when instanceof check but duck typing succeeds: graphqlSchemaSDL 1`] = `
+exports[`warning emitted when instanceof check fails but duck typing succeeds: graphqlSchemaSDL 1`] = `
 "
 type Query {
   users: [User!]!

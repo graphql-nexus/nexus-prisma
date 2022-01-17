@@ -33,16 +33,16 @@ export type IntegrationTestSpec = {
    *
    * Note datasource and generator blocks are taken care of automatically for you.
    */
-  datasourceSchema: string
+  database: string
   /**
    * Define the GraphQL API. All returned type defs are added to the final GraphQL schema.
    */
-  apiSchema: APISchemaSpec
+  api: APISchemaSpec
   /**
    * Get access to the gentime settings like you would in the gentime config file.
    */
-  gentimeConfig?(settings: Gentime.Settings.Manager): void
-  runtimeConfig?(settings: Runtime.Settings.Manager): void
+  nexusPrismaGentimeConfig?(settings: Gentime.Settings.Manager): void
+  nexusPrismaRuntimeConfig?(settings: Runtime.Settings.Manager): void
   /**
    * Access the Prisma Client instance and run some setup side-effects.
    *
@@ -62,7 +62,7 @@ export type IntegrationTestSpec = {
   /**
    * A Graphql document to execute against the GraphQL API. The result is snapshotted.
    */
-  apiClientQuery: DocumentNode
+  client: DocumentNode
 }
 
 export type TestIntegrationParams = IntegrationTestSpec & {
@@ -174,7 +174,7 @@ export const integrationTest = async (params: TestIntegrationParams) => {
   const sqliteDatabaseFileOutputAbsolute = Path.join(outputDirPath, sqliteDatabaseFileOutput)
   const dmmfFileOutputAbsolute = Path.join(outputDirPath, 'dmmf.json')
   const prismaSchemaContents = createPrismaSchema({
-    content: params.datasourceSchema,
+    content: params.database,
     datasourceProvider: {
       provider: 'sqlite',
       url: `file:${sqliteDatabaseFileOutput}`,
@@ -217,12 +217,12 @@ export const integrationTest = async (params: TestIntegrationParams) => {
     prismaClientImportId: prismaClientOutputDirAbsolute,
   })
 
-  if (params.gentimeConfig) {
-    params.gentimeConfig(gentimeSettings)
+  if (params.nexusPrismaGentimeConfig) {
+    params.nexusPrismaGentimeConfig(gentimeSettings)
   }
 
-  if (params.runtimeConfig) {
-    params.runtimeConfig(runtimeSettings)
+  if (params.nexusPrismaRuntimeConfig) {
+    params.nexusPrismaRuntimeConfig(runtimeSettings)
   }
 
   /**
@@ -244,7 +244,7 @@ export const integrationTest = async (params: TestIntegrationParams) => {
     }) as any
 
     const artifacts = await core.generateSchema.withArtifacts({
-      types: params.apiSchema(nexusPrisma),
+      types: params.api(nexusPrisma),
     })
 
     schema = artifacts.schema
@@ -254,7 +254,7 @@ export const integrationTest = async (params: TestIntegrationParams) => {
         prisma: prismaClient,
       },
       schema: schema,
-      document: params.apiClientQuery,
+      document: params.client,
     })
   } catch (e) {
     logCap.stop()

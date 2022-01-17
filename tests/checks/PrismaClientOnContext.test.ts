@@ -3,7 +3,7 @@ import { objectType, queryType } from 'nexus'
 import { testIntegration, TestIntegrationParams, testIntegrationPartial } from '../__helpers__/testers'
 
 const base = testIntegrationPartial({
-  datasourceSchema: `
+  database: `
     model User {
       id        String   @id
 			profile   Profile? @relation(fields: [profileId], references: [id])
@@ -14,7 +14,7 @@ const base = testIntegrationPartial({
 			user  User
 		}
   `,
-  apiSchema({ User, Profile }) {
+  api({ User, Profile }) {
     return [
       queryType({
         definition(t) {
@@ -41,7 +41,7 @@ const base = testIntegrationPartial({
       }),
     ]
   },
-  apiClientQuery: gql`
+  client: gql`
     query {
       users {
         profile {
@@ -55,7 +55,9 @@ const base = testIntegrationPartial({
 /**
  * Break the instanceof check but duck typing will succeed.
  */
-const instanceOfFailingPrismaClient: TestIntegrationParams['prismaClient'] = (prismaClientPackage) => {
+const prismaClientWhereInstanceofStrategyWillFail: TestIntegrationParams['prismaClient'] = (
+  prismaClientPackage
+) => {
   const prisma = new prismaClientPackage.PrismaClient()
   return { ...prisma }
 }
@@ -63,27 +65,29 @@ const instanceOfFailingPrismaClient: TestIntegrationParams['prismaClient'] = (pr
 /**
  * Some value that won't even pass Prisma Client duck typing check.
  */
-const duckTypeFailingPrismaClient: TestIntegrationParams['prismaClient'] = (prismaClientPackage) => {
+const prismaClientWhereDuckTypingStrategyWillFail: TestIntegrationParams['prismaClient'] = (
+  prismaClientPackage
+) => {
   return 'should be prisma client instance but is not' as any
 }
 
 testIntegration({
   description: 'error thrown when both instanceof check and duck typing fails',
-  prismaClient: duckTypeFailingPrismaClient,
+  prismaClient: prismaClientWhereDuckTypingStrategyWillFail,
   ...base,
 })
 
 testIntegration({
   description: 'warning emitted when instanceof check fails but duck typing succeeds',
-  prismaClient: instanceOfFailingPrismaClient,
+  prismaClient: prismaClientWhereInstanceofStrategyWillFail,
   ...base,
 })
 
 testIntegration({
   description:
     'when check is disabled then warning NOT emitted when instanceof check fails OR duck typing fails',
-  prismaClient: duckTypeFailingPrismaClient,
-  runtimeConfig(settings) {
+  prismaClient: prismaClientWhereDuckTypingStrategyWillFail,
+  nexusPrismaRuntimeConfig(settings) {
     settings.change({
       checks: {
         PrismaClientOnContext: false,
@@ -96,14 +100,24 @@ testIntegration({
 testIntegration({
   description:
     'when check instanceof strategy is disabled then warning NOT emitted when instanceof check fails but duck typing succeeds',
-  prismaClient: instanceOfFailingPrismaClient,
-  runtimeConfig(settings) {
+  prismaClient: prismaClientWhereInstanceofStrategyWillFail,
+  nexusPrismaRuntimeConfig(settings) {
     settings.change({
       checks: {
         PrismaClientOnContext: {
           warnWhenInstanceofStrategyFails: false,
         },
       },
+    })
+  },
+  ...base,
+})
+
+testIntegration({
+  description: `If prisma client import fails then the check cannot perform its instanceof strategy and thus throws an error`,
+  nexusPrismaGentimeConfig(settings) {
+    settings.change({
+      prismaClientImportId: 'does-not-exist',
     })
   },
   ...base,

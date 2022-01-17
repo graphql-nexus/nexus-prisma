@@ -3,7 +3,7 @@ import { nonNull, objectType, queryType } from 'nexus'
 import { testIntegration, testIntegrationPartial } from '../__helpers__/testers'
 
 const base = testIntegrationPartial({
-  datasourceSchema: `
+  database: `
     model User {
       id         String    @id
       profile    Profile   @relation(fields: [profileId], references: [id])
@@ -30,7 +30,7 @@ const base = testIntegrationPartial({
 
 testIntegration({
   description: 'can project user-to-profile relationship',
-  apiSchema({ User, Profile }) {
+  api({ User, Profile }) {
     return [
       queryType({
         definition(t) {
@@ -57,7 +57,7 @@ testIntegration({
       }),
     ]
   },
-  apiClientQuery: gql`
+  client: gql`
     query {
       users {
         id
@@ -74,7 +74,7 @@ testIntegration({
 testIntegration({
   description:
     'can project relationship in opposite direction of where @relation is defined, but the field will be nullable',
-  apiSchema({ User, Profile }) {
+  api({ User, Profile }) {
     return [
       queryType({
         definition(t) {
@@ -102,7 +102,7 @@ testIntegration({
       }),
     ]
   },
-  apiClientQuery: gql`
+  client: gql`
     query {
       users {
         id
@@ -121,7 +121,7 @@ testIntegration({
 testIntegration({
   description:
     'Nullable on Without-Relation-Scalar Side limitation can be worked around by wrapping type in an explicit nonNull',
-  apiSchema({ User, Profile }) {
+  api({ User, Profile }) {
     return [
       queryType({
         definition(t) {
@@ -152,7 +152,7 @@ testIntegration({
       }),
     ]
   },
-  apiClientQuery: gql`
+  client: gql`
     query {
       users {
         id
@@ -170,7 +170,7 @@ testIntegration({
 
 testIntegration({
   description: 'Can project User-to-Profile where Profile is using composite ID',
-  datasourceSchema: `
+  database: `
       model User {
         id          String    @id
         profile     Profile   @relation(fields: [profileId1, profileId2], references: [id1, id2])
@@ -184,7 +184,7 @@ testIntegration({
         @@id(fields: [id1, id2])
       }
     `,
-  apiSchema({ User, Profile }) {
+  api({ User, Profile }) {
     return [
       queryType({
         definition(t) {
@@ -228,7 +228,7 @@ testIntegration({
       },
     })
   },
-  apiClientQuery: gql`
+  client: gql`
     query {
       users {
         id

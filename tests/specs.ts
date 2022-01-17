@@ -6,7 +6,7 @@ export namespace Specs {
   export const relation1ToNReverse: IntegrationTestSpec = {
     description:
       'can project user-to-posts relationship in reverse (access use via post author field). If Post.author is NOT optional than it is NOT nullable in the GraphQL API.',
-    datasourceSchema: `
+    database: `
     model User {
       id         String    @id
       posts      Post[]
@@ -17,7 +17,7 @@ export namespace Specs {
       authorId  String
     }
   `,
-    apiSchema(nexusPrisma) {
+    api(nexusPrisma) {
       const { User, Post } = nexusPrisma
 
       return [
@@ -56,7 +56,7 @@ export namespace Specs {
         },
       })
     },
-    apiClientQuery: gql`
+    client: gql`
       query {
         posts {
           id
@@ -71,7 +71,7 @@ export namespace Specs {
   export const relation1ToNReverseAndOptional: IntegrationTestSpec = {
     description:
       'can project user-to-posts relationship in reverse (access use via post author field). If Post.author IS optional than it IS nullable in the GraphQL API.',
-    datasourceSchema: `
+    database: `
     model User {
       id         String    @id
       posts      Post[]
@@ -82,7 +82,7 @@ export namespace Specs {
       authorId  String
     }
   `,
-    apiSchema(nexusPrisma) {
+    api(nexusPrisma) {
       const { User, Post } = nexusPrisma
 
       return [
@@ -121,7 +121,7 @@ export namespace Specs {
         },
       })
     },
-    apiClientQuery: gql`
+    client: gql`
       query {
         posts {
           id

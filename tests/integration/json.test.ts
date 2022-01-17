@@ -7,13 +7,13 @@ import { testIntegration } from '../__helpers__/testers'
 testIntegration({
   skip: true, // integration test currently only works against SQLite which doesn't support JSON
   description: 'When a JSON field is defined in the Prisma schema it can be projected into the GraphQL API',
-  datasourceSchema: dedent`
+  database: dedent`
     model Foo {
       id   String @id
       json Json
     }
   `,
-  apiSchema({ Foo }) {
+  api({ Foo }) {
     return [
       NexusPrismaScalars.Bytes,
       NexusPrismaScalars.BigInt,
@@ -47,7 +47,7 @@ testIntegration({
       },
     })
   },
-  apiClientQuery: gql`
+  client: gql`
     query {
       foos {
         id

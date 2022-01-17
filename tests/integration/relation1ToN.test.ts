@@ -7,7 +7,7 @@ const base = testIntegrationPartial({})
 
 testIntegration({
   description: 'can project user-to-posts relationship',
-  datasourceSchema: `
+  database: `
     model User {
       id     String  @id
       posts  Post[]
@@ -18,7 +18,7 @@ testIntegration({
       authorId  String
     }
   `,
-  apiSchema({ User, Post }) {
+  api({ User, Post }) {
     return [
       queryType({
         definition(t) {
@@ -55,7 +55,7 @@ testIntegration({
       },
     })
   },
-  apiClientQuery: gql`
+  client: gql`
     query {
       users {
         id
@@ -73,7 +73,7 @@ testIntegration(Specs.relation1ToNReverse)
 
 testIntegration({
   description: 'can project user-to-posts relation where user has composite ID',
-  datasourceSchema: `
+  database: `
     model User {
       id1    String
       id2    String
@@ -87,7 +87,7 @@ testIntegration({
       authorId2  String
     }
   `,
-  apiSchema({ User, Post }) {
+  api({ User, Post }) {
     return [
       queryType({
         definition(t) {
@@ -125,7 +125,7 @@ testIntegration({
       },
     })
   },
-  apiClientQuery: gql`
+  client: gql`
     query {
       users {
         id1

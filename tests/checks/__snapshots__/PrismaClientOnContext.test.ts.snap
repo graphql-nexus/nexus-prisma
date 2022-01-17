@@ -32,6 +32,8 @@ type Profile {
 "
 `;
 
+exports[`error thrown when both instanceof check and duck typing fails: logs 1`] = `Array []`;
+
 exports[`warning emitted when instanceof check fails but duck typing succeeds: graphqlOperationExecutionResult 1`] = `
 Object {
   "data": Object {
@@ -60,3 +62,46 @@ type Profile {
 }
 "
 `;
+
+exports[`warning emitted when instanceof check fails but duck typing succeeds: logs 1`] = `
+Array [
+  "WARNING: Prisma Client on GraphQL context failed being checked using instanceof
+
+REASON: The Prisma Client class reference imported from /home/debian/projects/prisma/nexus-prisma/tests/__cache__/integration/warning-emitted-when-instanceof-check-fails-but-duck-typing-succeeds/client is not the same class used by you to create your Prisma Client instance.
+
+CONSEQUENCE: Maybe none since duck typing fallback indicates that the Prisma Client on the GraphQL context is actually valid. However relying on duck typing is hacky.
+
+CODE: PrismaClientOnContextInstanceOfStrategyFailed",
+]
+`;
+
+exports[`when check is disabled then warning NOT emitted when instanceof check fails but duck typing succeeds: graphqlOperationExecutionResult 1`] = `
+Object {
+  "data": Object {
+    "users": Array [
+      Object {
+        "profile": null,
+      },
+    ],
+  },
+}
+`;
+
+exports[`when check is disabled then warning NOT emitted when instanceof check fails but duck typing succeeds: graphqlSchemaSDL 1`] = `
+"
+type Query {
+  users: [User!]!
+}
+
+type User {
+  id: ID!
+  profile: Profile
+}
+
+type Profile {
+  id: ID!
+}
+"
+`;
+
+exports[`when check is disabled then warning NOT emitted when instanceof check fails but duck typing succeeds: logs 1`] = `Array []`;

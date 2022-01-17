@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 import { objectType, queryType } from 'nexus'
-import { testIntegration, testIntegrationPartial } from '../__helpers__/testers'
+import { testIntegration, TestIntegrationParams, testIntegrationPartial } from '../__helpers__/testers'
 
 const base = testIntegrationPartial({
   datasourceSchema: `
@@ -52,20 +52,45 @@ const base = testIntegrationPartial({
   `,
 })
 
+/**
+ * Break the instanceof check but duck typing will succeed.
+ */
+const instanceOfFailingPrismaClient: TestIntegrationParams['prismaClient'] = (prismaClientPackage) => {
+  const prisma = new prismaClientPackage.PrismaClient()
+  return { ...prisma }
+}
+
+/**
+ * Some value that won't even pass Prisma Client duck typing check.
+ */
+const duckTypeFailingPrismaClient: TestIntegrationParams['prismaClient'] = (prismaClientPackage) => {
+  return 'should be prisma client instance but is not' as any
+}
+
 testIntegration({
   description: 'error thrown when both instanceof check and duck typing fails',
-  prismaClient(prismaClientPackage) {
-    return 'should be prisma client instance but is not' as any
-  },
+  prismaClient: duckTypeFailingPrismaClient,
   ...base,
 })
 
 testIntegration({
   description: 'warning emitted when instanceof check fails but duck typing succeeds',
-  prismaClient(prismaClientPackage) {
-    // Break the instanceof check but duck typing will succeed.
-    const prisma = new prismaClientPackage.PrismaClient()
-    return { ...prisma }
+  prismaClient: instanceOfFailingPrismaClient,
+  ...base,
+})
+
+testIntegration({
+  description:
+    'when check is disabled then warning NOT emitted when instanceof check fails but duck typing succeeds',
+  prismaClient: instanceOfFailingPrismaClient,
+  runtimeConfig(settings) {
+    settings.change({
+      checks: {
+        PrismaClientOnContext: {
+          enabled: false,
+        },
+      },
+    })
   },
   ...base,
 })

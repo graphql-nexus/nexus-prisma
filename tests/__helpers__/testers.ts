@@ -14,6 +14,7 @@ import { ModuleSpec } from '../../src/generator/types'
 import { DMMF } from '@prisma/generator-helper'
 import slug from 'slug'
 import objectHash from 'object-hash'
+import { createLogCapture } from './helpers'
 
 /**
  * Define Nexus type definitions based on the Nexus Prisma configurations
@@ -41,6 +42,7 @@ export type IntegrationTestSpec = {
    * Get access to the gentime settings like you would in the gentime config file.
    */
   gentimeConfig?(settings: Gentime.Settings.Manager): void
+  runtimeConfig?(settings: Runtime.Settings.Manager): void
   /**
    * Access the Prisma Client instance and run some setup side-effects.
    *
@@ -48,7 +50,7 @@ export type IntegrationTestSpec = {
    *
    * 1. Seed the database.
    */
-  setup?: (prismaClient: any) => Promise<void>
+  setup?(prismaClient: any): Promise<void>
   /**
    * Handle instantiation of a Prisma Client instance.
    *
@@ -56,7 +58,7 @@ export type IntegrationTestSpec = {
    *
    * 1. Customize the Prisma Client settings.
    */
-  prismaClient?: (prismaClientPackage: any) => Promise<any>
+  prismaClient?(prismaClientPackage: any): Promise<any>
   /**
    * A Graphql document to execute against the GraphQL API. The result is snapshotted.
    */
@@ -109,6 +111,7 @@ export const testIntegration = (params: TestIntegrationParams) => {
     params.description,
     async () => {
       const result = await integrationTest(params)
+      expect(result.logs).toMatchSnapshot(`logs`)
       expect(result.graphqlSchemaSDL).toMatchSnapshot(`graphqlSchemaSDL`)
       expect(result.graphqlOperationExecutionResult).toMatchSnapshot(`graphqlOperationExecutionResult`)
     },
@@ -208,32 +211,60 @@ export const integrationTest = async (params: TestIntegrationParams) => {
   }
 
   const runtimeSettings = Runtime.Settings.create()
-  const genTimeSettings = Gentime.Settings.create()
+  const gentimeSettings = Gentime.Settings.create()
 
-  genTimeSettings.change({
+  gentimeSettings.change({
     prismaClientImportId: prismaClientOutputDirAbsolute,
   })
 
   if (params.gentimeConfig) {
-    params.gentimeConfig(genTimeSettings)
+    params.gentimeConfig(gentimeSettings)
   }
 
-  const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {
-    runtime: runtimeSettings,
-    gentime: genTimeSettings.data,
-  }) as any
+  if (params.runtimeConfig) {
+    params.runtimeConfig(runtimeSettings)
+  }
 
-  const { schema } = await core.generateSchema.withArtifacts({
-    types: params.apiSchema(nexusPrisma),
-  })
+  /**
+   * Application Logic Simulation Start
+   *
+   * Capture log output during this phase. This allows tests to assert on log output.
+   * Log output can be an important part of DX. It also can be a strong indicator of what logic has been run.
+   */
 
-  const graphqlOperationExecutionResult = await execute({
-    contextValue: {
-      prisma: prismaClient,
-    },
-    schema: schema,
-    document: params.apiClientQuery,
-  })
+  const logCap = createLogCapture()
+  let graphqlOperationExecutionResult
+  let schema
+  try {
+    logCap.start()
+
+    const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {
+      runtime: runtimeSettings,
+      gentime: gentimeSettings.data,
+    }) as any
+
+    const artifacts = await core.generateSchema.withArtifacts({
+      types: params.apiSchema(nexusPrisma),
+    })
+
+    schema = artifacts.schema
+
+    graphqlOperationExecutionResult = await execute({
+      contextValue: {
+        prisma: prismaClient,
+      },
+      schema: schema,
+      document: params.apiClientQuery,
+    })
+  } catch (e) {
+    logCap.stop()
+    throw e
+  }
+  logCap.stop()
+
+  /**
+   * Application Logic Simulation End
+   */
 
   /**
    * Automatically await disconnect. However only if it is actually a Prisma Client instance.
@@ -244,15 +275,10 @@ export const integrationTest = async (params: TestIntegrationParams) => {
     await prismaClient.$disconnect()
   }
 
-  // if (graphqlOperationExecutionResult.errors) {
-  //   throw new Error(
-  //     `GraphQL operation failed:\n\n  - ${graphqlOperationExecutionResult.errors.join('\n  - ')}`
-  //   )
-  // }
-
   return {
     graphqlSchemaSDL: prepareGraphQLSDLForSnapshot(printSchema(schema)),
     graphqlOperationExecutionResult,
+    logs: logCap.logs,
   }
 }
 

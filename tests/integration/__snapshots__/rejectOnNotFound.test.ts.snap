@@ -29,3 +29,5 @@ type Profile {
 }
 "
 `;
+
+exports[`ignores global rejectOnNotFound Prisma Client settings: logs 1`] = `Array []`;

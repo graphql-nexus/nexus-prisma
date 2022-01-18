@@ -201,12 +201,24 @@ export const integrationTest = async (params: TestIntegrationParams) => {
 
   const prismaClientPackage = require(prismaClientOutputDirAbsolute)
 
+  /**
+   * Maintain a controlled prisma client instance. This is so that tests can run setup with a functioning client while also
+   * having freedom to much around with the prisma client instance that the application under test will get. These are
+   * different concerns:
+   *
+   * 1. Prisma Client for scaffolding data for the test itself.
+   * 2. Prisma Client for Nexus Prisma to use in an application
+   *
+   * Some tests will intentionally create a bad prisma client instance to test gracefully error handling.
+   */
+  const prismaClientInternal = new prismaClientPackage.PrismaClient()
+
   const prismaClient = params.prismaClient
     ? params.prismaClient(prismaClientPackage)
     : new prismaClientPackage.PrismaClient()
 
   if (params.setup) {
-    await params.setup(prismaClient)
+    await params.setup(prismaClientInternal)
   }
 
   const runtimeSettings = Runtime.Settings.create()
@@ -273,6 +285,8 @@ export const integrationTest = async (params: TestIntegrationParams) => {
   if (prismaClient instanceof prismaClientPackage.PrismaClient) {
     await prismaClient.$disconnect()
   }
+
+  await prismaClientInternal.$disconnect()
 
   return {
     graphqlSchemaSDL: prepareGraphQLSDLForSnapshot(printSchema(schema)),

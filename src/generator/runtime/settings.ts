@@ -24,16 +24,19 @@ export type Input = {
      *
      * #### How does this check work?
      *
-     * The following steps are performed:
+     * There are three strategies for this check. The default is called `instanceOf_duckType_fallback`. It is
+     * a hybrid approach doing the following:
      *
      * 1. An `instanceof` check of the received value against the Prisma Client class.
      * 2. If 1 fails, then do duck type checks on the received value.
      * 3. If 1 and 2 both fail, an error is thrown. If only 1 fails then a warning is emitted.
      *
-     * Remarks: A primary reason (there may be others) for both checks is that some development environments
-     * like NextJS do optimized application "refreshes" that can lead to cases of 1 failing. It has something
-     * to do with Node module cache busting leading to mixes of old and new JS Classes hanging around together
-     * in memory.
+     * The other two strategies are `instanceOf` and `duckType` which use just their respective approaches.
+     *
+     * Remarks: A primary reason (there may be others) for having `instanceOf` and `duckType` strategies is
+     * that some development environments like NextJS do optimized application "refreshes" that can lead to
+     * cases of `instanceOf` strategy failing. It has something to do with Node module cache busting leading
+     * to mixes of old and new JS Classes hanging around together in memory.
      *
      * #### What happens when this check is disabled?
      *
@@ -54,9 +57,17 @@ export type Input = {
            */
           enabled?: boolean
           /**
-           * @default true
+           * Which strategy should this check use?
+           *
+           * 1. `instanceOf`: See if the context value is an instance of the Prisma Client class.
+           * 2. `duckType`: See if the context value appears to be a Prisma Client instance in practice by
+           * looking for some telltale methods like `findMany`.
+           * 3. `instanceOf_duckType_fallback`: A hybrid approach trying `instanceOf` and falling back to
+           * `duckType`.
+           *
+           * @default 'instanceOf_duckType_fallback'
            */
-          warnWhenInstanceofStrategyFails?: boolean
+          strategy?: 'instanceOf' | 'duckType' | 'instanceOf_duckType_fallback'
         }
   }
 }
@@ -79,8 +90,8 @@ export const create = () =>
               enabled: {
                 initial: () => true,
               },
-              warnWhenInstanceofStrategyFails: {
-                initial: () => true,
+              strategy: {
+                initial: () => 'instanceOf_duckType_fallback',
               },
             },
           },

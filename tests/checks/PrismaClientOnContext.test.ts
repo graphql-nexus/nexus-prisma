@@ -11,7 +11,7 @@ const base = testIntegrationPartial({
     }
 		model Profile {
       id    String  @id
-			user  User
+			user  User    @relation
 		}
   `,
   api({ User, Profile }) {
@@ -40,6 +40,19 @@ const base = testIntegrationPartial({
         },
       }),
     ]
+  },
+  async setup(prisma) {
+    await prisma.user.create({
+      data: {
+        id: '1',
+        profileId: '100',
+        profile: {
+          create: {
+            id: '100',
+          },
+        },
+      },
+    })
   },
   client: gql`
     query {
@@ -71,16 +84,123 @@ const prismaClientWhereDuckTypingStrategyWillFail: TestIntegrationParams['prisma
   return 'should be prisma client instance but is not' as any
 }
 
-testIntegration({
-  description: 'error thrown when both instanceof check and duck typing fails',
-  prismaClient: prismaClientWhereDuckTypingStrategyWillFail,
-  ...base,
+describe('instanceOf_duckType_fallback strategy:', () => {
+  testIntegration({
+    description: 'error thrown when both instanceof check and duck typing fails',
+    prismaClient: prismaClientWhereDuckTypingStrategyWillFail,
+    ...base,
+  })
+  testIntegration({
+    description: 'warning emitted when instanceof check fails but duck typing succeeds',
+    prismaClient: prismaClientWhereInstanceofStrategyWillFail,
+    ...base,
+  })
 })
 
-testIntegration({
-  description: 'warning emitted when instanceof check fails but duck typing succeeds',
-  prismaClient: prismaClientWhereInstanceofStrategyWillFail,
-  ...base,
+describe('instanceOf strategy:', () => {
+  testIntegration({
+    description: 'passes if client is a real instance of prisma client',
+    nexusPrismaRuntimeConfig(settings) {
+      settings.change({
+        checks: {
+          PrismaClientOnContext: {
+            strategy: 'instanceOf',
+          },
+        },
+      })
+    },
+    ...base,
+  })
+
+  testIntegration({
+    description: 'throws an error if client is NOT a real instance of prisma client',
+    prismaClient: prismaClientWhereInstanceofStrategyWillFail,
+    nexusPrismaRuntimeConfig(settings) {
+      settings.change({
+        checks: {
+          PrismaClientOnContext: {
+            strategy: 'instanceOf',
+          },
+        },
+      })
+    },
+    ...base,
+  })
+
+  testIntegration({
+    description: `If prisma client import fails then the check cannot perform its instanceof strategy and thus throws an error`,
+    nexusPrismaGentimeConfig(settings) {
+      settings.change({
+        prismaClientImportId: 'does-not-exist',
+      })
+    },
+    nexusPrismaRuntimeConfig(settings) {
+      settings.change({
+        checks: {
+          PrismaClientOnContext: {
+            strategy: 'instanceOf',
+          },
+        },
+      })
+    },
+    ...base,
+  })
+
+  testIntegration({
+    description: `If prisma client import succeeds but what is imported is not a valid prisma client then the check cannot perform its instanceof strategy and thus throws an error`,
+    nexusPrismaGentimeConfig(settings) {
+      settings.change({
+        prismaClientImportId: __filename,
+      })
+    },
+    nexusPrismaRuntimeConfig(settings) {
+      settings.change({
+        checks: {
+          PrismaClientOnContext: {
+            strategy: 'instanceOf',
+          },
+        },
+      })
+    },
+    ...base,
+  })
+})
+
+describe('duckType strategy:', () => {
+  testIntegration({
+    description: 'passes if client looks like a valid prisma client instance',
+    prismaClient: prismaClientWhereInstanceofStrategyWillFail,
+    nexusPrismaRuntimeConfig(settings) {
+      settings.change({
+        checks: {
+          PrismaClientOnContext: {
+            strategy: 'duckType',
+          },
+        },
+      })
+    },
+    ...base,
+  })
+  testIntegration({
+    description:
+      'does not matter if prisma client is not importable (and therefore nor if what would be imported is not a valid prisma client instance)',
+    prismaClient: prismaClientWhereInstanceofStrategyWillFail,
+    nexusPrismaGentimeConfig(settings) {
+      settings.change({
+        prismaClientImportId: 'does-not-exist',
+      })
+    },
+    nexusPrismaRuntimeConfig(settings) {
+      settings.change({
+        checks: {
+          PrismaClientOnContext: {
+            strategy: 'duckType',
+          },
+        },
+      })
+    },
+    ...base,
+  })
 })
 
 testIntegration({
@@ -92,42 +212,6 @@ testIntegration({
       checks: {
         PrismaClientOnContext: false,
       },
-    })
-  },
-  ...base,
-})
-
-testIntegration({
-  description:
-    'when check instanceof strategy is disabled then warning NOT emitted when instanceof check fails but duck typing succeeds',
-  prismaClient: prismaClientWhereInstanceofStrategyWillFail,
-  nexusPrismaRuntimeConfig(settings) {
-    settings.change({
-      checks: {
-        PrismaClientOnContext: {
-          warnWhenInstanceofStrategyFails: false,
-        },
-      },
-    })
-  },
-  ...base,
-})
-
-testIntegration({
-  description: `If prisma client import fails then the check cannot perform its instanceof strategy and thus throws an error`,
-  nexusPrismaGentimeConfig(settings) {
-    settings.change({
-      prismaClientImportId: 'does-not-exist',
-    })
-  },
-  ...base,
-})
-
-testIntegration({
-  description: `If prisma client import succeeds but what is imported is not a valid prisma client then the check cannot perform its instanceof strategy and thus throws an error`,
-  nexusPrismaGentimeConfig(settings) {
-    settings.change({
-      prismaClientImportId: __filename,
     })
   },
   ...base,

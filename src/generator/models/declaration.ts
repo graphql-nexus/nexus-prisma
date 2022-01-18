@@ -126,8 +126,8 @@ export function renderTypeScriptDeclarationForDocumentModels(
 
       import { Runtime } from ${
         settings.data.output.directory === 'default'
-          ? `'../generator/runtime/settingsSingleton'`
-          : `'nexus-prisma/dist-cjs/generator/runtime/settingsSingleton'`
+          ? `'../generator/runtime'`
+          : `'nexus-prisma/dist-cjs/generator/runtime'`
       }
 
       /**

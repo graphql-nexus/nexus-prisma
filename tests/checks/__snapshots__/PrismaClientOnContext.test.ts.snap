@@ -274,7 +274,7 @@ exports[`instanceOf_duckType_fallback strategy: warning emitted when instanceof 
 Array [
   "WARNING: Prisma Client on GraphQL context failed being checked using instanceof
 
-REASON: The Prisma Client class reference imported from /home/debian/projects/prisma/nexus-prisma/tests/__cache__/integration/warning-emitted-when-instanceof-check-fails-but-duck-typing-succeeds/client is not the same class used by you to create your Prisma Client instance.
+REASON: The Prisma Client class reference imported from <dynamic_path> is not the same class used by you to create your Prisma Client instance.
 
 CONSEQUENCE: Maybe none since duck typing fallback indicates that the Prisma Client on the GraphQL context is actually valid. However relying on duck typing is hacky.
 

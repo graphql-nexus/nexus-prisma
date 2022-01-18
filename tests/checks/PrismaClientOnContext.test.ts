@@ -97,7 +97,7 @@ describe('instanceOf_duckType_fallback strategy:', () => {
     // The emitted error contains a path that isn't stable across the CI/CI matrix. Needs to be processed.
     expect(result) {
       if (result.logs[0]) {
-        result.logs[0] = result.logs[0]!.replace(/(import from).*(is not the)/, '$1 <dynamic_path> $2')
+        result.logs[0] = result.logs[0]!.replace(/(.*imported from).*(is not the.*)/, '$1 <dynamic_path> $2')
       }
       expect(result.logs).toMatchSnapshot(`logs`)
       expect(result.graphqlSchemaSDL).toMatchSnapshot(`graphqlSchemaSDL`)

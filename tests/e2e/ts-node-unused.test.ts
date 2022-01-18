@@ -2,8 +2,8 @@ import * as Path from 'path'
 import dindist from 'dindist'
 import { konn, providers } from 'konn'
 import 'ts-replace-all'
-import { createPrismaSchema } from '../__helpers__/testers'
 import { project } from '../__providers__/project'
+import { createPrismaSchema } from '../__helpers__/helpers'
 
 const ctx = konn()
   .useBeforeAll(providers.dir())

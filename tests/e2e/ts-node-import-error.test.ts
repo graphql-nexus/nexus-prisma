@@ -1,7 +1,7 @@
 import dindist from 'dindist'
 import { konn, providers } from 'konn'
 import 'ts-replace-all'
-import { createPrismaSchema } from '../__helpers__/testers'
+import { createPrismaSchema } from '../__helpers__/helpers'
 import { project } from '../__providers__/project'
 
 const ctx = konn()

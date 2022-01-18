@@ -1,14 +1,14 @@
 import { DMMF } from '@prisma/client/runtime'
 import dedent from 'dindist'
 import { PrismaDocumentation } from '../../lib/prisma-documentation'
-import { Gentime } from '../gentime/settingsSingleton'
+import { Gentime } from '../gentime'
 
 type JSDoc = string
 
 type FieldModelParams = {
   field: DMMF.Field
   model: DMMF.Model
-  settings: Gentime.Settings
+  settings: Gentime.Settings.Manager
 }
 
 const jsdocIndent = '  '
@@ -18,7 +18,10 @@ const jsdocEmptyLine = `\n${jsdocIndent}*\n`
  * Enum
  */
 
-export function jsDocForEnum(params: { enum: DMMF.DatamodelEnum; settings: Gentime.Settings }): JSDoc {
+export function jsDocForEnum(params: {
+  enum: DMMF.DatamodelEnum
+  settings: Gentime.Settings.Manager
+}): JSDoc {
   const sections = [
     enumIntro(params.enum),
     nodeDocumentation({
@@ -68,7 +71,7 @@ function enumMissingDocGuide(enum_: DMMF.DatamodelEnum): string {
  * Model
  */
 
-export function jsDocForModel(params: { model: DMMF.Model; settings: Gentime.Settings }): JSDoc {
+export function jsDocForModel(params: { model: DMMF.Model; settings: Gentime.Settings.Manager }): JSDoc {
   const sections = [modelIntro(params.model), nodeDocumentation(params), modelExample(params.model)]
   const jsdoc = jsDocBookends(joinSections(sections))
   return jsdoc
@@ -82,9 +85,9 @@ function modelIntro(model: DMMF.Model): string {
 
 const nodeDocumentation = (
   params:
-    | { settings: Gentime.Settings; model: DMMF.Model }
-    | { settings: Gentime.Settings; model: DMMF.Model; field: DMMF.Field }
-    | { settings: Gentime.Settings; enum: DMMF.DatamodelEnum }
+    | { settings: Gentime.Settings.Manager; model: DMMF.Model }
+    | { settings: Gentime.Settings.Manager; model: DMMF.Model; field: DMMF.Field }
+    | { settings: Gentime.Settings.Manager; enum: DMMF.DatamodelEnum }
 ): string | null => {
   const documentation =
     'field' in params

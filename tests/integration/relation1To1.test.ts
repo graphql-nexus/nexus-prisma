@@ -1,10 +1,9 @@
 import { gql } from 'graphql-tag'
 import { nonNull, objectType, queryType } from 'nexus'
-import { testIntegration } from '../__helpers__/testers'
+import { testIntegration, testIntegrationPartial } from '../__helpers__/testers'
 
-testIntegration({
-  description: 'can project user-to-profile relationship',
-  datasourceSchema: `
+const base = testIntegrationPartial({
+  database: `
     model User {
       id         String    @id
       profile    Profile   @relation(fields: [profileId], references: [id])
@@ -12,10 +11,26 @@ testIntegration({
     }
     model Profile {
       id      String  @id
-      user    User?
+      user    User?   @relation
     }
   `,
-  apiSchema({ User, Profile }) {
+  async setup(prisma) {
+    await prisma.user.create({
+      data: {
+        id: 'user1',
+        profile: {
+          create: {
+            id: 'profile1',
+          },
+        },
+      },
+    })
+  },
+})
+
+testIntegration({
+  description: 'can project user-to-profile relationship',
+  api({ User, Profile }) {
     return [
       queryType({
         definition(t) {
@@ -42,19 +57,7 @@ testIntegration({
       }),
     ]
   },
-  async setup(prisma) {
-    await prisma.user.create({
-      data: {
-        id: 'user1',
-        profile: {
-          create: {
-            id: 'profile1',
-          },
-        },
-      },
-    })
-  },
-  apiClientQuery: gql`
+  client: gql`
     query {
       users {
         id
@@ -64,24 +67,14 @@ testIntegration({
       }
     }
   `,
+  ...base,
 })
 
 // https://github.com/prisma/nexus-prisma/issues/34
 testIntegration({
   description:
     'can project relationship in opposite direction of where @relation is defined, but the field will be nullable',
-  datasourceSchema: `
-    model User {
-      id         String    @id
-      profile    Profile   @relation(fields: [profileId], references: [id])
-      profileId  String
-    }
-    model Profile {
-      id      String  @id
-      user    User?
-    }
-  `,
-  apiSchema({ User, Profile }) {
+  api({ User, Profile }) {
     return [
       queryType({
         definition(t) {
@@ -109,19 +102,7 @@ testIntegration({
       }),
     ]
   },
-  async setup(prisma) {
-    await prisma.user.create({
-      data: {
-        id: 'user1',
-        profile: {
-          create: {
-            id: 'profile1',
-          },
-        },
-      },
-    })
-  },
-  apiClientQuery: gql`
+  client: gql`
     query {
       users {
         id
@@ -134,23 +115,13 @@ testIntegration({
       }
     }
   `,
+  ...base,
 })
 
 testIntegration({
   description:
     'Nullable on Without-Relation-Scalar Side limitation can be worked around by wrapping type in an explicit nonNull',
-  datasourceSchema: `
-      model User {
-        id         String    @id
-        profile    Profile   @relation(fields: [profileId], references: [id])
-        profileId  String
-      }
-      model Profile {
-        id      String  @id
-        user    User?
-      }
-    `,
-  apiSchema({ User, Profile }) {
+  api({ User, Profile }) {
     return [
       queryType({
         definition(t) {
@@ -181,19 +152,7 @@ testIntegration({
       }),
     ]
   },
-  async setup(prisma) {
-    await prisma.user.create({
-      data: {
-        id: 'user1',
-        profile: {
-          create: {
-            id: 'profile1',
-          },
-        },
-      },
-    })
-  },
-  apiClientQuery: gql`
+  client: gql`
     query {
       users {
         id
@@ -206,11 +165,12 @@ testIntegration({
       }
     }
   `,
+  ...base,
 })
 
 testIntegration({
   description: 'Can project User-to-Profile where Profile is using composite ID',
-  datasourceSchema: `
+  database: `
       model User {
         id          String    @id
         profile     Profile   @relation(fields: [profileId1, profileId2], references: [id1, id2])
@@ -220,11 +180,11 @@ testIntegration({
       model Profile {
         id1   String
         id2   String
-        user  User?
+        user  User? @relation
         @@id(fields: [id1, id2])
       }
     `,
-  apiSchema({ User, Profile }) {
+  api({ User, Profile }) {
     return [
       queryType({
         definition(t) {
@@ -268,7 +228,7 @@ testIntegration({
       },
     })
   },
-  apiClientQuery: gql`
+  client: gql`
     query {
       users {
         id

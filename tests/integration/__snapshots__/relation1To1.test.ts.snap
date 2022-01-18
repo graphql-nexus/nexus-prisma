@@ -36,6 +36,8 @@ type Profile {
 "
 `;
 
+exports[`Can project User-to-Profile where Profile is using composite ID: logs 1`] = `Array []`;
+
 exports[`Nullable on Without-Relation-Scalar Side limitation can be worked around by wrapping type in an explicit nonNull: graphqlOperationExecutionResult 1`] = `
 Object {
   "data": Object {
@@ -71,6 +73,8 @@ type Profile {
 }
 "
 `;
+
+exports[`Nullable on Without-Relation-Scalar Side limitation can be worked around by wrapping type in an explicit nonNull: logs 1`] = `Array []`;
 
 exports[`can project relationship in opposite direction of where @relation is defined, but the field will be nullable: graphqlOperationExecutionResult 1`] = `
 Object {
@@ -108,6 +112,8 @@ type Profile {
 "
 `;
 
+exports[`can project relationship in opposite direction of where @relation is defined, but the field will be nullable: logs 1`] = `Array []`;
+
 exports[`can project user-to-profile relationship: graphqlOperationExecutionResult 1`] = `
 Object {
   "data": Object {
@@ -139,3 +145,5 @@ type Profile {
 }
 "
 `;
+
+exports[`can project user-to-profile relationship: logs 1`] = `Array []`;

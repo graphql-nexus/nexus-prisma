@@ -1,3 +1,5 @@
 dist-cjs
 dist-esm
 coverage
+docs/.next
+tests/__cache__

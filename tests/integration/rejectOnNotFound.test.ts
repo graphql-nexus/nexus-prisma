@@ -4,7 +4,7 @@ import { testIntegration } from '../__helpers__/testers'
 
 testIntegration({
   description: 'ignores global rejectOnNotFound Prisma Client settings',
-  datasourceSchema: `
+  database: `
     model User {
       id         String    @id
       profile    Profile?  @relation(fields: [profileId], references: [id])
@@ -15,7 +15,7 @@ testIntegration({
 			user  User?
     }
   `,
-  apiSchema({ User, Profile }) {
+  api({ User, Profile }) {
     return [
       queryType({
         definition(t) {
@@ -42,7 +42,7 @@ testIntegration({
       }),
     ]
   },
-  setupPrismaClient(prismaClientPackage) {
+  prismaClient(prismaClientPackage) {
     // This global setting should have no effect on Nexus Prisma
     return new prismaClientPackage.PrismaClient({
       rejectOnNotFound: true,
@@ -55,7 +55,7 @@ testIntegration({
       },
     })
   },
-  apiClientQuery: gql`
+  client: gql`
     query {
       users {
         id

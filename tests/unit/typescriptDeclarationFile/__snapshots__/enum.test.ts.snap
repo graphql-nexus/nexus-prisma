@@ -91,7 +91,7 @@ export const Foo: Foo
 //
 //
 
-import { Runtime } from '../generator/runtime/settingsSingleton'
+import { Runtime } from '../generator/runtime'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).

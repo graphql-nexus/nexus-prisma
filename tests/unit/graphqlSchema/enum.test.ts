@@ -4,12 +4,12 @@ import { testGraphqlSchema } from '../../__helpers__/testers'
 
 testGraphqlSchema({
   description: 'When an enum is defined in the Prisma schema it can be projected into the GraphQL API',
-  datasourceSchema: dedent`
+  database: dedent`
     enum Foo {
       a
     }
   `,
-  apiSchema({ Foo }) {
+  api({ Foo }) {
     return [enumType(Foo)]
   },
 })
@@ -17,14 +17,14 @@ testGraphqlSchema({
 testGraphqlSchema({
   description:
     'When an enum with multiple members is defined in the Prisma schema it and all its members can be projected into the GraphQL API',
-  datasourceSchema: dedent`
+  database: dedent`
     enum Foo {
       a
       b
       c
     }
   `,
-  apiSchema({ Foo }) {
+  api({ Foo }) {
     return [enumType(Foo)]
   },
 })
@@ -32,13 +32,13 @@ testGraphqlSchema({
 testGraphqlSchema({
   description:
     'When an enum is defined with documentation in the Prisma schema it can be projected into the GraphQL API with that documentation',
-  datasourceSchema: dedent`
+  database: dedent`
     /// Some documentation
     enum Foo {
       a
     }
   `,
-  apiSchema({ Foo }) {
+  api({ Foo }) {
     return [enumType(Foo)]
   },
 })

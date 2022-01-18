@@ -1,30 +1,8 @@
 import * as Setset from 'setset'
+import * as Settings from './settings'
 
-export namespace Runtime {
-  export type SettingsInput = {
-    /**
-     * The name of the GraphQL context field to get an instance of Prisma Client from.
-     *
-     * This instance of Prisma Client is accessed in the default resolvers for relational fields.
-     *
-     * @default prisma
-     */
-    prismaClientContextField?: string
-  }
+export const settings = Settings.create()
 
-  export type SettingsData = Setset.InferDataFromInput<SettingsInput>
-
-  export type Settings = Setset.Manager<SettingsInput, SettingsData>
-
-  export const settings = Setset.create<SettingsInput, SettingsData>({
-    fields: {
-      prismaClientContextField: {
-        initial: () => 'prisma',
-      },
-    },
-  })
-
-  export function changeSettings(input: Setset.UserInput<SettingsInput>): void {
-    settings.change(input)
-  }
+export const changeSettings = (input: Setset.UserInput<Settings.Input>): void => {
+  settings.change(input)
 }

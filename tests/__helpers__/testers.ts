@@ -1,22 +1,19 @@
 import * as PrismaSDK from '@prisma/sdk'
-import dedent from 'dindist'
 import execa from 'execa'
 import * as fs from 'fs-jetpack'
-import { DocumentNode, execute, printSchema } from 'graphql'
+import { DocumentNode, execute, ExecutionResult, printSchema } from 'graphql'
 import { core } from 'nexus'
 import { AllNexusTypeDefs } from 'nexus/dist/core'
 import * as Path from 'path'
 import { generateRuntime } from '../../src/generator/generate'
-import { Gentime } from '../../src/generator/gentime/settingsSingleton'
+import { Gentime } from '../../src/generator/gentime'
 import * as ModelsGenerator from '../../src/generator/models'
-import { Settings } from '../../src/generator/models/javascript'
-import { Runtime } from '../../src/generator/runtime/settingsSingleton'
+import { Runtime } from '../../src/generator/runtime'
 import { ModuleSpec } from '../../src/generator/types'
-
-const settingsDefaults: Settings = {
-  gentime: Gentime.settings.data,
-  runtime: Runtime.settings,
-}
+import { DMMF } from '@prisma/generator-helper'
+import slug from 'slug'
+import objectHash from 'object-hash'
+import { createConsoleLogCapture, createPrismaSchema, prepareGraphQLSDLForSnapshot } from './helpers'
 
 /**
  * Define Nexus type definitions based on the Nexus Prisma configurations
@@ -35,11 +32,16 @@ export type IntegrationTestSpec = {
    *
    * Note datasource and generator blocks are taken care of automatically for you.
    */
-  datasourceSchema: string
+  database: string
   /**
    * Define the GraphQL API. All returned type defs are added to the final GraphQL schema.
    */
-  apiSchema: APISchemaSpec
+  api: APISchemaSpec
+  /**
+   * Get access to the gentime settings like you would in the gentime config file.
+   */
+  nexusPrismaGentimeConfig?(settings: Gentime.Settings.Manager): void
+  nexusPrismaRuntimeConfig?(settings: Runtime.Settings.Manager): void
   /**
    * Access the Prisma Client instance and run some setup side-effects.
    *
@@ -47,7 +49,7 @@ export type IntegrationTestSpec = {
    *
    * 1. Seed the database.
    */
-  setup?: (prismaClient: any) => Promise<void>
+  setup?(prismaClient: any): Promise<void>
   /**
    * Handle instantiation of a Prisma Client instance.
    *
@@ -55,14 +57,14 @@ export type IntegrationTestSpec = {
    *
    * 1. Customize the Prisma Client settings.
    */
-  setupPrismaClient?: (prismaClientPackage: any) => Promise<any>
+  prismaClient?(prismaClientPackage: any): Promise<any>
   /**
-   * A Graphql document to execute against the GraphQL API. The result is snapshoted.
+   * A Graphql document to execute against the GraphQL API. The result is snapshotted.
    */
-  apiClientQuery: DocumentNode
+  client: DocumentNode
 }
 
-type IntegrationTestParams = IntegrationTestSpec & {
+export type TestIntegrationParams = IntegrationTestSpec & {
   /**
    * Proxy for it.only
    */
@@ -71,19 +73,24 @@ type IntegrationTestParams = IntegrationTestSpec & {
    * Proxy for it.skip
    */
   skip?: boolean
+  expect?(result: {
+    logs: string[]
+    graphqlSchemaSDL: string
+    graphqlOperationExecutionResult: ExecutionResult
+  }): void
 }
 
 /**
  * Test that the given Prisma schema generates the expected generated source code.
  */
-export function testGeneratedModules(params: {
+export const testGeneratedModules = (params: {
   description: string
   databaseSchema: string
   /**
    * The gentime settings to use.
    */
-  settings?: Gentime.SettingsInput
-}) {
+  settings?: Gentime.Settings.Input
+}) => {
   it(params.description, async () => {
     Gentime.settings.reset()
     if (params.settings) {
@@ -98,7 +105,7 @@ export function testGeneratedModules(params: {
  * Test that the given Prisma schema + API Schema + data seed + GraphQL document lead to the expected
  * GraphQL schema and execution result.
  */
-export function testIntegration(params: IntegrationTestParams) {
+export const testIntegration = (params: TestIntegrationParams) => {
   if (params.skip && params.only)
     throw new Error(`Cannot specify to skip this test AND only run this test at the same time.`)
 
@@ -108,30 +115,47 @@ export function testIntegration(params: IntegrationTestParams) {
     params.description,
     async () => {
       const result = await integrationTest(params)
-      expect(result.graphqlSchemaSDL).toMatchSnapshot(`graphqlSchemaSDL`)
-      expect(result.graphqlOperationExecutionResult).toMatchSnapshot(`graphqlOperationExecutionResult`)
+      if (params.expect) {
+        params.expect(result)
+      } else {
+        expect(result.logs).toMatchSnapshot(`logs`)
+        expect(result.graphqlSchemaSDL).toMatchSnapshot(`graphqlSchemaSDL`)
+        expect(result.graphqlOperationExecutionResult).toMatchSnapshot(`graphqlOperationExecutionResult`)
+      }
     },
     30_000
   )
 }
 
+export const testIntegrationPartial = <T extends Partial<Omit<TestIntegrationParams, 'description'>>>(
+  params: T
+): T => {
+  return params
+}
+
 /**
- * Test that the given Prisma schema + API Scheam lead to the expected GraphQL schema.
+ * Test that the given Prisma schema + API Schema lead to the expected GraphQL schema.
  */
-export function testGraphqlSchema(params: {
-  datasourceSchema: string
-  description: string
-  apiSchema: APISchemaSpec
-}) {
+export const testGraphqlSchema = (
+  params: Pick<TestIntegrationParams, 'api' | 'description' | 'database'>
+) => {
   it(params.description, async () => {
     const dmmf = await PrismaSDK.getDMMF({
-      datamodel: createPrismaSchema({ content: params.datasourceSchema }),
+      datamodel: createPrismaSchema({
+        content: params.database,
+      }),
     })
 
-    const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, settingsDefaults) as any
+    const runtimeSettings = Runtime.Settings.create()
+    const gentimeSettings = Gentime.Settings.create()
+
+    const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {
+      gentime: gentimeSettings.data,
+      runtime: runtimeSettings,
+    }) as any
 
     const { schema } = await core.generateSchema.withArtifacts({
-      types: params.apiSchema(nexusPrisma),
+      types: params.api(nexusPrisma),
     })
 
     expect(prepareGraphQLSDLForSnapshot(printSchema(schema))).toMatchSnapshot('graphqlSchema')
@@ -145,154 +169,139 @@ export function testGraphqlSchema(params: {
 /**
  * Given a Prisma schema and Nexus type definitions return a GraphQL schema.
  */
-export async function integrationTest({
-  datasourceSchema,
-  apiSchema,
-  setup,
-  setupPrismaClient,
-  apiClientQuery,
-}: IntegrationTestParams) {
-  const dir = fs.tmpDir().cwd()
-  const dirRelativePrismaClientOutput = './client'
-  const prismaClientImportId = Path.posix.join(dir, dirRelativePrismaClientOutput)
+export const integrationTest = async (params: TestIntegrationParams) => {
+  /**
+   * On windows "File name too long" errors can occur. For that reason we do not pass through the test description which may be very long when on Windows.
+   */
+  const outputDirName =
+    process.platform === 'win32' ? objectHash({ description: params.description }) : slug(params.description)
+  const outputDirPath = Path.join(process.cwd(), 'tests/__cache__/integration/', outputDirName)
+  const prismaClientOutputDir = './client'
+  const prismaClientOutputDirAbsolute = Path.posix.join(outputDirPath, prismaClientOutputDir)
+  const sqliteDatabaseFileOutput = './db.sqlite'
+  const sqliteDatabaseFileOutputAbsolute = Path.join(outputDirPath, sqliteDatabaseFileOutput)
+  const dmmfFileOutputAbsolute = Path.join(outputDirPath, 'dmmf.json')
   const prismaSchemaContents = createPrismaSchema({
-    content: datasourceSchema,
+    content: params.database,
     datasourceProvider: {
       provider: 'sqlite',
-      url: `file:./db.sqlite`,
+      url: `file:${sqliteDatabaseFileOutput}`,
     },
     nexusPrisma: false,
-    clientOutput: dirRelativePrismaClientOutput,
+    clientOutput: prismaClientOutputDir,
   })
 
-  fs.write(`${dir}/schema.prisma`, prismaSchemaContents)
+  const cacheHit = fs.exists(prismaClientOutputDirAbsolute)
+  let dmmf: DMMF.Document
 
-  // This will run the prisma generators
-  execa.commandSync(`yarn -s prisma db push --force-reset --schema ${dir}/schema.prisma`)
+  if (!cacheHit) {
+    fs.write(`${outputDirPath}/schema.prisma`, prismaSchemaContents)
+    execa.commandSync(`yarn -s prisma db push --force-reset --schema ${outputDirPath}/schema.prisma`)
+    fs.copy(sqliteDatabaseFileOutputAbsolute, `${sqliteDatabaseFileOutputAbsolute}.bak`)
+    dmmf = await PrismaSDK.getDMMF({
+      datamodel: prismaSchemaContents,
+    })
+    fs.write(dmmfFileOutputAbsolute, dmmf)
+  } else {
+    // restore empty database
+    fs.copy(`${sqliteDatabaseFileOutputAbsolute}.bak`, sqliteDatabaseFileOutputAbsolute, { overwrite: true })
+    dmmf = fs.read(dmmfFileOutputAbsolute, 'json')
+  }
 
-  const prismaClientPackage = require(prismaClientImportId)
-  const prismaClient = setupPrismaClient
-    ? setupPrismaClient(prismaClientPackage)
+  const prismaClientPackage = require(prismaClientOutputDirAbsolute)
+
+  /**
+   * Maintain a controlled prisma client instance. This is so that tests can run setup with a functioning client while also
+   * having freedom to much around with the prisma client instance that the application under test will get. These are
+   * different concerns:
+   *
+   * 1. Prisma Client for scaffolding data for the test itself.
+   * 2. Prisma Client for Nexus Prisma to use in an application
+   *
+   * Some tests will intentionally create a bad prisma client instance to test gracefully error handling.
+   */
+  const prismaClientInternal = new prismaClientPackage.PrismaClient()
+
+  const prismaClient = params.prismaClient
+    ? params.prismaClient(prismaClientPackage)
     : new prismaClientPackage.PrismaClient()
 
-  if (setup) {
-    await setup(prismaClient)
+  if (params.setup) {
+    await params.setup(prismaClientInternal)
   }
 
-  const dmmf = await PrismaSDK.getDMMF({
-    datamodel: prismaSchemaContents,
+  const runtimeSettings = Runtime.Settings.create()
+  const gentimeSettings = Gentime.Settings.create()
+
+  gentimeSettings.change({
+    prismaClientImportId: prismaClientOutputDirAbsolute,
   })
 
-  const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {
-    ...settingsDefaults,
-    gentime: {
-      ...settingsDefaults.gentime,
-      prismaClientImportId: prismaClientImportId,
-    },
-  }) as any
-
-  const { schema } = await core.generateSchema.withArtifacts({
-    types: apiSchema(nexusPrisma),
-  })
-
-  const graphqlOperationExecutionResult = await execute({
-    contextValue: {
-      prisma: prismaClient,
-    },
-    schema: schema,
-    document: apiClientQuery,
-  })
-
-  await prismaClient.$disconnect()
-
-  if (graphqlOperationExecutionResult.errors) {
-    throw new Error(
-      `GraphQL operation failed:\n\n  - ${graphqlOperationExecutionResult.errors.join('\n  - ')}`
-    )
+  if (params.nexusPrismaGentimeConfig) {
+    params.nexusPrismaGentimeConfig(gentimeSettings)
   }
+
+  if (params.nexusPrismaRuntimeConfig) {
+    params.nexusPrismaRuntimeConfig(runtimeSettings)
+  }
+
+  /**
+   * Application Logic Simulation Start
+   *
+   * Capture log output during this phase. This allows tests to assert on log output.
+   * Log output can be an important part of DX. It also can be a strong indicator of what logic has been run.
+   */
+
+  const logCap = createConsoleLogCapture()
+  let graphqlOperationExecutionResult
+  let schema
+  try {
+    logCap.start()
+
+    const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {
+      runtime: runtimeSettings,
+      gentime: gentimeSettings.data,
+    }) as any
+
+    const artifacts = await core.generateSchema.withArtifacts({
+      types: params.api(nexusPrisma),
+    })
+
+    schema = artifacts.schema
+
+    graphqlOperationExecutionResult = await execute({
+      contextValue: {
+        prisma: prismaClient,
+      },
+      schema: schema,
+      document: params.client,
+    })
+  } catch (e) {
+    logCap.stop()
+    throw e
+  }
+  logCap.stop()
+
+  /**
+   * Application Logic Simulation End
+   */
+
+  /**
+   * Automatically await disconnect. However only if it is actually a Prisma Client instance.
+   *
+   * Sometimes tests might pass bad data on purpose to test our checks system.
+   */
+  if (prismaClient instanceof prismaClientPackage.PrismaClient) {
+    await prismaClient.$disconnect()
+  }
+
+  await prismaClientInternal.$disconnect()
 
   return {
     graphqlSchemaSDL: prepareGraphQLSDLForSnapshot(printSchema(schema)),
     graphqlOperationExecutionResult,
+    logs: logCap.logs,
   }
-}
-
-function prepareGraphQLSDLForSnapshot(sdl: string): string {
-  return '\n' + stripNexusQueryOk(sdl).trim() + '\n'
-}
-
-function stripNexusQueryOk(sdl: string): string {
-  return sdl.replace(
-    dedent`
-      type Query {
-        ok: Boolean!
-      }
-    `,
-    ''
-  )
-}
-
-/**
- * Create the contents of a Prisma Schema file.
- */
-export function createPrismaSchema({
-  content,
-  datasourceProvider,
-  clientOutput,
-  nexusPrisma,
-}: {
-  content: string
-  /**
-   * The datasource provider block. Defaults to postgres provider with DB_URL envar lookup.
-   */
-  datasourceProvider?: { provider: 'sqlite'; url: string } | { provider: 'postgres'; url: string }
-  /**
-   * Specify the prisma client generator block output configuration. By default is unspecified and uses the Prisma client generator default.
-   */
-  clientOutput?: string
-  /**
-   * Should the Nexus Prisma generator block be added.
-   *
-   * @default true
-   */
-  nexusPrisma?: boolean
-}): string {
-  const outputConfiguration = clientOutput ? `\n  output = "${clientOutput}"` : ''
-  const nexusPrisma_ = nexusPrisma ?? true
-  const datasourceProvider_ = datasourceProvider
-    ? {
-        ...datasourceProvider,
-        url: datasourceProvider.url.startsWith('env')
-          ? datasourceProvider.url
-          : `"${datasourceProvider.url}"`,
-      }
-    : {
-        provider: 'postgres',
-        url: 'env("DB_URL")',
-      }
-
-  return dedent`
-    datasource db {
-      provider = "${datasourceProvider_.provider}"
-      url      = ${datasourceProvider_.url}
-    }
-
-    generator client {
-      provider = "prisma-client-js"${outputConfiguration}
-    }
-
-    ${
-      nexusPrisma_
-        ? dedent`
-            generator nexusPrisma {
-              provider = "nexus-prisma"
-            }
-          `
-        : ``
-    }
-
-    ${content}
-  `
 }
 
 /**

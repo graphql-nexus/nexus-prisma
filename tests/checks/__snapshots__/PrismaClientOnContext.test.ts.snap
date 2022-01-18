@@ -281,37 +281,3 @@ CONSEQUENCE: Maybe none since duck typing fallback indicates that the Prisma Cli
 CODE: PrismaClientOnContextInstanceOfStrategyFailed",
 ]
 `;
-
-exports[`when check is disabled then warning NOT emitted when instanceof check fails OR duck typing fails: graphqlOperationExecutionResult 1`] = `
-Object {
-  "data": Object {
-    "users": Array [
-      Object {
-        "profile": null,
-      },
-    ],
-  },
-  "errors": Array [
-    [GraphQLError: Cannot read properties of undefined (reading 'findUnique')],
-  ],
-}
-`;
-
-exports[`when check is disabled then warning NOT emitted when instanceof check fails OR duck typing fails: graphqlSchemaSDL 1`] = `
-"
-type Query {
-  users: [User!]!
-}
-
-type User {
-  id: ID!
-  profile: Profile
-}
-
-type Profile {
-  id: ID!
-}
-"
-`;
-
-exports[`when check is disabled then warning NOT emitted when instanceof check fails OR duck typing fails: logs 1`] = `Array []`;

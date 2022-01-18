@@ -1,7 +1,7 @@
 import * as PrismaSDK from '@prisma/sdk'
 import execa from 'execa'
 import * as fs from 'fs-jetpack'
-import { DocumentNode, execute, printSchema } from 'graphql'
+import { DocumentNode, execute, ExecutionResult, printSchema } from 'graphql'
 import { core } from 'nexus'
 import { AllNexusTypeDefs } from 'nexus/dist/core'
 import * as Path from 'path'
@@ -73,6 +73,11 @@ export type TestIntegrationParams = IntegrationTestSpec & {
    * Proxy for it.skip
    */
   skip?: boolean
+  expect?(result: {
+    logs: string[]
+    graphqlSchemaSDL: string
+    graphqlOperationExecutionResult: ExecutionResult
+  }): void
 }
 
 /**
@@ -110,9 +115,13 @@ export const testIntegration = (params: TestIntegrationParams) => {
     params.description,
     async () => {
       const result = await integrationTest(params)
-      expect(result.logs).toMatchSnapshot(`logs`)
-      expect(result.graphqlSchemaSDL).toMatchSnapshot(`graphqlSchemaSDL`)
-      expect(result.graphqlOperationExecutionResult).toMatchSnapshot(`graphqlOperationExecutionResult`)
+      if (params.expect) {
+        params.expect(result)
+      } else {
+        expect(result.logs).toMatchSnapshot(`logs`)
+        expect(result.graphqlSchemaSDL).toMatchSnapshot(`graphqlSchemaSDL`)
+        expect(result.graphqlOperationExecutionResult).toMatchSnapshot(`graphqlOperationExecutionResult`)
+      }
     },
     30_000
   )

@@ -94,6 +94,15 @@ describe('instanceOf_duckType_fallback strategy:', () => {
     description: 'warning emitted when instanceof check fails but duck typing succeeds',
     prismaClient: prismaClientWhereInstanceofStrategyWillFail,
     ...base,
+    // The emitted error contains a path that isn't stable across the CI/CI matrix. Needs to be processed.
+    expect(result) {
+      if (result.logs[0]) {
+        result.logs[0] = result.logs[0]!.replace(/(import from).*(is not the)/, '$1 <dynamic_path> $2')
+      }
+      expect(result.logs).toMatchSnapshot(`logs`)
+      expect(result.graphqlSchemaSDL).toMatchSnapshot(`graphqlSchemaSDL`)
+      expect(result.graphqlOperationExecutionResult).toMatchSnapshot(`graphqlOperationExecutionResult`)
+    },
   })
 })
 
@@ -213,6 +222,10 @@ testIntegration({
         PrismaClientOnContext: false,
       },
     })
+  },
+  // Node.js 14.x vs 16.x have differing error messages so we do not snapshot in order to have CI matrix pass without issue
+  expect(result) {
+    expect(result.graphqlOperationExecutionResult.errors?.[0]?.message).toMatch(/Cannot read.*findUnique.*/)
   },
   ...base,
 })

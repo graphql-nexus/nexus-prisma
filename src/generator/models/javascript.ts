@@ -107,12 +107,12 @@ export function createModuleSpec(params: {
     ? dedent`
         import { getPrismaClientDmmf } from '${importSpecifierToNexusPrismaSourceDirectory}/helpers/prisma'
         import * as ModelsGenerator from '${importSpecifierToNexusPrismaSourceDirectory}/generator/models/index'
-        import { Runtime } from '${importSpecifierToNexusPrismaSourceDirectory}/generator/runtime'
+        import { Runtime } from '${importSpecifierToNexusPrismaSourceDirectory}/generator/runtime/index'
       `
     : dedent`
         const { getPrismaClientDmmf } = require('${importSpecifierToNexusPrismaSourceDirectory}/helpers/prisma')
         const ModelsGenerator = require('${importSpecifierToNexusPrismaSourceDirectory}/generator/models/index')
-        const { Runtime } = require('${importSpecifierToNexusPrismaSourceDirectory}/generator/runtime')
+        const { Runtime } = require('${importSpecifierToNexusPrismaSourceDirectory}/generator/runtime/index')
       `
 
   return {

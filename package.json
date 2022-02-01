@@ -123,7 +123,8 @@
   "peerDependencies": {
     "@prisma/client": "^3.5",
     "nexus": "^1.0.0",
-    "ts-node": "^10.0.0"
+    "ts-node": "^10.0.0",
+    "graphql": "^15 | ^16"
   },
   "peerDependenciesMeta": {
     "ts-node": {

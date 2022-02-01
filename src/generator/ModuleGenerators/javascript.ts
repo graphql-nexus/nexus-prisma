@@ -1,19 +1,30 @@
-import type { DMMF } from '@prisma/client/runtime'
 import dedent from 'dindist'
 import { chain } from 'lodash'
 import * as Nexus from 'nexus'
-import { NexusEnumTypeConfig, NexusListDef, NexusNonNullDef, NexusNullDef } from 'nexus/dist/core'
-import { MaybePromise, RecordUnknown, Resolver } from '../../helpers/utils'
+import {
+  NexusEnumTypeConfig,
+  NexusListDef,
+  NexusNonNullDef,
+  NexusNullDef,
+} from 'nexus/dist/core'
+import { inspect } from 'util'
+
+import type { DMMF } from '@prisma/client/runtime'
+
+import {
+  MaybePromise,
+  RecordUnknown,
+  Resolver,
+} from '../../helpers/utils'
+import { Messenger } from '../../lib/messenger'
 import { PrismaDmmf } from '../../lib/prisma-dmmf'
 import { PrismaDocumentation } from '../../lib/prisma-documentation'
 import { PrismaUtils } from '../../lib/prisma-utils'
-import { Gentime } from '../gentime'
 import { createWhereUniqueInput } from '../../lib/prisma-utils/whereUniqueInput'
+import { Gentime } from '../gentime'
 import { Runtime } from '../runtime'
-import { ModuleSpec } from '../types'
+import { Module } from '../types'
 import { fieldTypeToGraphQLType } from './declaration'
-import { inspect } from 'util'
-import { Messenger } from '../../lib/messenger'
 
 type PrismaEnumName = string
 
@@ -38,7 +49,7 @@ export type Settings = {
 /**
  * Create the module specification for the JavaScript runtime.
  */
-export function createModuleSpec(params: {
+export const createModule = (params: {
   /**
    * Resolved generator settings (whatever user supplied merged with defaults).
    */
@@ -51,7 +62,7 @@ export function createModuleSpec(params: {
    * Detailed data about the Prisma Schema contents and available operations over its models.
    */
   dmmf: DMMF.Document
-}): ModuleSpec {
+}): Module => {
   const { esm, gentimeSettings, dmmf } = params
 
   const esmModelExports =
@@ -142,10 +153,10 @@ export function createModuleSpec(params: {
   }
 }
 
-export function createNexusTypeDefConfigurations(
+export const createNexusTypeDefConfigurations = (
   dmmf: DMMF.Document,
   settings: Settings
-): NexusTypeDefConfigurations {
+): NexusTypeDefConfigurations => {
   return {
     ...createNexusObjectTypeDefConfigurations(dmmf, settings),
     ...createNexusEnumTypeDefConfigurations(dmmf, settings),
@@ -169,10 +180,10 @@ type NexusObjectTypeDefConfiguration = Record<
 /**
  * Create Nexus object type definition configurations for Prisma models found in the given DMMF.
  */
-function createNexusObjectTypeDefConfigurations(
+const createNexusObjectTypeDefConfigurations = (
   dmmf: DMMF.Document,
   settings: Settings
-): NexusObjectTypeDefConfigurations {
+): NexusObjectTypeDefConfigurations => {
   return chain(dmmf.datamodel.models)
     .map((model) => {
       return {
@@ -206,7 +217,7 @@ const prismaNodeDocumentationToDescription = (params: {
 
 // Complex return type I don't really understand how to easily work with manually.
 // eslint-disable-next-line
-export function prismaFieldToNexusType(field: DMMF.Field, settings: Settings) {
+export const prismaFieldToNexusType = (field: DMMF.Field, settings: Settings) => {
   const graphqlType = fieldTypeToGraphQLType(field, settings.gentime)
 
   if (field.isList) {
@@ -246,11 +257,11 @@ export function prismaFieldToNexusType(field: DMMF.Field, settings: Settings) {
  *
  *          but this is overall the better way to handle this detail it seems.
  */
-export function nexusResolverFromPrismaField(
+export const nexusResolverFromPrismaField = (
   model: DMMF.Model,
   field: DMMF.Field,
   settings: Settings
-): undefined | Resolver {
+): undefined | Resolver => {
   if (field.kind !== 'object') {
     return undefined
   }
@@ -374,10 +385,10 @@ type NexusEnumTypeDefConfiguration = AnyNexusEnumTypeConfig
 /**
  * Create Nexus enum type definition configurations for Prisma enums found in the given DMMF.
  */
-function createNexusEnumTypeDefConfigurations(
+const createNexusEnumTypeDefConfigurations = (
   dmmf: DMMF.Document,
   settings: Settings
-): NexusEnumTypeDefConfigurations {
+): NexusEnumTypeDefConfigurations => {
   return chain(dmmf.datamodel.enums)
     .map((enum_): AnyNexusEnumTypeConfig => {
       return {

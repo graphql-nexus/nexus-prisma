@@ -1,4 +1,4 @@
-export type ModuleSpec = {
+export type Module = {
   fileName: string
   content: string
 }

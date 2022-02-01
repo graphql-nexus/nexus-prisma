@@ -17,7 +17,7 @@ import * as PrismaSDK from '@prisma/sdk'
 
 import { generateRuntime } from '../../src/generator/generate'
 import { Gentime } from '../../src/generator/gentime'
-import * as ModelsGenerator from '../../src/generator/models'
+import { ModuleGenerators } from '../../src/generator/ModuleGenerators'
 import { Runtime } from '../../src/generator/runtime'
 import { Module } from '../../src/generator/types'
 import {
@@ -160,7 +160,7 @@ export const testGraphqlSchema = (
     const runtimeSettings = Runtime.Settings.create()
     const gentimeSettings = Gentime.Settings.create()
 
-    const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {
+    const nexusPrisma = ModuleGenerators.JS.createNexusTypeDefConfigurations(dmmf, {
       gentime: gentimeSettings.data,
       runtime: runtimeSettings,
     }) as any
@@ -269,7 +269,7 @@ export const integrationTest = async (params: TestIntegrationParams) => {
   try {
     logCap.start()
 
-    const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {
+    const nexusPrisma = ModuleGenerators.JS.createNexusTypeDefConfigurations(dmmf, {
       runtime: runtimeSettings,
       gentime: gentimeSettings.data,
     }) as any

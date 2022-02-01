@@ -1,11 +1,13 @@
-import { DMMF } from '@prisma/client/runtime'
 import * as fs from 'fs-jetpack'
 import * as Path from 'path'
 import * as pkgup from 'pkg-up'
+
+import { DMMF } from '@prisma/client/runtime'
+
 import { d } from '../helpers/debugNexusPrisma'
 import { Gentime } from './gentime'
-import * as ModelsGenerator from './models'
-import { ModuleSpec } from './types'
+import { ModuleGenerators } from './ModuleGenerators'
+import { Module } from './types'
 
 const OUTPUT_SOURCE_DIR_ESM = getOutputSourceDir({ esm: true })
 const OUTPUT_SOURCE_DIR_CJS = getOutputSourceDir({ esm: false })
@@ -56,13 +58,13 @@ export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Se
     fs.write('dmmf.json', dmmf)
   }
 
-  const declarationSourceFile = ModelsGenerator.TS.createModuleSpec(dmmf, settings)
+  const declarationSourceFile = ModuleGenerators.TS.createModule(dmmf, settings)
 
   if (settings.data.output.directory === 'default') {
     // ESM
 
     const esmSourceFiles = [
-      ModelsGenerator.JS.createModuleSpec({
+      ModuleGenerators.JS.createModule({
         gentimeSettings: settings,
         esm: true,
         dmmf,
@@ -82,7 +84,7 @@ export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Se
     // CJS
 
     const cjsSourceFiles = [
-      ModelsGenerator.JS.createModuleSpec({
+      ModuleGenerators.JS.createModule({
         gentimeSettings: settings,
         esm: false,
         dmmf,
@@ -100,7 +102,7 @@ export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Se
     })
   } else {
     const sourceFiles = [
-      ModelsGenerator.JS.createModuleSpec({
+      ModuleGenerators.JS.createModule({
         gentimeSettings: settings,
         esm: false,
         dmmf,
@@ -125,20 +127,18 @@ export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Se
 }
 
 /** Transform the given DMMF into JS source code with accompanying TS declarations. */
-export function generateRuntime(dmmf: DMMF.Document, settings: Gentime.Settings.Manager): ModuleSpec[] {
-  const sourceFiles: ModuleSpec[] = [
-    ModelsGenerator.JS.createModuleSpec({
+export const generateRuntime = (dmmf: DMMF.Document, settings: Gentime.Settings.Manager): Module[] => {
+  return [
+    ModuleGenerators.JS.createModule({
       gentimeSettings: settings,
       esm: true,
       dmmf,
     }),
-    ModelsGenerator.JS.createModuleSpec({
+    ModuleGenerators.JS.createModule({
       gentimeSettings: settings,
       esm: false,
       dmmf,
     }),
-    ModelsGenerator.TS.createModuleSpec(dmmf, settings),
+    ModuleGenerators.TS.createModule(dmmf, settings),
   ]
-
-  return sourceFiles
 }

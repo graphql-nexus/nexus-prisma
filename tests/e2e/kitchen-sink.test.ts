@@ -3,10 +3,7 @@ import dindist from 'dindist'
 import * as Execa from 'execa'
 import { gql } from 'graphql-request'
 import * as GQLScalars from 'graphql-scalars'
-import {
-  konn,
-  providers,
-} from 'konn'
+import { konn, providers } from 'konn'
 import * as Path from 'path'
 import stripAnsi from 'strip-ansi'
 import { inspect } from 'util'

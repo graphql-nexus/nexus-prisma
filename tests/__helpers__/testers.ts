@@ -1,19 +1,30 @@
-import * as PrismaSDK from '@prisma/sdk'
 import execa from 'execa'
 import * as fs from 'fs-jetpack'
-import { DocumentNode, execute, ExecutionResult, printSchema } from 'graphql'
+import {
+  DocumentNode,
+  execute,
+  ExecutionResult,
+  printSchema,
+} from 'graphql'
 import { core } from 'nexus'
 import { AllNexusTypeDefs } from 'nexus/dist/core'
+import objectHash from 'object-hash'
 import * as Path from 'path'
+import slug from 'slug'
+
+import { DMMF } from '@prisma/generator-helper'
+import * as PrismaSDK from '@prisma/sdk'
+
 import { generateRuntime } from '../../src/generator/generate'
 import { Gentime } from '../../src/generator/gentime'
 import * as ModelsGenerator from '../../src/generator/models'
 import { Runtime } from '../../src/generator/runtime'
-import { ModuleSpec } from '../../src/generator/types'
-import { DMMF } from '@prisma/generator-helper'
-import slug from 'slug'
-import objectHash from 'object-hash'
-import { createConsoleLogCapture, createPrismaSchema, prepareGraphQLSDLForSnapshot } from './helpers'
+import { Module } from '../../src/generator/types'
+import {
+  createConsoleLogCapture,
+  createPrismaSchema,
+  prepareGraphQLSDLForSnapshot,
+} from './helpers'
 
 /**
  * Define Nexus type definitions based on the Nexus Prisma configurations
@@ -317,9 +328,9 @@ export async function generateModules(
   })
 
   const [indexjs_esm, indexjs_cjs, indexdts] = generateRuntime(dmmf, Gentime.settings) as [
-    ModuleSpec,
-    ModuleSpec,
-    ModuleSpec
+    Module,
+    Module,
+    Module
   ]
 
   return {

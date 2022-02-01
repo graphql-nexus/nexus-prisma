@@ -78,7 +78,7 @@ Object {
   "errors": Array [
     [GraphQLError: Could not perform "PrismaClientOnContext" check because there was an error while trying to import Prisma Client:
 
-Error: Cannot find module 'does-not-exist' from 'src/generator/ModuleGenerators/javascript.ts'],
+Error: Cannot find module 'does-not-exist' from 'src/generator/ModuleGenerators/JS.ts'],
   ],
 }
 `;

@@ -1,2 +1,2 @@
-export * as TS from './declaration'
-export * as JS from './javascript'
+export * as TS from './TS'
+export * as JS from './JS'

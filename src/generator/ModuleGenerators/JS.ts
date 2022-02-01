@@ -1,12 +1,21 @@
 import dedent from 'dindist'
 import { chain } from 'lodash'
 import * as Nexus from 'nexus'
-import { NexusEnumTypeConfig, NexusListDef, NexusNonNullDef, NexusNullDef } from 'nexus/dist/core'
+import {
+  NexusEnumTypeConfig,
+  NexusListDef,
+  NexusNonNullDef,
+  NexusNullDef,
+} from 'nexus/dist/core'
 import { inspect } from 'util'
 
 import type { DMMF } from '@prisma/client/runtime'
 
-import { MaybePromise, RecordUnknown, Resolver } from '../../helpers/utils'
+import {
+  MaybePromise,
+  RecordUnknown,
+  Resolver,
+} from '../../helpers/utils'
 import { Messenger } from '../../lib/messenger'
 import { PrismaDmmf } from '../../lib/prisma-dmmf'
 import { PrismaDocumentation } from '../../lib/prisma-documentation'
@@ -14,9 +23,7 @@ import { PrismaUtils } from '../../lib/prisma-utils'
 import { createWhereUniqueInput } from '../../lib/prisma-utils/whereUniqueInput'
 import { Module } from '../helpers/types'
 import { Settings } from '../Settings'
-import { fieldTypeToGraphQLType } from './declaration'
-
-type a = Settings.Runtime.Manager['change']
+import { fieldTypeToGraphQLType } from './TS'
 
 type PrismaEnumName = string
 

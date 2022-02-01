@@ -122,6 +122,7 @@
   "prettier": "@prisma-labs/prettier-config",
   "peerDependencies": {
     "@prisma/client": "^3.5",
+    "graphql": "^15 | ^16",
     "nexus": "^1.0.0",
     "ts-node": "^10.0.0"
   },
@@ -144,7 +145,7 @@
     "pkg-up": "^3.1.0",
     "pluralize": "^8.0.0",
     "semver": "^7.3.5",
-    "setset": "^0.0.8",
+    "setset": "^0.0.9",
     "ts-replace-all": "^1.0.0",
     "tslib": "^2.3.1"
   },

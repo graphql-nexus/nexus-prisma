@@ -2730,6 +2730,17 @@ floggy@^0.3.1:
     lodash "^4.17.21"
     strip-ansi "6"
 
+floggy@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/floggy/-/floggy-0.3.2.tgz#0dd48da83405e532a109634872722265453dfa51"
+  integrity sha512-GHQm779y9N4CnPKSwOaGRRmG82u+7oLePvXB2kdr6H8yz0viveDJUm+go3yNaFgNQri4JVfUimxQjfrH48zf7w==
+  dependencies:
+    fp-ts "^2.11.3"
+    kleur "^4.1.4"
+    lodash "^4.17.21"
+    strip-ansi "6"
+    tslib "^2.3.1"
+
 for-in@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/for-in/-/for-in-1.0.2.tgz"
@@ -5283,13 +5294,13 @@ set-getter@^0.1.0:
   dependencies:
     to-object-path "^0.3.0"
 
-setset@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/setset/-/setset-0.0.8.tgz#4d68793e2d00ea10efdd09ca7647d14d3dcb51fa"
-  integrity sha512-NNyiUBzR6Q4Z0zHuSinXJehFEH/u2DoHSfHit5vQVqZHEwqlwzfxAOo5SfgkyFfgN85UJbax9jPXSULNyKIcBw==
+setset@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/setset/-/setset-0.0.9.tgz#81314a059065015a94e99f49b0156d395762bbd0"
+  integrity sha512-5w2bW4BVTzaFiB6nySuI+TY2jIeFMYZMtqnbz4m0A5fw/X1+nzwCcFWF4Kr4sEpeOwwwX/bFuXkSfjy29ZJ0cw==
   dependencies:
     "@jsdevtools/ono" "^7.1.3"
-    floggy "^0.3.1"
+    floggy "^0.3.2"
     lodash "^4.17.20"
     tslib "^2.2.0"
     type-fest "^0.20.0"

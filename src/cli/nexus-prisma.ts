@@ -2,19 +2,24 @@
 
 /** This script will be run by the prisma generator system. */
 
-process.env.DEBUG_COLORS = 'true'
-process.env.DEBUG_HIDE_DATE = 'true'
-import { GeneratorConfig, generatorHandler } from '@prisma/generator-helper'
 import dindist from 'dindist'
 import expandTilde from 'expand-tilde'
 import * as Path from 'path'
+
+// @ts-expect-error Private api
+import * as PrismaClientGenerator from '@prisma/client/generator-build'
+import { GeneratorConfig, generatorHandler } from '@prisma/generator-helper'
+
 import { generateRuntimeAndEmit } from '../generator'
-import { loadUserGentimeSettings, supportedSettingsModulePaths } from '../generator/gentime/settingsLoader'
 import { Gentime } from '../generator/gentime'
+import { loadUserGentimeSettings, supportedSettingsModulePaths } from '../generator/gentime/settingsLoader'
 import { d } from '../helpers/debugNexusPrisma'
 import { externalToInternalDmmf } from '../helpers/prismaExternalToInternalDMMF'
 import { resolveGitHubActionsWindowsPathTilde } from '../helpers/utils'
 import { renderCodeBlock, renderList, renderWarning } from '../lib/diagnostic'
+
+process.env.DEBUG_COLORS = 'true'
+process.env.DEBUG_HIDE_DATE = 'true'
 
 // todo by default error in ci and warn in local
 // enforceValidPeerDependencies({
@@ -71,14 +76,20 @@ generatorHandler({
       )
     }
 
-    // WARNING: Make sure this logic comes before `loadUserGentimeSettings` below
-    // otherwise we will overwrite the user's choice for this setting if they have set it.
+    /**
+     * Set the place to import Prisma Client from to be whatever has been set as the output in their PSL schema.
+     *
+     * WARNING: Make sure this logic comes before `loadUserGentimeSettings` below
+     * otherwise we will overwrite the user's choice for this setting if they have set it.
+     */
     Gentime.settings.change({
       prismaClientImportId: getPrismaClientImportIdForItsGeneratorOutputConfig(prismaClientGenerator),
     })
 
-    const internalDMMF = externalToInternalDmmf(dmmf)
-
+    /**
+     * Loading the gentime settings will mutate the gentime settings assuming the user has
+     * imported and used the gentime settings in their configuration module.
+     */
     loadUserGentimeSettings()
 
     /**
@@ -95,7 +106,9 @@ generatorHandler({
       })
     }
 
-    generateRuntimeAndEmit(internalDMMF, Gentime.settings)
+    const prismaClientDmmf = externalToInternalDmmf(dmmf)
+
+    generateRuntimeAndEmit(prismaClientDmmf, Gentime.settings)
 
     process.stdout.write(
       `You can now start using Nexus Prisma in your code. Reference: https://pris.ly/d/nexus-prisma\n`

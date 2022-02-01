@@ -12,9 +12,9 @@ import { generateRuntimeAndEmit } from '../generator'
 import { Gentime } from '../generator/gentime'
 import { loadUserGentimeSettings, supportedSettingsModulePaths } from '../generator/gentime/settingsLoader'
 import { d } from '../helpers/debugNexusPrisma'
-import { externalToInternalDmmf } from '../helpers/prismaExternalToInternalDMMF'
 import { resolveGitHubActionsWindowsPathTilde } from '../helpers/utils'
 import { renderCodeBlock, renderList, renderWarning } from '../lib/diagnostic'
+import { PrismaUtils } from '../lib/prisma-utils'
 
 process.env.DEBUG_COLORS = 'true'
 process.env.DEBUG_HIDE_DATE = 'true'
@@ -104,7 +104,7 @@ generatorHandler({
       })
     }
 
-    const prismaClientDmmf = externalToInternalDmmf(dmmf)
+    const prismaClientDmmf = PrismaUtils.externalToInternalDmmf(dmmf)
 
     generateRuntimeAndEmit(prismaClientDmmf, Gentime.settings)
 

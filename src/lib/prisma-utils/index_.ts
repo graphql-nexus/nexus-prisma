@@ -1,6 +1,9 @@
-import { PrismaClient } from '@prisma/client'
 import { lowerFirst } from 'lodash'
+
+import { PrismaClient } from '@prisma/client'
+
 export * from './whereUniqueInput'
+export * from './externalToInternalDMMF'
 
 /**
  * Convert a set of Prisma model field names to a TS ORM property name for the WHERE input.

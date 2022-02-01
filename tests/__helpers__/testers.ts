@@ -16,10 +16,9 @@ import { DMMF } from '@prisma/generator-helper'
 import * as PrismaSDK from '@prisma/sdk'
 
 import { generateRuntime } from '../../src/generator/generate'
-import { Gentime } from '../../src/generator/gentime'
+import { Module } from '../../src/generator/helpers/types'
 import { ModuleGenerators } from '../../src/generator/ModuleGenerators'
-import { Runtime } from '../../src/generator/runtime'
-import { Module } from '../../src/generator/types'
+import { Settings } from '../../src/generator/Settings'
 import {
   createConsoleLogCapture,
   createPrismaSchema,
@@ -51,8 +50,8 @@ export type IntegrationTestSpec = {
   /**
    * Get access to the gentime settings like you would in the gentime config file.
    */
-  nexusPrismaGentimeConfig?(settings: Gentime.Settings.Manager): void
-  nexusPrismaRuntimeConfig?(settings: Runtime.Settings.Manager): void
+  nexusPrismaGentimeConfig?(settings: Settings.Gentime.Manager): void
+  nexusPrismaRuntimeConfig?(settings: Settings.Runtime.Manager): void
   /**
    * Access the Prisma Client instance and run some setup side-effects.
    *
@@ -100,12 +99,12 @@ export const testGeneratedModules = (params: {
   /**
    * The gentime settings to use.
    */
-  settings?: Gentime.Settings.Input
+  settings?: Settings.Gentime.Input
 }) => {
   it(params.description, async () => {
-    Gentime.settings.reset()
+    Settings.Gentime.settings.reset()
     if (params.settings) {
-      Gentime.settings.change(params.settings)
+      Settings.Gentime.settings.change(params.settings)
     }
     const { indexdts } = await generateModules(params.databaseSchema)
     expect(indexdts).toMatchSnapshot('index.d.ts')
@@ -157,8 +156,8 @@ export const testGraphqlSchema = (
       }),
     })
 
-    const runtimeSettings = Runtime.Settings.create()
-    const gentimeSettings = Gentime.Settings.create()
+    const runtimeSettings = Settings.Runtime.create()
+    const gentimeSettings = Settings.Gentime.create()
 
     const nexusPrisma = ModuleGenerators.JS.createNexusTypeDefConfigurations(dmmf, {
       gentime: gentimeSettings.data,
@@ -241,8 +240,8 @@ export const integrationTest = async (params: TestIntegrationParams) => {
     await params.setup(prismaClientInternal)
   }
 
-  const runtimeSettings = Runtime.Settings.create()
-  const gentimeSettings = Gentime.Settings.create()
+  const runtimeSettings = Settings.Runtime.create()
+  const gentimeSettings = Settings.Gentime.create()
 
   gentimeSettings.change({
     prismaClientImportId: prismaClientOutputDirAbsolute,
@@ -327,7 +326,7 @@ export async function generateModules(
     datamodel: prismaSchemaContents,
   })
 
-  const [indexjs_esm, indexjs_cjs, indexdts] = generateRuntime(dmmf, Gentime.settings) as [
+  const [indexjs_esm, indexjs_cjs, indexdts] = generateRuntime(dmmf, Settings.Gentime.settings) as [
     Module,
     Module,
     Module

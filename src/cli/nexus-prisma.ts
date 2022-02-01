@@ -6,14 +6,24 @@ import dindist from 'dindist'
 import expandTilde from 'expand-tilde'
 import * as Path from 'path'
 
-import { GeneratorConfig, generatorHandler } from '@prisma/generator-helper'
+import {
+  GeneratorConfig,
+  generatorHandler,
+} from '@prisma/generator-helper'
 
 import { generateRuntimeAndEmit } from '../generator'
-import { Gentime } from '../generator/gentime'
-import { loadUserGentimeSettings, supportedSettingsModulePaths } from '../generator/gentime/settingsLoader'
+import { Settings } from '../generator/Settings'
+import {
+  loadUserGentimeSettings,
+  supportedSettingsModulePaths,
+} from '../generator/Settings/Gentime/loader'
 import { d } from '../helpers/debugNexusPrisma'
 import { resolveGitHubActionsWindowsPathTilde } from '../helpers/utils'
-import { renderCodeBlock, renderList, renderWarning } from '../lib/diagnostic'
+import {
+  renderCodeBlock,
+  renderList,
+  renderWarning,
+} from '../lib/diagnostic'
 import { PrismaUtils } from '../lib/prisma-utils'
 
 process.env.DEBUG_COLORS = 'true'
@@ -49,7 +59,7 @@ generatorHandler({
         throw new Error(`Failed to read the custom output path.`)
       }
 
-      Gentime.changeSettings({
+      Settings.Gentime.changeSettings({
         output: {
           directory: generator.output.value,
         },
@@ -80,7 +90,7 @@ generatorHandler({
      * WARNING: Make sure this logic comes before `loadUserGentimeSettings` below
      * otherwise we will overwrite the user's choice for this setting if they have set it.
      */
-    Gentime.settings.change({
+    Settings.Gentime.settings.change({
       prismaClientImportId: getPrismaClientImportIdForItsGeneratorOutputConfig(prismaClientGenerator),
     })
 
@@ -94,19 +104,19 @@ generatorHandler({
      * If the output path is some explicit relative path then make it absolute relative to the Prisma Schema file directory.
      */
     if (
-      Gentime.settings.data.output.directory !== 'default' &&
-      !Path.isAbsolute(Gentime.settings.data.output.directory)
+      Settings.Gentime.settings.data.output.directory !== 'default' &&
+      !Path.isAbsolute(Settings.Gentime.settings.data.output.directory)
     ) {
-      Gentime.settings.change({
+      Settings.Gentime.settings.change({
         output: {
-          directory: Path.join(Path.dirname(schemaPath), Gentime.settings.data.output.directory),
+          directory: Path.join(Path.dirname(schemaPath), Settings.Gentime.settings.data.output.directory),
         },
       })
     }
 
     const prismaClientDmmf = PrismaUtils.externalToInternalDmmf(dmmf)
 
-    generateRuntimeAndEmit(prismaClientDmmf, Gentime.settings)
+    generateRuntimeAndEmit(prismaClientDmmf, Settings.Gentime.settings)
 
     process.stdout.write(
       `You can now start using Nexus Prisma in your code. Reference: https://pris.ly/d/nexus-prisma\n`

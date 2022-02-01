@@ -5,9 +5,9 @@ import * as pkgup from 'pkg-up'
 import { DMMF } from '@prisma/client/runtime'
 
 import { d } from '../helpers/debugNexusPrisma'
-import { Gentime } from './gentime'
+import { Module } from './helpers/types'
 import { ModuleGenerators } from './ModuleGenerators'
-import { Module } from './types'
+import { Settings } from './Settings'
 
 const OUTPUT_SOURCE_DIR_ESM = getOutputSourceDir({ esm: true })
 const OUTPUT_SOURCE_DIR_CJS = getOutputSourceDir({ esm: false })
@@ -49,7 +49,7 @@ function getOutputSourceDir(params: { esm: boolean }): string {
 }
 
 /** Generate the Nexus Prisma runtime files and emit them into a "hole" in the internal package source tree. */
-export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Settings.Manager): void {
+export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Settings.Gentime.Manager): void {
   d('start generateRuntime with configuration %j', settings)
 
   d('start generateRuntime')
@@ -127,7 +127,7 @@ export function generateRuntimeAndEmit(dmmf: DMMF.Document, settings: Gentime.Se
 }
 
 /** Transform the given DMMF into JS source code with accompanying TS declarations. */
-export const generateRuntime = (dmmf: DMMF.Document, settings: Gentime.Settings.Manager): Module[] => {
+export const generateRuntime = (dmmf: DMMF.Document, settings: Settings.Gentime.Manager): Module[] => {
   return [
     ModuleGenerators.JS.createModule({
       gentimeSettings: settings,

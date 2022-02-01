@@ -21,10 +21,11 @@ import { PrismaDmmf } from '../../lib/prisma-dmmf'
 import { PrismaDocumentation } from '../../lib/prisma-documentation'
 import { PrismaUtils } from '../../lib/prisma-utils'
 import { createWhereUniqueInput } from '../../lib/prisma-utils/whereUniqueInput'
-import { Gentime } from '../gentime'
-import { Runtime } from '../runtime'
-import { Module } from '../types'
+import { Module } from '../helpers/types'
+import { Settings } from '../Settings'
 import { fieldTypeToGraphQLType } from './declaration'
+
+type a = Settings.Runtime.Manager['change']
 
 type PrismaEnumName = string
 
@@ -42,8 +43,8 @@ type NexusTypeDefConfigurations = Record<
 >
 
 export type Settings = {
-  runtime: Runtime.Settings.Manager
-  gentime: Gentime.Settings.Data
+  runtime: Settings.Runtime.Manager
+  gentime: Settings.Gentime.Data
 }
 
 /**
@@ -53,7 +54,7 @@ export const createModule = (params: {
   /**
    * Resolved generator settings (whatever user supplied merged with defaults).
    */
-  gentimeSettings: Gentime.Settings.Manager
+  gentimeSettings: Settings.Gentime.Manager
   /**
    * Should the module be generated using ESM instead of CJS?
    */
@@ -69,7 +70,7 @@ export const createModule = (params: {
     dmmf.datamodel.models
       .map((model) => {
         return dedent`
-        export const ${model.name} = models['${model.name}']
+        export const ${model.name} = nexusTypeDefConfigurations['${model.name}']
       `
       })
       .join('\n') || `// N/A -- You have not defined any models in your Prisma Schema.`
@@ -78,7 +79,7 @@ export const createModule = (params: {
     dmmf.datamodel.enums
       .map((enum_) => {
         return dedent`
-          export const ${enum_.name} = models['${enum_.name}']
+          export const ${enum_.name} = nexusTypeDefConfigurations['${enum_.name}']
         `
       })
       .join('\n') || `// N/A -- You have not defined any enums in your Prisma Schema.`
@@ -91,7 +92,7 @@ export const createModule = (params: {
 
         // Static API Exports
 
-        export const $settings = Runtime.changeSettings
+        export const $settings = RuntimeSettings.changeSettings
 
         // Reflected Model Exports
 
@@ -103,8 +104,8 @@ export const createModule = (params: {
       `
     : dedent`
         module.exports = {
-          $settings: Runtime.changeSettings,
-          ...models,
+          $settings: RuntimeSettings.changeSettings,
+          ...nexusTypeDefConfigurations,
         }
       `
 
@@ -117,13 +118,13 @@ export const createModule = (params: {
   const imports = esm
     ? dedent`
         import { getPrismaClientDmmf } from '${importSpecifierToNexusPrismaSourceDirectory}/helpers/prisma'
-        import * as ModelsGenerator from '${importSpecifierToNexusPrismaSourceDirectory}/generator/models/index'
-        import { Runtime } from '${importSpecifierToNexusPrismaSourceDirectory}/generator/runtime/index'
+        import { ModuleGenerators } from '${importSpecifierToNexusPrismaSourceDirectory}/generator/ModuleGenerators/index'
+        import * as RuntimeSettings from '${importSpecifierToNexusPrismaSourceDirectory}/generator/Settings/Runtime/index'
       `
     : dedent`
         const { getPrismaClientDmmf } = require('${importSpecifierToNexusPrismaSourceDirectory}/helpers/prisma')
-        const ModelsGenerator = require('${importSpecifierToNexusPrismaSourceDirectory}/generator/models/index')
-        const { Runtime } = require('${importSpecifierToNexusPrismaSourceDirectory}/generator/runtime/index')
+        const { ModuleGenerators } = require('${importSpecifierToNexusPrismaSourceDirectory}/generator/ModuleGenerators/index')
+        const RuntimeSettings = require('${importSpecifierToNexusPrismaSourceDirectory}/generator/Settings/Runtime/index')
       `
 
   return {
@@ -132,20 +133,21 @@ export const createModule = (params: {
     content: dedent`
       ${imports}
 
-      const gentimeSettings = ${JSON.stringify(gentimeSettings.data, null, 2)}
+      const gentimeSettingsData = ${JSON.stringify(gentimeSettings.data, null, 2)}
+      const runtimeSettingsManager = RuntimeSettings.settings
 
       const dmmf = getPrismaClientDmmf({
         // JSON stringify the values to ensure proper escaping
         // Details: https://github.com/prisma/nexus-prisma/issues/143
         // TODO test that fails without this code
         require: () => require(${JSON.stringify(gentimeSettings.data.prismaClientImportId)}),
-        importId: gentimeSettings.prismaClientImportId,
+        importId: gentimeSettingsData.prismaClientImportId,
         importIdResolved: require.resolve(${JSON.stringify(gentimeSettings.data.prismaClientImportId)})
       })
 
-      const models = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {
-        runtime: Runtime.settings,
-        gentime: gentimeSettings,
+      const nexusTypeDefConfigurations = ModuleGenerators.JS.createNexusTypeDefConfigurations(dmmf, {
+        gentime: gentimeSettingsData,
+        runtime: runtimeSettingsManager,
       })
 
       ${exports}

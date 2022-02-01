@@ -1,18 +1,19 @@
-import * as PrismaSDK from '@prisma/sdk'
 import execa from 'execa'
 import * as fs from 'fs-jetpack'
 import { DocumentNode, execute, ExecutionResult, printSchema } from 'graphql'
 import { core } from 'nexus'
 import { AllNexusTypeDefs } from 'nexus/dist/core'
-import * as Path from 'path'
-import { generateRuntime } from '../../src/generator/generate'
-import { Gentime } from '../../src/generator/gentime'
-import * as ModelsGenerator from '../../src/generator/models'
-import { Runtime } from '../../src/generator/runtime'
-import { ModuleSpec } from '../../src/generator/types'
-import { DMMF } from '@prisma/generator-helper'
-import slug from 'slug'
 import objectHash from 'object-hash'
+import * as Path from 'path'
+import slug from 'slug'
+
+import { DMMF } from '@prisma/generator-helper'
+import * as PrismaSDK from '@prisma/sdk'
+
+import { generateRuntime } from '../../src/generator/generate'
+import { Module } from '../../src/generator/helpers/types'
+import { ModuleGenerators } from '../../src/generator/ModuleGenerators'
+import { Settings } from '../../src/generator/Settings'
 import { createConsoleLogCapture, createPrismaSchema, prepareGraphQLSDLForSnapshot } from './helpers'
 
 /**
@@ -40,8 +41,8 @@ export type IntegrationTestSpec = {
   /**
    * Get access to the gentime settings like you would in the gentime config file.
    */
-  nexusPrismaGentimeConfig?(settings: Gentime.Settings.Manager): void
-  nexusPrismaRuntimeConfig?(settings: Runtime.Settings.Manager): void
+  nexusPrismaGentimeConfig?(settings: Settings.Gentime.Manager): void
+  nexusPrismaRuntimeConfig?(settings: Settings.Runtime.Manager): void
   /**
    * Access the Prisma Client instance and run some setup side-effects.
    *
@@ -89,12 +90,12 @@ export const testGeneratedModules = (params: {
   /**
    * The gentime settings to use.
    */
-  settings?: Gentime.Settings.Input
+  settings?: Settings.Gentime.Input
 }) => {
   it(params.description, async () => {
-    Gentime.settings.reset()
+    Settings.Gentime.settings.reset()
     if (params.settings) {
-      Gentime.settings.change(params.settings)
+      Settings.Gentime.settings.change(params.settings)
     }
     const { indexdts } = await generateModules(params.databaseSchema)
     expect(indexdts).toMatchSnapshot('index.d.ts')
@@ -146,10 +147,10 @@ export const testGraphqlSchema = (
       }),
     })
 
-    const runtimeSettings = Runtime.Settings.create()
-    const gentimeSettings = Gentime.Settings.create()
+    const runtimeSettings = Settings.Runtime.create()
+    const gentimeSettings = Settings.Gentime.create()
 
-    const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {
+    const nexusPrisma = ModuleGenerators.JS.createNexusTypeDefConfigurations(dmmf, {
       gentime: gentimeSettings.data,
       runtime: runtimeSettings,
     }) as any
@@ -230,8 +231,8 @@ export const integrationTest = async (params: TestIntegrationParams) => {
     await params.setup(prismaClientInternal)
   }
 
-  const runtimeSettings = Runtime.Settings.create()
-  const gentimeSettings = Gentime.Settings.create()
+  const runtimeSettings = Settings.Runtime.create()
+  const gentimeSettings = Settings.Gentime.create()
 
   gentimeSettings.change({
     prismaClientImportId: prismaClientOutputDirAbsolute,
@@ -258,7 +259,7 @@ export const integrationTest = async (params: TestIntegrationParams) => {
   try {
     logCap.start()
 
-    const nexusPrisma = ModelsGenerator.JS.createNexusTypeDefConfigurations(dmmf, {
+    const nexusPrisma = ModuleGenerators.JS.createNexusTypeDefConfigurations(dmmf, {
       runtime: runtimeSettings,
       gentime: gentimeSettings.data,
     }) as any
@@ -316,10 +317,10 @@ export async function generateModules(
     datamodel: prismaSchemaContents,
   })
 
-  const [indexjs_esm, indexjs_cjs, indexdts] = generateRuntime(dmmf, Gentime.settings) as [
-    ModuleSpec,
-    ModuleSpec,
-    ModuleSpec
+  const [indexjs_esm, indexjs_cjs, indexdts] = generateRuntime(dmmf, Settings.Gentime.settings) as [
+    Module,
+    Module,
+    Module
   ]
 
   return {

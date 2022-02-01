@@ -1,14 +1,16 @@
-import { DMMF } from '@prisma/client/runtime'
 import dedent from 'dindist'
+
+import { DMMF } from '@prisma/client/runtime'
+
 import { PrismaDocumentation } from '../../lib/prisma-documentation'
-import { Gentime } from '../gentime'
+import type { Settings } from '../Settings'
 
 type JSDoc = string
 
 type FieldModelParams = {
   field: DMMF.Field
   model: DMMF.Model
-  settings: Gentime.Settings.Manager
+  settings: Settings.Gentime.Manager
 }
 
 const jsdocIndent = '  '
@@ -18,10 +20,10 @@ const jsdocEmptyLine = `\n${jsdocIndent}*\n`
  * Enum
  */
 
-export function jsDocForEnum(params: {
+export const jsDocForEnum = (params: {
   enum: DMMF.DatamodelEnum
-  settings: Gentime.Settings.Manager
-}): JSDoc {
+  settings: Settings.Gentime.Manager
+}): JSDoc => {
   const sections = [
     enumIntro(params.enum),
     nodeDocumentation({
@@ -35,13 +37,13 @@ export function jsDocForEnum(params: {
   return jsdoc
 }
 
-function enumIntro(enum_: DMMF.DatamodelEnum): string {
+const enumIntro = (enum_: DMMF.DatamodelEnum): string => {
   return dedent`
     * Generated Nexus \`enumType\` configuration based on your Prisma schema's enum \`${enum_.name}\`.
   `
 }
 
-function enumExample(enum_: DMMF.DatamodelEnum): string {
+const enumExample = (enum_: DMMF.DatamodelEnum): string => {
   return dedent`
     * @example
     *
@@ -52,7 +54,7 @@ function enumExample(enum_: DMMF.DatamodelEnum): string {
   `
 }
 
-function enumMissingDocGuide(enum_: DMMF.DatamodelEnum): string {
+const enumMissingDocGuide = (enum_: DMMF.DatamodelEnum): string => {
   return dedent`
     ${missingDocsIntro({ kind: 'enum', enum: enum_ })}
     *
@@ -71,13 +73,13 @@ function enumMissingDocGuide(enum_: DMMF.DatamodelEnum): string {
  * Model
  */
 
-export function jsDocForModel(params: { model: DMMF.Model; settings: Gentime.Settings.Manager }): JSDoc {
+export const jsDocForModel = (params: { model: DMMF.Model; settings: Settings.Gentime.Manager }): JSDoc => {
   const sections = [modelIntro(params.model), nodeDocumentation(params), modelExample(params.model)]
   const jsdoc = jsDocBookends(joinSections(sections))
   return jsdoc
 }
 
-function modelIntro(model: DMMF.Model): string {
+const modelIntro = (model: DMMF.Model): string => {
   return dedent`
     * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`${model.name}\`.
   `
@@ -85,9 +87,9 @@ function modelIntro(model: DMMF.Model): string {
 
 const nodeDocumentation = (
   params:
-    | { settings: Gentime.Settings.Manager; model: DMMF.Model }
-    | { settings: Gentime.Settings.Manager; model: DMMF.Model; field: DMMF.Field }
-    | { settings: Gentime.Settings.Manager; enum: DMMF.DatamodelEnum }
+    | { settings: Settings.Gentime.Manager; model: DMMF.Model }
+    | { settings: Settings.Gentime.Manager; model: DMMF.Model; field: DMMF.Field }
+    | { settings: Settings.Gentime.Manager; enum: DMMF.DatamodelEnum }
 ): string | null => {
   const documentation =
     'field' in params
@@ -119,7 +121,7 @@ const nodeDocumentation = (
   return null
 }
 
-function modelMissingDocGuide(model: DMMF.Model): string {
+const modelMissingDocGuide = (model: DMMF.Model): string => {
   // TODO once https://stackoverflow.com/questions/61893953/how-to-escape-symbol-in-jsdoc-for-vscode
   // is resolved then we can write better examples below like: id String @id
   return dedent`
@@ -136,7 +138,7 @@ function modelMissingDocGuide(model: DMMF.Model): string {
   `
 }
 
-function modelExample(model: DMMF.Model): string {
+const modelExample = (model: DMMF.Model): string => {
   return dedent`
     * @example
     *
@@ -157,19 +159,19 @@ function modelExample(model: DMMF.Model): string {
  * Field
  */
 
-export function jsDocForField(params: FieldModelParams): JSDoc {
+export const jsDocForField = (params: FieldModelParams): JSDoc => {
   const sections = [fieldIntro(params), nodeDocumentation(params), fieldExample(params)]
   const jsdoc = jsDocBookends(joinSections(sections))
   return jsdoc
 }
 
-function fieldIntro({ model, field }: FieldModelParams): string {
+const fieldIntro = ({ model, field }: FieldModelParams): string => {
   return dedent`
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`${model.name}.${field.name}\`.
   `
 }
 
-function fieldMissingDocGuide({ model, field }: FieldModelParams): string {
+const fieldMissingDocGuide = ({ model, field }: FieldModelParams): string => {
   return dedent`
     ${missingDocsIntro({ kind: 'model', model })}
     * \`\`\`prisma
@@ -183,7 +185,7 @@ function fieldMissingDocGuide({ model, field }: FieldModelParams): string {
   `
 }
 
-function fieldExample({ model, field }: FieldModelParams): string {
+const fieldExample = ({ model, field }: FieldModelParams): string => {
   return dedent`
     * @example
     *
@@ -204,9 +206,9 @@ function fieldExample({ model, field }: FieldModelParams): string {
  * Helpers
  */
 
-function missingDocsIntro(
+const missingDocsIntro = (
   info: { kind: 'model'; model: DMMF.Model } | { kind: 'enum'; enum: DMMF.DatamodelEnum } | { kind: 'field' }
-): string {
+): string => {
   const thisItem =
     info.kind === 'enum'
       ? `enum ${info.enum.name}`

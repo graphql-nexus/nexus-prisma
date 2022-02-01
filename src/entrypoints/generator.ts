@@ -1,3 +1,1 @@
-import { Gentime } from '../generator/gentime'
-
-export const settings = Gentime.changeSettings
+export { changeSettings as settings } from '../generator/Settings/Gentime'

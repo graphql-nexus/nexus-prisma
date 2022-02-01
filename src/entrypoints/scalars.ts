@@ -1,9 +1,3 @@
-import { BigInt } from '../scalars/BigInt'
-import { Bytes } from '../scalars/Bytes'
-import { DateTime } from '../scalars/DateTime'
-import { Decimal } from '../scalars/Decimal'
-import { Json } from '../scalars/Json'
-
 /**
  * Predefined Nexus scalar type definitions to satisfy all custom scalars needed in GraphQL to map to the
  * native scalars in Prisma. The mapping is as follows:
@@ -75,14 +69,11 @@ import { Json } from '../scalars/Json'
  *          names in Prisma. Then, you are expected to define those custom scalar types in your GraphQL
  *          API. For convenience you can use these ones.
  */
-const NexusPrismaScalars = {
-  BigInt,
-  Bytes,
-  DateTime,
-  Decimal,
-  Json,
-}
 
-export default NexusPrismaScalars
+import { BigInt } from '../scalars/BigInt'
+import { Bytes } from '../scalars/Bytes'
+import { DateTime } from '../scalars/DateTime'
+import { Decimal } from '../scalars/Decimal'
+import { Json } from '../scalars/Json'
 
 export { BigInt, Bytes, DateTime, Decimal, Json }

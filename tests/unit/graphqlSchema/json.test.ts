@@ -1,6 +1,7 @@
 import dedent from 'dindist'
 import { objectType } from 'nexus'
-import NexusPrismaScalars from '../../../src/entrypoints/scalars'
+
+import * as NexusPrismaScalars from '../../../src/entrypoints/scalars'
 import { testGraphqlSchema } from '../../__helpers__/testers'
 
 testGraphqlSchema({

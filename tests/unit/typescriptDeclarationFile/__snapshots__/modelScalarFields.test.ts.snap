@@ -198,7 +198,7 @@ export const SomeModel: SomeModel
 //
 //
 
-import { Runtime } from '../generator/runtime'
+import type { Settings } from '../generator/Settings'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
@@ -227,7 +227,7 @@ import { Runtime } from '../generator/runtime'
  *
  * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
-export const $settings: typeof Runtime.changeSettings
+export const $settings: Settings.Runtime.Manager['change']
 "
 `;
 
@@ -429,7 +429,7 @@ export const SomeModel: SomeModel
 //
 //
 
-import { Runtime } from '../generator/runtime'
+import type { Settings } from '../generator/Settings'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
@@ -458,7 +458,7 @@ import { Runtime } from '../generator/runtime'
  *
  * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
-export const $settings: typeof Runtime.changeSettings
+export const $settings: Settings.Runtime.Manager['change']
 "
 `;
 
@@ -660,7 +660,7 @@ export const SomeModel: SomeModel
 //
 //
 
-import { Runtime } from '../generator/runtime'
+import type { Settings } from '../generator/Settings'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
@@ -689,7 +689,7 @@ import { Runtime } from '../generator/runtime'
  *
  * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
-export const $settings: typeof Runtime.changeSettings
+export const $settings: Settings.Runtime.Manager['change']
 "
 `;
 
@@ -891,7 +891,7 @@ export const SomeModel: SomeModel
 //
 //
 
-import { Runtime } from '../generator/runtime'
+import type { Settings } from '../generator/Settings'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
@@ -920,7 +920,7 @@ import { Runtime } from '../generator/runtime'
  *
  * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
-export const $settings: typeof Runtime.changeSettings
+export const $settings: Settings.Runtime.Manager['change']
 "
 `;
 
@@ -1122,7 +1122,7 @@ export const SomeModel: SomeModel
 //
 //
 
-import { Runtime } from '../generator/runtime'
+import type { Settings } from '../generator/Settings'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
@@ -1151,7 +1151,7 @@ import { Runtime } from '../generator/runtime'
  *
  * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
-export const $settings: typeof Runtime.changeSettings
+export const $settings: Settings.Runtime.Manager['change']
 "
 `;
 
@@ -1353,7 +1353,7 @@ export const SomeModel: SomeModel
 //
 //
 
-import { Runtime } from '../generator/runtime'
+import type { Settings } from '../generator/Settings'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
@@ -1382,7 +1382,7 @@ import { Runtime } from '../generator/runtime'
  *
  * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
-export const $settings: typeof Runtime.changeSettings
+export const $settings: Settings.Runtime.Manager['change']
 "
 `;
 
@@ -1532,7 +1532,7 @@ export const SomeModel: SomeModel
 //
 //
 
-import { Runtime } from '../generator/runtime'
+import type { Settings } from '../generator/Settings'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
@@ -1561,7 +1561,7 @@ import { Runtime } from '../generator/runtime'
  *
  * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
-export const $settings: typeof Runtime.changeSettings
+export const $settings: Settings.Runtime.Manager['change']
 "
 `;
 
@@ -1763,7 +1763,7 @@ export const SomeModel: SomeModel
 //
 //
 
-import { Runtime } from '../generator/runtime'
+import type { Settings } from '../generator/Settings'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
@@ -1792,7 +1792,7 @@ import { Runtime } from '../generator/runtime'
  *
  * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
-export const $settings: typeof Runtime.changeSettings
+export const $settings: Settings.Runtime.Manager['change']
 "
 `;
 
@@ -1942,7 +1942,7 @@ export const SomeModel: SomeModel
 //
 //
 
-import { Runtime } from '../generator/runtime'
+import type { Settings } from '../generator/Settings'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
@@ -1971,6 +1971,6 @@ import { Runtime } from '../generator/runtime'
  *
  * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
  */
-export const $settings: typeof Runtime.changeSettings
+export const $settings: Settings.Runtime.Manager['change']
 "
 `;

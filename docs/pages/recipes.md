@@ -41,7 +41,7 @@ Nexus Prisma generates default GraphQL resolvers for your model _relation fields
    })
    ```
 
-### Supply custom custom scalars to your GraphQL schema
+### Supply custom scalars to your GraphQL schema
 
 The following is a brief example how you could add your own custom GraphQL custom scalars to satisfy Nexus Prisma. Note that most of the time using the defaults exported by `nexus-prisma/scalars` will probably be good enough for you.
 

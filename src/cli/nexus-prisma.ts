@@ -6,24 +6,14 @@ import dindist from 'dindist'
 import expandTilde from 'expand-tilde'
 import * as Path from 'path'
 
-import {
-  GeneratorConfig,
-  generatorHandler,
-} from '@prisma/generator-helper'
+import { GeneratorConfig, generatorHandler } from '@prisma/generator-helper'
 
 import { generateRuntimeAndEmit } from '../generator'
 import { Settings } from '../generator/Settings'
-import {
-  loadUserGentimeSettings,
-  supportedSettingsModulePaths,
-} from '../generator/Settings/Gentime/loader'
+import { loadUserGentimeSettings, supportedSettingsModulePaths } from '../generator/Settings/Gentime/loader'
 import { d } from '../helpers/debugNexusPrisma'
 import { resolveGitHubActionsWindowsPathTilde } from '../helpers/utils'
-import {
-  renderCodeBlock,
-  renderList,
-  renderWarning,
-} from '../lib/diagnostic'
+import { renderCodeBlock, renderList, renderWarning } from '../lib/diagnostic'
 import { PrismaUtils } from '../lib/prisma-utils'
 
 process.env.DEBUG_COLORS = 'true'

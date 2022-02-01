@@ -1,11 +1,6 @@
 import execa from 'execa'
 import * as fs from 'fs-jetpack'
-import {
-  DocumentNode,
-  execute,
-  ExecutionResult,
-  printSchema,
-} from 'graphql'
+import { DocumentNode, execute, ExecutionResult, printSchema } from 'graphql'
 import { core } from 'nexus'
 import { AllNexusTypeDefs } from 'nexus/dist/core'
 import objectHash from 'object-hash'
@@ -19,11 +14,7 @@ import { generateRuntime } from '../../src/generator/generate'
 import { Module } from '../../src/generator/helpers/types'
 import { ModuleGenerators } from '../../src/generator/ModuleGenerators'
 import { Settings } from '../../src/generator/Settings'
-import {
-  createConsoleLogCapture,
-  createPrismaSchema,
-  prepareGraphQLSDLForSnapshot,
-} from './helpers'
+import { createConsoleLogCapture, createPrismaSchema, prepareGraphQLSDLForSnapshot } from './helpers'
 
 /**
  * Define Nexus type definitions based on the Nexus Prisma configurations

@@ -1,21 +1,12 @@
 import dedent from 'dindist'
 import { chain } from 'lodash'
 import * as Nexus from 'nexus'
-import {
-  NexusEnumTypeConfig,
-  NexusListDef,
-  NexusNonNullDef,
-  NexusNullDef,
-} from 'nexus/dist/core'
+import { NexusEnumTypeConfig, NexusListDef, NexusNonNullDef, NexusNullDef } from 'nexus/dist/core'
 import { inspect } from 'util'
 
 import type { DMMF } from '@prisma/client/runtime'
 
-import {
-  MaybePromise,
-  RecordUnknown,
-  Resolver,
-} from '../../helpers/utils'
+import { MaybePromise, RecordUnknown, Resolver } from '../../helpers/utils'
 import { Messenger } from '../../lib/messenger'
 import { PrismaDmmf } from '../../lib/prisma-dmmf'
 import { PrismaDocumentation } from '../../lib/prisma-documentation'

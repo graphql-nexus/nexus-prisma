@@ -4,18 +4,11 @@ import { LiteralUnion } from 'type-fest'
 
 import { DMMF } from '@prisma/generator-helper'
 
-import {
-  StandardGraphQLScalarType,
-  StandardGraphQLScalarTypes,
-} from '../../helpers/graphql'
+import { StandardGraphQLScalarType, StandardGraphQLScalarTypes } from '../../helpers/graphql'
 import { PrismaScalarType } from '../../helpers/prisma'
 import { allCasesHandled } from '../../helpers/utils'
 import { PrismaDmmf } from '../../lib/prisma-dmmf'
-import {
-  jsDocForEnum,
-  jsDocForField,
-  jsDocForModel,
-} from '../helpers/JSDocTemplates'
+import { jsDocForEnum, jsDocForField, jsDocForModel } from '../helpers/JSDocTemplates'
 import { Module } from '../helpers/types'
 import type { Settings } from '../Settings'
 

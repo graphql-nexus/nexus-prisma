@@ -1,16 +1,18 @@
-import { DMMF } from '@prisma/generator-helper'
 import dedent from 'dindist'
 import * as OS from 'os'
 import { LiteralUnion } from 'type-fest'
+
+import { DMMF } from '@prisma/generator-helper'
+
 import { StandardGraphQLScalarType, StandardGraphQLScalarTypes } from '../../helpers/graphql'
 import { PrismaScalarType } from '../../helpers/prisma'
 import { allCasesHandled } from '../../helpers/utils'
 import { PrismaDmmf } from '../../lib/prisma-dmmf'
-import { Gentime } from '../gentime'
 import { jsDocForEnum, jsDocForField, jsDocForModel } from '../helpers/JSDocTemplates'
-import { ModuleSpec } from '../types'
+import { Module } from '../helpers/types'
+import type { Settings } from '../Settings'
 
-export const createModuleSpec = (dmmf: DMMF.Document, settings: Gentime.Settings.Manager): ModuleSpec => {
+export const createModule = (dmmf: DMMF.Document, settings: Settings.Gentime.Manager): Module => {
   return {
     fileName: 'index.d.ts',
     content: dedent`
@@ -27,10 +29,10 @@ const NO_MODELS_DEFINED_COMMENT = dedent`
   // N/A –– You have not defined any models in your Prisma schema file.
 `
 
-export function renderTypeScriptDeclarationForDocumentModels(
+export const renderTypeScriptDeclarationForDocumentModels = (
   dmmf: DMMF.Document,
-  settings: Gentime.Settings.Manager
-): string {
+  settings: Settings.Gentime.Manager
+): string => {
   const models = dmmf.datamodel.models
   const enums = dmmf.datamodel.enums
 
@@ -124,10 +126,10 @@ export function renderTypeScriptDeclarationForDocumentModels(
       //
       //
 
-      import { Runtime } from ${
+      import type { Settings } from ${
         settings.data.output.directory === 'default'
-          ? `'../generator/runtime'`
-          : `'nexus-prisma/dist-cjs/generator/runtime'`
+          ? `'../generator/Settings'`
+          : `'nexus-prisma/dist-cjs/generator/Settings'`
       }
 
       /**
@@ -157,15 +159,15 @@ export function renderTypeScriptDeclarationForDocumentModels(
        *
        * @remarks This is _different_ than Nexus Prisma's [_gentime_ settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
        */
-      export const $settings: typeof Runtime.changeSettings
+      export const $settings: Settings.Runtime.Manager['change']
     ` + OS.EOL
   )
 }
 
-function renderTypeScriptDeclarationForEnum(
+const renderTypeScriptDeclarationForEnum = (
   enum_: DMMF.DatamodelEnum,
-  settings: Gentime.Settings.Manager
-): string {
+  settings: Settings.Gentime.Manager
+): string => {
   const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForEnum({ enum: enum_, settings }) + '\n' : ''
   const description = renderPrismaNodeDocumentationToDescription({ settings, node: enum_ })
 
@@ -178,7 +180,10 @@ function renderTypeScriptDeclarationForEnum(
   `
 }
 
-function renderTypeScriptDeclarationForModel(model: DMMF.Model, settings: Gentime.Settings.Manager): string {
+const renderTypeScriptDeclarationForModel = (
+  model: DMMF.Model,
+  settings: Settings.Gentime.Manager
+): string => {
   const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForModel({ model, settings }) + '\n' : ''
   const description = renderPrismaNodeDocumentationToDescription({ settings, node: model })
 
@@ -192,7 +197,7 @@ function renderTypeScriptDeclarationForModel(model: DMMF.Model, settings: Gentim
 }
 
 const renderPrismaNodeDocumentationToDescription = (params: {
-  settings: Gentime.Settings.Manager
+  settings: Settings.Gentime.Manager
   node: PrismaDmmf.DocumentableNode
 }): string => {
   return `${
@@ -200,24 +205,24 @@ const renderPrismaNodeDocumentationToDescription = (params: {
   }`
 }
 
-function renderTypeScriptDeclarationForModelFields(
+const renderTypeScriptDeclarationForModelFields = (
   model: DMMF.Model,
-  settings: Gentime.Settings.Manager
-): string {
+  settings: Settings.Gentime.Manager
+): string => {
   return model.fields
     .map((field) => renderTypeScriptDeclarationForField({ field, model, settings }))
     .join('\n')
 }
 
-function renderTypeScriptDeclarationForField({
+const renderTypeScriptDeclarationForField = ({
   field,
   model,
   settings,
 }: {
   field: DMMF.Field
   model: DMMF.Model
-  settings: Gentime.Settings.Manager
-}): string {
+  settings: Settings.Gentime.Manager
+}): string => {
   const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForField({ field, model, settings }) + '\n' : ''
   const description = renderPrismaNodeDocumentationToDescription({ settings, node: field })
   return dedent`
@@ -245,7 +250,7 @@ function renderTypeScriptDeclarationForField({
   `
 }
 
-function renderNexusType(field: DMMF.Field, settings: Gentime.Settings.Manager): string {
+const renderNexusType = (field: DMMF.Field, settings: Settings.Gentime.Manager): string => {
   const graphqlType = fieldTypeToGraphQLType(field, settings.data)
   /**
    * Relation fields can only work if the related field has been added to the API.
@@ -308,10 +313,10 @@ function renderNexusType(field: DMMF.Field, settings: Gentime.Settings.Manager):
  * @remarks The `settings` param type uses settings data instead of Setset instance because this helper
  *          is used at runtime too where we don't have a Setset instance for gentime.
  */
-export function fieldTypeToGraphQLType(
+export const fieldTypeToGraphQLType = (
   field: DMMF.Field,
-  settings: Gentime.Settings.Data
-): LiteralUnion<StandardGraphQLScalarType, string> {
+  settings: Settings.Gentime.Data
+): LiteralUnion<StandardGraphQLScalarType, string> => {
   // TODO remove once PC is fixed https://prisma-company.slack.com/archives/C016KUHB1R6/p1638816683155000?thread_ts=1638563060.145800&cid=C016KUHB1R6
   if (typeof field.type !== 'string') {
     throw new TypeError(`field.type is supposed to always be a string.`)

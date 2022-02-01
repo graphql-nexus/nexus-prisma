@@ -1,8 +1,9 @@
 import * as fs from 'fs'
 import kleur from 'kleur'
 import type * as TSNode from 'ts-node'
-import { d } from '../../helpers/debugNexusPrisma'
-import { renderError } from '../../lib/diagnostic'
+
+import { d } from '../../../helpers/debugNexusPrisma'
+import { renderError } from '../../../lib/diagnostic'
 
 export const supportedSettingsModulePaths = [
   'nexus-prisma.ts',

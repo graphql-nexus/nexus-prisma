@@ -6,7 +6,6 @@ import dindist from 'dindist'
 import expandTilde from 'expand-tilde'
 import * as Path from 'path'
 
-// @ts-expect-error Private api
 import { GeneratorConfig, generatorHandler } from '@prisma/generator-helper'
 
 import { generateRuntimeAndEmit } from '../generator'

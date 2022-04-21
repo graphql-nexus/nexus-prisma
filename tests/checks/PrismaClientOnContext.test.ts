@@ -98,6 +98,7 @@ describe('instanceOf_duckType_fallback strategy:', () => {
       if (result.logs[0]) {
         result.logs[0] = result.logs[0]!.replace(/(.*imported from).*(is not the.*)/, '$1 <dynamic_path> $2')
       }
+      console.log(JSON.stringify(result.logs))
       expect(result.logs).toMatchSnapshot(`logs`)
       expect(result.graphqlSchemaSDL).toMatchSnapshot(`graphqlSchemaSDL`)
       expect(result.graphqlOperationExecutionResult).toMatchSnapshot(`graphqlOperationExecutionResult`)

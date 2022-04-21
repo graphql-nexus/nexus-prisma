@@ -16,10 +16,10 @@ it('when project does not have ts-node installed nexus-prisma generator still ge
       build: 'prisma generate',
     },
     dependencies: {
-      '@prisma/client': '2.30',
+      '@prisma/client': '3.12',
       graphql: '15.5.1',
       nexus: '1.1.0',
-      prisma: '2.30',
+      prisma: '3.12',
     },
   })
 

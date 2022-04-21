@@ -83,11 +83,11 @@ beforeEach(() => {
       dotenv: '^9.0.0',
       'apollo-server': '^2.24.0',
       'cross-env': '^7.0.1',
-      '@prisma/client': '^2.18.0',
+      '@prisma/client': '^3.12.0',
       '@types/node': '^14.14.32',
       graphql: '^15.5.0',
-      nexus: '^1.0.0',
-      prisma: '^2.18.0',
+      nexus: '1.1.0',
+      prisma: '^3.12.0',
       'ts-node': '^9.1.1',
       'ts-node-dev': '^1.1.6',
       typescript: '^4.2.3',
@@ -151,7 +151,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
         async function main() {
           const prisma = new PrismaClient()
 
-          await prisma.$executeRaw('TRUNCATE "Foo", "Bar", "Qux"')
+          await prisma.$executeRaw\`TRUNCATE "Foo", "Bar", "Qux"\`
           await prisma.foo.create({
             data: {
               id: 'foo1',

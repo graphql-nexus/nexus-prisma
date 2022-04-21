@@ -6,12 +6,12 @@ const base = testIntegrationPartial({
   database: `
     model User {
       id        String   @id
-			profile   Profile? @relation(fields: [profileId], references: [id])
-			profileId String
+			profile   Profile @relation(fields: [profileId], references: [id])
+			profileId String   @unique
     }
 		model Profile {
       id    String  @id
-			user  User    @relation
+			user  User?    @relation
 		}
   `,
   api({ User, Profile }) {
@@ -45,7 +45,6 @@ const base = testIntegrationPartial({
     await prisma.user.create({
       data: {
         id: '1',
-        profileId: '100',
         profile: {
           create: {
             id: '100',

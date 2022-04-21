@@ -108,7 +108,7 @@
     "nodemon": "^2.0.15",
     "object-hash": "^2.2.0",
     "prettier": "2.5.0",
-    "prisma": "3.6.0",
+    "prisma": "3.12.0",
     "read-pkg-up": "7",
     "slug": "^5.2.0",
     "strip-ansi": "6",

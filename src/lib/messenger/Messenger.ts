@@ -42,3 +42,5 @@ export const renderCodeInline = (code: string): string => {
 export const renderCodeBlock = (code: string): string => {
   return `\`\`\`\n${kleur.cyan(code)}\n\`\`\``
 }
+
+export const clearKleurFormat = new RegExp(`\\x1b\\[[0-9]+m`, 'g')

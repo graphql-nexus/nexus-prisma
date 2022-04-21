@@ -248,12 +248,12 @@ type Profile {
 
 exports[`instanceOf_duckType_fallback strategy: warning emitted when instanceof check fails but duck typing succeeds: logs 1`] = `
 Array [
-  "[33m[1mWARNING[22m:[39m Prisma Client on GraphQL context failed being checked using instanceof
+  "WARNING: Prisma Client on GraphQL context failed being checked using instanceof
 
-[1mREASON[22m: The Prisma Client class reference imported from <dynamic_path> is not the same class used by you to create your Prisma Client instance.
+REASON: The Prisma Client class reference imported from <dynamic_path> is not the same class used by you to create your Prisma Client instance.
 
-[1mCONSEQUENCE[22m: Maybe none since duck typing fallback indicates that the Prisma Client on the GraphQL context is actually valid. However relying on duck typing is hacky.
+CONSEQUENCE: Maybe none since duck typing fallback indicates that the Prisma Client on the GraphQL context is actually valid. However relying on duck typing is hacky.
 
-[1mCODE[22m: PrismaClientOnContextInstanceOfStrategyFailed",
+CODE: PrismaClientOnContextInstanceOfStrategyFailed",
 ]
 `;

@@ -45,7 +45,6 @@ const base = testIntegrationPartial({
     await prisma.user.create({
       data: {
         id: '1',
-        profileId: '100',
         profile: {
           create: {
             id: '100',

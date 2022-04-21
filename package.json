@@ -104,7 +104,7 @@
     "jest-watch-typeahead": "1.0.0",
     "konn": "^0.7.0",
     "markdown-toc": "^1.2.0",
-    "nexus": "^1.1.0",
+    "nexus": "1.1.0",
     "nodemon": "^2.0.15",
     "object-hash": "^2.2.0",
     "prettier": "2.5.0",

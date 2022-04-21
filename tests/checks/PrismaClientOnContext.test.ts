@@ -6,12 +6,12 @@ const base = testIntegrationPartial({
   database: `
     model User {
       id        String   @id
-			profile   Profile? @relation(fields: [profileId], references: [id])
+			profile   Profile @relation(fields: [profileId], references: [id])
 			profileId String
     }
 		model Profile {
       id    String  @id
-			user  User    @relation
+			user  User?    @relation
 		}
   `,
   api({ User, Profile }) {

@@ -16,15 +16,15 @@
   "exports": {
     ".": {
       "require": "./dist-cjs/entrypoints/main.js",
-      "import": "./dist-esm/entrypoints/main.mjs"
+      "import": "./dist-esm/entrypoints/main.js"
     },
     "./scalars": {
       "require": "./dist-cjs/entrypoints/scalars.js",
-      "import": "./dist-esm/entrypoints/scalars.mjs"
+      "import": "./dist-esm/entrypoints/scalars.js"
     },
     "./generator": {
       "require": "./dist-cjs/entrypoints/generator.js",
-      "import": "./dist-esm/entrypoints/generator.mjs"
+      "import": "./dist-esm/entrypoints/generator.js"
     },
     "./*": {
       "default": "./*.js"
@@ -59,7 +59,7 @@
     "dev": "yarn -s clean && tsc --build --watch tsconfig.cjs.json tsconfig.esm.json",
     "dev:ts": "yarn dev",
     "dev:yalc": "nodemon --delay 1.5 --exec 'yalc push --no-scripts' --watch 'dist-*/**/*'",
-    "build": "yarn clean && tsc --build tsconfig.cjs.json tsconfig.esm.json && tsc-esm -p tsconfig.esm.json",
+    "build": "yarn clean && tsc --build tsconfig.cjs.json tsconfig.esm.json",
     "test": "cross-env NO_COLOR=true DEBUG='konn*,e2e' jest",
     "test:e2e": "cross-env NO_COLOR=true DEBUG=e2e jest --selectProjects e2e",
     "test:unit": "cross-env NO_COLOR=true jest --selectProjects unit",

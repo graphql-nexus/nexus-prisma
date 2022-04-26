@@ -86,7 +86,7 @@ beforeEach(() => {
       '@prisma/client': '^2.18.0',
       '@types/node': '^14.14.32',
       graphql: '^15.5.0',
-      nexus: '^1.0.0',
+      nexus: '1.1.0',
       prisma: '^2.18.0',
       'ts-node': '^9.1.1',
       'ts-node-dev': '^1.1.6',

@@ -22,7 +22,7 @@ type Query {
 
 type User {
   id: ID!
-  profile: Profile
+  profile: Profile!
 }
 
 type Profile {
@@ -55,7 +55,7 @@ type Query {
 
 type User {
   id: ID!
-  profile: Profile
+  profile: Profile!
 }
 
 type Profile {
@@ -68,13 +68,7 @@ exports[`duckType strategy: passes if client looks like a valid prisma client in
 
 exports[`instanceOf strategy: If prisma client import fails then the check cannot perform its instanceof strategy and thus throws an error: graphqlOperationExecutionResult 1`] = `
 Object {
-  "data": Object {
-    "users": Array [
-      Object {
-        "profile": null,
-      },
-    ],
-  },
+  "data": null,
   "errors": Array [
     [GraphQLError: Could not perform "PrismaClientOnContext" check because there was an error while trying to import Prisma Client:
 
@@ -91,7 +85,7 @@ type Query {
 
 type User {
   id: ID!
-  profile: Profile
+  profile: Profile!
 }
 
 type Profile {
@@ -104,13 +98,7 @@ exports[`instanceOf strategy: If prisma client import fails then the check canno
 
 exports[`instanceOf strategy: If prisma client import succeeds but what is imported is not a valid prisma client then the check cannot perform its instanceof strategy and thus throws an error: graphqlOperationExecutionResult 1`] = `
 Object {
-  "data": Object {
-    "users": Array [
-      Object {
-        "profile": null,
-      },
-    ],
-  },
+  "data": null,
   "errors": Array [
     [GraphQLError: Could not perform "PrismaClientOnContext" check because could not get a reference to a valid Prisma Client class. Found:
 
@@ -127,7 +115,7 @@ type Query {
 
 type User {
   id: ID!
-  profile: Profile
+  profile: Profile!
 }
 
 type Profile {
@@ -160,7 +148,7 @@ type Query {
 
 type User {
   id: ID!
-  profile: Profile
+  profile: Profile!
 }
 
 type Profile {
@@ -173,13 +161,7 @@ exports[`instanceOf strategy: passes if client is a real instance of prisma clie
 
 exports[`instanceOf strategy: throws an error if client is NOT a real instance of prisma client: graphqlOperationExecutionResult 1`] = `
 Object {
-  "data": Object {
-    "users": Array [
-      Object {
-        "profile": null,
-      },
-    ],
-  },
+  "data": null,
   "errors": Array [
     [GraphQLError: Check "PrismaClientOnContext" failed using "instanceOf" strategy. The GraphQL context.prisma value is not an instance of the Prisma Client.],
   ],
@@ -194,7 +176,7 @@ type Query {
 
 type User {
   id: ID!
-  profile: Profile
+  profile: Profile!
 }
 
 type Profile {
@@ -207,13 +189,7 @@ exports[`instanceOf strategy: throws an error if client is NOT a real instance o
 
 exports[`instanceOf_duckType_fallback strategy: error thrown when both instanceof check and duck typing fails: graphqlOperationExecutionResult 1`] = `
 Object {
-  "data": Object {
-    "users": Array [
-      Object {
-        "profile": null,
-      },
-    ],
-  },
+  "data": null,
   "errors": Array [
     [GraphQLError: Check "PrismaClientOnContext" failed using "instanceOf_duckType_fallback" strategy. The GraphQL context.prisma value is not an instance of the Prisma Client.],
   ],
@@ -228,7 +204,7 @@ type Query {
 
 type User {
   id: ID!
-  profile: Profile
+  profile: Profile!
 }
 
 type Profile {
@@ -261,7 +237,7 @@ type Query {
 
 type User {
   id: ID!
-  profile: Profile
+  profile: Profile!
 }
 
 type Profile {

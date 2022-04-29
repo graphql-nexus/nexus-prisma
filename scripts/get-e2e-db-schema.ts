@@ -33,7 +33,11 @@ const args = arg({
   '--github-env': String,
 })
 
-const schemaName = parseComboCase(args['--node-version'] ?? '', args['--os'] ?? '', args['--prisma-client-version'] ?? '')
+const schemaName = parseComboCase(
+  args['--node-version'] ?? '',
+  args['--os'] ?? '',
+  args['--prisma-client-version'] ?? ''
+)
 
 if (args['--github-env'] && args['--db-url']) {
   fs.append(args['--github-env'], `E2E_DB_SCHEMA=${args['--db-url']}?schema=${schemaName}`)
@@ -50,7 +54,7 @@ function parseComboCase(nodeVersionInput: string, osInput: string, prismaClientI
   const os = osParser.parse(osInput)
   // eslint-disable-next-line
   const comboCase = [nodeVersion, os].join(' + ') as ComboCase
-  const schema =  connectionStringMapping[comboCase]
+  const schema = connectionStringMapping[comboCase]
   if (!prismaClientInput) {
     return schema
   } else {

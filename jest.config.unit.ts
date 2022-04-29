@@ -9,7 +9,7 @@ const config: InitialOptionsTsJest = {
     '**/integration/**/*.test.ts',
     '**/checks/**/*.test.ts',
   ],
-  setupFiles: ['dotenv/config']
+  setupFiles: ['dotenv/config'],
 }
 
 export default config

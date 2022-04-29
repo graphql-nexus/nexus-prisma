@@ -26,13 +26,17 @@ const connectionStringMapping: Record<ComboCase, string> = {
 const args = arg({
   '--os': String,
   '--node-version': String,
+  '--db-url': String,
   '--github-env': String,
 })
 
 const comboCase = parseComboCase(args['--node-version'] ?? '', args['--os'] ?? '')
 
-if (args['--github-env']) {
-  fs.append(args['--github-env'], `E2E_DB_SCHEMA=${connectionStringMapping[comboCase]}`)
+if (args['--github-env'] && args['--db-url']) {
+  fs.append(
+    args['--github-env'],
+    `E2E_DB_SCHEMA=${args['--db-url']}?schema=${connectionStringMapping[comboCase]}`
+  )
 } else {
   process.stdout.write(connectionStringMapping[comboCase])
 }

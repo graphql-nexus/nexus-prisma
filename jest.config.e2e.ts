@@ -4,6 +4,7 @@ const config: InitialOptionsTsJest = {
   preset: 'ts-jest',
   displayName: 'e2e',
   testMatch: ['**/e2e/**/*.test.ts'],
+  setupFiles: ['dotenv/config'],
 }
 
 export default config

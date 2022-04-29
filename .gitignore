@@ -110,3 +110,5 @@ generator.d.ts
 generator.js
 
 tests/__cache__
+
+.idea

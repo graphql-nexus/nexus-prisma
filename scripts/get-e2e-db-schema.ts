@@ -14,6 +14,8 @@ const nodeVersionParser = z.union([z.literal('14.x'), z.literal('16.x')])
 
 const osParser = z.union([z.literal('macos-latest'), z.literal('ubuntu-latest'), z.literal('windows-latest')])
 
+const prismaClientParser = z.string().regex(/\d+.\d+/)
+
 const connectionStringMapping: Record<ComboCase, string> = {
   '14.x + macos-latest': 'node_14_macos_latest',
   '14.x + windows-latest': 'node_14_windows_latest',
@@ -26,24 +28,33 @@ const connectionStringMapping: Record<ComboCase, string> = {
 const args = arg({
   '--os': String,
   '--node-version': String,
+  '--prisma-client-version': String,
+  '--db-url': String,
   '--github-env': String,
 })
 
-const comboCase = parseComboCase(args['--node-version'] ?? '', args['--os'] ?? '')
+const schemaName = parseComboCase(args['--node-version'] ?? '', args['--os'] ?? '', args['--prisma-client-version'] ?? '')
 
-if (args['--github-env']) {
-  fs.append(args['--github-env'], `E2E_DB_SCHEMA=${connectionStringMapping[comboCase]}`)
+if (args['--github-env'] && args['--db-url']) {
+  fs.append(args['--github-env'], `E2E_DB_SCHEMA=${args['--db-url']}?schema=${schemaName}`)
 } else {
-  process.stdout.write(connectionStringMapping[comboCase])
+  process.stdout.write(schemaName)
 }
 
 //
 // Helpers
 //
 
-function parseComboCase(nodeVersionInput: string, osInput: string): ComboCase {
+function parseComboCase(nodeVersionInput: string, osInput: string, prismaClientInput: string): string {
   const nodeVersion = nodeVersionParser.parse(nodeVersionInput)
   const os = osParser.parse(osInput)
   // eslint-disable-next-line
-  return [nodeVersion, os].join(' + ') as any
+  const comboCase = [nodeVersion, os].join(' + ') as ComboCase
+  const schema =  connectionStringMapping[comboCase]
+  if (!prismaClientInput) {
+    return schema
+  } else {
+    const prismaClient = prismaClientParser.parse(prismaClientInput)
+    return schema + prismaClient
+  }
 }

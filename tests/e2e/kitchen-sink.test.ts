@@ -293,6 +293,8 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
     },
   ]
 
+  console.log(process.env.E2E_DB_SCHEMA)
+
   files.forEach((fileSpec) => ctx.fs.write(fileSpec.filePath, fileSpec.content))
 
   // todo api server & database & seed that allows for testing that prisma runtime usage works

@@ -91,6 +91,7 @@
     "@typescript-eslint/parser": "^5.5.0",
     "arg": "^5.0.1",
     "cross-env": "^7.0.3",
+    "dotenv": "^16.0.0",
     "dripip": "0.10.0",
     "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.3.0",

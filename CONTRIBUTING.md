@@ -18,6 +18,8 @@ Sometimes links are placed into the README or in logs that we want to make as st
 - We disable `kleur` colors so snapshots do not have them. It would be nice to put the DX of colors into tests but needs some work. Node 12/14 results in different codes, [thus different snapshots](https://github.com/prisma/nexus-prisma/pull/3#issuecomment-782432471). See test-mode feature request here: https://github.com/lukeed/kleur/issues/47#issue-812419257.
 
 - E2e tests run against a [Heroku Postgres database](https://data.heroku.com/datastores/6e28e827-3dec-4181-b7a1-b219c5016437). Each run of the test e2e test will reset all data in that database. We do not use `docker-compose` because [it is not available on the macOS docker images](https://github.com/actions/virtual-environments/issues/17#issuecomment-614726536) and it is not possible to run Postgres in Windows GitHub actions machines either. Our CI runs against all OS's.
+- To run E2e tests in your local you will need to create a `.env` file and put your local postgresql DB connection URL `E2E_DB_SCHEMA=postgresql://prisma:prisma@localhost:5432/nexus-prisma`.
+- To run E2e tests in your GitHub fork repo actions workflow you will need to add a GitHub actions secrets has an online postgresql url connection with the name `E2E_DB_URL`.
 
 ## Link-Like Development
 

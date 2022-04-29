@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0450ad94-3015-4964-8183-dd6ab334c0e1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/pr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pr.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/trunk.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/trunk.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/get-e2e-db-schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/get-e2e-db-schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/nexus-prisma.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +122,7 @@
       <workItem from="1650981853876" duration="1983000" />
       <workItem from="1651045634245" duration="4417000" />
       <workItem from="1651072944366" duration="3221000" />
-      <workItem from="1651198017046" duration="2558000" />
+      <workItem from="1651198017046" duration="2870000" />
     </task>
     <servers />
   </component>

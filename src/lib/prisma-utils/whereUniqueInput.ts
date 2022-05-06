@@ -54,6 +54,9 @@ function getUniqueIdentifierFields(model: DMMF.Model): FieldName[] {
 
   // Try finding 2
   if (model.primaryKey && model.primaryKey.fields.length > 0) {
+    if (model.primaryKey.name) {
+      return [model.primaryKey.name];
+    }
     return model.primaryKey.fields
   }
 

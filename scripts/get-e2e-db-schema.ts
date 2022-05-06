@@ -14,7 +14,7 @@ const nodeVersionParser = z.union([z.literal('14.x'), z.literal('16.x')])
 
 const osParser = z.union([z.literal('macos-latest'), z.literal('ubuntu-latest'), z.literal('windows-latest')])
 
-const prismaClientParser = z.string().regex(/\d+.\d+/)
+const prismaClientParser = z.string().regex(/3.\d+/)
 
 const connectionStringMapping: Record<ComboCase, string> = {
   '14.x + macos-latest': 'node_14_macos_latest',
@@ -51,13 +51,12 @@ if (args['--github-env']) {
 function parseComboCase(nodeVersionInput: string, osInput: string, prismaClientInput: string): string {
   const nodeVersion = nodeVersionParser.parse(nodeVersionInput)
   const os = osParser.parse(osInput)
-  // eslint-disable-next-line
-  const comboCase = [nodeVersion, os].join(' + ') as ComboCase
+  const comboCase: ComboCase = `${nodeVersion} + ${os}`
   const schema = connectionStringMapping[comboCase]
   if (!prismaClientInput) {
     return schema
   } else {
     const prismaClientVersion = prismaClientParser.parse(prismaClientInput)
-    return [schema,prismaClient].join('_') 
+    return [schema, prismaClientVersion].join('_')
   }
 }

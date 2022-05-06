@@ -58,6 +58,6 @@ function parseComboCase(nodeVersionInput: string, osInput: string, prismaClientI
     return schema
   } else {
     const prismaClientVersion = prismaClientParser.parse(prismaClientInput)
-    return schema + prismaClient
+    return [schema,prismaClient].join('_') 
   }
 }

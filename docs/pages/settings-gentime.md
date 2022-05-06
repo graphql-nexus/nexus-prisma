@@ -64,7 +64,7 @@ The above is equivalent to the following:
 
 import { settings } from 'nexus-prisma/generator'
 
-settings.change({
+settings({
   output: '../generated/nexus-prisma',
 })
 ```

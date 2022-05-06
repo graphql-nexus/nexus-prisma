@@ -66,7 +66,7 @@ generatorHandler({
           solution: `Create a configuration file in one of the following locations:\n\n${renderList(supportedSettingsModulePaths)}\n\nThen add the following code:\n\n${renderCodeBlock(dindist`
             import { settings } from 'nexus-prisma/generator'
 
-            settings.change({
+            settings({
               output: '${generator.output.value}'
             })
         `)}`,

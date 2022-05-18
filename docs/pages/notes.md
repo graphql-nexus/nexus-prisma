@@ -83,7 +83,6 @@ We test Node versions that are `Active LTS` and `Current`. For which versions of
 1. `Yarn` we can use yarn at any deployment platform except `Heroku` because Heroku starting `Pruning devDependencies` and yarn rebuild fresh packages this means that the generated code by the `prisma generate` command will delete. We can use `Yarn` with `Heroku` by adding a custom [Gentime Settings](/settings-gentime#usage) and change the output path.
 2. `npm` we can use `npm` at any deployment platform without any issues.
 3. `pnpm` we can't use `pnpm` without adding a custom [Gentime Settings](/settings-gentime#usage) and change the output path.
-    
 
 ### Supported Versions Of `@prisma/client`
 

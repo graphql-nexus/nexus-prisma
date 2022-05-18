@@ -70,3 +70,13 @@ settings.change({
 ```
 
 It is considered idiomatic to use the Nexus Prisma configuration file instead of inline generator block configuration. Inline generator block configuration lacks autocomplete and inline JSDoc. The only reason `output` is supported is to be [symmetrical with Prisma Client](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/generating-prisma-client#the-location-of-prisma-client) and thus ease onboarding.
+
+If you added a custom output path because the output will be in `.js` you will need to include the `.js` files into your `tsconfig.ts` file by adding this prop.
+
+```json
+{
+  "compilerOptions": {
+    "allowJs": true
+  }
+}
+```

@@ -4,9 +4,9 @@ exports[`when project does not have ts-node installed nexus-prisma generator sti
 "Prisma schema loaded from <SOME PATH>
 You can now start using Nexus Prisma in your code. Reference: https://pris.ly/d/nexus-prisma
 
-✔ Generated Prisma Client (<SOME VERSION>) to <SOME PATH> in <SOME TIME>ms
+✔ Generated Prisma Client (<SOME VERSION>) to <SOME PATH> in <SOME TIME><unit>
 
-✔ Generated Nexus Prisma to <SOME PATH> in <SOME TIME>ms
+✔ Generated Nexus Prisma to <SOME PATH> in <SOME TIME><unit>
 You can now start using Prisma Client in your code. Reference: https://pris.ly/d/client
 \`\`\`
 import { PrismaClient } from '@prisma/client'

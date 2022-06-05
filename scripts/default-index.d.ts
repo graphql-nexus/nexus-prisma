@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * If you're seeing this it means that you have not generated Nexus Prisma.
  *

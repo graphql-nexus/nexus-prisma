@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
-import { runtimeProxy } from '../runtimeProxy'
-
 /**
  * If you're seeing this it means that you have not generated Nexus Prisma.
  *
@@ -9,4 +5,4 @@ import { runtimeProxy } from '../runtimeProxy'
  *
  * To run its generation step simply run Nexus reflection like you normally would.
  */
-export const PleaseRunPrismaGenerate = runtimeProxy
+export declare const PleaseRunPrismaGenerate: any

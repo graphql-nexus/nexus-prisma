@@ -126,11 +126,7 @@ export const renderTypeScriptDeclarationForDocumentModels = (
       //
       //
 
-      import type { Settings } from ${
-        settings.data.output.directory === 'default'
-          ? `'../generator/Settings'`
-          : `'nexus-prisma/dist-cjs/generator/Settings'`
-      }
+      import type { Settings } from 'nexus-prisma/dist-cjs/generator/Settings/index'
 
       /**
        * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).

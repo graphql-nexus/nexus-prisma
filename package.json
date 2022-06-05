@@ -8,6 +8,7 @@
   "files": [
     "dist-cjs",
     "dist-esm",
+    "scripts/*.*(js|d.ts|json)",
     "scalars.d.ts",
     "scalars.js",
     "generator.d.ts",
@@ -70,7 +71,9 @@
     "release:pr": "dripip pr",
     "release:canary": "dripip preview",
     "release:stable": "dripip stable",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "yarn build",
+    "generate": "node scripts/postinstall.js",
+    "postinstall": "node scripts/postinstall.js"
   },
   "devDependencies": {
     "@homer0/prettier-plugin-jsdoc": "^4.0.6",

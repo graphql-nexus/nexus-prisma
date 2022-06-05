@@ -18,4 +18,4 @@ if (!packageJson || !packageJson.version || !packageJson.name) {
   })
 }
 
-export * from '../runtime'
+export * from '.nexus-prisma/index'

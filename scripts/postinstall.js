@@ -7,14 +7,15 @@ const mkdir = promisify(fs.mkdir)
 
 ensureEmptyDotPrisma()
 
-const OUTPUT_SOURCE_DIR = require.resolve('.nexus-prisma').replace('/index.js', '')
-
 async function ensureEmptyDotPrisma() {
   try {
     const inTheNodeModules =
       __dirname.endsWith('/node_modules/nexus-prisma/scripts') ||
       __dirname.endsWith('/.yalc/nexus-prisma/scripts')
-    const dotNexusPrismaDir = path.join(__dirname, inTheNodeModules ? OUTPUT_SOURCE_DIR : '../.nexus-prisma')
+    const dotNexusPrismaDir = path.join(
+      __dirname,
+      inTheNodeModules ? '../../../node_modules/.nexus-prisma' : '../.nexus-prisma'
+    )
     if (!fs.existsSync(dotNexusPrismaDir)) {
       await mkdir(dotNexusPrismaDir)
     }

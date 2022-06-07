@@ -15,6 +15,7 @@ import { d } from '../helpers/debugNexusPrisma'
 import { resolveGitHubActionsWindowsPathTilde } from '../helpers/utils'
 import { renderCodeBlock, renderList, renderWarning } from '../lib/diagnostic'
 import { PrismaUtils } from '../lib/prisma-utils'
+import { OUTPUT_SOURCE_DIR } from '../generator/generate'
 
 process.env.DEBUG_COLORS = 'true'
 process.env.DEBUG_HIDE_DATE = 'true'
@@ -27,7 +28,7 @@ process.env.DEBUG_HIDE_DATE = 'true'
 generatorHandler({
   onManifest() {
     return {
-      defaultOutput: Path.join(__dirname, '../../../../node_modules/.nexus-prisma'),
+      defaultOutput: OUTPUT_SOURCE_DIR,
       prettyName: 'Nexus Prisma',
     }
   },

@@ -14,7 +14,7 @@ async function ensureEmptyDotPrisma() {
       __dirname.endsWith('/.yalc/nexus-prisma/scripts')
     const dotNexusPrismaDir = path.join(
       __dirname,
-      inTheNodeModules ? '../../../node_modules/.nexus-prisma' : '../.nexus-prisma'
+      inTheNodeModules ? '../../../../node_modules/.nexus-prisma' : '../../.nexus-prisma'
     )
     if (!fs.existsSync(dotNexusPrismaDir)) {
       await mkdir(dotNexusPrismaDir)

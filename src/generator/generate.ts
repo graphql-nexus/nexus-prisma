@@ -8,7 +8,7 @@ import { Module } from './helpers/types'
 import { ModuleGenerators } from './ModuleGenerators'
 import { Settings } from './Settings'
 
-export const OUTPUT_SOURCE_DIR = require.resolve('.nexus-prisma').replace('/index.js', '')
+export const OUTPUT_SOURCE_DIR = Path.join(__dirname, '../../../../node_modules/.nexus-prisma')
 
 /** Generate the Nexus Prisma runtime files and emit them into a "hole" in the internal package source tree. */
 export const generateRuntimeAndEmit = (dmmf: DMMF.Document, settings: Settings.Gentime.Manager): void => {

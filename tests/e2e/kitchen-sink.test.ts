@@ -89,7 +89,7 @@ beforeEach(() => {
       nexus: '1.1.0',
       prisma: '^3.5.0',
       'ts-node': '^10.8.1',
-      'ts-node-dev': '^1.1.8',
+      'ts-node-dev': '^1.1.6',
       typescript: '^4.2.3',
     },
   })

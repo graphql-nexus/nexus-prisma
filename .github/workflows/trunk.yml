@@ -6,6 +6,7 @@ on:
 
 jobs:
   test-latest-prisma:
+    timeout-minutes: 20
     strategy:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
@@ -33,6 +34,7 @@ jobs:
           directory: ./coverage
 
   test-past-prisma:
+    timeout-minutes: 20
     strategy:
       matrix:
         os: ['ubuntu-latest']
@@ -54,6 +56,7 @@ jobs:
       - run: yarn -s test:ci
 
   release-canary:
+    timeout-minutes: 20
     needs:
       - test-latest-prisma
       - test-past-prisma

@@ -138,6 +138,7 @@ function getPrismaClientImportIdForItsGeneratorOutputConfig(
   /**
    * when using a pnpm package manager it's generate a custom folder for every package and breaking our import.
    * as a fix if we found that the prisma output path include the .pnpm folder we use the prismaClientPackageMoniker
+   * TODO: adding a test https://github.com/prisma/nexus-prisma/issues/189
    */
   const prismaClientOutputPNPM = Path.normalize(`/node_modules/.pnpm/@prisma+client`)
   if (prismaClientGeneratorConfig.output.value.includes(prismaClientOutputPNPM)) {

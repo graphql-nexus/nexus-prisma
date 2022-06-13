@@ -9,9 +9,7 @@ ensureEmptyDotPrisma()
 
 async function ensureEmptyDotPrisma() {
   try {
-    const inTheNodeModules =
-      __dirname.endsWith('/node_modules/nexus-prisma/scripts') ||
-      __dirname.endsWith('/.yalc/nexus-prisma/scripts')
+    const inTheNodeModules = __dirname.includes('/node_modules') || __dirname.includes('/.yalc')
     const dotNexusPrismaDir = path.join(
       __dirname,
       inTheNodeModules ? '../../../../node_modules/.nexus-prisma' : '../../.nexus-prisma'

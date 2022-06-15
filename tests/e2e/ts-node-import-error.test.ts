@@ -58,3 +58,10 @@ const normalizeGeneratorOutput = (output: string) =>
     .replaceAll(/Generated Prisma Client \(.*\)/g, 'Generated Prisma Client (<SOME VERSION>)')
     // https://regex101.com/r/r2wR1Y/2
     .replaceAll(/Require stack:(?:(?:\n\s*- .*)(?:\n +at .* \(.*\))*)+/g, 'Require stack:\n- <SOME STACK>')
+    // TODO: Temporary fix for
+    // https://github.com/npm/cli/issues/4980#issuecomment-1145334203.
+    // Remove when resolved.
+    .replace(
+      /npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.\n/,
+      ''
+    )

@@ -8,6 +8,7 @@
   "files": [
     "dist-cjs",
     "dist-esm",
+    "scripts/production",
     "scalars.d.ts",
     "scalars.js",
     "generator.d.ts",
@@ -59,7 +60,7 @@
     "dev": "yarn -s clean && tsc --build --watch tsconfig.cjs.json tsconfig.esm.json",
     "dev:ts": "yarn dev",
     "dev:yalc": "nodemon --delay 1.5 --exec 'yalc push --no-scripts' --watch 'dist-*/**/*'",
-    "build": "yarn clean && tsc --build tsconfig.cjs.json tsconfig.esm.json",
+    "build": "yarn generate && yarn clean && tsc --build tsconfig.cjs.json tsconfig.esm.json",
     "test": "cross-env NO_COLOR=true DEBUG='konn*,e2e' jest",
     "test:e2e": "cross-env NO_COLOR=true DEBUG=e2e jest --selectProjects e2e",
     "test:unit": "cross-env NO_COLOR=true jest --selectProjects unit",
@@ -70,7 +71,9 @@
     "release:pr": "dripip pr",
     "release:canary": "dripip preview",
     "release:stable": "dripip stable",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "yarn build",
+    "generate": "node scripts/production/postinstall.js",
+    "postinstall": "node scripts/production/postinstall.js"
   },
   "devDependencies": {
     "@homer0/prettier-plugin-jsdoc": "^4.0.6",

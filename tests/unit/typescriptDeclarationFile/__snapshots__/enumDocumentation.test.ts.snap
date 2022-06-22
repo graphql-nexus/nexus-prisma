@@ -79,7 +79,7 @@ export const SomeEnum: SomeEnum
 //
 //
 
-import type { Settings } from '../generator/Settings'
+import type { Settings } from 'nexus-prisma/dist-cjs/generator/Settings/index'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
@@ -191,7 +191,7 @@ export const Foo: Foo
 //
 //
 
-import type { Settings } from '../generator/Settings'
+import type { Settings } from 'nexus-prisma/dist-cjs/generator/Settings/index'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
@@ -301,7 +301,7 @@ export const Foo: Foo
 //
 //
 
-import type { Settings } from '../generator/Settings'
+import type { Settings } from 'nexus-prisma/dist-cjs/generator/Settings/index'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).
@@ -425,7 +425,7 @@ export const Foo: Foo
 //
 //
 
-import type { Settings } from '../generator/Settings'
+import type { Settings } from 'nexus-prisma/dist-cjs/generator/Settings/index'
 
 /**
  * Adjust Nexus Prisma's [runtime settings](https://pris.ly/nexus-prisma/docs/settings/runtime).

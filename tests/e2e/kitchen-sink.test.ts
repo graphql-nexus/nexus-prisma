@@ -352,13 +352,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
    * Sanity check the Prisma Client import ID
    */
 
-  expect(ctx.fs.read('node_modules/nexus-prisma/dist-cjs/runtime/index.js')).toMatch(
-    /.*"prismaClientImportId": "@prisma\/client".*/
-  )
-
-  // TODO once a dedicated ESM test exists, move this exlcusively to it
-  // For not this is a cheap sanity check
-  expect(ctx.fs.read('node_modules/nexus-prisma/dist-esm/runtime/index.js')).toMatch(
+  expect(ctx.fs.read('node_modules/.nexus-prisma/index.js')).toMatch(
     /.*"prismaClientImportId": "@prisma\/client".*/
   )
 

@@ -1,0 +1,5 @@
+{
+  "name": ".nexus-prisma",
+  "main": "index.js",
+  "types": "index.d.ts"
+}

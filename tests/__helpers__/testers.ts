@@ -8,7 +8,7 @@ import * as Path from 'path'
 import slug from 'slug'
 
 import { DMMF } from '@prisma/generator-helper'
-import * as PrismaSDK from '@prisma/sdk'
+import * as PrismaInternals from '@prisma/internals'
 
 import { generateRuntime } from '../../src/generator/generate'
 import { Module } from '../../src/generator/helpers/types'
@@ -141,7 +141,7 @@ export const testGraphqlSchema = (
   params: Pick<TestIntegrationParams, 'api' | 'description' | 'database'>
 ) => {
   it(params.description, async () => {
-    const dmmf = await PrismaSDK.getDMMF({
+    const dmmf = await PrismaInternals.getDMMF({
       datamodel: createPrismaSchema({
         content: params.database,
       }),
@@ -199,7 +199,7 @@ export const integrationTest = async (params: TestIntegrationParams) => {
     fs.write(`${outputDirPath}/schema.prisma`, prismaSchemaContents)
     execa.commandSync(`yarn -s prisma db push --force-reset --schema ${outputDirPath}/schema.prisma`)
     fs.copy(sqliteDatabaseFileOutputAbsolute, `${sqliteDatabaseFileOutputAbsolute}.bak`)
-    dmmf = await PrismaSDK.getDMMF({
+    dmmf = await PrismaInternals.getDMMF({
       datamodel: prismaSchemaContents,
     })
     fs.write(dmmfFileOutputAbsolute, dmmf)
@@ -313,7 +313,7 @@ export async function generateModules(
 ): Promise<{ indexjs_esm: string; indexjs_cjs: string; indexdts: string }> {
   const prismaSchemaContents = createPrismaSchema({ content })
 
-  const dmmf = await PrismaSDK.getDMMF({
+  const dmmf = await PrismaInternals.getDMMF({
     datamodel: prismaSchemaContents,
   })
 

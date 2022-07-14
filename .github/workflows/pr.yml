@@ -56,24 +56,25 @@ jobs:
         with:
           directory: ./coverage
 
-  test-past-prisma:
-    timeout-minutes: 20
-    strategy:
-      matrix:
-        os: ['ubuntu-latest']
-        node-version: [16.x]
-        prisma-client-version: ['4.0']
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: yarn --frozen-lockfile
-      - name: Set E2E DB Schema
-        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --prisma-client-version ${{ matrix.prisma-client-version }} --github-env $GITHUB_ENV
-      - run: yarn -s build
-      - name: Install Prisma Client version
-        run: yarn -s add @prisma/client@${{ matrix.prisma-client-version }}
-      - run: yarn -s test:ci
+#  TODO: get this test back when we have old versions to support
+#  test-past-prisma:
+#    timeout-minutes: 20
+#    strategy:
+#      matrix:
+#        os: ['ubuntu-latest']
+#        node-version: [16.x]
+#        prisma-client-version: ['4.0']
+#    runs-on: ${{ matrix.os }}
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Use Node.js ${{ matrix.node-version }}
+#        uses: actions/setup-node@v1
+#        with:
+#          node-version: ${{ matrix.node-version }}
+#      - run: yarn --frozen-lockfile
+#      - name: Set E2E DB Schema
+#        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --prisma-client-version ${{ matrix.prisma-client-version }} --github-env $GITHUB_ENV
+#      - run: yarn -s build
+#      - name: Install Prisma Client version
+#        run: yarn -s add @prisma/client@${{ matrix.prisma-client-version }}
+#      - run: yarn -s test:ci

@@ -14,7 +14,7 @@ const nodeVersionParser = z.union([z.literal('14.x'), z.literal('16.x')])
 
 const osParser = z.union([z.literal('macos-latest'), z.literal('ubuntu-latest'), z.literal('windows-latest')])
 
-const prismaClientParser = z.string().regex(/3.\d+/)
+const prismaClientParser = z.string().regex(/4.\d+/)
 
 const connectionStringMapping: Record<ComboCase, string> = {
   '14.x + macos-latest': 'node_14_macos_latest',

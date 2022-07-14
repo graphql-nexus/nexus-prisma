@@ -55,7 +55,6 @@ jobs:
         if: matrix.os == 'ubuntu-latest' && matrix.node-version == '16.x'
         with:
           directory: ./coverage
-
 #  TODO: get this test back when we have old versions to support
 #  test-past-prisma:
 #    timeout-minutes: 20

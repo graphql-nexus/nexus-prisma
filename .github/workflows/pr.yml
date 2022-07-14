@@ -62,7 +62,7 @@ jobs:
       matrix:
         os: ['ubuntu-latest']
         node-version: [16.x]
-        prisma-client-version: []
+        prisma-client-version: ['4.0']
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2

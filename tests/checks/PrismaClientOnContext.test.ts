@@ -7,7 +7,7 @@ const base = testIntegrationPartial({
     model User {
       id        String   @id
 			profile   Profile @relation(fields: [profileId], references: [id])
-			profileId String
+			profileId String  @unique
     }
 		model Profile {
       id    String  @id

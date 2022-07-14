@@ -6,9 +6,9 @@ testIntegration({
   description: 'ignores global rejectOnNotFound Prisma Client settings',
   database: `
     model User {
-      id         String    @id
-      profile    Profile?  @relation(fields: [profileId], references: [id])
-      profileId  String?
+      id         String   @id
+      profile    Profile? @relation(fields: [profileId], references: [id])
+      profileId  String?  @unique
     }
     model Profile {
       id    String  @id
@@ -44,6 +44,7 @@ testIntegration({
   },
   prismaClient(prismaClientPackage) {
     // This global setting should have no effect on Nexus Prisma
+    // TODO:  prisma:warn `rejectOnNotFound` option is deprecated and will be removed in Prisma 5. Please use `prisma.user.undefined` method instead
     return new prismaClientPackage.PrismaClient({
       rejectOnNotFound: true,
     })

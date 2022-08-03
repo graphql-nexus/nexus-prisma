@@ -44,7 +44,6 @@ testIntegration({
   },
   prismaClient(prismaClientPackage) {
     // This global setting should have no effect on Nexus Prisma
-    // TODO:  prisma:warn `rejectOnNotFound` option is deprecated and will be removed in Prisma 5. Please use `prisma.user.undefined` method instead
     return new prismaClientPackage.PrismaClient({
       rejectOnNotFound: true,
     })

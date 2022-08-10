@@ -15,10 +15,10 @@ const ctx = konn()
         build: 'prisma generate',
       },
       dependencies: {
-        '@prisma/client': '2.30',
+        '@prisma/client': '4.0.0',
         graphql: '15.5.1',
         nexus: '1.1.0',
-        prisma: '2.30',
+        prisma: '4.0.0',
       },
     })
     ctx.fs.write(

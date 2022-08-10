@@ -6,9 +6,9 @@ testIntegration({
   description: 'ignores global rejectOnNotFound Prisma Client settings',
   database: `
     model User {
-      id         String    @id
-      profile    Profile?  @relation(fields: [profileId], references: [id])
-      profileId  String?
+      id         String   @id
+      profile    Profile? @relation(fields: [profileId], references: [id])
+      profileId  String?  @unique
     }
     model Profile {
       id    String  @id

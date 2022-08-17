@@ -9,7 +9,7 @@
     "build": "next build",
     "export": "next build && next export",
     "format": "prettier --write .",
-    "lint": "next link"
+    "lint": "next lint"
   },
   "dependencies": {
     "next": "12.2.5",

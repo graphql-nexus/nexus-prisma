@@ -14,12 +14,13 @@
     "lint:check": "eslint . --ext .ts,.tsx --max-warnings 0"
   },
   "dependencies": {
-    "next": "^11.1.2",
-    "nextra": "^1.1.0",
-    "nextra-theme-docs": "^1.2.6",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "remark-gfm": "^1.0.0"
+    "autoprefixer": "^10.4.8",
+    "next": "12.2.5",
+    "nextra": "2.0.0-beta.17",
+    "nextra-theme-docs": "2.0.0-beta.17",
+    "postcss": "^8.4.16",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "prettier": "@prisma-labs/prettier-config",
   "devDependencies": {
@@ -31,8 +32,8 @@
     "eslint-config-next": "^11.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-only-warn": "^1.0.2",
-    "gh-pages": "^3.2.3",
     "prettier": "^2.3.2",
+    "tailwindcss": "^3.1.5",
     "typescript": "^4.3.5"
   }
 }

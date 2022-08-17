@@ -1,3 +1,8 @@
+---
+title: Features - Docs
+description: This plugin integrates Prisma into Nexus. It gives you an API you to project fields from models defined in your Prisma schema into your GraphQL API. It also gives you an API to build GraphQL root fields that allow your API clients to query and mutate data.
+---
+
 # Features
 
 > **Note**: ⛑ The following use abbreviated examples that skip a complete setup of passing Nexus type definition to Nexus' `makeSchema`. If you are new to Nexus, consider reading the [official Nexus tutorial](https://nxs.li/tutorial) before jumping into Nexus Prisma.
@@ -103,7 +108,7 @@ Please note that not all kinds of relationships are supported yet. Details about
 
 To project relations you must by default expose an instance of Prisma Client on the GraphQL context under the key name `prisma`. You can [customize which context property Nexus Prisma should look for your Prisma Client](#prismaclientcontextfield-string).
 
-#### Example: Exposing Prisma Client on GraphQL Context with Apollo Server
+### Example: Exposing Prisma Client on GraphQL Context with Apollo Server
 
 ```ts
 import { ApolloServer } from 'apollo-server'
@@ -126,14 +131,14 @@ new ApolloServer({
 
 You can project [1:1 relationships](https://www.prisma.io/docs/concepts/components/prisma-schema/relations#one-to-one-relations) into your API.
 
-#### Example: Tests
+### Example: Tests
 
 The integration test suite is a useful reference as it is declarative (easy to read) and gives a known-working example spanning from database all the way to executed GraphQL document.
 
 - [Tests](https://github.com/prisma/nexus-prisma/blob/main/tests/integration/relation1To1.test.ts)
 - [Snapshots](https://github.com/prisma/nexus-prisma/blob/main/tests/integration/__snapshots__/relation1To1.test.ts.snap)
 
-#### Example: Full 1:1
+### Example: Full 1:1
 
 ```prisma
 // Database Schema
@@ -242,7 +247,7 @@ query {
 }
 ```
 
-#### Limitation: Nullable on Without-Relation-Scalar Side
+### Limitation: Nullable on Without-Relation-Scalar Side
 
 Prisma requires that a 1:1 relationship has one side that is optional. For example in the following it is **not** possible for `Profile` to have a required relationship to `User`. For more detail you can read the Prisma docs about this [here](https://www.prisma.io/docs/concepts/components/prisma-schema/relations#one-to-one-relations).
 
@@ -312,14 +317,14 @@ objectType({
 
 You can project [1:n relationships](https://www.prisma.io/docs/concepts/components/prisma-schema/relations#one-to-many-relations) into your API.
 
-#### Example: Tests
+### Example: Tests
 
 The integration test suite is a useful reference as it is declarative (easy to read) and gives a known-working example spanning from database all the way to executed GraphQL document.
 
 - [Tests](https://github.com/prisma/nexus-prisma/blob/main/tests/integration/relation1ToN.test.ts)
 - [Snapshots](https://github.com/prisma/nexus-prisma/blob/main/tests/integration/__snapshots__/relation1ToN.test.ts.snap)
 
-#### Example: Full 1:n
+### Example: Full 1:n
 
 ```prisma
 // Database Schema
@@ -467,7 +472,7 @@ model A {                                       type A {
 
 If a `findOne` or `findUnique` for a non-nullable Prisma field return null for some reason (e.g. data corruption in the database) then the standard [GraphQL `null` propagation](https://medium.com/@calebmer/when-to-use-graphql-non-null-fields-4059337f6fc8) will kick in.
 
-#### Prisma Client `rejectOnNotFound` Handling
+### Prisma Client `rejectOnNotFound` Handling
 
 Prisma Client's [`rejectOnNotFound` feature](https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#rejectonnotfound) is effectively ignored by Nexus Prisma. For example if you [set `rejectOnNotFound` globally on your Prisma Client](https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#enable-globally-for-findunique-and-findfirst) it will not effect Nexus Prisma when it uses Prisma Client. This is because Nexus Prisma [sets `rejectOnNotFound: false` for every `findUnique`/`findFirst`](https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#remarks-2) request it sends.
 
@@ -475,13 +480,13 @@ The reason for this design choice is that when Nexus Prisma's logic is handling 
 
 If you have a use-case for different behaviour [please open a feature request](https://github.com/prisma/nexus-prisma/issues/new?assignees=&labels=type%2Ffeat&template=10-feature.md&title=Better%20rejectOnNotFound%20Handling). Also, remember, you can always override the Nexus Prisma resolvers with your own logic ([recipe](/recipes#project-relation-with-custom-resolver-logic)).
 
-#### Related Issues
+### Related Issues
 
 - [`#98` Always set rejectOnNotFound to false](https://github.com/prisma/nexus-prisma/issues/98)
 
 ## Prisma Schema Docs Propagation
 
-#### As GraphQL schema doc
+### As GraphQL schema doc
 
 ```prisma
 /// A user.
@@ -519,7 +524,7 @@ type User {
 }
 ```
 
-#### As JSDoc
+### As JSDoc
 
 Can be disabled in [gentime settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
 
@@ -538,7 +543,7 @@ User // JSDoc: A user.
 User.id // JSDoc: A stable identifier to find users by.
 ```
 
-#### Rich Formatting
+### Rich Formatting
 
 It is possible to write multiline documentation in your Prisma Schema file. It is also possible to write markdown or whatever else you want.
 
@@ -585,16 +590,16 @@ Nexus Prisma supports both [ESM](https://nodejs.org/api/esm.html) and CJS. There
 
 These are finer points that aren't perhaps worth a top-level point but none the less add up toward a thoughtful developer experience.
 
-#### JSDoc
+### JSDoc
 
 - Generated Nexus configuration for fields and models that you _have not_ documented in your PSL get default JSDoc that teaches you how to do so.
 - JSDoc for Enums have their members embedded
 
-#### Default Runtime
+### Default Runtime
 
 When your project is in a state where the generated Nexus Prisma part is missing (new repo clone, reinstalled deps, etc.) Nexus Prisma gives you a default runtime export named `PleaseRunPrismaGenerate` and will error with a clear message.
 
-#### Peer-Dependency Validation
+### Peer-Dependency Validation
 
 When `nexus-prisma` is imported it will validate that your project has peer dependencies setup correctly.
 
@@ -605,6 +610,6 @@ NO_PEER_DEPENDENCY_CHECK=true|1
 PEER_DEPENDENCY_CHECK=false|0
 ```
 
-#### Auto-Import Optimized
+### Auto-Import Optimized
 
 - `nexus-prisma/scalars` offers a default export you can easily auto-import by name: `NexusPrismaScalars`.

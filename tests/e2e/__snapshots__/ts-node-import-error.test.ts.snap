@@ -4,7 +4,7 @@ exports[`when project does not have ts-node installed nexus-prisma generator sti
 "Error: 
 ✔ Generated Prisma Client (<SOME VERSION>) to <SOME PATH> in <SOME TIME><unit>
 
-Error: Cannot find module 'ts-node'
+Cannot find module 'ts-node'
 Require stack:
 - <SOME STACK>
 

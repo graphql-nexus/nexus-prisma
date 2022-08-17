@@ -5,7 +5,7 @@ import { NexusPrismaIcon } from './components/logos/NexusPrisma'
 export default {
   github: 'https://github.com/prisma/nexus-prisma',
   projectLink: 'https://github.com/prisma/nexus-prisma',
-  docsRepositoryBase: 'https://github.com/prisma/nexus-prisma/blob/master',
+  docsRepositoryBase: 'https://github.com/prisma/nexus-prisma/blob/main/docs/pages',
   titleSuffix: ' | Nexus Prisma',
   search: true,
   unstable_flexSearch: true,

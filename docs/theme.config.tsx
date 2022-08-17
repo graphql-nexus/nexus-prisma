@@ -7,8 +7,6 @@ export default {
   projectLink: 'https://github.com/prisma/nexus-prisma',
   docsRepositoryBase: 'https://github.com/prisma/nexus-prisma/blob/master',
   titleSuffix: ' | Nexus Prisma',
-  branch: 'main', // branch of docs
-  path: '/', // path of docs
   search: true,
   unstable_flexSearch: true,
   unstable_staticImage: true,

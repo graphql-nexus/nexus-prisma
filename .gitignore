@@ -114,3 +114,4 @@ tests/__cache__
 .idea
 
 .nexus-prisma
+.vercel

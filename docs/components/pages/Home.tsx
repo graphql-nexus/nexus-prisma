@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 import { NexusPrismaIcon } from '../logos/NexusPrisma'
 
 export const Home: FC = () => (
-  <div className="w-auto px-4 pt-16 pb-16 mx-auto sm:pt-24 lg:px-8">
+  <div className="w-auto px-4 py-16 mx-auto sm:py-24 lg:px-8">
     <div className="flex justify-center pb-8">
       <NexusPrismaIcon width="30em" height="10em" />
     </div>

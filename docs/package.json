@@ -12,6 +12,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reach/skip-nav": "0.17.0",
     "next": "12.2.5",
     "nextra": "2.0.0-beta.17",
     "nextra-theme-docs": "2.0.0-beta.17",

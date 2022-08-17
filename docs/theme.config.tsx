@@ -8,8 +8,6 @@ export default {
   docsRepositoryBase: 'https://github.com/prisma/nexus-prisma/blob/main/docs/pages',
   titleSuffix: ' | Nexus Prisma',
   search: true,
-  unstable_flexSearch: true,
-  unstable_staticImage: true,
   floatTOC: true,
   feedbackLink: 'Question? Give us feedback →',
   footerText: `MIT ${new Date().getFullYear()} © Prisma Data Inc.`,

@@ -1,10 +1,23 @@
+---
+title: Architecture - Docs
+description: This plugin integrates Prisma into Nexus. It gives you an API you to project fields from models defined in your Prisma schema into your GraphQL API. It also gives you an API to build GraphQL root fields that allow your API clients to query and mutate data.
+---
+
+import Image from 'next/image'
+
 # Architecture
 
 Understanding the following information should not be required knowledge for using Nexus Prisma. It is primarily here for internal maintenance and collaboration. But we're happy for whatever benefit you get out of it too.
 
 ## System
 
-![nexus-prisma-architecture](https://user-images.githubusercontent.com/284476/118728589-70fce780-b802-11eb-8c8b-4328ef5d6fb5.png)
+<Image
+  src="/images/architecture.jpg"
+  alt="Architecture"
+  width={2799}
+  height={1508}
+  layout="responsive"
+/>
 
 1. You or a script (CI, programmatic, etc.) run `$ prisma generate`.
 2. Prisma generator system reads your Prisma schema file

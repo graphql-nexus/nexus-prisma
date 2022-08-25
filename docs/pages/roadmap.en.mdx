@@ -1,6 +1,11 @@
+---
+title: Roadmap
+description: This plugin integrates Prisma into Nexus. It gives you an API you to project fields from models defined in your Prisma schema into your GraphQL API. It also gives you an API to build GraphQL root fields that allow your API clients to query and mutate data.
+---
+
 # Roadmap
 
-##### Done
+## Done
 
 - [x] ([#4](https://github.com/prisma/nexus-prisma/issues/4)) Support for Prisma Model field types that map to standard GraphQL scalars
 - [x] ([#8](https://github.com/prisma/nexus-prisma/issues/8)) Support for Prisma Model field types of `DateTime` & `Json`
@@ -11,20 +16,20 @@
 - [x] ([#61](https://github.com/prisma/nexus-prisma/issues/61)) JSDoc for settings/$settings
 - [x] ([#68](https://github.com/prisma/nexus-prisma/issues/68)) Support for Prisma Model field type `Bytes`
 
-##### Shortterm
+## Shortterm
 
 - [x] ([#59](https://github.com/prisma/nexus-prisma/issues/59)) Support for Prisma Model field type `BigInt`
 - [x] ([#94](https://github.com/prisma/nexus-prisma/issues/94)) Support for Prisma Model field type `Decimal`
 - [ ] Improved JSDoc for relation 1:1 & 1:n fields
 
-##### Midterm
+## Midterm
 
 - [ ] Support for Prisma Model field types relating to other Models n:n
 - [ ] Support for relation field ordering parameters
 - [ ] ([#83](https://github.com/prisma/nexus-prisma/issues/83)) Support for relation field filtering parameters
 - [ ] Support for relation field pagination parameters
 
-##### Longterm
+## Longterm
 
 - [ ] Nexus Plugin? `t.model`? `t.crud`?
 - [ ] ...

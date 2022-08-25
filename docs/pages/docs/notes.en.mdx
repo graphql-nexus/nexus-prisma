@@ -1,8 +1,13 @@
+---
+title: Notes - Docs
+description: This plugin integrates Prisma into Nexus. It gives you an API you to project fields from models defined in your Prisma schema into your GraphQL API. It also gives you an API to build GraphQL root fields that allow your API clients to query and mutate data.
+---
+
 # Notes
 
-### Which should I use? `nexus-plugin-prisma` vs `nexus-prisma` vs Vanilla Nexus
+## Which should I use? `nexus-plugin-prisma` vs `nexus-prisma` vs Vanilla Nexus
 
-#### Vanilla Nexus
+### Vanilla Nexus
 
 [npm](https://npmjs.org/nexus) | [github](https://github.com/graphql-nexus/nexus)
 
@@ -12,7 +17,7 @@ If stability is the most important thing for you then Prisma+Nexus vanilla is pr
 - pro: stable
 - con: If you have a lot of boilerplate CRUD then might feel painful
 
-#### `nexus-plugin-prisma`
+### `nexus-plugin-prisma`
 
 [npm](https://npmjs.org/nexus-plugin-prisma) | [github](https://github.com/graphql-nexus/nexus-plugin-prisma)
 
@@ -24,7 +29,7 @@ If automatic CRUD is the most important thing for you then maybe stick with the 
 - con: not kept up to date with Prisma
 - con: buggy
 
-#### `nexus-prisma`
+### `nexus-prisma`
 
 [npm](http://npmjs.org/nexus-prisma) | [github](https://github.com/prisma/nexus-prisma)
 
@@ -34,23 +39,23 @@ If you would benefit from model projection features and are ok with using early 
 - pro: maintained
 - con: early access, things may change, bugs may be present, features may be incomplete.
 
-### Working with Bundlers
+## Working with Bundlers
 
-#### Disable Peer Dependency Check
+### Disable Peer Dependency Check
 
 When working with bundlers, it probably makes sense to disable the runtime peer dependency check system since the bundle step is merging the dependency tree into a single file and may be moved to run standalone away from the original project manifest (e.g. in a docker container).
 
 Instructions to do this can be found [here](/features#peer-dependency-validation).
 
-#### General Support
+### General Support
 
 `nexus-prisma` has tests showing that it supports `ncc`. Other bundlers are not tested and may or may not work. It is our goal however that nexus-prisma not be the reason for any popular bundler to not work on your project. So if you encounter a problem with one (e.g. `parcel`), open an issue here and we'll fix the issue including an addition to our test suite.
 
-### For users of `nexus-prisma@=<0.20`
+## For users of `nexus-prisma@=<0.20`
 
 Versions of `nexus-prisma` package prior to `0.20` were a completely different version of the API, and had also become deprecated at one point to migrate to `nexus-plugin-prisma` when Nexus Framework was being worked on. All of that is history.
 
-### For users of `nexus@=<1.0`
+## For users of `nexus@=<1.0`
 
 The [release of Nexus 1.1](https://github.com/graphql-nexus/nexus/releases/tag/1.0.0) introduced an overload to `t.field` allowing improved usage of Nexus Prisma. The difference is as follows. Note if you prefer the older way that is and always will be supported too.
 
@@ -72,19 +77,19 @@ export const schema = makeSchema({
 })
 ```
 
-### Supported Versions Of Node
+## Supported Versions Of Node
 
 We only officially support what we test.
 
 We test Node versions that are `Active LTS` and `Current`. For which versions of Node that equals you can refer to our tests or look here: https://nodejs.org/en/about/releases.
 
-### Supported Versions Of `@prisma/client`
+## Supported Versions Of `@prisma/client`
 
 We only officially support what we test.
 
 We test Prisma Client versions `2.30.x`, `2.29.x`.
 
-### Supported Versions Of `ts-node`
+## Supported Versions Of `ts-node`
 
 We only officially support what we test.
 
@@ -92,10 +97,10 @@ We test `ts-node` versions `10.x`.
 
 Reminder: `ts-node` is an optional peer dep required when you are working with the [gentime settings](https://pris.ly/nexus-prisma/docs/settings/gentime).
 
-#### Matrix Testing Policy
+### Matrix Testing Policy
 
 We test the latest versions of `@prisma/client` against Node 16 and 14 on Ubuntu, macOS, and Windows while past versions of `@prisma/client` are tested only against Node 16 on Ubuntu. We do this to keep the CI test matris reasonable as the number of past `@prisma/client` versions supported could grow long.
 
-#### Patch Version Support Policy
+### Patch Version Support Policy
 
 We only support the latest patch version of a minor series. For example imagine that there was a bug when `nexus-prisma` was integrated with `@prisma/client@2.30.1` but _not_ when integrated with `@prisma/client@2.30.2`. Our policy would be that users should upgrade to the latest `2.30.x` version, and that we would not release any no code changes of `nexus-prisma`.

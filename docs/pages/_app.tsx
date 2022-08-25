@@ -1,10 +1,6 @@
-import { FC } from 'react'
-import { AppProps } from 'next/app'
+import '../styles.css'
 import 'nextra-theme-docs/style.css'
 
-const App: FC<AppProps> = ({ Component, pageProps }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+export default function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
 }
-
-export default App

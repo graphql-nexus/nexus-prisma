@@ -8,7 +8,9 @@ import { Callout } from 'nextra-theme-docs'
 # Features
 
 <Callout>
-  The following use abbreviated examples that skip a complete setup of passing Nexus type definition to Nexus' `makeSchema`. If you are new to Nexus, consider reading the [official Nexus tutorial](https://nxs.li/tutorial) before jumping into Nexus Prisma.
+  The following use abbreviated examples that skip a complete setup of passing Nexus type definition to Nexus'
+  `makeSchema`. If you are new to Nexus, consider reading the [official Nexus
+  tutorial](https://nxs.li/tutorial) before jumping into Nexus Prisma.
 </Callout>
 
 ## Type-safe Generated Library Code
@@ -85,12 +87,14 @@ However some of the Prisma scalars do not have a natural standard representation
 | `Bytes`    | `Bytes`    | `bytes`          | [Byte](https://www.graphql-scalars.dev/docs/scalars/byte/)            | [Node.js Buffer](https://nodejs.org/api/buffer.html#buffer_buffer)                                           |
 | `Decimal`  | `Decimal`  | `decimal`        | (internal)                                                            | Uses [Decimal.js](https://github.com/MikeMcl/decimal.js)                                                     |
 
-<Callout>
-  Not all Prisma scalar mappings are implemented yet: `Unsupported`
-</Callout>
+<Callout>Not all Prisma scalar mappings are implemented yet: `Unsupported`</Callout>
 
 <Callout>
-  BigInt is supported in Node.js since version [10.4.0](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt#browser_compatibility) however to support BigInt in `JSON.parse`/`JSON.stringify` you must use [`json-bigint-patch`](https://github.com/ardatan/json-bigint-patch) otherwise BigInt values will be serialized as strings.
+  BigInt is supported in Node.js since version
+  [10.4.0](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt#browser_compatibility)
+  however to support BigInt in `JSON.parse`/`JSON.stringify` you must use
+  [`json-bigint-patch`](https://github.com/ardatan/json-bigint-patch) otherwise BigInt values will be
+  serialized as strings.
 </Callout>
 
 You can use your own GraphQL Scalar Implementation, however, you _must adhere to the above Prisma/GraphQL name mapping defined above_.

@@ -7,26 +7,29 @@ import { Callout } from 'nextra-theme-docs'
 
 # Usage
 
-1. Install dependencies
+1.  Install dependencies
 
-   ```
-   npm add nexus-prisma nexus graphql @prisma/client
-   npm add --dev prisma
-   ```
+    ```
+    npm add nexus-prisma nexus graphql @prisma/client
+    npm add --dev prisma
+    ```
 
-   <Callout> 
-    `nexus` `graphql` and `@prisma/client` are peer dependencies. `prisma` is for the Prisma CLI which you'll probably want during development.
-   </Callout>
+    <Callout>
+      `nexus` `graphql` and `@prisma/client` are peer dependencies. `prisma` is for the Prisma CLI which
+      you'll probably want during development.
+    </Callout>
 
-   <Callout> 
+          <Callout>
+
     If you use `nexus@=<1.0` then you must use `t.field(<NAME>, <CONFIG>)` instead of `t.field(<CONFIG>)`. The Nexus Prisma docs assume the latter form.
-   </Callout>
 
-1. Add a `nexus-prisma` generator block to your Prisma Schema.
+    </Callout>
 
-1. Run `prisma generate` in your terminal.
+1.  Add a `nexus-prisma` generator block to your Prisma Schema.
 
-1. Import models from `nexus-prisma` and then pass them to your Nexus type definition and field definition configurations. In this way you will be effectively projecting models from your data layer into GraphQL types in your API layer.
+1.  Run `prisma generate` in your terminal.
+
+1.  Import models from `nexus-prisma` and then pass them to your Nexus type definition and field definition configurations. In this way you will be effectively projecting models from your data layer into GraphQL types in your API layer.
 
 ## Example
 

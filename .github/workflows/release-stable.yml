@@ -7,20 +7,15 @@ jobs:
     name: Release stable
     timeout-minutes: 20
 
-    strategy:
-      matrix:
-        os: ['ubuntu-latest']
-        node-version: [16]
-
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 16
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16
           cache: 'yarn'
 
       - name: Install dependencies

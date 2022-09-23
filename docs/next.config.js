@@ -16,6 +16,7 @@ const securityHeaders = [
 ]
 
 module.exports = withNextra({
+  basePath: 'nexus-prisma/docs',
   images: {
     unoptimized: true
   },

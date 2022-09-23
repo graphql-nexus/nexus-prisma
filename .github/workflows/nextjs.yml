@@ -30,11 +30,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Navigate to docs
-        run: |
-          cd ${{ github.workspace }}/docs
       - name: Detect package manager
         id: detect-package-manager
+        working-directory: ./docs
         run: |
           if [ -f "${{ github.workspace }}/yarn.lock" ]; then
             echo "::set-output name=manager::yarn"
@@ -67,22 +65,25 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            .next/cache
+            docs/.next/cache
           # Generate a new cache whenever packages or source files change.
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/docs/package-lock.json', '**/docs/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/docs/package-lock.json', '**/docs/yarn.lock') }}-
       - name: Install dependencies
+        working-directory: ./docs
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
+        working-directory: ./docs
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Static HTML export with Next.js
+        working-directory: ./docs
         run: ${{ steps.detect-package-manager.outputs.runner }} next export
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ./out
+          path: ./docs/out
 
   # Deployment job
   deploy:

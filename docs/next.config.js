@@ -16,6 +16,9 @@ const securityHeaders = [
 ]
 
 module.exports = withNextra({
+  images: {
+    unoptimized: true
+  },
   async headers() {
     return [
       {
@@ -33,9 +36,5 @@ module.exports = withNextra({
       },
     ]
   },
-  reactStrictMode: true,
-  i18n: {
-    locales: ['en'],
-    defaultLocale: 'en',
-  },
+  reactStrictMode: true
 })

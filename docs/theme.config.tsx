@@ -48,6 +48,5 @@ export default {
   footerEditLink: () => {
     return 'Edit this page on GitHub'
   },
-  i18n: [{ locale: 'en', text: 'English' }],
   gitTimestamp: 'Last updated on',
 }

@@ -7,6 +7,6 @@
 
 [![trunk](https://github.com/prisma/nexus-prisma/actions/workflows/trunk.yml/badge.svg)](https://github.com/prisma/nexus-prisma/actions/workflows/trunk.yml)
 
-Official [Prisma](https://prisma.io) plugin for [Nexus](https://nexusjs.org).
+[Prisma](https://prisma.io) plugin for [Nexus](https://nexusjs.org).
 
 Please visit [nexus.prisma.io](https://nexus.prisma.io) for documentation.

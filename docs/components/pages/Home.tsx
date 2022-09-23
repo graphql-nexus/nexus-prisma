@@ -9,7 +9,6 @@ export const Home: FC = () => (
     </div>
 
     <h1 className="max-w-5xl text-center mx-auto text-6xl font-extrabold tracking-tighter leading-[1.1] sm:text-7xl lg:text-8xl xl:text-8xl">
-      Official&nbsp;
       <span className="inline-block text-transparent bg-clip-text bg-nextraBlue">Prisma&nbsp;</span>
       <br />
       plugin for&nbsp;

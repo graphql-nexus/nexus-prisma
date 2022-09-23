@@ -22,7 +22,7 @@ export const Home: FC = () => (
     </p>
     <div className="max-w-xl mx-auto pt-8 sm:flex sm:justify-center md:mt-8">
       <div className="rounded-md">
-        <Link href="/docs/index">
+        <Link href="/docs">
           <a className="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white no-underline bg-black border border-transparent rounded-md dark:bg-white dark:text-black dark:hover:bg-gray-300 hover:bg-gray-700 md:py-3 md:text-lg md:px-10 md:leading-6">
             Start Building →
           </a>

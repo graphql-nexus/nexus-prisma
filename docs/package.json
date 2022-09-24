@@ -13,9 +13,9 @@
   },
   "dependencies": {
     "@reach/skip-nav": "0.17.0",
-    "next": "12.2.5",
-    "nextra": "2.0.0-beta.17",
-    "nextra-theme-docs": "2.0.0-beta.17",
+    "next": "12.3.0",
+    "nextra": "2.0.0-beta.29",
+    "nextra-theme-docs": "2.0.0-beta.29",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },

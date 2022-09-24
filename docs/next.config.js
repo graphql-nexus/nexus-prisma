@@ -16,6 +16,10 @@ const securityHeaders = [
 ]
 
 module.exports = withNextra({
+  basePath: '/nexus-prisma',
+  images: {
+    unoptimized: true
+  },
   async headers() {
     return [
       {
@@ -33,9 +37,5 @@ module.exports = withNextra({
       },
     ]
   },
-  reactStrictMode: true,
-  i18n: {
-    locales: ['en'],
-    defaultLocale: 'en',
-  },
+  reactStrictMode: true
 })

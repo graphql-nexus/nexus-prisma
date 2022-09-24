@@ -2,11 +2,11 @@
 
 <p align="center">
   <img src="https://i.imgur.com/8qvElTM.png" width="300" align="center" />
-  <h1 align="center"><a style="color:black;" href="https://nexus.prisma.io">nexus-prisma</a></h1>
+  <h1 align="center"><a style="color:black;" href="https://prisma.github.io/nexus-prisma">nexus-prisma</a></h1>
 </p>
 
 [![trunk](https://github.com/prisma/nexus-prisma/actions/workflows/trunk.yml/badge.svg)](https://github.com/prisma/nexus-prisma/actions/workflows/trunk.yml)
 
-Official [Prisma](https://prisma.io) plugin for [Nexus](https://nexusjs.org).
+[Prisma](https://prisma.io) plugin for [Nexus](https://nexusjs.org).
 
-Please visit [nexus.prisma.io](https://nexus.prisma.io) for documentation.
+Please visit [prisma.github.io/nexus-prisma](https://prisma.github.io/nexus-prisma) for documentation.

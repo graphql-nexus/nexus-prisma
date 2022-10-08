@@ -22,8 +22,13 @@
     //   Packages doing this force their consumers to.
     // for pluralize which we will remove once @prisma/client exports externalToInternal DMMF transformer
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+
+    "baseUrl": ".",
+    "paths": {
+      ".nexus-prisma": [".nexus-prisma"]
+    }
   },
-  "include": ["src", "tests", "scripts"],
+  "include": ["src", "tests", "scripts", "utils"],
   "exclude": ["dist-*", "tests/e2e/fixtures", "docs"]
 }

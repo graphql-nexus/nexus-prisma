@@ -6,67 +6,101 @@ on:
 
 jobs:
   test-latest-prisma:
+    name: Test with latest Prisma
+    timeout-minutes: 20
+
     strategy:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
-        node-version: [14.x, 16.x]
+        node-version: [14, 16]
+
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn --frozen-lockfile
-      - name: Set E2E DB Schema
-        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --github-env $env:GITHUB_ENV
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Set E2E DB Schema for Windows
         if: ${{ matrix.os == 'windows-latest' }}
-      - name: Set E2E DB Schema
-        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --github-env $GITHUB_ENV
+        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --github-env $env:GITHUB_ENV
+
+      - name: Set E2E DB Schema for other operating systems
         if: ${{ matrix.os != 'windows-latest' }}
-      - run: yarn -s build
-      - run: yarn -s test:ci
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
-        if: matrix.os == 'ubuntu-latest' && matrix.node-version == '16.x'
-        with:
-          directory: ./coverage
+        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --github-env $GITHUB_ENV
+
+      - name: Build
+        run: yarn -s build
+
+      - name: Test
+        run: yarn -s test:ci
 
   test-past-prisma:
+    name: Test with past Prisma
+    timeout-minutes: 20
+
     strategy:
       matrix:
         os: ['ubuntu-latest']
-        node-version: [16.x]
-        prisma-client-version: ['3.5']
+        node-version: [16]
+        prisma-client-version: ['4.0']
+
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
       - run: yarn --frozen-lockfile
+
       - name: Set E2E DB Schema
-        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --github-env $GITHUB_ENV
-      - run: yarn -s build
+        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --prisma-client-version ${{ matrix.prisma-client-version }} --github-env $GITHUB_ENV
+
+      - name: Build
+        run: yarn -s build
+
       - name: Install Prisma Client version
         run: yarn -s add @prisma/client@${{ matrix.prisma-client-version }}
-      - run: yarn -s test:ci
+
+      - name: Test
+        run: yarn -s test:ci
 
   release-canary:
-    needs:
-      - test-latest-prisma
-      - test-past-prisma
-    runs-on: ubuntu-latest
+    needs: [test-latest-prisma, test-past-prisma]
+    name: Release canary
+    timeout-minutes: 20
+
+    strategy:
+      matrix:
+        os: ['ubuntu-latest']
+        node-version: [16]
+
+    runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
-      - name: Install Dependencies
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      - name: Install dependencies
         run: yarn --frozen-lockfile
+
       - name: Release Canary
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}

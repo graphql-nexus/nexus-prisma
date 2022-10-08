@@ -1,8 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-
-import { noop } from 'lodash'
-
+const lodash = require('lodash')
 /**
  * This proxy enables users to _not_ get blocked from generating Nexus Prisma. In order to generate Nexus
  * Prisma they must run Nexus reflection. This in turn means running through code that is using Nexus Prisma.
@@ -12,7 +8,7 @@ import { noop } from 'lodash'
  * This solution allows them to do basically anything with Nexus Prisma _before generation_ without hitting
  * runtime errors.
  */
-export const runtimeProxy: any = new Proxy(noop, {
+const runtimeProxy = new Proxy(lodash.noop, {
   get() {
     return runtimeProxy
   },
@@ -20,3 +16,14 @@ export const runtimeProxy: any = new Proxy(noop, {
     return runtimeProxy
   },
 })
+
+/**
+ * If you're seeing this it means that you have not generated Nexus Prisma.
+ *
+ * Nexus Prisma is partly a generated library. Before using it you must run its generation step.
+ *
+ * To run its generation step simply run Nexus reflection like you normally would.
+ */
+module.exports = {
+  PleaseRunPrismaGenerate: runtimeProxy,
+}

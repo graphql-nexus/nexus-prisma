@@ -15,6 +15,7 @@ import { d } from '../helpers/debugNexusPrisma'
 import { resolveGitHubActionsWindowsPathTilde } from '../helpers/utils'
 import { renderCodeBlock, renderList, renderWarning } from '../lib/diagnostic'
 import { PrismaUtils } from '../lib/prisma-utils'
+import { OUTPUT_SOURCE_DIR } from '../generator/generate'
 
 process.env.DEBUG_COLORS = 'true'
 process.env.DEBUG_HIDE_DATE = 'true'
@@ -27,7 +28,7 @@ process.env.DEBUG_HIDE_DATE = 'true'
 generatorHandler({
   onManifest() {
     return {
-      defaultOutput: Path.join(__dirname, '../runtime'),
+      defaultOutput: OUTPUT_SOURCE_DIR,
       prettyName: 'Nexus Prisma',
     }
   },
@@ -66,7 +67,7 @@ generatorHandler({
           solution: `Create a configuration file in one of the following locations:\n\n${renderList(supportedSettingsModulePaths)}\n\nThen add the following code:\n\n${renderCodeBlock(dindist`
             import { settings } from 'nexus-prisma/generator'
 
-            settings.change({
+            settings({
               output: '${generator.output.value}'
             })
         `)}`,
@@ -132,6 +133,16 @@ function getPrismaClientImportIdForItsGeneratorOutputConfig(
   const prismaClientDefaultOutput = Path.normalize(`/node_modules/@prisma/client`)
 
   if (!prismaClientGeneratorConfig.output || !prismaClientGeneratorConfig.output.value) {
+    return prismaClientPackageMoniker
+  }
+
+  /**
+   * when using a pnpm package manager it's generate a custom folder for every package and breaking our import.
+   * as a fix if we found that the prisma output path include the .pnpm folder we use the prismaClientPackageMoniker
+   * TODO: adding a test https://github.com/prisma/nexus-prisma/issues/189
+   */
+  const prismaClientOutputPNPM = Path.normalize(`/node_modules/.pnpm/@prisma+client`)
+  if (prismaClientGeneratorConfig.output.value.includes(prismaClientOutputPNPM)) {
     return prismaClientPackageMoniker
   }
 

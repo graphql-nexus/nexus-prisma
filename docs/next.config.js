@@ -1,26 +1,41 @@
-/* eslint-disable */
+const withNextra = require('nextra')({
+  theme: 'nextra-theme-docs',
+  themeConfig: './theme.config.tsx',
+  unstable_flexsearch: true,
+})
 
-const remarkGfm = require('remark-gfm')
-const withNextra = require('nextra')
+const securityHeaders = [
+  {
+    key: 'X-Frame-Options',
+    value: 'SAMEORIGIN',
+  },
+  {
+    key: 'X-Content-Type-Options',
+    value: 'nosniff',
+  },
+]
 
-module.exports = withNextra('nextra-theme-docs', './theme.config.js')(withRemarkGFM())
-
-/**
- * Use Remark GFM in MDX Webpack Loader.
- * Can be removed once shuding/nextra#184 is released.
- *
- * @returns {import('next').NextConfig}
- * @see https://github.com/shuding/nextra/pull/184/
- */
-function withRemarkGFM() {
-  return {
-    webpack(config, options) {
-      const markdownRule = config.module.rules.find((rule) => rule.test?.toString() === '/\\.mdx?$/')
-      const mdxLoaderConfig = markdownRule.use.find(({ loader }) => loader === '@mdx-js/loader')
-      mdxLoaderConfig.options = {
-        remarkPlugins: [remarkGfm],
-      }
-      return config
-    },
-  }
-}
+module.exports = withNextra({
+  basePath: '/nexus-prisma',
+  images: {
+    unoptimized: true
+  },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: securityHeaders,
+      },
+    ]
+  },
+  async redirects() {
+    return [
+      {
+        source: '/docs',
+        destination: '/docs/index',
+        permanent: false,
+      },
+    ]
+  },
+  reactStrictMode: true
+})

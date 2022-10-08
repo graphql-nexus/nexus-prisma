@@ -1,13 +1,14 @@
 import gql from 'graphql-tag'
 import { objectType, queryType } from 'nexus'
 import { testIntegration, TestIntegrationParams, testIntegrationPartial } from '../__helpers__/testers'
+import { ansiEscapeSequencePattern } from '../../utils/ansiEscapeSequencePattern'
 
 const base = testIntegrationPartial({
   database: `
     model User {
       id        String   @id
 			profile   Profile @relation(fields: [profileId], references: [id])
-			profileId String
+			profileId String  @unique
     }
 		model Profile {
       id    String  @id
@@ -96,7 +97,10 @@ describe('instanceOf_duckType_fallback strategy:', () => {
     // The emitted error contains a path that isn't stable across the CI/CI matrix. Needs to be processed.
     expect(result) {
       if (result.logs[0]) {
-        result.logs[0] = result.logs[0]!.replace(/(.*imported from).*(is not the.*)/, '$1 <dynamic_path> $2')
+        result.logs[0] = result.logs[0]!.replace(
+          /(.*imported from).*(is not the.*)/,
+          '$1 <dynamic_path> $2'
+        ).replace(ansiEscapeSequencePattern, '')
       }
       expect(result.logs).toMatchSnapshot(`logs`)
       expect(result.graphqlSchemaSDL).toMatchSnapshot(`graphqlSchemaSDL`)

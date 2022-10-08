@@ -110,3 +110,8 @@ generator.d.ts
 generator.js
 
 tests/__cache__
+
+.idea
+
+.nexus-prisma
+.vercel

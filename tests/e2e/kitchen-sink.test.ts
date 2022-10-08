@@ -83,12 +83,12 @@ beforeEach(() => {
       dotenv: '^9.0.0',
       'apollo-server': '^2.24.0',
       'cross-env': '^7.0.1',
-      '@prisma/client': '^3.5.0',
+      '@prisma/client': '^4.0.0',
       '@types/node': '^14.14.32',
       graphql: '^15.5.0',
       nexus: '1.1.0',
-      prisma: '^3.5.0',
-      'ts-node': '^9.1.1',
+      prisma: '^4.0.0',
+      'ts-node': '^10.8.1',
       'ts-node-dev': '^1.1.6',
       typescript: '^4.2.3',
     },
@@ -120,7 +120,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
           model Bar {
             id     String   @id
             foo    Foo?     @relation(fields: [fooId], references: [id])
-            fooId  String?
+            fooId  String?  @unique
           }
 
           // This type "Qux" will not be projected
@@ -352,13 +352,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
    * Sanity check the Prisma Client import ID
    */
 
-  expect(ctx.fs.read('node_modules/nexus-prisma/dist-cjs/runtime/index.js')).toMatch(
-    /.*"prismaClientImportId": "@prisma\/client".*/
-  )
-
-  // TODO once a dedicated ESM test exists, move this exlcusively to it
-  // For not this is a cheap sanity check
-  expect(ctx.fs.read('node_modules/nexus-prisma/dist-esm/runtime/index.js')).toMatch(
+  expect(ctx.fs.read('node_modules/.nexus-prisma/index.js')).toMatch(
     /.*"prismaClientImportId": "@prisma\/client".*/
   )
 

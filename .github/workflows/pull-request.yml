@@ -1,0 +1,107 @@
+name: Pull Request
+on:
+  pull_request:
+
+jobs:
+  validate:
+    name: Validate Codebase
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    strategy:
+      matrix:
+        node-version: [14]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Run prettier
+        run: yarn -s format:check
+
+      - name: Run es-lint
+        run: yarn -s lint:check
+
+  test-latest-prisma:
+    needs: [validate]
+    name: Test with latest Prisma
+    timeout-minutes: 20
+
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        node-version: [14, 16]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Set E2E DB Schema for Windows
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --github-env $env:GITHUB_ENV
+
+      - name: Set E2E DB Schema for other operating systems
+        if: ${{ matrix.os != 'windows-latest' }}
+        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --github-env $GITHUB_ENV
+
+      - name: Build
+        run: yarn -s build
+
+      - name: Test
+        run: yarn -s test:ci
+
+  test-past-prisma:
+    needs: [validate]
+    name: Test with past Prisma
+    timeout-minutes: 20
+
+    strategy:
+      matrix:
+        os: ['ubuntu-latest']
+        node-version: [16]
+        prisma-client-version: ['4.0']
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Set E2E DB Schema
+        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --prisma-client-version ${{ matrix.prisma-client-version }} --github-env $GITHUB_ENV
+
+      - name: Build
+        run: yarn -s build
+
+      - name: Install Prisma Client version
+        run: yarn -s add @prisma/client@${{ matrix.prisma-client-version }}
+
+      - name: Test
+        run: yarn -s test:ci

@@ -1,0 +1,12 @@
+{
+  "*": {
+    "type": "page"
+  },
+  "index": {
+    "title": "Home",
+    "hidden": "true",
+    "theme": { "layout": "raw" }
+  },
+  "docs": "Docs",
+  "roadmap": "Roadmap"
+}

@@ -8,6 +8,7 @@
   "files": [
     "dist-cjs",
     "dist-esm",
+    "scripts/production",
     "scalars.d.ts",
     "scalars.js",
     "generator.d.ts",
@@ -59,7 +60,7 @@
     "dev": "yarn -s clean && tsc --build --watch tsconfig.cjs.json tsconfig.esm.json",
     "dev:ts": "yarn dev",
     "dev:yalc": "nodemon --delay 1.5 --exec 'yalc push --no-scripts' --watch 'dist-*/**/*'",
-    "build": "yarn clean && tsc --build tsconfig.cjs.json tsconfig.esm.json",
+    "build": "yarn generate && yarn clean && tsc --build tsconfig.cjs.json tsconfig.esm.json",
     "test": "cross-env NO_COLOR=true DEBUG='konn*,e2e' jest",
     "test:e2e": "cross-env NO_COLOR=true DEBUG=e2e jest --selectProjects e2e",
     "test:unit": "cross-env NO_COLOR=true jest --selectProjects unit",
@@ -70,13 +71,15 @@
     "release:pr": "dripip pr",
     "release:canary": "dripip preview",
     "release:stable": "dripip stable",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "yarn build",
+    "generate": "node scripts/production/postinstall.js",
+    "postinstall": "node scripts/production/postinstall.js"
   },
   "devDependencies": {
     "@homer0/prettier-plugin-jsdoc": "^4.0.6",
     "@prisma-labs/prettier-config": "0.1.0",
-    "@prisma/client": "^3.12.0",
-    "@prisma/sdk": "^3.12.0",
+    "@prisma/client": "^4.1.0",
+    "@prisma/internals": "^4.1.0",
     "@types/debug": "^4.1.7",
     "@types/expand-tilde": "^2.0.0",
     "@types/jest": "27.0.3",
@@ -108,7 +111,7 @@
     "nodemon": "^2.0.15",
     "object-hash": "^2.2.0",
     "prettier": "2.5.0",
-    "prisma": "3.12.0",
+    "prisma": "4.1.0",
     "read-pkg-up": "7",
     "slug": "^5.2.0",
     "strip-ansi": "6",
@@ -121,8 +124,8 @@
   },
   "prettier": "@prisma-labs/prettier-config",
   "peerDependencies": {
-    "@prisma/client": "^3.10",
-    "graphql": "^15 | ^16",
+    "@prisma/client": "^4",
+    "graphql": "^15.0.0 || ^16.0.0",
     "nexus": "^1.0.0",
     "ts-node": "^10.0.0"
   },
@@ -132,7 +135,7 @@
     }
   },
   "dependencies": {
-    "@prisma/generator-helper": "^3.12.0",
+    "@prisma/generator-helper": "^4.1.0",
     "debug": "^4.3.3",
     "decimal.js": "^10.3.1",
     "dindist": "^1.0.2",

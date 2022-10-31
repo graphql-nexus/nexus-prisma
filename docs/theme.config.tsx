@@ -4,18 +4,18 @@ import { NexusPrismaIcon } from './components/logos/NexusPrisma'
 
 export default {
   project: {
-      link: 'https://github.com/prisma/nexus-prisma'
+    link: 'https://github.com/prisma/nexus-prisma',
   },
   docsRepositoryBase: 'https://github.com/prisma/nexus-prisma/blob/main/docs/pages',
   titleSuffix: ' | Nexus Prisma',
   toc: {
-      float: true
+    float: true,
   },
   feedback: {
-      content: 'Question? Give us feedback →'
+    content: 'Question? Give us feedback →',
   },
   footer: {
-      text: `MIT ${new Date().getFullYear()}`
+    text: `MIT ${new Date().getFullYear()}`,
   },
   banner: function Banner() {
     return (
@@ -52,7 +52,7 @@ export default {
     )
   },
   editLink: {
-      text: 'Edit this page on GitHub'
+    text: 'Edit this page on GitHub',
   },
   gitTimestamp: 'Last updated on',
 }

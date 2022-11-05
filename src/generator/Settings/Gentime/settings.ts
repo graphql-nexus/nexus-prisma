@@ -25,7 +25,7 @@ export type Input = {
    *     In this mode, guide content into your JSDoc that looks something like the following:
    *
    *     ```
-   *     * ### ️⚠️ You have not writen documentation for ${thisItem}
+   *     * ### ️⚠️ You have not written documentation for ${thisItem}
    *
    *     * Replace this default advisory JSDoc with your own documentation about ${thisItem}
    *     * by documenting it in your Prisma schema. For example:

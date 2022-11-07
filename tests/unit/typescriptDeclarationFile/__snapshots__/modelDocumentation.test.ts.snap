@@ -173,7 +173,7 @@ exports[`When a model field has a documentation comment, then it is used for the
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
+  * ### ️⚠️ You have not written documentation for model SomeModel
   *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
@@ -341,7 +341,7 @@ exports[`When a model field has no documentation comment, then it gets the defau
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
+  * ### ️⚠️ You have not written documentation for model SomeModel
   *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
@@ -374,7 +374,7 @@ export interface SomeModel {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
+    * ### ️⚠️ You have not written documentation for model SomeModel
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
@@ -541,7 +541,7 @@ export interface SomeModel {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
+    * ### ️⚠️ You have not written documentation for model SomeModel
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
@@ -687,7 +687,7 @@ exports[`When a model has no documentation comment, then it gets the default JSD
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
+  * ### ️⚠️ You have not written documentation for model SomeModel
   *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
@@ -720,7 +720,7 @@ export interface SomeModel {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
+    * ### ️⚠️ You have not written documentation for model SomeModel
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:

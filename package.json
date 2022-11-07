@@ -115,7 +115,7 @@
     "read-pkg-up": "7",
     "slug": "^5.2.0",
     "strip-ansi": "6",
-    "ts-jest": "27.0.7",
+    "ts-jest": "29.0.3",
     "ts-node": "^10.4.0",
     "type-fest": "^2.8.0",
     "typescript": "4.5.2",

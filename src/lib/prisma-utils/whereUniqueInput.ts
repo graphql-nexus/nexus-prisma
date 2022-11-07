@@ -26,8 +26,11 @@ export const createWhereUniqueInput = (source: RecordUnknown, model: DMMF.Model)
     return pick(source, uniqueIdentifierFields)
   }
 
+  const propertyName =
+    (model.primaryKey?.fields === uniqueIdentifierFields && model.primaryKey.name) ||
+    TypeScriptOrmCompoundUniquePropertyName(uniqueIdentifierFields)
   return {
-    [TypeScriptOrmCompoundUniquePropertyName(uniqueIdentifierFields)]: pick(source, uniqueIdentifierFields),
+    [propertyName]: pick(source, uniqueIdentifierFields),
   }
 }
 
@@ -54,9 +57,6 @@ function getUniqueIdentifierFields(model: DMMF.Model): FieldName[] {
 
   // Try finding 2
   if (model.primaryKey && model.primaryKey.fields.length > 0) {
-    if (model.primaryKey.name) {
-      return [model.primaryKey.name]
-    }
     return model.primaryKey.fields
   }
 

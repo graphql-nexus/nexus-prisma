@@ -78,7 +78,7 @@ testIntegration({
       id1    String
       id2    String
       posts  Post[]
-      @@id(fields: [id1, id2])
+      @@id(fields: [id1, id2], name: "usersCustomPK")
     }
     model Post {
       id         String  @id

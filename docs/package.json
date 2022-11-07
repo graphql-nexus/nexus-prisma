@@ -15,7 +15,7 @@
     "@reach/skip-nav": "0.17.0",
     "next": "12.3.0",
     "nextra": "2.0.0-beta.41",
-    "nextra-theme-docs": "2.0.0-beta.29",
+    "nextra-theme-docs": "2.0.0-beta.41",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },

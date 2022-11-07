@@ -861,6 +861,11 @@
   resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-4.1.0.tgz#da8002d4b75c92e3fd564ba5b0bd04847ffb3c4c"
   integrity sha512-quqHXD3P83NBLVtRlts4SgKHmqgA8GMiyDTJ7af03Wg0gl6F5t65mBYvIuwmD+52vHm42JtIsp/fAO9YIV0JBA==
 
+"@prisma/engines@4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-4.5.0.tgz#82df347a893a5ae2a67707d44772ba181f4b9328"
+  integrity sha512-4t9ir2SbQQr/wMCNU4YpHWp5hU14J2m3wHUZnGJPpmBF8YtkisxyVyQsKd1e6FyLTaGq8LOLhm6VLYHKqKNm+g==
+
 "@prisma/fetch-engine@4.1.0":
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/@prisma/fetch-engine/-/fetch-engine-4.1.0.tgz#0ca9a775ddd4b4b71d9e703ccc868e81c7b34f2e"
@@ -5069,12 +5074,12 @@ printj@~1.1.0:
   resolved "https://registry.npmjs.org/printj/-/printj-1.1.2.tgz"
   integrity sha512-zA2SmoLaxZyArQTOPj5LXecR+RagfPSU5Kw1qP+jkWeNlrq+eJZyY2oS68SU1Z/7/myXM4lo9716laOFAVStCQ==
 
-prisma@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/prisma/-/prisma-4.1.0.tgz#5d43597f0f2603a4a75d9586346c74110d8e221f"
-  integrity sha512-iwqpAT6In1uvMSwQAM3PqmaBdhh2OaQ/2t+n3RjpW4vAKP3R7E1T34FZUU4zGOWtMWm5dt0sPThQkT/h87r6gw==
+prisma@4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/prisma/-/prisma-4.5.0.tgz#361ae3f4476d0821b97645e5da42975a7c2943bb"
+  integrity sha512-9Aeg4qiKlv9Wsjz4NO8k2CzRzlvS3A4FYVJ5+28sBBZ0eEwbiVOE/Jj7v6rZC1tFW2s4GSICQOAyuOjc6WsNew==
   dependencies:
-    "@prisma/engines" "4.1.0"
+    "@prisma/engines" "4.5.0"
 
 process-nextick-args@~2.0.0:
   version "2.0.1"

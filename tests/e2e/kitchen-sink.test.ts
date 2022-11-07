@@ -81,7 +81,7 @@ beforeEach(() => {
     },
     dependencies: {
       dotenv: '^9.0.0',
-      'apollo-server': '^2.24.0',
+      'apollo-server': '^3.11.1',
       'cross-env': '^7.0.1',
       '@prisma/client': '^4.0.0',
       '@types/node': '^14.14.32',

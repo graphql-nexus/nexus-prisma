@@ -140,7 +140,7 @@
     "decimal.js": "^10.3.1",
     "dindist": "^1.0.2",
     "expand-tilde": "^2.0.2",
-    "fs-jetpack": "^4.3.0",
+    "fs-jetpack": "^5.1.0",
     "graphql-scalars": "^1.13.6",
     "kleur": "^4.1.4",
     "lodash": "^4.17.21",

@@ -136,7 +136,7 @@
   },
   "dependencies": {
     "@prisma/generator-helper": "^4.1.0",
-    "debug": "^4.3.3",
+    "debug": "^4.3.4",
     "decimal.js": "^10.3.1",
     "dindist": "^1.0.2",
     "expand-tilde": "^2.0.2",

@@ -274,7 +274,19 @@
   resolved "https://registry.npmjs.org/@prisma-labs/prettier-config/-/prettier-config-0.1.0.tgz"
   integrity sha512-P0h2y+gnIxFP2HdsTYSYHWmabGBlxyVjnUepsrRe8gAF36mxOonGsbsQmKt/Q9H9CMjrSkFoDe5F5HLi2iW5/Q==
 
-"@reach/skip-nav@0.17.0", "@reach/skip-nav@^0.17.0":
+"@reach/polymorphic@0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@reach/polymorphic/-/polymorphic-0.18.0.tgz#2fe42007a774e06cdbc8e13e0d46f2dc30f2f1ed"
+  integrity sha512-N9iAjdMbE//6rryZZxAPLRorzDcGBnluf7YQij6XDLiMtfCj1noa7KyLpEc/5XCIB/EwhX3zCluFAwloBKdblA==
+
+"@reach/skip-nav@0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@reach/skip-nav/-/skip-nav-0.18.0.tgz#9f72ba7ffcd8231c5d3aa10829ef68806e5bf759"
+  integrity sha512-7XKHX0NNTz9VJw1d+ZRuu3KhKSOZTIHSbHUuv7qKKPwSNApDa+dVGqR/I7dKwyB/CDFMXO4iEz4XLtOmvi0FEg==
+  dependencies:
+    "@reach/polymorphic" "0.18.0"
+
+"@reach/skip-nav@^0.17.0":
   version "0.17.0"
   resolved "https://registry.npmjs.org/@reach/skip-nav/-/skip-nav-0.17.0.tgz"
   integrity sha512-wkkpQK3ffczzGHis6TaUvpOabuAL9n9Kh5vr4h56XPIJP3X77VcHUDk7MK3HbV1mTgamGxc9Hbd1sXKSWLu3yA==

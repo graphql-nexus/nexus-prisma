@@ -109,7 +109,7 @@
     "markdown-toc": "^1.2.0",
     "nexus": "^1.1.0",
     "nodemon": "^2.0.20",
-    "object-hash": "^2.2.0",
+    "object-hash": "^3.0.0",
     "prettier": "2.7.1",
     "prisma": "4.1.0",
     "read-pkg-up": "7",

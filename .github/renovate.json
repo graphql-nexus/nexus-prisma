@@ -3,5 +3,6 @@
   "extends": ["config:base", ":semanticCommits", ":automergeMinor"],
   "rangeStrategy": "bump",
   "assignees": ["rostislav-simonik"],
-  "reviewers": ["rostislav-simonik"]
+  "reviewers": ["rostislav-simonik"],
+  "ignorePaths": []
 }

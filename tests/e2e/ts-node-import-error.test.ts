@@ -45,6 +45,7 @@ const normalizeGeneratorOutput = (output: string) =>
     .replaceAll(/(\d+|\d+(\.\d+))(ms|s)/g, '<SOME TIME><unit>')
     .replaceAll(/ to .* in /g, ' to <SOME PATH> in ')
     .replaceAll(/loaded from.*/g, 'loaded from <SOME PATH>')
+    .replaceAll(/Error: Cannot find module/g, 'Cannot find module')
     .replaceAll(/Generated Prisma Client \(.*\)/g, 'Generated Prisma Client (<SOME VERSION>)')
     // https://regex101.com/r/r2wR1Y/2
     .replaceAll(/Require stack:(?:(?:\n\s*- .*)(?:\n +at .* \(.*\))*)+/g, 'Require stack:\n- <SOME STACK>')

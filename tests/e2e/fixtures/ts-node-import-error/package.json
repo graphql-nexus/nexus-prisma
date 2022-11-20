@@ -1,0 +1,14 @@
+{
+  "name": "ts-node-import-error",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "__dynamic__",
+    "graphql": "^15.8.0",
+    "nexus": "1.1.0",
+    "prisma": "__dynamic__"
+  }
+}

@@ -12,14 +12,14 @@
     "db:migrate": "prisma db push --force-reset --accept-data-loss && ts-node prisma/seed"
   },
   "dependencies": {
-		"@prisma/client": "__dynamic__",
+    "@prisma/client": "__dynamic__",
     "@types/node": "^18.11.9",
     "apollo-server": "^3.11.1",
     "cross-env": "^7.0.3",
     "dotenv": "^9.0.0",
     "graphql": "^15.8.0",
     "nexus": "1.1.0",
-		"prisma": "__dynamic__",
+    "prisma": "__dynamic__",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^1.1.6",
     "typescript": "4.5.2"

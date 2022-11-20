@@ -6,9 +6,9 @@
     "build": "prisma generate"
   },
   "dependencies": {
-		"@prisma/client": "__dynamic__",
+    "@prisma/client": "__dynamic__",
     "graphql": "^15.8.0",
     "nexus": "1.1.0",
-		"prisma": "__dynamic__"
+    "prisma": "__dynamic__"
   }
 }

@@ -1,6 +1,7 @@
 import dindist from 'dindist'
 import { konn, providers } from 'konn'
 import 'ts-replace-all'
+import * as Path from 'path'
 import { createPrismaSchema } from '../__helpers__/helpers'
 import { project } from '../__providers__/project'
 
@@ -11,18 +12,7 @@ const ctx = konn()
   .done()
 
 it('when project does not have ts-node installed nexus-prisma generator still generates if there are no TS generator config files present', async () => {
-  ctx.packageJson.merge({
-    scripts: {
-      build: 'prisma generate',
-    },
-    dependencies: {
-      '@prisma/client': '4.0.0',
-      graphql: '15.5.1',
-      nexus: '1.1.0',
-      prisma: '4.0.0',
-    },
-  })
-
+  ctx.fixture.use(Path.join(__dirname, 'fixtures/ts-node-import-error'))
   ctx.fs.write(
     `prisma/schema.prisma`,
     createPrismaSchema({

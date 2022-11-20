@@ -66,33 +66,7 @@ const ctx = konn()
   .done()
 
 beforeEach(() => {
-  ctx.packageJson.merge({
-    license: 'MIT',
-    scripts: {
-      reflect: 'yarn -s reflect:prisma && yarn -s reflect:nexus',
-      'reflect:prisma': "cross-env DEBUG='*' prisma generate",
-      // peer dependency check will fail since we're using yalc, e.g.:
-      // " ... nexus-prisma@0.0.0-dripip+c2653557 does not officially support @prisma/client@2.22.1 ... "
-      'reflect:nexus': 'cross-env REFLECT=true ts-node --transpile-only src/schema',
-      build: 'tsc',
-      start: 'node build/server',
-      'dev:server': 'yarn ts-node-dev --transpile-only server',
-      'db:migrate': 'prisma db push --force-reset --accept-data-loss && ts-node prisma/seed',
-    },
-    dependencies: {
-      dotenv: '^9.0.0',
-      'apollo-server': '^3.11.1',
-      'cross-env': '^7.0.1',
-      '@prisma/client': '^4.0.0',
-      '@types/node': '^14.14.32',
-      graphql: '^15.5.0',
-      nexus: '1.1.0',
-      prisma: '^4.0.0',
-      'ts-node': '^10.8.1',
-      'ts-node-dev': '^1.1.6',
-      typescript: '^4.2.3',
-    },
-  })
+  ctx.fixture.use(Path.join(__dirname, 'fixtures/kitchen-sink'))
   ctx.runOrThrow(`${Path.join(process.cwd(), `node_modules/.bin/yalc`)} add ${ctx.thisPackageName}`)
   ctx.runOrThrow(`npm install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
 })

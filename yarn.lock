@@ -897,7 +897,7 @@
   resolved "https://registry.yarnpkg.com/@prisma-labs/prettier-config/-/prettier-config-0.1.0.tgz#ef6cb5f89487974ca997516e9b39d5ccbefeeaad"
   integrity sha512-P0h2y+gnIxFP2HdsTYSYHWmabGBlxyVjnUepsrRe8gAF36mxOonGsbsQmKt/Q9H9CMjrSkFoDe5F5HLi2iW5/Q==
 
-"@prisma/client@^4.0.0":
+"@prisma/client@^4.6.1":
   version "4.6.1"
   resolved "https://registry.yarnpkg.com/@prisma/client/-/client-4.6.1.tgz#e8e1d347ecbff44158d21b6591bb99650c8503a8"
   integrity sha512-M1+NNrMzqaOIxT7PBGcTs3IZo7d1EW/+gVQd4C4gUgWBDGgD9AcIeZnUSidgWClmpMSgVUdnVORjsWWGUameYA==
@@ -966,7 +966,7 @@
     temp-dir "2.0.0"
     tempy "1.0.1"
 
-"@prisma/generator-helper@4.6.1", "@prisma/generator-helper@^4.0.0":
+"@prisma/generator-helper@4.6.1", "@prisma/generator-helper@^4.6.1":
   version "4.6.1"
   resolved "https://registry.yarnpkg.com/@prisma/generator-helper/-/generator-helper-4.6.1.tgz#cb5248ff7ebf8722c311f26843b314e031e089a7"
   integrity sha512-70XBmqDhmpe8H35ttOJOgyg1OpppO/uelILB1SIwjeSI7PHHdU2+Y/+LkpnifkCEpSZKIhxEIPbHx17m2neAsA==
@@ -983,7 +983,7 @@
   dependencies:
     "@prisma/debug" "4.6.1"
 
-"@prisma/internals@^4.0.0":
+"@prisma/internals@^4.6.1":
   version "4.6.1"
   resolved "https://registry.yarnpkg.com/@prisma/internals/-/internals-4.6.1.tgz#e7e3a5121b39fc408c09c12f04439449580e5e64"
   integrity sha512-oPE01UMMY5W9PAr+uP0MaHO4o7SD3b7dVqaEuZsj6NRN7jtoKujQXp+zo74BAeqjLJyCiHXhTIReuO9NExiZtg==
@@ -4694,7 +4694,7 @@ pretty-format@^29.3.1:
     ansi-styles "^5.0.0"
     react-is "^18.0.0"
 
-prisma@^4.0.0:
+prisma@^4.6.1:
   version "4.6.1"
   resolved "https://registry.yarnpkg.com/prisma/-/prisma-4.6.1.tgz#6c85fb667abed006a6b849c9c1ddd81d3f071b87"
   integrity sha512-BR4itMCuzrDV4tn3e2TF+nh1zIX/RVU0isKtKoN28ADeoJ9nYaMhiuRRkFd2TZN8+l/XfYzoRKyHzUFXLQhmBQ==

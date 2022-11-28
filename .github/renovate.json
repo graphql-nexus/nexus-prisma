@@ -4,5 +4,6 @@
   "rangeStrategy": "bump",
   "assignees": ["rostislav-simonik"],
   "reviewers": ["rostislav-simonik"],
-  "ignorePaths": []
+  "ignorePaths": [],
+  "ignoreDeps": ["read-pkg-up"]
 }

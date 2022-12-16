@@ -5,5 +5,12 @@
   "assignees": ["rostislav-simonik"],
   "reviewers": ["rostislav-simonik"],
   "ignorePaths": [],
-  "ignoreDeps": ["read-pkg-up"]
+  "ignoreDeps": ["read-pkg-up"],
+  "packageRules": [
+    {
+      "groupName": "Typescript packages",
+      "groupSlug": "typescript-packages",
+      "matchPackageNames": ["typescript", "ts-node", "ts-node-dev"]
+    }
+  ]
 }

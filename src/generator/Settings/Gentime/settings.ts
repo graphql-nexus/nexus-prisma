@@ -162,7 +162,6 @@ export const create = () =>
         }),
         fields: {
           directory: {
-            initial: () => 'default',
           },
           name: {
             initial: () => 'index',

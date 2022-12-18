@@ -343,6 +343,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
   const serverProcess = ctx.runAsync(`node build/server`, { reject: false })
   serverProcess.stdout!.pipe(process.stdout)
 
+  let timeoutHandle: NodeJS.Timeout | undefined;
   const result = await Promise.race<'timeout' | 'server_started'>([
     new Promise((res) =>
       serverProcess.stdout!.on('data', (data: Buffer) => {
@@ -350,7 +351,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
       })
     ),
     new Promise((res) => {
-      setTimeout(() => res('timeout'), 10_000)
+      timeoutHandle = setTimeout(() => res('timeout'), 10_000)
     }),
   ])
 
@@ -358,6 +359,8 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
     throw new Error(
       `server was not ready after 10 seconds. The output from child process was:\n\n${serverProcess.stdio}\n\n`
     )
+  } else if (timeoutHandle) {
+    clearTimeout(timeoutHandle)
   }
 
   d(`starting client queries`)

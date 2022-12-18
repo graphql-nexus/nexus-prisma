@@ -278,7 +278,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
   const results = runTestProjectBuild()
 
   // uncomment this to see the raw results (helpful for debugging)
-  console.log(`e2e output:\n`, inspect(results, { depth: 10, colors: true }))
+  // console.log(`e2e output:\n`, inspect(results, { depth: 10, colors: true }))
 
   /**
    * Sanity checks around buildtime

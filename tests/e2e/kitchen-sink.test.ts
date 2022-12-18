@@ -331,11 +331,10 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
     /.*"prismaClientImportId": "@prisma\/client".*/
   )
 
-
   if (process.env.DATABASE_SETUP === 'not-available') {
     d(`database not available, skipping runtime test`)
   }
-  
+
   /**
    * Sanity check the runtime
    */
@@ -349,15 +348,16 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
   const serverProcess = ctx.runAsync(`node build/server`, { reject: false })
   serverProcess.stdout!.pipe(process.stdout)
 
-  const result = await timeoutRace<'server_started'>([
-    new Promise((res) =>
-      serverProcess.stdout!.on('data', (data: Buffer) => {
-        if (data.toString().match(SERVER_READY_MESSAGE)) res('server_started')
-      })
-    )],
-    10_000,
+  const result = await timeoutRace<'server_started'>(
+    [
+      new Promise((res) =>
+        serverProcess.stdout!.on('data', (data: Buffer) => {
+          if (data.toString().match(SERVER_READY_MESSAGE)) res('server_started')
+        })
+      ),
+    ],
+    10_000
   )
-
 
   if (result === 'timeout') {
     throw new Error(
@@ -393,7 +393,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
   // and rely on jest --forceExit to terminate the process
 
   await timeoutRace([serverProcess], 2_000)
-  
+
   d(`stopped server`)
 
   expect(data).toMatchSnapshot('client request 1')

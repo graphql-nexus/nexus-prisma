@@ -110,7 +110,7 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      - name: Set E2E DB Schema        
+      - name: Set E2E DB Schema
         run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --github-env $GITHUB_ENV
 
       - name: Build

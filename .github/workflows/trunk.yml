@@ -16,6 +16,7 @@ jobs:
         database: ['no-db']
 
     runs-on: ${{ matrix.os }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -108,7 +109,7 @@ jobs:
         os: ['ubuntu-latest']
         node-version: [16]
         database: ['db']
-        prisma-client-version: ['4.0']
+        prisma-base-version: ['4.0']
 
     runs-on: ${{ matrix.os }}
 
@@ -135,16 +136,20 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
 
-      - run: yarn --frozen-lockfile
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
 
       - name: Set E2E DB Schema
-        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --prisma-client-version ${{ matrix.prisma-client-version }} --github-env $GITHUB_ENV
+        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --prisma-client-version ${{ matrix.prisma-base-version }} --github-env $GITHUB_ENV
 
       - name: Build
         run: yarn -s build
 
-      - name: Install Prisma Client version
-        run: yarn -s add @prisma/client@${{ matrix.prisma-client-version }}
+      - name: Install prisma dev packages
+        run: yarn -s add prisma@${{ matrix.prisma-base-version }} @prisma/client@${{ matrix.prisma-base-version }} @prisma/internals@${{ matrix.prisma-base-version }} --dev
+
+      - name: Install prisma packages
+        run: yarn -s add @prisma/generator-helper@${{ matrix.prisma-base-version }}
 
       - name: Test
         run: yarn -s test:ci

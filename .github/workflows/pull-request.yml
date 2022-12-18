@@ -33,7 +33,7 @@ jobs:
 
   test-latest-prisma-without-database:
     needs: [validate]
-    name: Test with latest Prisma
+    name: Test with latest Prisma - No DB
     timeout-minutes: 20
 
     strategy:
@@ -74,7 +74,7 @@ jobs:
 
   test-latest-prisma-with-database:
     needs: [validate]
-    name: Test with latest Prisma
+    name: Test with latest Prisma - DB
     timeout-minutes: 20
 
     strategy:
@@ -121,7 +121,7 @@ jobs:
 
   test-past-prisma-with-database:
     needs: [validate]
-    name: Test with past Prisma
+    name: Test with past Prisma - DB
     timeout-minutes: 20
 
     strategy:

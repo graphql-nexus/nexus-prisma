@@ -2,6 +2,25 @@ import dedent from 'dindist'
 import * as fs from 'fs-jetpack'
 import * as Path from 'path'
 
+export const timeoutRace = async <T>(
+  values: Iterable<T | PromiseLike<T>>,
+  timeout: number,
+): Promise<Awaited<T> | 'timeout'> => {
+ let timeoutHandle: NodeJS.Timeout | undefined
+
+  const result = await Promise.race<'timeout' | T>([
+    ...values,
+    new Promise((res) => {
+      timeoutHandle = setTimeout(() => res('timeout'), timeout)
+    }),
+  ])
+
+  if (result !== 'timeout' && timeoutHandle) {
+    clearTimeout(timeoutHandle)
+  }
+  return result
+}
+
 export function assertBuildPresent() {
   if (fs.exists(Path.join(__dirname, '../../dist-esm')) === false)
     throw new Error(`Please run build ESM before running this test`)

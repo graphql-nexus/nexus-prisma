@@ -9,7 +9,7 @@ import stripAnsi from 'strip-ansi'
 import { inspect } from 'util'
 
 import { envarSpecs } from '../../src/lib/peerDepValidator'
-import { createPrismaSchema } from '../__helpers__/helpers'
+import { createPrismaSchema, timeoutRace } from '../__helpers__/helpers'
 import { graphQLClient } from '../__providers__/graphqlClient'
 import { project } from '../__providers__/project'
 
@@ -344,26 +344,21 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
   const serverProcess = ctx.runAsync(`node build/server`, { reject: false })
   serverProcess.stdout!.pipe(process.stdout)
 
-  let timeoutHandle: NodeJS.Timeout | undefined
-  const result = await Promise.race<'timeout' | 'server_started'>([
+  const result = await timeoutRace<'server_started'>([
     new Promise((res) =>
       serverProcess.stdout!.on('data', (data: Buffer) => {
         if (data.toString().match(SERVER_READY_MESSAGE)) res('server_started')
       })
-    ),
-    new Promise((res) => {
-      timeoutHandle = setTimeout(() => res('timeout'), 10_000)
-    }),
-  ])
+    )],
+    10_000,
+  )
+
 
   if (result === 'timeout') {
     throw new Error(
       `server was not ready after 10 seconds. The output from child process was:\n\n${serverProcess.stdio}\n\n`
     )
-  } else if (timeoutHandle) {
-    clearTimeout(timeoutHandle)
   }
-
   d(`starting client queries`)
 
   const data = await ctx.graphQLClient.request(gql`
@@ -391,8 +386,9 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
   serverProcess.cancel()
   // On Windows the serverProcess never completes the promise so we do an ugly timeout here
   // and rely on jest --forceExit to terminate the process
-  await Promise.race([serverProcess, new Promise((res) => setTimeout(res, 2000))])
 
+  await timeoutRace([serverProcess], 2_000)
+  
   d(`stopped server`)
 
   expect(data).toMatchSnapshot('client request 1')

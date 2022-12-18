@@ -396,8 +396,30 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
   await timeoutRace([serverProcess], 2_000)
 
   d(`stopped server`)
-
-  expect(data).toMatchSnapshot('client request 1')
+  expect(data).toMatchInlineSnapshot(`
+    Object {
+      "bars": Array [
+        Object {
+          "foo": Object {
+            "BigIntManually": null,
+            "BytesManually": null,
+            "DateTimeManually": null,
+            "DecimalManually": null,
+            "JsonManually": null,
+            "someBigIntField": 9007199254740991,
+            "someBytesField": Object {
+              "data": Array [],
+              "type": "Buffer",
+            },
+            "someDateTimeField": "2021-05-10T20:42:46.609Z",
+            "someDecimalField": "24.454545",
+            "someEnumA": "alpha",
+            "someJsonField": Object {},
+          },
+        },
+      ],
+    }
+  `)
 
   const [{ foo }] = data.bars
 

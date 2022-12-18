@@ -330,7 +330,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
     /.*"prismaClientImportId": "@prisma\/client".*/
   )
 
-  if (process.env.DATABASE_SETUP === 'not-available') {
+  if (process.env.DATABASE === 'no-db') {
     d(`database not available, skipping runtime test`)
     return
   }

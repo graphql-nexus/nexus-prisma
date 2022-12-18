@@ -9,7 +9,7 @@ import stripAnsi from 'strip-ansi'
 import { inspect } from 'util'
 
 import { envarSpecs } from '../../src/lib/peerDepValidator'
-import { createPrismaSchema } from '../__helpers__/helpers'
+import { createPrismaSchema, timeoutRace } from '../__helpers__/helpers'
 import { graphQLClient } from '../__providers__/graphqlClient'
 import { project } from '../__providers__/project'
 
@@ -261,9 +261,9 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
       filePath: `.env`,
       // prettier-ignore
       content: dindist`
-        DB_URL="postgres://bcnfshogmxsukp:e31b6ddc8b9d85f8964b6671e4b578c58f0d13e15f637513207d44268eabc950@ec2-54-196-33-23.compute-1.amazonaws.com:5432/d17vadgam0dtao?schema=${process.env.E2E_DB_SCHEMA ?? 'local'}"
+        DB_URL="postgresql://postgres:postgres@localhost/nexus-prisma?schema=${process.env.E2E_DB_SCHEMA ?? 'local'}"
         ${envarSpecs.NO_PEER_DEPENDENCY_CHECK.name}="true"
-      `,
+        `,
     },
   ]
 
@@ -277,7 +277,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
   const results = runTestProjectBuild()
 
   // uncomment this to see the raw results (helpful for debugging)
-  console.log(`e2e output:\n`, inspect(results, { depth: 10, colors: true }))
+  // console.log(`e2e output:\n`, inspect(results, { depth: 10, colors: true }))
 
   /**
    * Sanity checks around buildtime
@@ -330,6 +330,11 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
     /.*"prismaClientImportId": "@prisma\/client".*/
   )
 
+  if (process.env.DATABASE === 'no-db') {
+    d(`database not available, skipping runtime test`)
+    return
+  }
+
   /**
    * Sanity check the runtime
    */
@@ -343,23 +348,22 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
   const serverProcess = ctx.runAsync(`node build/server`, { reject: false })
   serverProcess.stdout!.pipe(process.stdout)
 
-  const result = await Promise.race<'timeout' | 'server_started'>([
-    new Promise((res) =>
-      serverProcess.stdout!.on('data', (data: Buffer) => {
-        if (data.toString().match(SERVER_READY_MESSAGE)) res('server_started')
-      })
-    ),
-    new Promise((res) => {
-      setTimeout(() => res('timeout'), 10_000)
-    }),
-  ])
+  const result = await timeoutRace<'server_started'>(
+    [
+      new Promise((res) =>
+        serverProcess.stdout!.on('data', (data: Buffer) => {
+          if (data.toString().match(SERVER_READY_MESSAGE)) res('server_started')
+        })
+      ),
+    ],
+    10_000
+  )
 
   if (result === 'timeout') {
     throw new Error(
       `server was not ready after 10 seconds. The output from child process was:\n\n${serverProcess.stdio}\n\n`
     )
   }
-
   d(`starting client queries`)
 
   const data = await ctx.graphQLClient.request(gql`
@@ -387,11 +391,34 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
   serverProcess.cancel()
   // On Windows the serverProcess never completes the promise so we do an ugly timeout here
   // and rely on jest --forceExit to terminate the process
-  await Promise.race([serverProcess, new Promise((res) => setTimeout(res, 2000))])
+
+  await timeoutRace([serverProcess], 2_000)
 
   d(`stopped server`)
-
-  expect(data).toMatchSnapshot('client request 1')
+  expect(data).toMatchInlineSnapshot(`
+    Object {
+      "bars": Array [
+        Object {
+          "foo": Object {
+            "BigIntManually": null,
+            "BytesManually": null,
+            "DateTimeManually": null,
+            "DecimalManually": null,
+            "JsonManually": null,
+            "someBigIntField": 9007199254740991,
+            "someBytesField": Object {
+              "data": Array [],
+              "type": "Buffer",
+            },
+            "someDateTimeField": "2021-05-10T20:42:46.609Z",
+            "someDecimalField": "24.454545",
+            "someEnumA": "alpha",
+            "someJsonField": Object {},
+          },
+        },
+      ],
+    }
+  `)
 
   const [{ foo }] = data.bars
 

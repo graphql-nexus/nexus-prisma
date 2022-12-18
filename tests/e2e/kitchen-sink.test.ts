@@ -264,10 +264,10 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
         DB_URL="postgresql://postgres:postgres@localhost/nexus-prisma?schema=${process.env.E2E_DB_SCHEMA ?? 'local'}"
         ${envarSpecs.NO_PEER_DEPENDENCY_CHECK.name}="true"
         `,
-      },
-    ]
-    
-    // DB_URL="postgres://bcnfshogmxsukp:e31b6ddc8b9d85f8964b6671e4b578c58f0d13e15f637513207d44268eabc950@ec2-54-196-33-23.compute-1.amazonaws.com:5432/d17vadgam0dtao?schema=${process.env.E2E_DB_SCHEMA ?? 'local'}"
+    },
+  ]
+
+  // DB_URL="postgres://bcnfshogmxsukp:e31b6ddc8b9d85f8964b6671e4b578c58f0d13e15f637513207d44268eabc950@ec2-54-196-33-23.compute-1.amazonaws.com:5432/d17vadgam0dtao?schema=${process.env.E2E_DB_SCHEMA ?? 'local'}"
   files.forEach((fileSpec) => ctx.fs.write(fileSpec.filePath, fileSpec.content))
 
   // todo api server & database & seed that allows for testing that prisma runtime usage works
@@ -344,7 +344,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
   const serverProcess = ctx.runAsync(`node build/server`, { reject: false })
   serverProcess.stdout!.pipe(process.stdout)
 
-  let timeoutHandle: NodeJS.Timeout | undefined;
+  let timeoutHandle: NodeJS.Timeout | undefined
   const result = await Promise.race<'timeout' | 'server_started'>([
     new Promise((res) =>
       serverProcess.stdout!.on('data', (data: Buffer) => {

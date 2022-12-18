@@ -1,4 +1,5 @@
 name: Pull Request
+
 on:
   pull_request:
 
@@ -179,6 +180,7 @@ jobs:
 
       - name: Install prisma packages
         run: yarn -s add @prisma/generator-helper@${{ matrix.prisma-base-version }}
+
       - name: Test
         run: yarn -s test:ci
         env:

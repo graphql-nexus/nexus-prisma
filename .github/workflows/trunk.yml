@@ -5,16 +5,18 @@ on:
     branches: [main]
 
 jobs:
-  test-latest-prisma:
+  test-latest-prisma-without-database:
     name: Test with latest Prisma
     timeout-minutes: 20
 
     strategy:
       matrix:
-        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        os: ['macos-latest', 'windows-latest']
         node-version: [14, 16]
+        database: ['no-db']
 
     runs-on: ${{ matrix.os }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -41,18 +43,34 @@ jobs:
 
       - name: Test
         run: yarn -s test:ci
+        env:
+          DATABASE: ${{ matrix.database }}
 
-  test-past-prisma:
-    name: Test with past Prisma
+  test-latest-prisma-with-database:
+    name: Test with latest Prisma
     timeout-minutes: 20
 
     strategy:
       matrix:
         os: ['ubuntu-latest']
-        node-version: [16]
-        prisma-client-version: ['4.0']
+        node-version: [14, 16]
+        database: ['db']
 
     runs-on: ${{ matrix.os }}
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -63,22 +81,84 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
 
-      - run: yarn --frozen-lockfile
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
 
-      - name: Set E2E DB Schema
-        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --prisma-client-version ${{ matrix.prisma-client-version }} --github-env $GITHUB_ENV
+      - name: Set E2E DB Schema for Windows
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --github-env $env:GITHUB_ENV
+
+      - name: Set E2E DB Schema for other operating systems
+        if: ${{ matrix.os != 'windows-latest' }}
+        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --github-env $GITHUB_ENV
 
       - name: Build
         run: yarn -s build
 
-      - name: Install Prisma Client version
-        run: yarn -s add @prisma/client@${{ matrix.prisma-client-version }}
+      - name: Test
+        run: yarn -s test:ci
+        env:
+          DATABASE: ${{ matrix.database }}
+
+  test-past-prisma-with-database:
+    name: Test with past Prisma
+    timeout-minutes: 20
+
+    strategy:
+      matrix:
+        os: ['ubuntu-latest']
+        node-version: [16]
+        database: ['db']
+        prisma-base-version: ['4.0']
+
+    runs-on: ${{ matrix.os }}
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Set E2E DB Schema
+        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --prisma-client-version ${{ matrix.prisma-base-version }} --github-env $GITHUB_ENV
+
+      - name: Build
+        run: yarn -s build
+
+      - name: Install prisma dev packages
+        run: yarn -s add prisma@${{ matrix.prisma-base-version }} @prisma/client@${{ matrix.prisma-base-version }} @prisma/internals@${{ matrix.prisma-base-version }} --dev
+
+      - name: Install prisma packages
+        run: yarn -s add @prisma/generator-helper@${{ matrix.prisma-base-version }}
 
       - name: Test
         run: yarn -s test:ci
+        env:
+          DATABASE: ${{ matrix.database }}
 
   release-canary:
-    needs: [test-latest-prisma, test-past-prisma]
+    needs:
+      [test-latest-prisma-without-database, test-latest-prisma-with-database, test-past-prisma-with-database]
     name: Release canary
     timeout-minutes: 20
 

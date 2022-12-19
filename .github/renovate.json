@@ -5,5 +5,12 @@
   "assignees": ["rostislav-simonik"],
   "reviewers": ["rostislav-simonik"],
   "ignorePaths": [],
-  "ignoreDeps": ["read-pkg-up"]
+  "ignoreDeps": ["read-pkg-up"],
+  "packageRules": [
+    {
+      "groupName": "Nextra packages",
+      "groupSlug": "nextra-packages",
+      "matchPackageNames": ["nextra", "nextra-theme-docs"]
+    }
+  ]
 }

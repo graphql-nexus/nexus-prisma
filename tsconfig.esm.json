@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo-esm",
     "outDir": "dist-esm",
     "module": "ES2015",
     "rootDir": "src",

@@ -155,6 +155,7 @@ jobs:
         run: yarn -s test:ci
         env:
           DATABASE: ${{ matrix.database }}
+          PRISMA_VERSION: past
 
   release-canary:
     needs:

@@ -63,7 +63,7 @@ export interface SomeModel {
      * The type of this field.
      */
     type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? NexusCore.NexusNonNullDef<'ID'>
+    ? NexusCore.NexusNonNullDef<'ID' & NexusCore.GetGen<'allNamedTypes', string>>
     : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
   
     /**
@@ -231,7 +231,7 @@ export interface SomeModel {
      * The type of this field.
      */
     type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? NexusCore.NexusNonNullDef<'ID'>
+    ? NexusCore.NexusNonNullDef<'ID' & NexusCore.GetGen<'allNamedTypes', string>>
     : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
   
     /**
@@ -410,7 +410,7 @@ export interface SomeModel {
      * The type of this field.
      */
     type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? NexusCore.NexusNonNullDef<'ID'>
+    ? NexusCore.NexusNonNullDef<'ID' & NexusCore.GetGen<'allNamedTypes', string>>
     : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
   
     /**
@@ -577,7 +577,7 @@ export interface SomeModel {
      * The type of this field.
      */
     type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? NexusCore.NexusNonNullDef<'ID'>
+    ? NexusCore.NexusNonNullDef<'ID' & NexusCore.GetGen<'allNamedTypes', string>>
     : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
   
     /**
@@ -756,7 +756,7 @@ export interface SomeModel {
      * The type of this field.
      */
     type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? NexusCore.NexusNonNullDef<'ID'>
+    ? NexusCore.NexusNonNullDef<'ID' & NexusCore.GetGen<'allNamedTypes', string>>
     : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
   
     /**
@@ -908,7 +908,7 @@ export interface SomeModel {
      * The type of this field.
      */
     type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
-    ? NexusCore.NexusNonNullDef<'ID'>
+    ? NexusCore.NexusNonNullDef<'ID' & NexusCore.GetGen<'allNamedTypes', string>>
     : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
   
     /**

@@ -11,6 +11,11 @@
       "groupName": "Nextra packages",
       "groupSlug": "nextra-packages",
       "matchPackageNames": ["nextra", "nextra-theme-docs"]
+    },
+    {
+      "groupName": "Typescript packages",
+      "groupSlug": "typescript-packages",
+      "matchPackageNames": ["typescript", "ts-node", "ts-node-dev"]
     }
   ]
 }

@@ -185,6 +185,7 @@ jobs:
         run: yarn -s test:ci
         env:
           DATABASE: ${{ matrix.database }}
+          PRISMA_VERSION: past
 
   test-documentation-build:
     needs: [validate]

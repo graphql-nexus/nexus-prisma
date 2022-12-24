@@ -23,7 +23,7 @@
   "devDependencies": {
     "@prisma-labs/prettier-config": "0.1.0",
     "@types/node": "18.11.9",
-    "@types/react": "18.0.25",
+    "@types/react": "18.0.26",
     "autoprefixer": "10.4.13",
     "eslint": "8.27.0",
     "eslint-config-next": "13.0.3",

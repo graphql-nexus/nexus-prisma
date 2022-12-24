@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`can project user-to-posts relation where user has composite ID: graphqlOperationExecutionResult 1`] = `
-Object {
-  "data": Object {
-    "users": Array [
-      Object {
+{
+  "data": {
+    "users": [
+      {
         "id1": "user1",
-        "posts": Array [
-          Object {
+        "posts": [
+          {
             "id": "post1",
           },
         ],
@@ -34,20 +34,20 @@ type Post {
 "
 `;
 
-exports[`can project user-to-posts relation where user has composite ID: logs 1`] = `Array []`;
+exports[`can project user-to-posts relation where user has composite ID: logs 1`] = `[]`;
 
 exports[`can project user-to-posts relationship in reverse (access use via post author field). If Post.author IS optional than it IS nullable in the GraphQL API.: graphqlOperationExecutionResult 1`] = `
-Object {
-  "data": Object {
-    "posts": Array [
-      Object {
-        "author": Object {
+{
+  "data": {
+    "posts": [
+      {
+        "author": {
           "id": "user1",
         },
         "id": "post1",
       },
-      Object {
-        "author": Object {
+      {
+        "author": {
           "id": "user1",
         },
         "id": "post2",
@@ -74,20 +74,20 @@ type Post {
 "
 `;
 
-exports[`can project user-to-posts relationship in reverse (access use via post author field). If Post.author IS optional than it IS nullable in the GraphQL API.: logs 1`] = `Array []`;
+exports[`can project user-to-posts relationship in reverse (access use via post author field). If Post.author IS optional than it IS nullable in the GraphQL API.: logs 1`] = `[]`;
 
 exports[`can project user-to-posts relationship in reverse (access use via post author field). If Post.author is NOT optional than it is NOT nullable in the GraphQL API.: graphqlOperationExecutionResult 1`] = `
-Object {
-  "data": Object {
-    "posts": Array [
-      Object {
-        "author": Object {
+{
+  "data": {
+    "posts": [
+      {
+        "author": {
           "id": "user1",
         },
         "id": "post1",
       },
-      Object {
-        "author": Object {
+      {
+        "author": {
           "id": "user1",
         },
         "id": "post2",
@@ -114,19 +114,19 @@ type Post {
 "
 `;
 
-exports[`can project user-to-posts relationship in reverse (access use via post author field). If Post.author is NOT optional than it is NOT nullable in the GraphQL API.: logs 1`] = `Array []`;
+exports[`can project user-to-posts relationship in reverse (access use via post author field). If Post.author is NOT optional than it is NOT nullable in the GraphQL API.: logs 1`] = `[]`;
 
 exports[`can project user-to-posts relationship: graphqlOperationExecutionResult 1`] = `
-Object {
-  "data": Object {
-    "users": Array [
-      Object {
+{
+  "data": {
+    "users": [
+      {
         "id": "user1",
-        "posts": Array [
-          Object {
+        "posts": [
+          {
             "id": "post1",
           },
-          Object {
+          {
             "id": "post2",
           },
         ],
@@ -153,4 +153,4 @@ type Post {
 "
 `;
 
-exports[`can project user-to-posts relationship: logs 1`] = `Array []`;
+exports[`can project user-to-posts relationship: logs 1`] = `[]`;

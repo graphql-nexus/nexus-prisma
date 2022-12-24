@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Can project User-to-Profile where Profile is using composite ID: graphqlOperationExecutionResult 1`] = `
-Object {
-  "data": Object {
-    "users": Array [
-      Object {
+{
+  "data": {
+    "users": [
+      {
         "id": "user1",
-        "profile": Object {
+        "profile": {
           "id1": "profile1",
-          "user": Object {
+          "user": {
             "id": "user1",
           },
         },
@@ -36,17 +36,17 @@ type Profile {
 "
 `;
 
-exports[`Can project User-to-Profile where Profile is using composite ID: logs 1`] = `Array []`;
+exports[`Can project User-to-Profile where Profile is using composite ID: logs 1`] = `[]`;
 
 exports[`Nullable on Without-Relation-Scalar Side limitation can be worked around by wrapping type in an explicit nonNull: graphqlOperationExecutionResult 1`] = `
-Object {
-  "data": Object {
-    "users": Array [
-      Object {
+{
+  "data": {
+    "users": [
+      {
         "id": "user1",
-        "profile": Object {
+        "profile": {
           "id": "profile1",
-          "user": Object {
+          "user": {
             "id": "user1",
           },
         },
@@ -74,17 +74,17 @@ type Profile {
 "
 `;
 
-exports[`Nullable on Without-Relation-Scalar Side limitation can be worked around by wrapping type in an explicit nonNull: logs 1`] = `Array []`;
+exports[`Nullable on Without-Relation-Scalar Side limitation can be worked around by wrapping type in an explicit nonNull: logs 1`] = `[]`;
 
 exports[`can project relationship in opposite direction of where @relation is defined, but the field will be nullable: graphqlOperationExecutionResult 1`] = `
-Object {
-  "data": Object {
-    "users": Array [
-      Object {
+{
+  "data": {
+    "users": [
+      {
         "id": "user1",
-        "profile": Object {
+        "profile": {
           "id": "profile1",
-          "user": Object {
+          "user": {
             "id": "user1",
           },
         },
@@ -112,15 +112,15 @@ type Profile {
 "
 `;
 
-exports[`can project relationship in opposite direction of where @relation is defined, but the field will be nullable: logs 1`] = `Array []`;
+exports[`can project relationship in opposite direction of where @relation is defined, but the field will be nullable: logs 1`] = `[]`;
 
 exports[`can project user-to-profile relationship: graphqlOperationExecutionResult 1`] = `
-Object {
-  "data": Object {
-    "users": Array [
-      Object {
+{
+  "data": {
+    "users": [
+      {
         "id": "user1",
-        "profile": Object {
+        "profile": {
           "id": "profile1",
         },
       },
@@ -146,4 +146,4 @@ type Profile {
 "
 `;
 
-exports[`can project user-to-profile relationship: logs 1`] = `Array []`;
+exports[`can project user-to-profile relationship: logs 1`] = `[]`;

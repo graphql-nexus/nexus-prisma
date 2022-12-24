@@ -64,7 +64,7 @@ export interface SomeModel {
      */
     type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
     ? NexusCore.NexusNonNullDef<'ID' & NexusCore.GetGen<'allNamedTypes', string>>
-    : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
+    : 'Warning/Error: The type \\'ID\\' is not amoung the union of GetGen<\\'allNamedTypes\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\'ID\\' to your GraphQL API.'
   
     /**
      * The documentation of this field.
@@ -141,7 +141,7 @@ import type { Settings } from 'nexus-prisma/dist-cjs/generator/Settings/index'
  *       }),
  *       context() {
  *         return {
- *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *           db: new PrismaClient(), // <-- You put Prisma client on the "db" context property
  *         }
  *       },
  *     })
@@ -232,7 +232,7 @@ export interface SomeModel {
      */
     type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
     ? NexusCore.NexusNonNullDef<'ID' & NexusCore.GetGen<'allNamedTypes', string>>
-    : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
+    : 'Warning/Error: The type \\'ID\\' is not amoung the union of GetGen<\\'allNamedTypes\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\'ID\\' to your GraphQL API.'
   
     /**
      * The documentation of this field.
@@ -309,7 +309,7 @@ import type { Settings } from 'nexus-prisma/dist-cjs/generator/Settings/index'
  *       }),
  *       context() {
  *         return {
- *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *           db: new PrismaClient(), // <-- You put Prisma client on the "db" context property
  *         }
  *       },
  *     })
@@ -411,7 +411,7 @@ export interface SomeModel {
      */
     type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
     ? NexusCore.NexusNonNullDef<'ID' & NexusCore.GetGen<'allNamedTypes', string>>
-    : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
+    : 'Warning/Error: The type \\'ID\\' is not amoung the union of GetGen<\\'allNamedTypes\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\'ID\\' to your GraphQL API.'
   
     /**
      * The documentation of this field.
@@ -488,7 +488,7 @@ import type { Settings } from 'nexus-prisma/dist-cjs/generator/Settings/index'
  *       }),
  *       context() {
  *         return {
- *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *           db: new PrismaClient(), // <-- You put Prisma client on the "db" context property
  *         }
  *       },
  *     })
@@ -578,7 +578,7 @@ export interface SomeModel {
      */
     type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
     ? NexusCore.NexusNonNullDef<'ID' & NexusCore.GetGen<'allNamedTypes', string>>
-    : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
+    : 'Warning/Error: The type \\'ID\\' is not amoung the union of GetGen<\\'allNamedTypes\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\'ID\\' to your GraphQL API.'
   
     /**
      * The documentation of this field.
@@ -655,7 +655,7 @@ import type { Settings } from 'nexus-prisma/dist-cjs/generator/Settings/index'
  *       }),
  *       context() {
  *         return {
- *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *           db: new PrismaClient(), // <-- You put Prisma client on the "db" context property
  *         }
  *       },
  *     })
@@ -757,7 +757,7 @@ export interface SomeModel {
      */
     type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
     ? NexusCore.NexusNonNullDef<'ID' & NexusCore.GetGen<'allNamedTypes', string>>
-    : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
+    : 'Warning/Error: The type \\'ID\\' is not amoung the union of GetGen<\\'allNamedTypes\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\'ID\\' to your GraphQL API.'
   
     /**
      * The documentation of this field.
@@ -834,7 +834,7 @@ import type { Settings } from 'nexus-prisma/dist-cjs/generator/Settings/index'
  *       }),
  *       context() {
  *         return {
- *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *           db: new PrismaClient(), // <-- You put Prisma client on the "db" context property
  *         }
  *       },
  *     })
@@ -909,7 +909,7 @@ export interface SomeModel {
      */
     type: 'ID' extends NexusCore.GetGen<'allNamedTypes', string>
     ? NexusCore.NexusNonNullDef<'ID' & NexusCore.GetGen<'allNamedTypes', string>>
-    : 'Warning/Error: The type \\\\'ID\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'ID\\\\' to your GraphQL API.'
+    : 'Warning/Error: The type \\'ID\\' is not amoung the union of GetGen<\\'allNamedTypes\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\'ID\\' to your GraphQL API.'
   
     /**
      * The documentation of this field.
@@ -986,7 +986,7 @@ import type { Settings } from 'nexus-prisma/dist-cjs/generator/Settings/index'
  *       }),
  *       context() {
  *         return {
- *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *           db: new PrismaClient(), // <-- You put Prisma client on the "db" context property
  *         }
  *       },
  *     })

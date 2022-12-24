@@ -87,7 +87,7 @@ export interface User {
      */
     type: 'Int' extends NexusCore.GetGen<'allNamedTypes', string>
     ? NexusCore.NexusNonNullDef<'Int' & NexusCore.GetGen<'allNamedTypes', string>>
-    : 'Warning/Error: The type \\\\'Int\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'Int\\\\' to your GraphQL API.'
+    : 'Warning/Error: The type \\'Int\\' is not amoung the union of GetGen<\\'allNamedTypes\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\'Int\\' to your GraphQL API.'
   
     /**
      * The documentation of this field.
@@ -139,7 +139,7 @@ export interface User {
      */
     type: 'Post' extends NexusCore.GetGen<'allNamedTypes', string>
     ? (NexusCore.NexusListDef<'Post' & NexusCore.GetGen<'allNamedTypes', string>> | NexusCore.NexusNonNullDef<'Post' & NexusCore.GetGen<'allNamedTypes', string>>)
-    : 'Warning/Error: The type \\\\'Post\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'Post\\\\' to your GraphQL API.'
+    : 'Warning/Error: The type \\'Post\\' is not amoung the union of GetGen<\\'allNamedTypes\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\'Post\\' to your GraphQL API.'
   
     /**
      * The documentation of this field.
@@ -226,7 +226,7 @@ export interface Post {
      */
     type: 'Int' extends NexusCore.GetGen<'allNamedTypes', string>
     ? NexusCore.NexusNonNullDef<'Int' & NexusCore.GetGen<'allNamedTypes', string>>
-    : 'Warning/Error: The type \\\\'Int\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'Int\\\\' to your GraphQL API.'
+    : 'Warning/Error: The type \\'Int\\' is not amoung the union of GetGen<\\'allNamedTypes\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\'Int\\' to your GraphQL API.'
   
     /**
      * The documentation of this field.
@@ -278,7 +278,7 @@ export interface Post {
      */
     type: 'User' extends NexusCore.GetGen<'allNamedTypes', string>
     ? NexusCore.NexusNullDef<'User' & NexusCore.GetGen<'allNamedTypes', string>>
-    : 'Warning/Error: The type \\\\'User\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'User\\\\' to your GraphQL API.'
+    : 'Warning/Error: The type \\'User\\' is not amoung the union of GetGen<\\'allNamedTypes\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\'User\\' to your GraphQL API.'
   
     /**
      * The documentation of this field.
@@ -330,7 +330,7 @@ export interface Post {
      */
     type: 'Int' extends NexusCore.GetGen<'allNamedTypes', string>
     ? NexusCore.NexusNullDef<'Int' & NexusCore.GetGen<'allNamedTypes', string>>
-    : 'Warning/Error: The type \\\\'Int\\\\' is not amoung the union of GetGen<\\\\'allNamedTypes\\\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\\\'Int\\\\' to your GraphQL API.'
+    : 'Warning/Error: The type \\'Int\\' is not amoung the union of GetGen<\\'allNamedTypes\\', string>. This means that either: 1) You need to run nexus typegen reflection. 2) You need to add the type \\'Int\\' to your GraphQL API.'
   
     /**
      * The documentation of this field.
@@ -409,7 +409,7 @@ import type { Settings } from 'nexus-prisma/dist-cjs/generator/Settings/index'
  *       }),
  *       context() {
  *         return {
- *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *           db: new PrismaClient(), // <-- You put Prisma client on the "db" context property
  *         }
  *       },
  *     })

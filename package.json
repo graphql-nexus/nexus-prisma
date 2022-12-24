@@ -100,7 +100,7 @@
     "eslint-plugin-only-warn": "^1.0.3",
     "execa": "^5.1.1",
     "graphql": "^15.8.0",
-    "graphql-request": "^3.7.0",
+    "graphql-request": "^5.1.0",
     "graphql-tag": "^2.12.6",
     "jest": "27.5.1",
     "jest-watch-select-projects": "^2.0.0",

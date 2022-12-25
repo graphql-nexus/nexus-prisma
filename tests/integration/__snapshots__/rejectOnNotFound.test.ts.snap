@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ignores global rejectOnNotFound Prisma Client settings: graphqlOperationExecutionResult 1`] = `
-Object {
-  "data": Object {
-    "users": Array [
-      Object {
+{
+  "data": {
+    "users": [
+      {
         "id": "user1",
         "profile": null,
       },
@@ -30,4 +30,4 @@ type Profile {
 "
 `;
 
-exports[`ignores global rejectOnNotFound Prisma Client settings: logs 1`] = `Array []`;
+exports[`ignores global rejectOnNotFound Prisma Client settings: logs 1`] = `[]`;

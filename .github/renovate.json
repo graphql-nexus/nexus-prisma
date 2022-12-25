@@ -5,7 +5,7 @@
   "assignees": ["rostislav-simonik"],
   "reviewers": ["rostislav-simonik"],
   "ignorePaths": [],
-  "ignoreDeps": ["read-pkg-up"],
+  "ignoreDeps": ["read-pkg-up", "execa"],
   "packageRules": [
     {
       "groupName": "Nextra packages",

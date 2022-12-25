@@ -97,7 +97,7 @@ import type { Settings } from 'nexus-prisma/dist-cjs/generator/Settings/index'
  *       }),
  *       context() {
  *         return {
- *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *           db: new PrismaClient(), // <-- You put Prisma client on the "db" context property
  *         }
  *       },
  *     })
@@ -209,7 +209,7 @@ import type { Settings } from 'nexus-prisma/dist-cjs/generator/Settings/index'
  *       }),
  *       context() {
  *         return {
- *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *           db: new PrismaClient(), // <-- You put Prisma client on the "db" context property
  *         }
  *       },
  *     })
@@ -319,7 +319,7 @@ import type { Settings } from 'nexus-prisma/dist-cjs/generator/Settings/index'
  *       }),
  *       context() {
  *         return {
- *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *           db: new PrismaClient(), // <-- You put Prisma client on the "db" context property
  *         }
  *       },
  *     })
@@ -443,7 +443,7 @@ import type { Settings } from 'nexus-prisma/dist-cjs/generator/Settings/index'
  *       }),
  *       context() {
  *         return {
- *           db: new PrismaClient(), // <-- You put Prisma client on the \\"db\\" context property
+ *           db: new PrismaClient(), // <-- You put Prisma client on the "db" context property
  *         }
  *       },
  *     })

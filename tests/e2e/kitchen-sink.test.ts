@@ -403,24 +403,24 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
 
   d(`stopped server`)
   expect(data).toMatchInlineSnapshot(`
-    Object {
-      "bars": Array [
-        Object {
-          "foo": Object {
+    {
+      "bars": [
+        {
+          "foo": {
             "BigIntManually": null,
             "BytesManually": null,
             "DateTimeManually": null,
             "DecimalManually": null,
             "JsonManually": null,
             "someBigIntField": 9007199254740991,
-            "someBytesField": Object {
-              "data": Array [],
+            "someBytesField": {
+              "data": [],
               "type": "Buffer",
             },
             "someDateTimeField": "2021-05-10T20:42:46.609Z",
             "someDecimalField": "24.454545",
             "someEnumA": "alpha",
-            "someJsonField": Object {},
+            "someJsonField": {},
           },
         },
       ],

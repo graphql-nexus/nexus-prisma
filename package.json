@@ -97,7 +97,7 @@
     "dripip": "0.10.0",
     "eslint": "^8.30.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-only-warn": "^1.0.3",
+    "eslint-plugin-only-warn": "^1.1.0",
     "execa": "^5.1.1",
     "graphql": "^15.8.0",
     "graphql-request": "^5.1.0",

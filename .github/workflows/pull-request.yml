@@ -139,7 +139,7 @@ jobs:
         os: ['ubuntu-latest']
         node-version: [16]
         database: ['db']
-        past-version: ['prisma@4.0', 'prisma@4.0, graphql@15.8.0', 'graphql@15.8.0']
+        past-version: ['prisma@4.0, graphql@15.8.0', 'graphql@15.8.0']
 
     runs-on: ${{ matrix.os }}
 

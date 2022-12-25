@@ -69,7 +69,7 @@ beforeEach(() => {
   ctx.fixture.use(Path.join(__dirname, 'fixtures/kitchen-sink'))
   if (process.env.PRISMA_VERSION === 'past') {
     ctx.packageJson.merge({
-      dependencies: {
+      devDependencies: {
         typescript: '4.7.4',
       },
     })

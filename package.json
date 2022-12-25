@@ -120,7 +120,7 @@
     "type-fest": "^3.4.0",
     "typescript": "4.9.4",
     "yalc": "^1.0.0-pre.53",
-    "zod": "^3.19.1"
+    "zod": "^3.20.2"
   },
   "prettier": "@prisma-labs/prettier-config",
   "peerDependencies": {

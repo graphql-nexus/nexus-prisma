@@ -6,7 +6,7 @@
     "build:prisma": "prisma generate",
     "dev": "ts-node main"
   },
-  "dependencies": {
+  "devDependencies": {
     "@prisma/client": "__dynamic__",
     "graphql": "__dynamic__",
     "nexus": "__dynamic__",

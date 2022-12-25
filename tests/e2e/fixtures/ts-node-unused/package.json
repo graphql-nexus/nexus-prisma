@@ -5,7 +5,7 @@
   "scripts": {
     "build": "prisma generate"
   },
-  "dependencies": {
+  "devDependencies": {
     "@prisma/client": "__dynamic__",
     "graphql": "__dynamic__",
     "nexus": "__dynamic__",

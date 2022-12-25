@@ -8,7 +8,7 @@
     "start:dist": "node ./dist",
     "start:ts": "ts-node main"
   },
-  "dependencies": {
+  "devDependencies": {
     "@prisma/client": "__dynamic__",
     "@vercel/ncc": "0.36.0",
     "graphql": "__dynamic__",

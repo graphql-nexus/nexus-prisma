@@ -58,7 +58,4 @@ const decimalConfig: GraphQLScalarTypeConfig<null | string | number | DecimalJs.
  *   })
  *
  */
-export const Decimal = asNexusMethod(  
-  new GraphQLScalarType(decimalConfig),
-  'decimal'
-)
+export const Decimal = asNexusMethod(new GraphQLScalarType(decimalConfig), 'decimal')

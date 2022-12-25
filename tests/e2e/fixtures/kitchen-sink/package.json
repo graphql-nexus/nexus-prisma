@@ -11,7 +11,7 @@
     "dev:server": "yarn ts-node-dev --transpile-only server",
     "db:migrate": "prisma db push --force-reset --accept-data-loss && ts-node prisma/seed"
   },
-  "dependencies": {
+  "devDependencies": {
     "@prisma/client": "__dynamic__",
     "@types/node": "^18.11.9",
     "apollo-server": "^3.11.1",

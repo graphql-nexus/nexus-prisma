@@ -177,7 +177,7 @@ jobs:
         run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --prisma-client-version 4.0 --github-env $GITHUB_ENV
 
       - name: Set E2E DB Schema
-        if: ! contains(matrix.past-version, 'prisma')
+        if: contains(matrix.past-version, 'prisma') == false
         run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --github-env $GITHUB_ENV
 
       - name: Install past prisma dev packages

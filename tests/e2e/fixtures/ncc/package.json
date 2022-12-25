@@ -11,7 +11,7 @@
   "dependencies": {
     "@prisma/client": "__dynamic__",
     "@vercel/ncc": "0.36.0",
-    "graphql": "15.5.1",
+    "graphql": "16.6.0",
     "nexus": "1.1.0",
     "prisma": "__dynamic__",
     "ts-node": "10.9.1",

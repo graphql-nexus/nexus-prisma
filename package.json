@@ -99,7 +99,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-only-warn": "^1.1.0",
     "execa": "^5.1.1",
-    "graphql": "^15.8.0",
+    "graphql": "^16.6.0",
     "graphql-request": "^5.1.0",
     "graphql-tag": "^2.12.6",
     "jest": "29.3.1",

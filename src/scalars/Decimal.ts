@@ -7,7 +7,7 @@ import { GraphQLScalarType, GraphQLScalarTypeConfig, Kind } from 'graphql'
  *
  * @see https://github.com/unlight/prisma-graphql-type-decimal/blob/master/src/index.ts
  */
-const decimalConfig: GraphQLScalarTypeConfig<null | string | number | DecimalJs, string> = {
+const decimalConfig: GraphQLScalarTypeConfig<null | string | number | DecimalJs.Decimal, string> = {
   name: 'Decimal',
   description: 'An arbitrary-precision Decimal type',
   /**

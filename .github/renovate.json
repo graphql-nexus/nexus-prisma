@@ -3,5 +3,30 @@
   "extends": ["config:base", ":semanticCommits", ":automergeMinor"],
   "rangeStrategy": "bump",
   "assignees": ["rostislav-simonik"],
-  "reviewers": ["rostislav-simonik"]
+  "reviewers": ["rostislav-simonik"],
+  "ignorePaths": [],
+  "packageRules": [
+    {
+      "matchPackageNames": ["execa"],
+      "allowedVersions": "<6.0.0"
+    },
+    {
+      "matchPackageNames": ["read-pkg-up"],
+      "allowedVersions": "<8.0.0"
+    },
+    {
+      "matchPackageNames": ["strip-ansi"],
+      "allowedVersions": "<7.0.0"
+    },
+    {
+      "groupName": "Nextra packages",
+      "groupSlug": "nextra-packages",
+      "matchPackageNames": ["nextra", "nextra-theme-docs"]
+    },
+    {
+      "groupName": "Typescript packages",
+      "groupSlug": "typescript-packages",
+      "matchPackageNames": ["typescript", "ts-node", "ts-node-dev"]
+    }
+  ]
 }

@@ -1,0 +1,14 @@
+{
+  "name": "ts-node-unused",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "prisma generate"
+  },
+  "devDependencies": {
+    "@prisma/client": "__dynamic__",
+    "graphql": "__dynamic__",
+    "nexus": "__dynamic__",
+    "prisma": "__dynamic__"
+  }
+}

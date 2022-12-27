@@ -10,7 +10,7 @@ enum Foo {
 
 exports[`When an enum is defined with documentation in the Prisma schema it can be projected into the GraphQL API with that documentation: graphqlSchema 1`] = `
 "
-\\"\\"\\"Some documentation\\"\\"\\"
+"""Some documentation"""
 enum Foo {
   a
 }

@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`duckType strategy: does not matter if prisma client is not importable (and therefore nor if what would be imported is not a valid prisma client instance): graphqlOperationExecutionResult 1`] = `
-Object {
-  "data": Object {
-    "users": Array [
-      Object {
-        "profile": Object {
+{
+  "data": {
+    "users": [
+      {
+        "profile": {
           "id": "100",
         },
       },
@@ -31,14 +31,14 @@ type Profile {
 "
 `;
 
-exports[`duckType strategy: does not matter if prisma client is not importable (and therefore nor if what would be imported is not a valid prisma client instance): logs 1`] = `Array []`;
+exports[`duckType strategy: does not matter if prisma client is not importable (and therefore nor if what would be imported is not a valid prisma client instance): logs 1`] = `[]`;
 
 exports[`duckType strategy: passes if client looks like a valid prisma client instance: graphqlOperationExecutionResult 1`] = `
-Object {
-  "data": Object {
-    "users": Array [
-      Object {
-        "profile": Object {
+{
+  "data": {
+    "users": [
+      {
+        "profile": {
           "id": "100",
         },
       },
@@ -64,12 +64,12 @@ type Profile {
 "
 `;
 
-exports[`duckType strategy: passes if client looks like a valid prisma client instance: logs 1`] = `Array []`;
+exports[`duckType strategy: passes if client looks like a valid prisma client instance: logs 1`] = `[]`;
 
 exports[`instanceOf strategy: If prisma client import fails then the check cannot perform its instanceof strategy and thus throws an error: graphqlOperationExecutionResult 1`] = `
-Object {
+{
   "data": null,
-  "errors": Array [
+  "errors": [
     [GraphQLError: Could not perform "PrismaClientOnContext" check because there was an error while trying to import Prisma Client:
 
 Error: Cannot find module 'does-not-exist' from 'src/generator/ModuleGenerators/JS.ts'],
@@ -94,12 +94,12 @@ type Profile {
 "
 `;
 
-exports[`instanceOf strategy: If prisma client import fails then the check cannot perform its instanceof strategy and thus throws an error: logs 1`] = `Array []`;
+exports[`instanceOf strategy: If prisma client import fails then the check cannot perform its instanceof strategy and thus throws an error: logs 1`] = `[]`;
 
 exports[`instanceOf strategy: If prisma client import succeeds but what is imported is not a valid prisma client then the check cannot perform its instanceof strategy and thus throws an error: graphqlOperationExecutionResult 1`] = `
-Object {
+{
   "data": null,
-  "errors": Array [
+  "errors": [
     [GraphQLError: Could not perform "PrismaClientOnContext" check because could not get a reference to a valid Prisma Client class. Found:
 
 {}],
@@ -124,14 +124,14 @@ type Profile {
 "
 `;
 
-exports[`instanceOf strategy: If prisma client import succeeds but what is imported is not a valid prisma client then the check cannot perform its instanceof strategy and thus throws an error: logs 1`] = `Array []`;
+exports[`instanceOf strategy: If prisma client import succeeds but what is imported is not a valid prisma client then the check cannot perform its instanceof strategy and thus throws an error: logs 1`] = `[]`;
 
 exports[`instanceOf strategy: passes if client is a real instance of prisma client: graphqlOperationExecutionResult 1`] = `
-Object {
-  "data": Object {
-    "users": Array [
-      Object {
-        "profile": Object {
+{
+  "data": {
+    "users": [
+      {
+        "profile": {
           "id": "100",
         },
       },
@@ -157,12 +157,12 @@ type Profile {
 "
 `;
 
-exports[`instanceOf strategy: passes if client is a real instance of prisma client: logs 1`] = `Array []`;
+exports[`instanceOf strategy: passes if client is a real instance of prisma client: logs 1`] = `[]`;
 
 exports[`instanceOf strategy: throws an error if client is NOT a real instance of prisma client: graphqlOperationExecutionResult 1`] = `
-Object {
+{
   "data": null,
-  "errors": Array [
+  "errors": [
     [GraphQLError: Check "PrismaClientOnContext" failed using "instanceOf" strategy. The GraphQL context.prisma value is not an instance of the Prisma Client.],
   ],
 }
@@ -185,12 +185,12 @@ type Profile {
 "
 `;
 
-exports[`instanceOf strategy: throws an error if client is NOT a real instance of prisma client: logs 1`] = `Array []`;
+exports[`instanceOf strategy: throws an error if client is NOT a real instance of prisma client: logs 1`] = `[]`;
 
 exports[`instanceOf_duckType_fallback strategy: error thrown when both instanceof check and duck typing fails: graphqlOperationExecutionResult 1`] = `
-Object {
+{
   "data": null,
-  "errors": Array [
+  "errors": [
     [GraphQLError: Check "PrismaClientOnContext" failed using "instanceOf_duckType_fallback" strategy. The GraphQL context.prisma value is not an instance of the Prisma Client.],
   ],
 }
@@ -213,14 +213,14 @@ type Profile {
 "
 `;
 
-exports[`instanceOf_duckType_fallback strategy: error thrown when both instanceof check and duck typing fails: logs 1`] = `Array []`;
+exports[`instanceOf_duckType_fallback strategy: error thrown when both instanceof check and duck typing fails: logs 1`] = `[]`;
 
 exports[`instanceOf_duckType_fallback strategy: warning emitted when instanceof check fails but duck typing succeeds: graphqlOperationExecutionResult 1`] = `
-Object {
-  "data": Object {
-    "users": Array [
-      Object {
-        "profile": Object {
+{
+  "data": {
+    "users": [
+      {
+        "profile": {
           "id": "100",
         },
       },
@@ -247,7 +247,7 @@ type Profile {
 `;
 
 exports[`instanceOf_duckType_fallback strategy: warning emitted when instanceof check fails but duck typing succeeds: logs 1`] = `
-Array [
+[
   "WARNING: Prisma Client on GraphQL context failed being checked using instanceof
 
 REASON: The Prisma Client class reference imported from <dynamic_path> is not the same class used by you to create your Prisma Client instance.

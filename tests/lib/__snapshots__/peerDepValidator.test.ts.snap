@@ -5,28 +5,28 @@ exports[`ValidatePeerDependencies if peer dep is optional, then no check is made
 exports[`ValidatePeerDependencies if peer dep missing, then returns failure 1`] = `
 "{
   kind: 'peer_dep_not_installed',
-  message: 'ERROR: Peer dependency validation check failed.\\\\n' +
-    '\\\\n' +
-    'REASON: charlie is a peer dependency required by alpha. But you have not installed it into this project yet.\\\\n' +
-    '\\\\n' +
-    'CONSEQUENCE: Your project may not work correctly.\\\\n' +
-    '\\\\n' +
-    'SOLUTION: Please run \`yarn add charlie\`.\\\\n' +
-    '\\\\n' +
-    'HOW TO DISABLE: \\\\n' +
-    '\\\\n' +
-    'You can disable this peer dependency check by setting one of two environment variables. Their specs are:\\\\n' +
-    '\\\\n' +
-    \\"  NO_PEER_DEPENDENCY_CHECK = 'true' | '1'\\\\n\\" +
-    \\"  PEER_DEPENDENCY_CHECK    = 'false' | '0'\\\\n\\" +
-    '\\\\n' +
-    'Examples:\\\\n' +
-    '\\\\n' +
-    \\"  NO_PEER_DEPENDENCY_CHECK='true'\\\\n\\" +
-    \\"  NO_PEER_DEPENDENCY_CHECK='1'\\\\n\\" +
-    \\"  PEER_DEPENDENCY_CHECK='false'\\\\n\\" +
-    \\"  PEER_DEPENDENCY_CHECK='0'\\\\n\\" +
-    '\\\\n' +
+  message: 'ERROR: Peer dependency validation check failed.\\n' +
+    '\\n' +
+    'REASON: charlie is a peer dependency required by alpha. But you have not installed it into this project yet.\\n' +
+    '\\n' +
+    'CONSEQUENCE: Your project may not work correctly.\\n' +
+    '\\n' +
+    'SOLUTION: Please run \`yarn add charlie\`.\\n' +
+    '\\n' +
+    'HOW TO DISABLE: \\n' +
+    '\\n' +
+    'You can disable this peer dependency check by setting one of two environment variables. Their specs are:\\n' +
+    '\\n' +
+    "  NO_PEER_DEPENDENCY_CHECK = 'true' | '1'\\n" +
+    "  PEER_DEPENDENCY_CHECK    = 'false' | '0'\\n" +
+    '\\n' +
+    'Examples:\\n' +
+    '\\n' +
+    "  NO_PEER_DEPENDENCY_CHECK='true'\\n" +
+    "  NO_PEER_DEPENDENCY_CHECK='1'\\n" +
+    "  PEER_DEPENDENCY_CHECK='false'\\n" +
+    "  PEER_DEPENDENCY_CHECK='0'\\n" +
+    '\\n' +
     'CODE: peer_dep_not_installed'
 }"
 `;
@@ -34,26 +34,26 @@ exports[`ValidatePeerDependencies if peer dep missing, then returns failure 1`] 
 exports[`ValidatePeerDependencies if peer dep package.json missing version field, then returns failure 1`] = `
 "{
   kind: 'peer_dep_package_json_invalid',
-  message: 'WARNING: Peer dependency validation check failed unexpectedly.\\\\n' +
-    '\\\\n' +
-    'REASON: alpha requires peer dependency charlie. No version info for charlie could be found in its package.json thus preventing a check if its version satisfies the peer dependency version range.\\\\n' +
-    '\\\\n' +
-    'CONSEQUENCE: Peer dep validator checks cannot be carried out so you are on your own.\\\\n' +
-    '\\\\n' +
-    'HOW TO DISABLE: \\\\n' +
-    '\\\\n' +
-    'You can disable this peer dependency check by setting one of two environment variables. Their specs are:\\\\n' +
-    '\\\\n' +
-    \\"  NO_PEER_DEPENDENCY_CHECK = 'true' | '1'\\\\n\\" +
-    \\"  PEER_DEPENDENCY_CHECK    = 'false' | '0'\\\\n\\" +
-    '\\\\n' +
-    'Examples:\\\\n' +
-    '\\\\n' +
-    \\"  NO_PEER_DEPENDENCY_CHECK='true'\\\\n\\" +
-    \\"  NO_PEER_DEPENDENCY_CHECK='1'\\\\n\\" +
-    \\"  PEER_DEPENDENCY_CHECK='false'\\\\n\\" +
-    \\"  PEER_DEPENDENCY_CHECK='0'\\\\n\\" +
-    '\\\\n' +
+  message: 'WARNING: Peer dependency validation check failed unexpectedly.\\n' +
+    '\\n' +
+    'REASON: alpha requires peer dependency charlie. No version info for charlie could be found in its package.json thus preventing a check if its version satisfies the peer dependency version range.\\n' +
+    '\\n' +
+    'CONSEQUENCE: Peer dep validator checks cannot be carried out so you are on your own.\\n' +
+    '\\n' +
+    'HOW TO DISABLE: \\n' +
+    '\\n' +
+    'You can disable this peer dependency check by setting one of two environment variables. Their specs are:\\n' +
+    '\\n' +
+    "  NO_PEER_DEPENDENCY_CHECK = 'true' | '1'\\n" +
+    "  PEER_DEPENDENCY_CHECK    = 'false' | '0'\\n" +
+    '\\n' +
+    'Examples:\\n' +
+    '\\n' +
+    "  NO_PEER_DEPENDENCY_CHECK='true'\\n" +
+    "  NO_PEER_DEPENDENCY_CHECK='1'\\n" +
+    "  PEER_DEPENDENCY_CHECK='false'\\n" +
+    "  PEER_DEPENDENCY_CHECK='0'\\n" +
+    '\\n' +
     'CODE: peer_dep_package_json_invalid'
 }"
 `;
@@ -63,26 +63,26 @@ exports[`ValidatePeerDependencies if peer dep version satisfies required range, 
 exports[`ValidatePeerDependencies if project peer dep version does not satisfy required range, then returns failure 1`] = `
 "{
   kind: 'peer_dep_invalid_version',
-  message: 'WARNING: Peer dependency validation check failed\\\\n' +
-    '\\\\n' +
-    'REASON: alpha@1.0.0 does not officially support charlie@1.0.0. The officially supported range is: \`2.0.x\`.\\\\n' +
-    '\\\\n' +
-    'CONSEQUENCE: This could lead to undefined behaviors and bugs.\\\\n' +
-    '\\\\n' +
-    'HOW TO DISABLE: \\\\n' +
-    '\\\\n' +
-    'You can disable this peer dependency check by setting one of two environment variables. Their specs are:\\\\n' +
-    '\\\\n' +
-    \\"  NO_PEER_DEPENDENCY_CHECK = 'true' | '1'\\\\n\\" +
-    \\"  PEER_DEPENDENCY_CHECK    = 'false' | '0'\\\\n\\" +
-    '\\\\n' +
-    'Examples:\\\\n' +
-    '\\\\n' +
-    \\"  NO_PEER_DEPENDENCY_CHECK='true'\\\\n\\" +
-    \\"  NO_PEER_DEPENDENCY_CHECK='1'\\\\n\\" +
-    \\"  PEER_DEPENDENCY_CHECK='false'\\\\n\\" +
-    \\"  PEER_DEPENDENCY_CHECK='0'\\\\n\\" +
-    '\\\\n' +
+  message: 'WARNING: Peer dependency validation check failed\\n' +
+    '\\n' +
+    'REASON: alpha@1.0.0 does not officially support charlie@1.0.0. The officially supported range is: \`2.0.x\`.\\n' +
+    '\\n' +
+    'CONSEQUENCE: This could lead to undefined behaviors and bugs.\\n' +
+    '\\n' +
+    'HOW TO DISABLE: \\n' +
+    '\\n' +
+    'You can disable this peer dependency check by setting one of two environment variables. Their specs are:\\n' +
+    '\\n' +
+    "  NO_PEER_DEPENDENCY_CHECK = 'true' | '1'\\n" +
+    "  PEER_DEPENDENCY_CHECK    = 'false' | '0'\\n" +
+    '\\n' +
+    'Examples:\\n' +
+    '\\n' +
+    "  NO_PEER_DEPENDENCY_CHECK='true'\\n" +
+    "  NO_PEER_DEPENDENCY_CHECK='1'\\n" +
+    "  PEER_DEPENDENCY_CHECK='false'\\n" +
+    "  PEER_DEPENDENCY_CHECK='0'\\n" +
+    '\\n' +
     'CODE: peer_dep_invalid_version'
 }"
 `;

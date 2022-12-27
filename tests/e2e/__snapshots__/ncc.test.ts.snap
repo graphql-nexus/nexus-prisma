@@ -7,6 +7,5 @@ exports[`works with ncc 1`] = `
 
 type Query {
   foos: [Foo]
-}
-"
+}"
 `;

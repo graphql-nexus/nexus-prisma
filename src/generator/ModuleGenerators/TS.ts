@@ -276,27 +276,27 @@ const renderNexusType = (field: DMMF.Field, settings: Settings.Gentime.Manager):
   if (field.isList && field.isRequired) {
     return dedent`
       ${conditionalTypeCheck}
-        ? (NexusCore.NexusListDef<'${graphqlType}'> | NexusCore.NexusNonNullDef<'${graphqlType}'>)
+        ? (NexusCore.NexusListDef<'${graphqlType}' & NexusCore.GetGen<'allNamedTypes', string>> | NexusCore.NexusNonNullDef<'${graphqlType}' & NexusCore.GetGen<'allNamedTypes', string>>)
         : ${typeLiteralMissingNexusOutputTypeErrorMessage}
     `
   } else if (field.isList && !field.isRequired) {
     return dedent`
       ${conditionalTypeCheck}
-        ? NexusCore.NexusListDef<'${graphqlType}'> | NexusCore.NexusNullDef<'${graphqlType}'>
+        ? NexusCore.NexusListDef<'${graphqlType}' & NexusCore.GetGen<'allNamedTypes', string>> | NexusCore.NexusNullDef<'${graphqlType}' & NexusCore.GetGen<'allNamedTypes', string>>
         : ${typeLiteralMissingNexusOutputTypeErrorMessage}
 
     `
   } else if (field.isRequired) {
     return dedent`
       ${conditionalTypeCheck}
-        ? NexusCore.NexusNonNullDef<'${graphqlType}'>
+        ? NexusCore.NexusNonNullDef<'${graphqlType}' & NexusCore.GetGen<'allNamedTypes', string>>
         : ${typeLiteralMissingNexusOutputTypeErrorMessage}
 
     `
   } else {
     return dedent`
       ${conditionalTypeCheck}
-        ? NexusCore.NexusNullDef<'${graphqlType}'>
+        ? NexusCore.NexusNullDef<'${graphqlType}' & NexusCore.GetGen<'allNamedTypes', string>>
         : ${typeLiteralMissingNexusOutputTypeErrorMessage}
 
     `

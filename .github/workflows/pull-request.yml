@@ -1,4 +1,5 @@
 name: Pull Request
+
 on:
   pull_request:
 
@@ -31,17 +32,19 @@ jobs:
       - name: Run es-lint
         run: yarn -s lint:check
 
-  test-latest-prisma:
+  test-latest-prisma-without-database:
     needs: [validate]
     name: Test with latest Prisma
     timeout-minutes: 20
 
     strategy:
       matrix:
-        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        os: ['macos-latest', 'windows-latest']
         node-version: [14, 16]
+        database: ['no-db']
 
     runs-on: ${{ matrix.os }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -68,19 +71,35 @@ jobs:
 
       - name: Test
         run: yarn -s test:ci
+        env:
+          DATABASE: ${{ matrix.database }}
 
-  test-past-prisma:
+  test-latest-prisma-with-database:
     needs: [validate]
-    name: Test with past Prisma
+    name: Test with latest Prisma
     timeout-minutes: 20
 
     strategy:
       matrix:
         os: ['ubuntu-latest']
-        node-version: [16]
-        prisma-client-version: ['4.0']
+        node-version: [14, 16]
+        database: ['db']
 
     runs-on: ${{ matrix.os }}
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -94,14 +113,128 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      - name: Set E2E DB Schema
-        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --prisma-client-version ${{ matrix.prisma-client-version }} --github-env $GITHUB_ENV
+      - name: Set E2E DB Schema for Windows
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --github-env $env:GITHUB_ENV
+
+      - name: Set E2E DB Schema for other operating systems
+        if: ${{ matrix.os != 'windows-latest' }}
+        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --github-env $GITHUB_ENV
 
       - name: Build
         run: yarn -s build
 
-      - name: Install Prisma Client version
-        run: yarn -s add @prisma/client@${{ matrix.prisma-client-version }}
+      - name: Test
+        run: yarn -s test:ci
+        env:
+          DATABASE: ${{ matrix.database }}
+
+  test-past-versions-with-database:
+    needs: [validate]
+    name: Test with past versions
+    timeout-minutes: 20
+
+    strategy:
+      matrix:
+        os: ['ubuntu-latest']
+        node-version: [16]
+        database: ['db']
+        past-version: ['prisma@4.0, graphql@15.8.0', 'graphql@15.8.0']
+
+    runs-on: ${{ matrix.os }}
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Build
+        run: yarn -s build
+
+      - name: Set E2E DB Schema
+        if: contains(matrix.past-version, 'prisma')
+        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --prisma-client-version 4.0 --github-env $GITHUB_ENV
+
+      - name: Set E2E DB Schema
+        if: contains(matrix.past-version, 'prisma') == false
+        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --github-env $GITHUB_ENV
+
+      - name: Install past prisma dev packages
+        if: contains(matrix.past-version, 'prisma')
+        run: yarn -s add prisma@4.0 @prisma/client@4.0 @prisma/internals@4.0 --dev
+
+      - name: Install past prisma packages
+        if: contains(matrix.past-version, 'prisma')
+        run: yarn -s add @prisma/generator-helper@4.0
+
+      - name: Install past graphql packages
+        if: contains(matrix.past-version, 'graphql')
+        run: yarn -s add graphql@^15.8.0 nexus@1.2 --dev
 
       - name: Test
         run: yarn -s test:ci
+        env:
+          DATABASE: ${{ matrix.database }}
+          PAST_VERSION: ${{ matrix.past-version }}
+
+  test-documentation-build:
+    needs: [validate]
+    name: Test documentation build
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'yarn'
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+        with:
+          # Automatically inject basePath in your Next.js configuration file and disable
+          # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
+          #
+          # You may remove this line if you want to manage the configuration yourself.
+          static_site_generator: next
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            docs/.next/cache
+          # Generate a new cache whenever packages or source files change.
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/docs/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/docs/yarn.lock') }}-
+      - name: Install dependencies
+        working-directory: ./docs
+        run: yarn install
+      - name: Build with Next.js
+        working-directory: ./docs
+        run: yarn next build
+      - name: Static HTML export with Next.js
+        working-directory: ./docs
+        run: yarn next export

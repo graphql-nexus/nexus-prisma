@@ -85,7 +85,7 @@
     "@types/jest": "29.2.4",
     "@types/lodash": "^4.14.191",
     "@types/node": "^18.11.18",
-    "@types/object-hash": "^2.2.1",
+    "@types/object-hash": "^3.0.2",
     "@types/pluralize": "^0.0.29",
     "@types/semver": "^7.3.13",
     "@types/slug": "^5.0.3",

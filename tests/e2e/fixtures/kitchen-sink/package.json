@@ -19,8 +19,6 @@
     "dotenv": "^16.0.3",
     "graphql": "__dynamic__",
     "nexus": "__dynamic__",
-    "graphql": "^15.8.0",
-    "nexus": "1.1.0",
     "prisma": "__dynamic__",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",

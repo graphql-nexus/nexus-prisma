@@ -114,7 +114,7 @@
     "prisma": "^4.6.1",
     "read-pkg-up": "7.0.1",
     "slug": "^8.2.2",
-    "strip-ansi": "6",
+    "strip-ansi": "7",
     "ts-jest": "29.0.3",
     "ts-node": "^10.9.1",
     "type-fest": "^3.5.0",

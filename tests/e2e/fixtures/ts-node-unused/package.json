@@ -5,10 +5,10 @@
   "scripts": {
     "build": "prisma generate"
   },
-  "dependencies": {
+  "devDependencies": {
     "@prisma/client": "__dynamic__",
-    "graphql": "^15.8.0",
-    "nexus": "1.1.0",
+    "graphql": "__dynamic__",
+    "nexus": "__dynamic__",
     "prisma": "__dynamic__"
   }
 }

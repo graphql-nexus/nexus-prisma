@@ -49,9 +49,11 @@ export const project = () =>
               overwrite: true,
             })
             api.packageJson.merge({
-              dependencies: {
+              devDependencies: {
                 '@prisma/client': Package.devDependencies['@prisma/client'],
                 prisma: Package.devDependencies.prisma,
+                graphql: Package.devDependencies.graphql,
+                nexus: Package.devDependencies.nexus,
               },
             })
           },

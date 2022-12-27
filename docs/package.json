@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@reach/skip-nav": "0.18.0",
-    "next": "13.0.3",
+    "next": "13.1.1",
     "nextra": "2.0.1",
     "nextra-theme-docs": "2.0.1",
     "react": "18.2.0",
@@ -22,11 +22,11 @@
   "prettier": "@prisma-labs/prettier-config",
   "devDependencies": {
     "@prisma-labs/prettier-config": "0.1.0",
-    "@types/node": "18.11.17",
+    "@types/node": "18.11.18",
     "@types/react": "18.0.26",
     "autoprefixer": "10.4.13",
     "eslint": "8.30.0",
-    "eslint-config-next": "13.0.3",
+    "eslint-config-next": "13.1.1",
     "postcss": "8.4.20",
     "prettier": "2.8.1",
     "tailwindcss": "3.2.4",

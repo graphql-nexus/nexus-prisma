@@ -1,7 +1,35 @@
 import { asNexusMethod } from 'nexus'
 import * as DecimalJs from 'decimal.js'
+import { GraphQLScalarType, GraphQLScalarTypeConfig, Kind } from 'graphql'
 
-import { GraphQLScalarType, Kind } from 'graphql'
+/**
+ * Copied from prisma-graphql-type-decimal.
+ *
+ * @see https://github.com/unlight/prisma-graphql-type-decimal/blob/master/src/index.ts
+ */
+const decimalConfig: GraphQLScalarTypeConfig<null | string | number | DecimalJs.Decimal, string> = {
+  name: 'Decimal',
+  description: 'An arbitrary-precision Decimal type',
+  /**
+   * Value sent to the client
+   */
+  serialize(value) {
+    // console.log('serialize value', value.constructor.name)
+    return String(value)
+  },
+  /**
+   * Value from the client
+   */
+  parseValue(value) {
+    return new DecimalJs.Decimal(value as DecimalJs.Decimal.Value)
+  },
+  parseLiteral(ast) {
+    if (ast.kind === Kind.INT || ast.kind === Kind.FLOAT || ast.kind === Kind.STRING) {
+      return new DecimalJs.Decimal(ast.value)
+    }
+    return null
+  },
+}
 
 /**
  * A Nexus scalar type definition for arbitrary-precision Decimal type.
@@ -30,33 +58,4 @@ import { GraphQLScalarType, Kind } from 'graphql'
  *   })
  *
  */
-export const Decimal = asNexusMethod(
-  /**
-   * Copied from prisma-graphql-type-decimal.
-   *
-   * @see https://github.com/unlight/prisma-graphql-type-decimal
-   */
-  new GraphQLScalarType({
-    name: 'Decimal',
-    description: 'An arbitrary-precision Decimal type',
-    /**
-     * Value sent to the client
-     */
-    serialize(value: DecimalJs.Decimal) {
-      return value.toString()
-    },
-    /**
-     * Value from the client
-     */
-    parseValue(value: DecimalJs.Decimal.Value) {
-      return new DecimalJs.Decimal(value)
-    },
-    parseLiteral(ast) {
-      if (ast.kind === Kind.INT || ast.kind === Kind.FLOAT || ast.kind === Kind.STRING) {
-        return new DecimalJs.Decimal(ast.value)
-      }
-      return null
-    },
-  }),
-  'decimal'
-)
+export const Decimal = asNexusMethod(new GraphQLScalarType(decimalConfig), 'decimal')

@@ -129,9 +129,9 @@ jobs:
         env:
           DATABASE: ${{ matrix.database }}
 
-  test-past-prisma-with-database:
+  test-past-versions-with-database:
     needs: [validate]
-    name: Test with past Prisma
+    name: Test with past versions
     timeout-minutes: 20
 
     strategy:
@@ -139,7 +139,7 @@ jobs:
         os: ['ubuntu-latest']
         node-version: [16]
         database: ['db']
-        prisma-base-version: ['4.0']
+        past-version: ['prisma@4.0, graphql@15.8.0', 'graphql@15.8.0']
 
     runs-on: ${{ matrix.os }}
 
@@ -169,17 +169,28 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      - name: Set E2E DB Schema
-        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --prisma-client-version ${{ matrix.prisma-base-version }} --github-env $GITHUB_ENV
-
       - name: Build
         run: yarn -s build
 
-      - name: Install prisma dev packages
-        run: yarn -s add prisma@${{ matrix.prisma-base-version }} @prisma/client@${{ matrix.prisma-base-version }} @prisma/internals@${{ matrix.prisma-base-version }} --dev
+      - name: Set E2E DB Schema
+        if: contains(matrix.past-version, 'prisma')
+        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --prisma-client-version 4.0 --github-env $GITHUB_ENV
 
-      - name: Install prisma packages
-        run: yarn -s add @prisma/generator-helper@${{ matrix.prisma-base-version }}
+      - name: Set E2E DB Schema
+        if: contains(matrix.past-version, 'prisma') == false
+        run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --github-env $GITHUB_ENV
+
+      - name: Install past prisma dev packages
+        if: contains(matrix.past-version, 'prisma')
+        run: yarn -s add prisma@4.0 @prisma/client@4.0 @prisma/internals@4.0 --dev
+
+      - name: Install past prisma packages
+        if: contains(matrix.past-version, 'prisma')
+        run: yarn -s add @prisma/generator-helper@4.0
+
+      - name: Install past graphql packages
+        if: contains(matrix.past-version, 'graphql')
+        run: yarn -s add graphql@^15.8.0 nexus@1.2 --dev
 
       - name: Test
         run: yarn -s test:ci

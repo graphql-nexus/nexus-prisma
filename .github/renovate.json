@@ -5,8 +5,19 @@
   "assignees": ["rostislav-simonik"],
   "reviewers": ["rostislav-simonik"],
   "ignorePaths": [],
-  "ignoreDeps": ["read-pkg-up", "execa"],
   "packageRules": [
+    {
+      "matchPackageNames": ["execa"],
+      "allowedVersions": "<6.0.0"
+    },
+    {
+      "matchPackageNames": ["read-pkg-up"],
+      "allowedVersions": "<8.0.0"
+    },
+    {
+      "matchPackageNames": ["strip-ansi"],
+      "allowedVersions": "<7.0.0"
+    },
     {
       "groupName": "Nextra packages",
       "groupSlug": "nextra-packages",

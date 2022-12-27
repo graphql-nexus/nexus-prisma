@@ -1,5 +1,6 @@
 import { konn, providers } from 'konn'
 import * as Path from 'path'
+import { stripEndingLines } from '../__helpers__/helpers'
 import { project } from '../__providers__/project'
 
 const ctx = konn()
@@ -20,5 +21,5 @@ it('works with ncc', () => {
 
   const result = ctx.runOrThrowPackageScript(`start:dist`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
 
-  expect(result.stdout).toMatchSnapshot()
+  expect(stripEndingLines(result.stdout)).toMatchSnapshot()
 })

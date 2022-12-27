@@ -52,6 +52,8 @@ export const project = () =>
               devDependencies: {
                 '@prisma/client': Package.devDependencies['@prisma/client'],
                 prisma: Package.devDependencies.prisma,
+                graphql: Package.devDependencies.graphql,
+                nexus: Package.devDependencies.nexus,
               },
             })
           },

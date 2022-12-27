@@ -1,5 +1,6 @@
 import { konn, providers } from 'konn'
 import * as Path from 'path'
+import { stripEndingLines } from '../__helpers__/helpers'
 import { project } from '../__providers__/project'
 
 const ctx = konn()
@@ -14,5 +15,5 @@ it('gentime setting output: custom directory', () => {
   ctx.runOrThrow(`npm install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
   ctx.runOrThrow(`npx prisma generate`)
   const result = ctx.runOrThrowPackageScript(`dev`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
-  expect(result.stdout).toMatchSnapshot()
+  expect(stripEndingLines(result.stdout)).toMatchSnapshot()
 })

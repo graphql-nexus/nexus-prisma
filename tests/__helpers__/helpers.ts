@@ -123,3 +123,5 @@ export const stripNexusQueryOk = (sdl: string): string => {
     ''
   )
 }
+
+export const stripEndingLines = (s?: string) => s?.replace(/\n+$/, '')

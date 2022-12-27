@@ -17,6 +17,8 @@
     "apollo-server": "^3.11.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
+    "graphql": "__dynamic__",
+    "nexus": "__dynamic__",
     "graphql": "^15.8.0",
     "nexus": "1.1.0",
     "prisma": "__dynamic__",

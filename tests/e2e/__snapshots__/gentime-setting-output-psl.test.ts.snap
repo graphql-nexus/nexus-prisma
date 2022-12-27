@@ -7,6 +7,5 @@ exports[`gentime setting output: custom directory 1`] = `
 
 type Query {
   foos: [Foo]
-}
-"
+}"
 `;

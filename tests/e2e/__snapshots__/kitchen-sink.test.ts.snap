@@ -53,8 +53,7 @@ enum SomeEnumA {
   alpha
   bravo
   charlie
-}
-"
+}"
 `;
 
 exports[`A full-featured project type checks, generates expected GraphQL schema, and successfully resolves received GraphQL documents: nexus typegen 1`] = `

@@ -217,7 +217,7 @@ const missingDocsIntro = (
       : info.kind
 
   return dedent`
-     * ### ️⚠️ You have not writen documentation for ${thisItem}
+     * ### ️⚠️ You have not written documentation for ${thisItem}
      *
      * Replace this default advisory JSDoc with your own documentation about ${thisItem}
      * by documenting it in your Prisma schema. For example:

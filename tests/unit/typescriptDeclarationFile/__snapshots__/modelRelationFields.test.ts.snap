@@ -17,7 +17,7 @@ exports[`A model relation field projects a default resolve function: index.d.ts 
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`User\`.
   *
-  * ### ️⚠️ You have not writen documentation for model User
+  * ### ️⚠️ You have not written documentation for model User
   *
   * Replace this default advisory JSDoc with your own documentation about model User
   * by documenting it in your Prisma schema. For example:
@@ -50,7 +50,7 @@ export interface User {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`User.id\`.
     *
-    * ### ️⚠️ You have not writen documentation for model User
+    * ### ️⚠️ You have not written documentation for model User
     *
     * Replace this default advisory JSDoc with your own documentation about model User
     * by documenting it in your Prisma schema. For example:
@@ -102,7 +102,7 @@ export interface User {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`User.posts\`.
     *
-    * ### ️⚠️ You have not writen documentation for model User
+    * ### ️⚠️ You have not written documentation for model User
     *
     * Replace this default advisory JSDoc with your own documentation about model User
     * by documenting it in your Prisma schema. For example:
@@ -156,7 +156,7 @@ export interface User {
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`Post\`.
   *
-  * ### ️⚠️ You have not writen documentation for model Post
+  * ### ️⚠️ You have not written documentation for model Post
   *
   * Replace this default advisory JSDoc with your own documentation about model Post
   * by documenting it in your Prisma schema. For example:
@@ -189,7 +189,7 @@ export interface Post {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`Post.id\`.
     *
-    * ### ️⚠️ You have not writen documentation for model Post
+    * ### ️⚠️ You have not written documentation for model Post
     *
     * Replace this default advisory JSDoc with your own documentation about model Post
     * by documenting it in your Prisma schema. For example:
@@ -241,7 +241,7 @@ export interface Post {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`Post.author\`.
     *
-    * ### ️⚠️ You have not writen documentation for model Post
+    * ### ️⚠️ You have not written documentation for model Post
     *
     * Replace this default advisory JSDoc with your own documentation about model Post
     * by documenting it in your Prisma schema. For example:
@@ -293,7 +293,7 @@ export interface Post {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`Post.authorId\`.
     *
-    * ### ️⚠️ You have not writen documentation for model Post
+    * ### ️⚠️ You have not written documentation for model Post
     *
     * Replace this default advisory JSDoc with your own documentation about model Post
     * by documenting it in your Prisma schema. For example:

@@ -17,7 +17,7 @@ exports[`A model field with type BigInt maps to GraphQL BigInt custom scalar: in
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
+  * ### ️⚠️ You have not written documentation for model SomeModel
   *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
@@ -50,7 +50,7 @@ export interface SomeModel {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
+    * ### ️⚠️ You have not written documentation for model SomeModel
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
@@ -102,7 +102,7 @@ export interface SomeModel {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
     *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
+    * ### ️⚠️ You have not written documentation for model SomeModel
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
@@ -248,7 +248,7 @@ exports[`A model field with type Boolean maps to GraphQL Boolean scalar: index.d
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
+  * ### ️⚠️ You have not written documentation for model SomeModel
   *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
@@ -281,7 +281,7 @@ export interface SomeModel {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
+    * ### ️⚠️ You have not written documentation for model SomeModel
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
@@ -333,7 +333,7 @@ export interface SomeModel {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
     *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
+    * ### ️⚠️ You have not written documentation for model SomeModel
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
@@ -479,7 +479,7 @@ exports[`A model field with type Bytes maps to GraphQL Bytes custom scalar: inde
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
+  * ### ️⚠️ You have not written documentation for model SomeModel
   *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
@@ -512,7 +512,7 @@ export interface SomeModel {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
+    * ### ️⚠️ You have not written documentation for model SomeModel
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
@@ -564,7 +564,7 @@ export interface SomeModel {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
     *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
+    * ### ️⚠️ You have not written documentation for model SomeModel
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
@@ -710,7 +710,7 @@ exports[`A model field with type DateTime maps to GraphQL DateTime custom scalar
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
+  * ### ️⚠️ You have not written documentation for model SomeModel
   *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
@@ -743,7 +743,7 @@ export interface SomeModel {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
+    * ### ️⚠️ You have not written documentation for model SomeModel
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
@@ -795,7 +795,7 @@ export interface SomeModel {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
     *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
+    * ### ️⚠️ You have not written documentation for model SomeModel
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
@@ -941,7 +941,7 @@ exports[`A model field with type Float maps to GraphQL Float scalar: index.d.ts 
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
+  * ### ️⚠️ You have not written documentation for model SomeModel
   *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
@@ -974,7 +974,7 @@ export interface SomeModel {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
+    * ### ️⚠️ You have not written documentation for model SomeModel
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
@@ -1026,7 +1026,7 @@ export interface SomeModel {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
     *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
+    * ### ️⚠️ You have not written documentation for model SomeModel
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
@@ -1172,7 +1172,7 @@ exports[`A model field with type Int maps to GraphQL Int scalar: index.d.ts 1`] 
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
+  * ### ️⚠️ You have not written documentation for model SomeModel
   *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
@@ -1205,7 +1205,7 @@ export interface SomeModel {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
+    * ### ️⚠️ You have not written documentation for model SomeModel
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
@@ -1257,7 +1257,7 @@ export interface SomeModel {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
     *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
+    * ### ️⚠️ You have not written documentation for model SomeModel
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
@@ -1403,7 +1403,7 @@ exports[`A model field with type Int, attribute @id, maps to GraphQL Int scalar:
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
+  * ### ️⚠️ You have not written documentation for model SomeModel
   *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
@@ -1436,7 +1436,7 @@ export interface SomeModel {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
+    * ### ️⚠️ You have not written documentation for model SomeModel
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
@@ -1582,7 +1582,7 @@ exports[`A model field with type Json maps to GraphQL Json custom scalar: index.
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
+  * ### ️⚠️ You have not written documentation for model SomeModel
   *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
@@ -1615,7 +1615,7 @@ export interface SomeModel {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
+    * ### ️⚠️ You have not written documentation for model SomeModel
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
@@ -1667,7 +1667,7 @@ export interface SomeModel {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.foo\`.
     *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
+    * ### ️⚠️ You have not written documentation for model SomeModel
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:
@@ -1813,7 +1813,7 @@ exports[`A model field with type String, attribute @id, maps to GraphQL ID scala
 /**
   * Generated Nexus \`objectType\` configuration based on your Prisma schema's model \`SomeModel\`.
   *
-  * ### ️⚠️ You have not writen documentation for model SomeModel
+  * ### ️⚠️ You have not written documentation for model SomeModel
   *
   * Replace this default advisory JSDoc with your own documentation about model SomeModel
   * by documenting it in your Prisma schema. For example:
@@ -1846,7 +1846,7 @@ export interface SomeModel {
   /**
     * Generated Nexus \`t.field\` configuration based on your Prisma schema's model-field \`SomeModel.id\`.
     *
-    * ### ️⚠️ You have not writen documentation for model SomeModel
+    * ### ️⚠️ You have not written documentation for model SomeModel
     *
     * Replace this default advisory JSDoc with your own documentation about model SomeModel
     * by documenting it in your Prisma schema. For example:

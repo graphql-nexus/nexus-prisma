@@ -21,7 +21,7 @@ exports[`An enum maps to a Nexus enum type definition: index.d.ts 1`] = `
 /**
   * Generated Nexus \`enumType\` configuration based on your Prisma schema's enum \`Foo\`.
   *
-  * ### ️⚠️ You have not writen documentation for enum Foo
+  * ### ️⚠️ You have not written documentation for enum Foo
   *
   * Replace this default advisory JSDoc with your own documentation about enum Foo
   * by documenting it in your Prisma schema. For example:

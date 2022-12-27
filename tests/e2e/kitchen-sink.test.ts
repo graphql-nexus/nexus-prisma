@@ -9,7 +9,7 @@ import stripAnsi from 'strip-ansi'
 import { inspect } from 'util'
 
 import { envarSpecs } from '../../src/lib/peerDepValidator'
-import { createPrismaSchema, timeoutRace } from '../__helpers__/helpers'
+import { createPrismaSchema, stripEndingLines, timeoutRace } from '../__helpers__/helpers'
 import { graphQLClient } from '../__providers__/graphqlClient'
 import { project } from '../__providers__/project'
 
@@ -325,7 +325,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
 
   expect(results.runSecondBuild.exitCode).toBe(0)
 
-  expect(results.fileGraphqlSchema).toMatchSnapshot('graphql schema')
+  expect(stripEndingLines(results.fileGraphqlSchema)).toMatchSnapshot('graphql schema')
 
   expect(results.fileTypegen).toMatchSnapshot('nexus typegen')
 

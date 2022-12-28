@@ -7,6 +7,10 @@
   "ignorePaths": [],
   "packageRules": [
     {
+      "extends": "monorepo:prisma",
+      "rangeStrategy": "update-lockfile"
+    },
+    {
       "matchPackageNames": ["execa"],
       "allowedVersions": "<6.0.0"
     },

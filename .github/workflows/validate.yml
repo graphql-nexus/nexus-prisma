@@ -1,0 +1,31 @@
+on:
+  workflow_call:
+
+jobs:
+  validate:
+    name: Validate Codebase
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    strategy:
+      matrix:
+        node-version: [14]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Run prettier
+        run: yarn -s format:check
+
+      - name: Run es-lint
+        run: yarn -s lint:check

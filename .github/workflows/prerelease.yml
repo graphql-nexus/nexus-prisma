@@ -1,0 +1,46 @@
+name: Prerelease
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - alpha
+      - beta
+      - next
+      - next-major
+
+jobs:
+  validate:
+    name: Validate
+    uses: ./.github/workflows/validate.yml
+
+  tests:
+    needs: [validate]
+    name: Tests
+    uses: ./.github/workflows/tests.yml
+
+  prerelease:
+    if: contains(fromJson('["alpha", "beta", "next", "next-major"]'), github.ref_name)
+    name: Prerelease
+    timeout-minutes: 20
+    needs: [tests]
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Semantic release
+        run: yarn semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELASE_GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

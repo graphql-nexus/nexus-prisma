@@ -82,7 +82,7 @@
     "@prisma/internals": "^4.0",
     "@types/debug": "^4.1.7",
     "@types/expand-tilde": "^2.0.0",
-    "@types/jest": "29.2.4",
+    "@types/jest": "29.2.5",
     "@types/lodash": "^4.14.191",
     "@types/node": "^18.11.18",
     "@types/object-hash": "^3.0.2",

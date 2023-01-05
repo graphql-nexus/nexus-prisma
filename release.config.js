@@ -39,7 +39,7 @@ const plugins = [
   ,
 ]
 
-if (process.env.GITHUB_REF_NAME === 'main') {
+if (!['alpha', 'beta'].includes(process.env.GITHUB_REF_NAME)) {
   plugins.push([
     '@semantic-release/git',
     {

@@ -3,3 +3,4 @@ dist-esm
 coverage
 docs/.next
 tests/__cache__
+CHANGELOG.md

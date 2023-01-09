@@ -22,7 +22,6 @@ jobs:
   prerelease:
     if: contains(fromJson('["alpha", "beta", "next", "next-major"]'), github.ref_name)
     name: Prerelease
-    timeout-minutes: 20
     needs: [tests]
 
     runs-on: ubuntu-latest

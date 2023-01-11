@@ -1,3 +1,17 @@
+## [1.0.2](https://github.com/prisma/nexus-prisma/compare/v1.0.1...v1.0.2) (2023-01-11)
+
+
+### Documentation
+
+* update links and prepare docs for 1.x.x release ([9903a0a](https://github.com/prisma/nexus-prisma/commit/9903a0a4a54e5d5812e7d2a3ea32b104db8c20f3))
+
+
+### CI
+
+* fix main health workflow triggers ([#362](https://github.com/prisma/nexus-prisma/issues/362)) ([4a09851](https://github.com/prisma/nexus-prisma/commit/4a098517e28f19d014639c480be92702e0c73506))
+* remove persistance of default credentials on release/prerelease workflows ([#364](https://github.com/prisma/nexus-prisma/issues/364)) ([708e5ca](https://github.com/prisma/nexus-prisma/commit/708e5cad38b6128e4db6f2531519cfad367a330c))
+* remove timeout on prerelease and release jobs ([#359](https://github.com/prisma/nexus-prisma/issues/359)) ([51ccb56](https://github.com/prisma/nexus-prisma/commit/51ccb5605e37fa86ae920e984e3d86aa6d404896))
+
 ## [1.0.1](https://github.com/prisma/nexus-prisma/compare/v1.0.0...v1.0.1) (2023-01-09)
 
 

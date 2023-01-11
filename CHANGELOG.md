@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/prisma/nexus-prisma/compare/v1.0.2...v1.0.3) (2023-01-11)
+
+
+### Bug fixes
+
+* **deps:** update nextra packages to v2.2.0 ([#363](https://github.com/prisma/nexus-prisma/issues/363)) ([e2f49cf](https://github.com/prisma/nexus-prisma/commit/e2f49cf2aa0558fbc799e02e9bb98234eef5c645))
+
 ## [1.0.2](https://github.com/prisma/nexus-prisma/compare/v1.0.1...v1.0.2) (2023-01-11)
 
 

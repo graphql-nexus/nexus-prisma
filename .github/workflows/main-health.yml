@@ -1,8 +1,9 @@
 name: Main health
 
-push:
-  branches:
-    - main
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   validate:

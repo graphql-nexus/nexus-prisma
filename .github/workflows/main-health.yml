@@ -1,0 +1,16 @@
+name: Main health
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    name: Validate
+    uses: ./.github/workflows/validate.yml
+
+  tests:
+    needs: [validate]
+    name: Tests
+    uses: ./.github/workflows/tests.yml

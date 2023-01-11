@@ -9,8 +9,11 @@ type ComboCase =
   | '16 + windows-latest'
   | '16 + macos-latest'
   | '16 + ubuntu-latest'
+  | '18 + windows-latest'
+  | '18 + macos-latest'
+  | '18 + ubuntu-latest'
 
-const nodeVersionParser = z.union([z.literal('14'), z.literal('16')])
+const nodeVersionParser = z.union([z.literal('14'), z.literal('16'), z.literal('18')])
 
 const osParser = z.union([z.literal('macos-latest'), z.literal('ubuntu-latest'), z.literal('windows-latest')])
 
@@ -23,6 +26,9 @@ const connectionStringMapping: Record<ComboCase, string> = {
   '16 + macos-latest': 'node_16_macos_latest',
   '16 + windows-latest': 'node_16_windows_latest',
   '16 + ubuntu-latest': 'node_16_ubuntu_latest',
+  '18 + macos-latest': 'node_18_macos_latest',
+  '18 + windows-latest': 'node_18_windows_latest',
+  '18 + ubuntu-latest': 'node_18_ubuntu_latest',
 }
 
 const args = arg({

@@ -2809,10 +2809,10 @@ next@13.1.1:
     "@next/swc-win32-ia32-msvc" "13.1.1"
     "@next/swc-win32-x64-msvc" "13.1.1"
 
-nextra-theme-docs@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/nextra-theme-docs/-/nextra-theme-docs-2.1.0.tgz#0d4a7b1cd4e08ad5152c4cf682a57c6352db9415"
-  integrity sha512-0Fn0EsGaKa9We2+CkN9LPtT6F21w4wbihuv0/Vg2YowpAdu5nslsDIhtg66CRET5U5007xE5GG8NLwWaCHQhhg==
+nextra-theme-docs@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/nextra-theme-docs/-/nextra-theme-docs-2.2.0.tgz#149d39d09e5f9c90579ec31a5da8377322a52b4e"
+  integrity sha512-18kWQv0BzpyGK9lvpljrOY44HU2ALl5InALRj8A0tXuEPeOf+5ykMnLRdH2KeM2MGCcYDXCDuKEmkBevAXa4vQ==
   dependencies:
     "@headlessui/react" "^1.7.7"
     "@mdx-js/react" "^2.1.5"
@@ -2829,10 +2829,10 @@ nextra-theme-docs@2.1.0:
     scroll-into-view-if-needed "^3.0.0"
     zod "^3.20.2"
 
-nextra@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/nextra/-/nextra-2.1.0.tgz#11645c294535e46d95815d22bfc3814113612d69"
-  integrity sha512-8bq/TW8wv8H8D6UAokb9WKhnYeoxKG7c8ikWF1n6k3kOO9m0PLG+guTwqkWre28jJyziljc3i/Fnr3k4HiB9Ow==
+nextra@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/nextra/-/nextra-2.2.0.tgz#d9438689af0f1b37b556061e5b76e04a37a1ad7c"
+  integrity sha512-AB6sDWPKuJUrOJlr4inYd8sDWMIAIpFeJBw652ebT093UZxWKxYpecB+TjDLt8BNGXDOaZXA+f9309AE08MLIw==
   dependencies:
     "@mdx-js/mdx" "^2.1.5"
     "@napi-rs/simple-git" "^0.1.8"
@@ -2843,7 +2843,7 @@ nextra@2.1.0:
     p-limit "^3.1.0"
     rehype-katex "^6.0.2"
     rehype-mdx-title "^2.0.0"
-    rehype-pretty-code "0.6.0"
+    rehype-pretty-code "0.7.0"
     remark-gfm "^3.0.1"
     remark-math "^5.1.1"
     remark-reading-time "^2.0.1"
@@ -3297,10 +3297,10 @@ rehype-parse@^8.0.0:
     parse5 "^6.0.0"
     unified "^10.0.0"
 
-rehype-pretty-code@0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/rehype-pretty-code/-/rehype-pretty-code-0.6.0.tgz#22031de9bbb028f531ad9cf2ffc9d4aa902d4407"
-  integrity sha512-VfntYoWYOBVURXYDdB8p/E1sZTm2W5ry89fJyY94WJAo1jUH/5sVhDC7cX5PPnksMyW9PYMxRLNfjkBpSgJrzQ==
+rehype-pretty-code@0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/rehype-pretty-code/-/rehype-pretty-code-0.7.0.tgz#3d800b30f4aef7c959559a9a61279e0f7fad93b2"
+  integrity sha512-dWdNYALc6ApIx6Qlyk+13JVrEdZiy73rIjRkZgNG05d2iHzfIWMMZ6NM/WsuS0KEAPq9vgulqRah98b9HFpPlw==
   dependencies:
     hash-obj "^4.0.0"
     nanoid "^4.0.0"

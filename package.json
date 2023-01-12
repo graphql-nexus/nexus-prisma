@@ -76,8 +76,8 @@
     "postinstall": "node scripts/production/postinstall.js"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.4.1",
-    "@commitlint/config-conventional": "^17.4.0",
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
     "@homer0/prettier-plugin-jsdoc": "^5.1.6",
     "@prisma-labs/prettier-config": "0.1.0",
     "@prisma/client": "^4.0",

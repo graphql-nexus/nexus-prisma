@@ -40,7 +40,7 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Semantic release
-        run: yarn semantic-release --dry-run
+        run: yarn semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELASE_GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

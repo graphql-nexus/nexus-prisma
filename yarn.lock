@@ -603,13 +603,13 @@
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.1.1.tgz#076d78ce99822258cf813ecc1e7fa460fa74d052"
   integrity sha512-NQ17ii0rK1b34VZonlmT2QMJFI70m0TRwbknO/ihlbatXyaktDhN/98vBiUU6kNBPljqGqyIrl2T4nY2RpFANg==
 
-"@homer0/prettier-plugin-jsdoc@^5.1.6":
-  version "5.1.6"
-  resolved "https://registry.yarnpkg.com/@homer0/prettier-plugin-jsdoc/-/prettier-plugin-jsdoc-5.1.6.tgz#42552d43c57359943bc8764f70f2d45db9905529"
-  integrity sha512-3eI/a5ONMKyUi0+cX65zvpbfh5P+7MLZWNzREIosqx57fmCY3AdxXvykSoY+kgFq2uXkrgj05pIubRAfg5OT6g==
+"@homer0/prettier-plugin-jsdoc@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@homer0/prettier-plugin-jsdoc/-/prettier-plugin-jsdoc-6.0.0.tgz#dcc37d4749b91a0506b90eda6bb54e8e9b141358"
+  integrity sha512-21ItGUyRghetQjQVDG3PfWq/2Hp8WYVDdHuCnO3Pjn8bfYDM7AM0erCMCIAGWsi9dxUtH2lA0Yis7Fnd5s+1yg==
   dependencies:
     comment-parser "^1.3.1"
-    prettier "^2.7.1"
+    prettier "^2.8.1"
     ramda "0.28.0"
 
 "@humanwhocodes/config-array@^0.11.8":
@@ -6477,15 +6477,10 @@ prelude-ls@^1.2.1:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
 
-prettier@2.8.3:
+prettier@2.8.3, prettier@^2.8.1:
   version "2.8.3"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.3.tgz#ab697b1d3dd46fb4626fbe2f543afe0cc98d8632"
   integrity sha512-tJ/oJ4amDihPoufT5sM0Z1SKEuKay8LfVAMlbbhnnkvt6BUserZylqo2PN+p9KeljLr0OHa2rXHU1T8reeoTrw==
-
-prettier@^2.7.1:
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.1.tgz#4e1fd11c34e2421bc1da9aea9bd8127cd0a35efc"
-  integrity sha512-lqGoSJBQNJidqCHE80vqZJHWHRFoNYsSpP9AjFhlhi9ODCJA541svILes/+/1GM3VaL/abZi7cpFzOpdR9UPKg==
 
 pretty-format@^29.0.0, pretty-format@^29.3.1:
   version "29.3.1"

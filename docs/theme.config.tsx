@@ -6,7 +6,7 @@ export default {
   project: {
     link: 'https://github.com/prisma/nexus-prisma',
   },
-  docsRepositoryBase: 'https://github.com/prisma/nexus-prisma/blob/main/docs/pages',
+  docsRepositoryBase: 'https://github.com/prisma/nexus-prisma/blob/main/docs',
   titleSuffix: ' | Nexus Prisma',
   toc: {
     float: true,

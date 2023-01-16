@@ -117,7 +117,6 @@
     "prettier": "2.8.3",
     "prisma": "^4.0",
     "read-pkg-up": "7.0.1",
-    "semantic-release": "^19.0.5",
     "slug": "^8.2.2",
     "strip-ansi": "6",
     "ts-jest": "29.0.5",
@@ -126,6 +125,9 @@
     "typescript": "4.9.4",
     "yalc": "^1.0.0-pre.53",
     "zod": "^3.20.2"
+  },
+  "optionalDependencies": {
+    "semantic-release": "^19.0.5"
   },
   "prettier": "@prisma-labs/prettier-config",
   "peerDependencies": {

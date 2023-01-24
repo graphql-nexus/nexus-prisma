@@ -4,7 +4,7 @@ on:
 jobs:
   test-latest-prisma-without-database:
     name: Test with latest Prisma
-    timeout-minutes: 20
+    timeout-minutes: 40
 
     strategy:
       matrix:
@@ -45,7 +45,7 @@ jobs:
 
   test-latest-prisma-with-database:
     name: Test with latest Prisma
-    timeout-minutes: 20
+    timeout-minutes: 40
 
     strategy:
       matrix:
@@ -99,7 +99,7 @@ jobs:
 
   test-past-versions-with-database:
     name: Test with past versions
-    timeout-minutes: 20
+    timeout-minutes: 40
 
     strategy:
       matrix:

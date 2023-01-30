@@ -1,3 +1,21 @@
+## [1.0.4](https://github.com/prisma/nexus-prisma/compare/v1.0.3...v1.0.4) (2023-01-30)
+
+
+### CI
+
+* avoid concurent execution of tests on PRs ([#381](https://github.com/prisma/nexus-prisma/issues/381)) ([7ce9aaa](https://github.com/prisma/nexus-prisma/commit/7ce9aaa168f68413e397bd08d6bfe5ace95e6cb1))
+* double workflow timeouts ([#382](https://github.com/prisma/nexus-prisma/issues/382)) ([77dfa4b](https://github.com/prisma/nexus-prisma/commit/77dfa4b8b67f3324f03b75607bacba0411965dda))
+* enable main release ([#368](https://github.com/prisma/nexus-prisma/issues/368)) ([dc0e45a](https://github.com/prisma/nexus-prisma/commit/dc0e45a725b59861b105568fc3ee5caf60bfba1e))
+* move semantic-release under optionalDependencies ([#379](https://github.com/prisma/nexus-prisma/issues/379)) ([aab61f1](https://github.com/prisma/nexus-prisma/commit/aab61f16adbcf2f30f7ef99003db266e55914fd4))
+* remove on push trigger for release workflow ([#369](https://github.com/prisma/nexus-prisma/issues/369)) ([d82617b](https://github.com/prisma/nexus-prisma/commit/d82617be98a29172889ec50a8fde8c3b8f21576e))
+* switch to current lts node version 18 ([#365](https://github.com/prisma/nexus-prisma/issues/365)) ([b1abba8](https://github.com/prisma/nexus-prisma/commit/b1abba81f43dc31186b5e2676b1fa25638ac0f2c))
+
+
+### Bug fixes
+
+* **deps:** update dependency tslib to ^2.5.0 ([#409](https://github.com/prisma/nexus-prisma/issues/409)) ([1c38ddf](https://github.com/prisma/nexus-prisma/commit/1c38ddf20cd537a218db8d1194692054abb28956))
+* **docs:** edit page on github ([#372](https://github.com/prisma/nexus-prisma/issues/372)) ([ae266a3](https://github.com/prisma/nexus-prisma/commit/ae266a3b18d0ba411afe70f569e672013002ac35))
+
 ## [1.0.3](https://github.com/prisma/nexus-prisma/compare/v1.0.2...v1.0.3) (2023-01-11)
 
 

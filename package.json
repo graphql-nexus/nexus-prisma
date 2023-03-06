@@ -100,7 +100,7 @@
     "cross-env": "^7.0.3",
     "dripip": "0.10.0",
     "eslint": "^8.35.0",
-    "eslint-config-prettier": "^8.6.0",
+    "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-only-warn": "^1.1.0",
     "execa": "^5.1.1",
     "graphql": "^16.6.0",

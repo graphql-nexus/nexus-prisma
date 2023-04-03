@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/prisma/nexus-prisma/compare/v1.0.4...v1.0.5) (2023-04-03)
+
+
+### Bug fixes
+
+* **deps:** update dependency graphql-scalars to ^1.21.3 ([#469](https://github.com/prisma/nexus-prisma/issues/469)) ([63a9ee3](https://github.com/prisma/nexus-prisma/commit/63a9ee3d61f3401807df440cfb414b21083ae692))
+
 ## [1.0.4](https://github.com/prisma/nexus-prisma/compare/v1.0.3...v1.0.4) (2023-01-30)
 
 

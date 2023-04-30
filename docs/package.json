@@ -17,7 +17,7 @@
     "@prisma-labs/prettier-config": "0.1.0",
     "@reach/skip-nav": "0.18.0",
     "@types/node": "18.16.3",
-    "@types/react": "18.0.38",
+    "@types/react": "18.2.0",
     "autoprefixer": "10.4.14",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.2",

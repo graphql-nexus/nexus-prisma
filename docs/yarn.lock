@@ -2921,10 +2921,10 @@ next@13.4.0:
     "@next/swc-win32-ia32-msvc" "13.4.0"
     "@next/swc-win32-x64-msvc" "13.4.0"
 
-nextra-theme-docs@2.4.2:
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/nextra-theme-docs/-/nextra-theme-docs-2.4.2.tgz#40519660073481c783d3a172eb3d9ed44b7f123d"
-  integrity sha512-5H6NJ38TlbgetNx9HjMmQcNpsp6GFH26TfjLVC0RWxhEPuoutSFpJ8RjWKXv6WEaWaL500CoErW0/DeXzuQGUg==
+nextra-theme-docs@2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/nextra-theme-docs/-/nextra-theme-docs-2.5.0.tgz#91f422711a4bf9888e9bfe3af6dc5baf36fc6892"
+  integrity sha512-xmJx0xj0Mewfr/h4xkZH5TuTB6qWeygCGW384ySqZA81LargQjEqw8a25BSif8dWaMAZZ+oIBOvJ2Et+CJytQQ==
   dependencies:
     "@headlessui/react" "^1.7.10"
     "@popperjs/core" "^2.11.6"
@@ -2939,10 +2939,10 @@ nextra-theme-docs@2.4.2:
     scroll-into-view-if-needed "^3.0.0"
     zod "^3.20.2"
 
-nextra@2.4.2:
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/nextra/-/nextra-2.4.2.tgz#f9f130f1b47727ef661fa2ad63033e9d7c9960be"
-  integrity sha512-FH2BTCF8q3aBtc1w1pj1N6LMFyiMP5KL+w6Ph4s2M5FwTtv150dSNWWw5Hy2GgxLTi391B/CRkO31OCjp9trkA==
+nextra@2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/nextra/-/nextra-2.5.0.tgz#0b9ca9a70e4a26390ed5aab7b5f3f3ae290aba51"
+  integrity sha512-YvknuUvV2fdFY3F3gsxNFA2lwDWg3KHEAiyumUxZKOnW8+yTwocXGFccD76Py9fYxcmUL9ARo+PEusnXlWmLeQ==
   dependencies:
     "@mdx-js/mdx" "^2.3.0"
     "@mdx-js/react" "^2.3.0"
@@ -2959,7 +2959,7 @@ nextra@2.4.2:
     remark-gfm "^3.0.1"
     remark-math "^5.1.1"
     remark-reading-time "^2.0.1"
-    shiki "^0.14.0"
+    shiki "^0.14.2"
     slash "^3.0.0"
     title "^3.5.3"
     unist-util-remove "^3.1.1"
@@ -3572,10 +3572,10 @@ shebang-regex@^3.0.0:
   resolved "https://registry.npmjs.org/shebang-regex/-/shebang-regex-3.0.0.tgz"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
-shiki@^0.14.0:
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/shiki/-/shiki-0.14.1.tgz#9fbe082d0a8aa2ad63df4fbf2ee11ec924aa7ee1"
-  integrity sha512-+Jz4nBkCBe0mEDqo1eKRcCdjRtrCjozmcbTUjbPTX7OOJfEbTZzlUWlZtGe3Gb5oV1/jnojhG//YZc3rs9zSEw==
+shiki@^0.14.2:
+  version "0.14.2"
+  resolved "https://registry.yarnpkg.com/shiki/-/shiki-0.14.2.tgz#d51440800b701392b31ce2336036058e338247a1"
+  integrity sha512-ltSZlSLOuSY0M0Y75KA+ieRaZ0Trf5Wl3gutE7jzLuIcWxLp5i/uEnLoQWNvgKXQ5OMpGkJnVMRLAuzjc0LJ2A==
   dependencies:
     ansi-sequence-parser "^1.1.0"
     jsonc-parser "^3.2.0"

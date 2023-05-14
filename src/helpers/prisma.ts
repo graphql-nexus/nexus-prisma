@@ -61,10 +61,10 @@ export const getPrismaClientDmmf = (packageLoader: {
     `)
   }
 
-  const prismaClientPackageObject = prismaClientPackage as Record<string, unknown>
+  const prismaClientPackageObject = prismaClientPackage as { Prisma?: { dmmf: DMMF.Document } }
 
   // eslint-disable-next-line
-  if (!prismaClientPackageObject.dmmf) {
+  if (!prismaClientPackageObject.Prisma?.dmmf) {
     // prettier-ignore
     throw new Error(dedent`
       Failed to get Prisma Client DMMF. It was imported from ${printedImportId} but did not contain "dmmf" data. Got:
@@ -78,7 +78,7 @@ export const getPrismaClientDmmf = (packageLoader: {
 
   // Simple duck type to sanity check we got good data at runtime.
 
-  const dmmf = prismaClientPackageObject.dmmf as DMMF.Document
+  const dmmf = prismaClientPackageObject.Prisma?.dmmf
 
   const expectedFields = ['datamodel', 'schema', 'mappings'] as const
 

@@ -61,7 +61,7 @@ export const getPrismaClientDmmf = (packageLoader: {
     `)
   }
 
-  const prismaClientPackageObject = prismaClientPackage as { Prisma?: { dmmf: DMMF.Document}}
+  const prismaClientPackageObject = prismaClientPackage as { Prisma?: { dmmf: DMMF.Document } }
 
   // eslint-disable-next-line
   if (!prismaClientPackageObject.Prisma?.dmmf) {
@@ -78,7 +78,7 @@ export const getPrismaClientDmmf = (packageLoader: {
 
   // Simple duck type to sanity check we got good data at runtime.
 
-  const dmmf = prismaClientPackageObject.Prisma?.dmmf 
+  const dmmf = prismaClientPackageObject.Prisma?.dmmf
 
   const expectedFields = ['datamodel', 'schema', 'mappings'] as const
 

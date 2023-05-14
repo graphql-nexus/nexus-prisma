@@ -3,9 +3,7 @@
   "extends": ["config:base", ":semanticCommits", ":automergeMinor"],
   "rangeStrategy": "bump",
   "reviewers": ["rostislav-simonik"],
-  "ignoreReviewers": [
-    "renovate-approve"
-  ],
+  "ignoreReviewers": ["renovate-approve"],
   "ignorePaths": [],
   "packageRules": [
     {

@@ -46,7 +46,7 @@ generatorHandler({
     }
 
     if (generator.isCustomOutput) {
-      if (!generator.output) {
+      if (!generator.output?.value) {
         throw new Error(`Failed to read the custom output path.`)
       }
 

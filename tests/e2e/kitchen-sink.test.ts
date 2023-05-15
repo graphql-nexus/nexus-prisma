@@ -360,7 +360,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
   const result = await timeoutRace<'server_started'>(
     [
       new Promise((res) =>
-        serverProcess.stdout!.on('data', (data: Buffer) => {
+        serverProcess.stdout?.on('data', (data: Buffer) => {
           if (data.toString().match(SERVER_READY_MESSAGE)) res('server_started')
         })
       ),

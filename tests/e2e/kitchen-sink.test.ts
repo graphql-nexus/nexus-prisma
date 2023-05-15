@@ -78,7 +78,7 @@ beforeEach(async () => {
   bindRunOrThrow(ctx)
   ctx.runOrThrow(`${Path.join(process.cwd(), `node_modules/.bin/yalc`)} add ${ctx.thisPackageName}`)
   await ctx.runAsync(`yarn install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
-}, 5*60*1000)
+}, 5 * 60 * 1000)
 
 // TODO add an ESM test
 

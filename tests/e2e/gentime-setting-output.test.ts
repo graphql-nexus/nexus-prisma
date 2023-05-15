@@ -10,11 +10,11 @@ const ctx = konn()
   .useBeforeEach(project())
   .done()
 
-it('gentime setting output: custom directory', () => {
+it('gentime setting output: custom directory', async () => {
   ctx.fixture.use(Path.join(__dirname, 'fixtures/basic'))
   bindRunOrThrow(ctx)
   ctx.runOrThrow(`${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`)
-  ctx.runOrThrow(`npm install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
+  await ctx.runAsync(`yarn install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
   ctx.runOrThrow(`npx prisma generate`)
   const result = ctx.runOrThrowPackageScript(`dev`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
   expect(stripEndingLines(result.stdout)).toMatchSnapshot()

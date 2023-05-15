@@ -10,7 +10,7 @@ const ctx = konn()
   .useBeforeAll(providers.dir())
   .useBeforeAll(providers.run())
   .useBeforeAll(project())
-  .beforeAll((ctx) => {
+  .beforeAll(async (ctx) => {
     ctx.fixture.use(Path.join(__dirname, 'fixtures/ts-node-unused'))
     ctx.fs.write(
       `prisma/schema.prisma`,
@@ -24,7 +24,7 @@ const ctx = konn()
     )
     bindRunOrThrow(ctx)
     ctx.runOrThrow(`${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`)
-    ctx.runOrThrow(`npm install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
+    await ctx.runAsync(`yarn install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
     return ctx
   })
   .done()

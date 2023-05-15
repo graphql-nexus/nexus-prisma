@@ -66,7 +66,7 @@ const ctx = konn()
   .useBeforeEach(graphQLClient())
   .done()
 
-beforeEach(() => {
+beforeEach(async () => {
   ctx.fixture.use(Path.join(__dirname, 'fixtures/kitchen-sink'))
   if (process.env.PAST_VERSION && process.env.PAST_VERSION.indexOf('prisma') !== -1) {
     ctx.packageJson.merge({
@@ -77,8 +77,8 @@ beforeEach(() => {
   }
   bindRunOrThrow(ctx)
   ctx.runOrThrow(`${Path.join(process.cwd(), `node_modules/.bin/yalc`)} add ${ctx.thisPackageName}`)
-  ctx.runOrThrow(`npm install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
-})
+  await ctx.runAsync(`yarn install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
+}, 5*60*1000)
 
 // TODO add an ESM test
 
@@ -355,7 +355,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
   d(`starting server`)
 
   const serverProcess = ctx.runAsync(`node build/server`, { reject: false })
-  serverProcess.stdout!.pipe(process.stdout)
+  serverProcess.stdout?.pipe(process.stdout)
 
   const result = await timeoutRace<'server_started'>(
     [

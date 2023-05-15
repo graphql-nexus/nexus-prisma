@@ -1,3 +1,15 @@
+## [1.0.6](https://github.com/prisma/nexus-prisma/compare/v1.0.5...v1.0.6) (2023-05-15)
+
+
+### Bug fixes
+
+* **deps:** update dependency semver to ^7.5.1 ([#505](https://github.com/prisma/nexus-prisma/issues/505)) ([53a01dc](https://github.com/prisma/nexus-prisma/commit/53a01dcdf5a22a5a305caab475370daba076d625))
+
+
+### CI
+
+* remove default assignees ([#552](https://github.com/prisma/nexus-prisma/issues/552)) ([16523ee](https://github.com/prisma/nexus-prisma/commit/16523ee56843c45ac652a5555017bf1f18250bf9))
+
 ## [1.0.5](https://github.com/prisma/nexus-prisma/compare/v1.0.4...v1.0.5) (2023-04-03)
 
 

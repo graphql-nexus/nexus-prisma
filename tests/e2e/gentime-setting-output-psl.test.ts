@@ -41,11 +41,7 @@ it(
     bindRunOrThrow(ctx)
     ctx.runOrThrow(`${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`)
 
-    await ctx
-      .runAsync(`yarn install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
-      .kill('SIGTERM', {
-        forceKillAfterTimeout: 2000,
-      })
+    await ctx.runAsync(`yarn install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
     ctx.runOrThrow(`npx prisma generate`)
     const result = ctx.runOrThrowPackageScript(`dev`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
     expect(stripEndingLines(result.stdout)).toMatchSnapshot()

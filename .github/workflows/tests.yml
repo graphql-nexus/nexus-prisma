@@ -159,6 +159,10 @@ jobs:
         if: contains(matrix.past-version, 'graphql')
         run: yarn -s add graphql@^15.8.0 nexus@1.2 --dev
 
+      #NOTE: addresses issue "npm ERR! maxAge must be a number" due picking npm version from local semantic-release
+      - name: Remove semantic-release
+        run: yarn -s remove semantic-release
+
       - name: Test
         run: yarn -s test:ci
         env:

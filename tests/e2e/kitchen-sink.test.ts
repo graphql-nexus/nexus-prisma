@@ -12,6 +12,7 @@ import { envarSpecs } from '../../src/lib/peerDepValidator'
 import { createPrismaSchema, stripEndingLines, timeoutRace } from '../__helpers__/helpers'
 import { graphQLClient } from '../__providers__/graphqlClient'
 import { project } from '../__providers__/project'
+import { bindRunOrThrow } from './run-or-throw'
 
 const d = debug('e2e')
 
@@ -74,6 +75,7 @@ beforeEach(() => {
       },
     })
   }
+  bindRunOrThrow(ctx)
   ctx.runOrThrow(`${Path.join(process.cwd(), `node_modules/.bin/yalc`)} add ${ctx.thisPackageName}`)
   ctx.runOrThrow(`npm install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
 })

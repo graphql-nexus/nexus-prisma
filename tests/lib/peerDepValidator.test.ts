@@ -1,6 +1,7 @@
 import dedent from 'dindist'
 import { konn, providers } from 'konn'
 import { merge, omit } from 'lodash'
+import { bindRunOrThrow } from 'tests/e2e/run-or-throw'
 import { PackageJson } from 'type-fest'
 import { envarSpecs } from '../../src/lib/peerDepValidator'
 import { assertBuildPresent } from '../__helpers__/helpers'
@@ -24,7 +25,7 @@ beforeAll(() => {
   assertBuildPresent()
 
   // setup alpha dep that has peer dep requirements
-
+  bindRunOrThrow(ctx)
   ctx.runOrThrow(`yarn add kleur semver tslib debug fs-jetpack dindist --production`)
 
   ctx.fs.write(`node_modules/${importer.name}/package.json`, {

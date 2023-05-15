@@ -4,6 +4,7 @@ import { konn, providers } from 'konn'
 import 'ts-replace-all'
 import { project } from '../__providers__/project'
 import { createPrismaSchema } from '../__helpers__/helpers'
+import { bindRunOrThrow } from './run-or-throw'
 
 const ctx = konn()
   .useBeforeAll(providers.dir())
@@ -21,6 +22,7 @@ const ctx = konn()
         `,
       })
     )
+    bindRunOrThrow(ctx)
     ctx.runOrThrow(`${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`)
     ctx.runOrThrow(`npm install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
     return ctx

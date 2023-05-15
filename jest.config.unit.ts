@@ -9,7 +9,7 @@ const config: InitialOptionsTsJest = {
     '**/integration/**/*.test.ts',
     '**/checks/**/*.test.ts',
   ],
-  testTimeout: 5*60*1000,
+  testTimeout: 5 * 60 * 1000,
 }
 
 export default config

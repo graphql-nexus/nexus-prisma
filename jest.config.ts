@@ -10,7 +10,7 @@ const config: InitialOptionsTsJest = {
   collectCoverageFrom: ['src/**/*'],
   coverageReporters: ['lcov', 'text', 'html'],
   projects: [`<rootDir>/jest.config.e2e.ts`, `<rootDir>/jest.config.unit.ts`],
-  testTimeout: 5*60*1000,
+  testTimeout: 5 * 60 * 1000,
 }
 
 export default config

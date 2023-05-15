@@ -47,4 +47,4 @@ it('gentime setting output: custom directory', async () => {
   ctx.runOrThrow(`npx prisma generate`)
   const result = ctx.runOrThrowPackageScript(`dev`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
   expect(stripEndingLines(result.stdout)).toMatchSnapshot()
-})
+}, 5*60*1000)

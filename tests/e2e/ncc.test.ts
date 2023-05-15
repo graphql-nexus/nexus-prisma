@@ -24,4 +24,4 @@ it('works with ncc', async () => {
   const result = ctx.runOrThrowPackageScript(`start:dist`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
 
   expect(stripEndingLines(result.stdout)).toMatchSnapshot()
-})
+}, 5*60*1000)

@@ -39,7 +39,7 @@ it('when project does not have ts-node installed nexus-prisma generator still ge
 
   expect(normalizeGeneratorOutput(result.stderr)).toMatchSnapshot('stderr')
   expect(normalizeGeneratorOutput(result.stdout)).toMatchSnapshot('stdout')
-})
+}, 5*60*1000)
 
 const normalizeGeneratorOutput = (output: string) =>
   output

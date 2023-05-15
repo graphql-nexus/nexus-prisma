@@ -10,12 +10,14 @@ const ctx = konn()
   .useBeforeEach(project())
   .done()
 
-it('gentime setting output: custom directory', async () => {
-  ctx.fixture.use(Path.join(__dirname, 'fixtures/basic'))
-  ctx.fs.remove('prisma/nexus-prisma.ts')
-  ctx.fs.write(
-    'prisma/schema.prisma',
-    `
+it(
+  'gentime setting output: custom directory',
+  async () => {
+    ctx.fixture.use(Path.join(__dirname, 'fixtures/basic'))
+    ctx.fs.remove('prisma/nexus-prisma.ts')
+    ctx.fs.write(
+      'prisma/schema.prisma',
+      `
       datasource db {
         provider = "sqlite"
         url      = "file:./db.sqlite"
@@ -35,16 +37,18 @@ it('gentime setting output: custom directory', async () => {
         id String @id @default(cuid())
       }
     `
-  )
-  bindRunOrThrow(ctx)
-  ctx.runOrThrow(`${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`)
+    )
+    bindRunOrThrow(ctx)
+    ctx.runOrThrow(`${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`)
 
-  await ctx
-    .runAsync(`yarn install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
-    .kill('SIGTERM', {
-      forceKillAfterTimeout: 2000,
-    })
-  ctx.runOrThrow(`npx prisma generate`)
-  const result = ctx.runOrThrowPackageScript(`dev`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
-  expect(stripEndingLines(result.stdout)).toMatchSnapshot()
-}, 5*60*1000)
+    await ctx
+      .runAsync(`yarn install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
+      .kill('SIGTERM', {
+        forceKillAfterTimeout: 2000,
+      })
+    ctx.runOrThrow(`npx prisma generate`)
+    const result = ctx.runOrThrowPackageScript(`dev`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
+    expect(stripEndingLines(result.stdout)).toMatchSnapshot()
+  },
+  5 * 60 * 1000
+)

@@ -10,18 +10,22 @@ const ctx = konn()
   .useBeforeEach(project())
   .done()
 
-it('works with ncc', async () => {
-  ctx.fixture.use(Path.join(__dirname, 'fixtures/ncc'))
-  bindRunOrThrow(ctx)
-  ctx.runOrThrow(`${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`)
-  await ctx.runAsync(`yarn install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
-  ctx.runOrThrowPackageScript(`build`)
+it(
+  'works with ncc',
+  async () => {
+    ctx.fixture.use(Path.join(__dirname, 'fixtures/ncc'))
+    bindRunOrThrow(ctx)
+    ctx.runOrThrow(`${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`)
+    await ctx.runAsync(`yarn install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
+    ctx.runOrThrowPackageScript(`build`)
 
-  // Remove this to ensure that when the ncc build is run in the next step
-  // it is truly running independent of any node_modules.
-  ctx.fs.remove('node_modules')
+    // Remove this to ensure that when the ncc build is run in the next step
+    // it is truly running independent of any node_modules.
+    ctx.fs.remove('node_modules')
 
-  const result = ctx.runOrThrowPackageScript(`start:dist`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
+    const result = ctx.runOrThrowPackageScript(`start:dist`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
 
-  expect(stripEndingLines(result.stdout)).toMatchSnapshot()
-}, 5*60*1000)
+    expect(stripEndingLines(result.stdout)).toMatchSnapshot()
+  },
+  5 * 60 * 1000
+)

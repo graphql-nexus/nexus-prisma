@@ -12,34 +12,38 @@ const ctx = konn()
   .useBeforeEach(project())
   .done()
 
-it('when project does not have ts-node installed nexus-prisma generator still generates if there are no TS generator config files present', async () => {
-  ctx.fixture.use(Path.join(__dirname, 'fixtures/ts-node-import-error'))
-  ctx.fs.write(
-    `prisma/schema.prisma`,
-    createPrismaSchema({
-      content: dindist`
+it(
+  'when project does not have ts-node installed nexus-prisma generator still generates if there are no TS generator config files present',
+  async () => {
+    ctx.fixture.use(Path.join(__dirname, 'fixtures/ts-node-import-error'))
+    ctx.fs.write(
+      `prisma/schema.prisma`,
+      createPrismaSchema({
+        content: dindist`
       model Foo {
         id  String  @id
       }
     `,
-    })
-  )
+      })
+    )
 
-  ctx.fs.write(
-    'prisma/nexus-prisma.ts',
-    dindist`
+    ctx.fs.write(
+      'prisma/nexus-prisma.ts',
+      dindist`
       throw new Error('Oops, something unexpected happened.')
     `
-  )
-  bindRunOrThrow(ctx)
-  ctx.runOrThrow(`yalc add ${ctx.thisPackageName}`)
-  await ctx.runAsync(`yarn install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
+    )
+    bindRunOrThrow(ctx)
+    ctx.runOrThrow(`yalc add ${ctx.thisPackageName}`)
+    await ctx.runAsync(`yarn install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
 
-  const result = await ctx.runPackageScript(`build`)
+    const result = await ctx.runPackageScript(`build`)
 
-  expect(normalizeGeneratorOutput(result.stderr)).toMatchSnapshot('stderr')
-  expect(normalizeGeneratorOutput(result.stdout)).toMatchSnapshot('stdout')
-}, 5*60*1000)
+    expect(normalizeGeneratorOutput(result.stderr)).toMatchSnapshot('stderr')
+    expect(normalizeGeneratorOutput(result.stdout)).toMatchSnapshot('stdout')
+  },
+  5 * 60 * 1000
+)
 
 const normalizeGeneratorOutput = (output: string) =>
   output

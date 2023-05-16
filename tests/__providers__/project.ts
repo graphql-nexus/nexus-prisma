@@ -105,7 +105,7 @@ export const project = () =>
       // d(`starting project setup`)
       // Execa.commandSync(`yalc publish --no-scripts`)
       // ctx.runOrThrow(`yalc add ${thisPackageName}`)
-      // ctx.runOrThrow(`yarn install --legacy-peer-deps`)
+      // ctx.runOrThrow(`pnpm install`)
       // d(`done project setup`)
 
       return api

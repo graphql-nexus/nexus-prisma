@@ -12,7 +12,7 @@ const ctx = konn()
 it('gentime setting output: custom directory', () => {
   ctx.fixture.use(Path.join(__dirname, 'fixtures/basic'))
   ctx.runOrThrow(`${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`)
-  ctx.runOrThrow(`yarn install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
+  ctx.runOrThrow(`pnpm install`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
   ctx.runOrThrow(`npx prisma generate`)
   const result = ctx.runOrThrowPackageScript(`dev`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
   expect(stripEndingLines(result.stdout)).toMatchSnapshot()

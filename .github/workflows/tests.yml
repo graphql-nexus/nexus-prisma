@@ -39,7 +39,7 @@ jobs:
         run: yarn -s build
 
       - uses: pnpm/action-setup@v2
-        name: Install pnpm
+        name: Install pnpm #1
         id: pnpm-install
         with:
           version: latest

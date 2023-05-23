@@ -84,7 +84,7 @@
     "@prisma/internals": "^4.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
-    "@types/debug": "^4.1.7",
+    "@types/debug": "^4.1.8",
     "@types/expand-tilde": "^2.0.0",
     "@types/jest": "29.5.1",
     "@types/lodash": "^4.14.194",

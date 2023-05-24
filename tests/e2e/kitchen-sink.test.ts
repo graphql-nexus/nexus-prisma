@@ -60,7 +60,7 @@ function runTestProjectBuild(): ProjectResult {
 
 const ctx = konn()
   .useBeforeEach(providers.dir())
-  .useBeforeEach(providers.run())
+  .useBeforeEach(providers.run({ packageManager: 'yarn' }))
   .useBeforeEach(project())
   .useBeforeEach(graphQLClient())
   .done()

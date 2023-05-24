@@ -5,7 +5,7 @@ import { project } from '../__providers__/project'
 
 const ctx = konn()
   .useBeforeEach(providers.dir())
-  .useBeforeEach(providers.run())
+  .useBeforeEach(providers.run({ packageManager: 'yarn' }))
   .useBeforeEach(project())
   .done()
 

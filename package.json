@@ -68,6 +68,7 @@
     "tdd": "jest --selectProjects unit --watch",
     "tdd:e2e:debug": "cross-env test_project_reuse=true jest --selectProjects e2e --watch",
     "clean": "rm -rf dist-cjs dist-esm node_modules/.cache",
+    "clean:test:cache": "rm -rf tests/__cache__",
     "release:pr": "dripip pr",
     "release:canary": "dripip preview",
     "release:stable": "dripip stable",

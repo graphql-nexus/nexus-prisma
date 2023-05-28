@@ -67,7 +67,6 @@ export const monitorAsyncMethod = async (
     try {
       return await invoker()
     } catch (error: any) {
-      console.log('CCCCC', JSON.stringify(error, null, 2))
       if (error.timedOut === true && retryIndex < options.retry) {
         retryIndex += 1
         console.log(`Retrying (${retryIndex}/${options.retry})`)

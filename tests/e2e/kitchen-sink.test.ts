@@ -11,7 +11,7 @@ import { envarSpecs } from '../../src/lib/peerDepValidator'
 import { createPrismaSchema, stripEndingLines, timeoutRace } from '../__helpers__/helpers'
 import { graphQLClient } from '../__providers__/graphqlClient'
 import { project } from '../__providers__/project'
-import { run } from '../__providers__/run'
+import { monitorAsyncMethod, run } from '../__providers__/run'
 
 const d = debug('e2e')
 
@@ -70,16 +70,16 @@ beforeEach(async () => {
       },
     })
   }
-  await ctx.runAsyncOrThrow(
-    `${Path.join(process.cwd(), `node_modules/.bin/yalc`)} add ${ctx.thisPackageName}`,
-    {
-      factoryTimeout: 30 * 1000,
-    }
+  await monitorAsyncMethod(
+    ctx.runAsyncOrThrow(`${Path.join(process.cwd(), `node_modules/.bin/yalc`)} add ${ctx.thisPackageName}`), 
+    30 *1000
   )
-  await ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
-    env: { PEER_DEPENDENCY_CHECK: 'false' },
-    factoryTimeout: 90 * 1000,
-  })
+  await monitorAsyncMethod(
+    ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
+      env: { PEER_DEPENDENCY_CHECK: 'false' },
+    }),
+    90 * 1000
+  )
 }, 120 * 1000)
 
 // TODO add an ESM test

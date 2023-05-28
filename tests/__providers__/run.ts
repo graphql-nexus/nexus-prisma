@@ -1,4 +1,4 @@
-import { command as execaCommand, type SyncOptions, type ExecaChildProcess, type Options } from 'execa'
+import * as Execa from 'execa'
 import { provider, Provider } from 'konn'
 import { Providers } from 'konn/providers'
 import { getPackageManager } from '../__helpers__/packageManager'
@@ -21,35 +21,29 @@ export type Params = {
    * @default false
    */
   debug?: boolean
-
-  factoryTimeout?: number
 }
 
 export type Needs = Partial<Providers.Dir.Contributes>
-type RunOptions = SyncOptions
-type RunAsyncOptions = RunOptions & {
-  factoryTimeout?: number
-}
+type RunOptions = Execa.SyncOptions
+type RunAsyncOptions = RunOptions
+type RunAsyncReturnType = Execa.ExecaChildProcess & { command: string }
 
 export type Contributes = {
   // runOrThrow(command: string, options?: RunOptions): Execa.ExecaSyncReturnValue
   // runGracefully(command: string, options?: RunOptions): Execa.ExecaSyncReturnValue
   // runPackagerCommandOrThrow(command: string, options?: RunOptions): Execa.ExecaSyncReturnValue
   // runPackagerCommandGracefully(command: string, options?: RunOptions): Execa.ExecaSyncReturnValue
-  runAsyncOrThrow(command: string, options?: RunAsyncOptions): ExecaChildProcess
-  runAsyncGracefully(command: string, options?: RunAsyncOptions): ExecaChildProcess
-  runPackagerCommandAsyncOrThrow(command: string, options?: RunAsyncOptions): ExecaChildProcess
-  runPackagerCommandAsyncGracefully(command: string, options?: RunAsyncOptions): ExecaChildProcess
+  runAsyncOrThrow(command: string, options?: RunAsyncOptions): RunAsyncReturnType
+  runAsyncGracefully(command: string, options?: RunAsyncOptions): RunAsyncReturnType
+  runPackagerCommandAsyncOrThrow(command: string, options?: RunAsyncOptions): RunAsyncReturnType
+  runPackagerCommandAsyncGracefully(command: string, options?: RunAsyncOptions): RunAsyncReturnType
 }
 
-const runAsyncFactory =
-  (runAsync: (command: string, options?: Options) => ExecaChildProcess, timeout: number) =>
-  (command: string, options?: Options): ExecaChildProcess => {
+export const monitorAsyncMethod = async (execaChildProcess: RunAsyncReturnType, timeout: number): Promise<Execa.ExecaReturnValue<string>> => {
     const start = Date.now()
-    const promise = runAsync(command, options)
-
+    console.log(`EXECA ${execaChildProcess.command} START`)
     const timeoutId = setTimeout(() => {
-      promise.kill('SIGTERM', {
+      execaChildProcess.kill('SIGTERM', {
         forceKillAfterTimeout: timeout + 60 * 1000,
       })
     }, timeout)
@@ -57,23 +51,26 @@ const runAsyncFactory =
     const summary = () => {
       const end = Date.now()
       const diff = (end - start) / 1000
-      console.log(`RUN COMMAND (${diff}s)`, command)
+      console.log(`EXECA ${execaChildProcess.command} FINISH (${diff}s)`)
     }
-    promise
-      .then(() => {
-        clearTimeout(timeoutId)
+    try {
+      try {
+        return await execaChildProcess
+      } finally {
         summary()
-        return promise
-      })
-      .catch((error: any) => {
         clearTimeout(timeoutId)
-        summary()
-        console.log(error)
-        return Promise.reject(error)
-      })
-
-    return promise
+      }
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
   }
+
+  const injectCommand = (command: string, execaChildProcess: Execa.ExecaChildProcess): RunAsyncReturnType => {
+    const result = execaChildProcess as RunAsyncReturnType
+    result.command = command
+    return result
+  } 
 
 /**
  * Create a Run provider.
@@ -90,7 +87,6 @@ export const run = (params?: Params): Provider<Needs, Contributes> =>
     .before((ctx, { log }) => {
       const cwd = ctx.fs?.cwd() ?? process.cwd()
       const packageManager = params?.packageManager ?? getPackageManager()
-      const providerFactoryTimeout = params?.factoryTimeout ?? 2 * 60 * 1000
       const stdio = params?.debug ? 'inherit' : undefined
 
       const api: Contributes = {
@@ -122,13 +118,16 @@ export const run = (params?: Params): Provider<Needs, Contributes> =>
         //     reject: false,
         //   })
         // },
-        runAsyncOrThrow(command, { factoryTimeout, ...options } = {}) {
+        runAsyncOrThrow(command, options) {
           log.trace(`will_run`, { command })
-          return runAsyncFactory(execaCommand, factoryTimeout ?? providerFactoryTimeout)(command, {
-            cwd,
-            stdio,
-            ...options,
-          })
+          return injectCommand(
+            command, 
+            Execa.command(command, {
+              cwd,
+              stdio,
+              ...options,
+            })
+          )
         },
 
         runAsyncGracefully(command, options) {
@@ -137,15 +136,19 @@ export const run = (params?: Params): Provider<Needs, Contributes> =>
             reject: false,
           })
         },
-        runPackagerCommandAsyncOrThrow(command, { factoryTimeout, ...options } = {}) {
+        runPackagerCommandAsyncOrThrow(partialCommand, options) {
+          const command = `${packageManager} ${partialCommand}`
           log.trace(`will_run`, { command })
-          return runAsyncFactory(execaCommand, factoryTimeout ?? providerFactoryTimeout)(
-            `${packageManager} ${command}`,
-            {
-              cwd,
-              stdio,
-              ...options,
-            }
+          return injectCommand(
+            command,
+            Execa.command(
+              `${packageManager} ${command}`,
+              {
+                cwd,
+                stdio,
+                ...options,
+              }
+            )
           )
         },
         runPackagerCommandAsyncGracefully(command, options) {

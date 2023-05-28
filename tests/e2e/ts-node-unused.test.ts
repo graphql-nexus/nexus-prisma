@@ -3,7 +3,7 @@ import dindist from 'dindist'
 import { konn, providers } from 'konn'
 import 'ts-replace-all'
 import { project } from '../__providers__/project'
-import { run } from '../__providers__/run'
+import { monitorAsyncMethod, run } from '../__providers__/run'
 import { createPrismaSchema } from '../__helpers__/helpers'
 
 const ctx = konn()
@@ -25,9 +25,13 @@ const ctx = konn()
     await ctx.runAsyncOrThrow(
       `${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`
     )
-    await ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
-      env: { PEER_DEPENDENCY_CHECK: 'false' },
-    })
+    await monitorAsyncMethod(
+      ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
+        env: { PEER_DEPENDENCY_CHECK: 'false' },
+      }),
+      90 * 1000
+    )
+
     return ctx
   })
   .done()

@@ -4,7 +4,7 @@ import 'ts-replace-all'
 import * as Path from 'path'
 import { createPrismaSchema } from '../__helpers__/helpers'
 import { project } from '../__providers__/project'
-import { run } from '../__providers__/run'
+import { monitorAsyncMethod, run } from '../__providers__/run'
 
 const ctx = konn().useBeforeEach(providers.dir()).useBeforeEach(run()).useBeforeEach(project()).done()
 
@@ -30,9 +30,12 @@ it('when project does not have ts-node installed nexus-prisma generator still ge
   )
 
   await ctx.runAsyncOrThrow(`yalc add ${ctx.thisPackageName}`)
-  await ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
-    env: { PEER_DEPENDENCY_CHECK: 'false' },
-  })
+  await monitorAsyncMethod(
+    ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
+      env: { PEER_DEPENDENCY_CHECK: 'false' },
+    }),
+    90 * 1000
+  )
 
   const result = await ctx.runPackagerCommandAsyncGracefully('run --silent build')
 

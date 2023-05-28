@@ -1,4 +1,4 @@
-import * as Execa from 'execa'
+import { command as execaCommand, type SyncOptions, type ExecaChildProcess, type Options } from 'execa'
 import { provider, Provider } from 'konn'
 import { Providers } from 'konn/providers'
 import { getPackageManager } from '../__helpers__/packageManager'
@@ -21,20 +21,59 @@ export type Params = {
    * @default false
    */
   debug?: boolean
+
+  factoryTimeout?: number
 }
 
 export type Needs = Partial<Providers.Dir.Contributes>
-type RunOptions = Execa.SyncOptions
+type RunOptions = SyncOptions 
+type RunAsyncOptions = RunOptions & { 
+  factoryTimeout?: number
+}
 
 export type Contributes = {
   // runOrThrow(command: string, options?: RunOptions): Execa.ExecaSyncReturnValue
   // runGracefully(command: string, options?: RunOptions): Execa.ExecaSyncReturnValue
   // runPackagerCommandOrThrow(command: string, options?: RunOptions): Execa.ExecaSyncReturnValue
   // runPackagerCommandGracefully(command: string, options?: RunOptions): Execa.ExecaSyncReturnValue
-  runAsyncOrThrow(command: string, options?: RunOptions): Execa.ExecaChildProcess
-  runAsyncGracefully(command: string, options?: RunOptions): Execa.ExecaChildProcess
-  runPackagerCommandAsyncOrThrow(command: string, options?: RunOptions): Execa.ExecaChildProcess
-  runPackagerCommandAsyncGracefully(command: string, options?: RunOptions): Execa.ExecaChildProcess
+  runAsyncOrThrow(command: string, options?: RunAsyncOptions): ExecaChildProcess
+  runAsyncGracefully(command: string, options?: RunAsyncOptions): ExecaChildProcess
+  runPackagerCommandAsyncOrThrow(command: string, options?: RunAsyncOptions): ExecaChildProcess
+  runPackagerCommandAsyncGracefully(command: string, options?: RunAsyncOptions): ExecaChildProcess
+}
+
+const runAsyncFactory = (
+  runAsync: (command: string, options?: Options) => ExecaChildProcess,
+  timeout: number,
+) => (command: string, options?: Options): ExecaChildProcess => {
+  const start = Date.now()
+  const promise = runAsync(command, options)
+
+  const timeoutId = setTimeout(() => {
+    promise.kill('SIGTERM', {
+      forceKillAfterTimeout: timeout + 60 * 1000,
+    })
+  }, timeout)
+
+  const summary = () => {
+    const end = Date.now()
+    const diff = (end - start) / 1000
+    console.log(`RUN COMMAND (${diff}s)`, command)
+  }
+  promise.then(() => {
+    clearTimeout(timeoutId)
+    summary()
+    return promise
+  })
+  .catch((error: any) => {
+    clearTimeout(timeoutId)
+    summary()
+    console.log(error)
+    return Promise.reject(error)
+  })
+
+  return promise
+    
 }
 
 /**
@@ -52,6 +91,7 @@ export const run = (params?: Params): Provider<Needs, Contributes> =>
     .before((ctx, { log }) => {
       const cwd = ctx.fs?.cwd() ?? process.cwd()
       const packageManager = params?.packageManager ?? getPackageManager()
+      const providerFactoryTimeout = params?.factoryTimeout ?? 2 * 60 * 1000
       const stdio = params?.debug ? 'inherit' : undefined
 
       const api: Contributes = {
@@ -83,9 +123,9 @@ export const run = (params?: Params): Provider<Needs, Contributes> =>
         //     reject: false,
         //   })
         // },
-        runAsyncOrThrow(command, options) {
+        runAsyncOrThrow(command, { factoryTimeout, ...options } = {}) {
           log.trace(`will_run`, { command })
-          return Execa.command(command, {
+          return runAsyncFactory(execaCommand, factoryTimeout ?? providerFactoryTimeout)(command, {
             cwd,
             stdio,
             ...options,
@@ -98,9 +138,9 @@ export const run = (params?: Params): Provider<Needs, Contributes> =>
             reject: false,
           })
         },
-        runPackagerCommandAsyncOrThrow(command, options) {
+        runPackagerCommandAsyncOrThrow(command, { factoryTimeout, ...options} = {}) {
           log.trace(`will_run`, { command })
-          return Execa.command(`${packageManager} ${command}`, {
+          return runAsyncFactory(execaCommand, factoryTimeout ?? providerFactoryTimeout)(`${packageManager} ${command}`, {
             cwd,
             stdio,
             ...options,

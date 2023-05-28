@@ -71,8 +71,8 @@ beforeEach(async () => {
     })
   }
   await monitorAsyncMethod(
-    ctx.runAsyncOrThrow(`${Path.join(process.cwd(), `node_modules/.bin/yalc`)} add ${ctx.thisPackageName}`), 
-    30 *1000
+    ctx.runAsyncOrThrow(`${Path.join(process.cwd(), `node_modules/.bin/yalc`)} add ${ctx.thisPackageName}`),
+    30 * 1000
   )
   await monitorAsyncMethod(
     ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {

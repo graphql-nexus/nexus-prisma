@@ -39,38 +39,41 @@ export type Contributes = {
   runPackagerCommandAsyncGracefully(command: string, options?: RunAsyncOptions): RunAsyncReturnType
 }
 
-export const monitorAsyncMethod = async (execaChildProcess: RunAsyncReturnType, timeout: number): Promise<Execa.ExecaReturnValue<string>> => {
-    const start = Date.now()
-    console.log(`EXECA ${execaChildProcess.command} START`)
-    const timeoutId = setTimeout(() => {
-      execaChildProcess.kill('SIGTERM', {
-        forceKillAfterTimeout: timeout + 60 * 1000,
-      })
-    }, timeout)
+export const monitorAsyncMethod = async (
+  execaChildProcess: RunAsyncReturnType,
+  timeout: number
+): Promise<Execa.ExecaReturnValue<string>> => {
+  const start = Date.now()
+  console.log(`EXECA ${execaChildProcess.command} START`)
+  const timeoutId = setTimeout(() => {
+    execaChildProcess.kill('SIGTERM', {
+      forceKillAfterTimeout: timeout + 60 * 1000,
+    })
+  }, timeout)
 
-    const summary = () => {
-      const end = Date.now()
-      const diff = (end - start) / 1000
-      console.log(`EXECA ${execaChildProcess.command} FINISH (${diff}s)`)
-    }
-    try {
-      try {
-        return await execaChildProcess
-      } finally {
-        summary()
-        clearTimeout(timeoutId)
-      }
-    } catch (error) {
-      console.log(error)
-      throw error
-    }
+  const summary = () => {
+    const end = Date.now()
+    const diff = (end - start) / 1000
+    console.log(`EXECA ${execaChildProcess.command} FINISH (${diff}s)`)
   }
+  try {
+    try {
+      return await execaChildProcess
+    } finally {
+      summary()
+      clearTimeout(timeoutId)
+    }
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+}
 
-  const injectCommand = (command: string, execaChildProcess: Execa.ExecaChildProcess): RunAsyncReturnType => {
-    const result = execaChildProcess as RunAsyncReturnType
-    result.command = command
-    return result
-  } 
+const injectCommand = (command: string, execaChildProcess: Execa.ExecaChildProcess): RunAsyncReturnType => {
+  const result = execaChildProcess as RunAsyncReturnType
+  result.command = command
+  return result
+}
 
 /**
  * Create a Run provider.
@@ -121,7 +124,7 @@ export const run = (params?: Params): Provider<Needs, Contributes> =>
         runAsyncOrThrow(command, options) {
           log.trace(`will_run`, { command })
           return injectCommand(
-            command, 
+            command,
             Execa.command(command, {
               cwd,
               stdio,
@@ -141,14 +144,11 @@ export const run = (params?: Params): Provider<Needs, Contributes> =>
           log.trace(`will_run`, { command })
           return injectCommand(
             command,
-            Execa.command(
-              `${packageManager} ${command}`,
-              {
-                cwd,
-                stdio,
-                ...options,
-              }
-            )
+            Execa.command(`${packageManager} ${command}`, {
+              cwd,
+              stdio,
+              ...options,
+            })
           )
         },
         runPackagerCommandAsyncGracefully(command, options) {

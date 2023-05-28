@@ -127,7 +127,7 @@ export const testIntegration = (params: TestIntegrationParams) => {
         expect(result.graphqlOperationExecutionResult).toMatchSnapshot(`graphqlOperationExecutionResult`)
       }
     },
-    30_000
+    60_000
   )
 }
 

@@ -440,4 +440,4 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
   expect(typeof foo.someDateTimeField).toEqual('string')
   expect(typeof foo.someBytesField).toEqual('object')
   expect(typeof GQLScalars.BigIntResolver.parseValue(foo.someBigIntField)).toEqual('bigint')
-}, 240_000)
+}, 120_000)

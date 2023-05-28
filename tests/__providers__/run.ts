@@ -144,7 +144,7 @@ export const run = (params?: Params): Provider<Needs, Contributes> =>
           log.trace(`will_run`, { command })
           return injectCommand(
             command,
-            Execa.command(`${packageManager} ${command}`, {
+            Execa.command(command, {
               cwd,
               stdio,
               ...options,

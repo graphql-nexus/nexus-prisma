@@ -1,9 +1,7 @@
 import { gql } from 'graphql-tag'
 import { objectType, queryType } from 'nexus'
 import { Specs } from '../specs'
-import { testIntegration, testIntegrationPartial } from '../__helpers__/testers'
-
-const base = testIntegrationPartial({})
+import { testIntegration } from '../__helpers__/testers'
 
 testIntegration({
   description: 'can project user-to-posts relationship',

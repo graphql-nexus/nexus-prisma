@@ -1,39 +1,38 @@
-import * as Execa from 'execa'
 import { provider } from 'konn'
 import { Providers } from 'konn/providers'
 import { merge } from 'lodash'
 import readPkgUp from 'read-pkg-up'
 import { PackageJson, TsConfigJson } from 'type-fest'
 import { assertBuildPresent } from '../__helpers__/helpers'
+import type * as Run from './run'
 import * as Package from '../../package.json'
 
 type Project = {
   thisPackageName: string
   fixture: {
-    use(path: string): void
+    useAsync(path: string): Promise<void>
   }
   packageJson: {
-    merge(fields: PackageJson): void
-    create(fields: PackageJson): void
+    mergeAsync(fields: PackageJson): Promise<void>
+    createAsync(fields: PackageJson): Promise<void>
   }
   tsconfig: {
-    merge(fields: TsConfigJson): void
-    create(fields: TsConfigJson): void
+    mergeAsync(fields: TsConfigJson): Promise<void>
+    createAsync(fields: TsConfigJson): Promise<void>
   }
 }
 
-export type Needs = Providers.Dir.Contributes & Providers.Run.Contributes
+export type Needs = Providers.Dir.Contributes & Run.Contributes
 
 export type Contributes = Project
 
 export const project = () =>
   provider<Needs, Contributes>()
     .name('project')
-    .before((ctx) => {
+    .before(async (ctx) => {
       assertBuildPresent()
-      Execa.commandSync(`yarn -s yalc publish --no-scripts`)
 
-      const thisPackageJson = readPkgUp.sync({ cwd: __dirname })?.packageJson
+      const thisPackageJson = (await readPkgUp({ cwd: __dirname }))?.packageJson
 
       if (!thisPackageJson) {
         throw new Error(`Failed to get own package.json`)
@@ -44,11 +43,14 @@ export const project = () =>
       const api: Project = {
         thisPackageName,
         fixture: {
-          use: (path) => {
-            ctx.fs.copy(path, ctx.fs.cwd(), {
+          useAsync: async (path) => {
+            if (!process.env.CI) {
+              console.log('e2e project path:', ctx.fs.cwd())
+            }
+            await ctx.fs.copyAsync(path, ctx.fs.cwd(), {
               overwrite: true,
             })
-            api.packageJson.merge({
+            await api.packageJson.mergeAsync({
               devDependencies: {
                 '@prisma/client': Package.devDependencies['@prisma/client'],
                 prisma: Package.devDependencies.prisma,
@@ -59,37 +61,36 @@ export const project = () =>
           },
         },
         packageJson: {
-          create: (packageJson) => {
+          createAsync: async (packageJson) => {
             const fileName = 'package.json'
-            ctx.fs.write(fileName, packageJson, { jsonIndent: 2 })
+            await ctx.fs.writeAsync(fileName, packageJson, { jsonIndent: 2 })
           },
-          merge: (fields) => {
+          mergeAsync: async (fields) => {
             const fileName = 'package.json'
-            const PackageJson = ctx.fs.read(fileName, 'json')
+            const PackageJson = await ctx.fs.readAsync(fileName, 'json')
             const PackageJsonNew = merge(PackageJson, fields)
-            ctx.fs.write(fileName, PackageJsonNew, { jsonIndent: 2 })
+            await ctx.fs.writeAsync(fileName, PackageJsonNew, { jsonIndent: 2 })
           },
         },
         tsconfig: {
-          create: (tsconfig) => {
+          createAsync: async (tsconfig) => {
             const fileName = 'tsconfig.json'
-            ctx.fs.write(fileName, tsconfig, { jsonIndent: 2 })
+            await ctx.fs.writeAsync(fileName, tsconfig, { jsonIndent: 2 })
           },
-          merge: (fields) => {
+          mergeAsync: async (fields) => {
             const fileName = 'tsconfig.json'
-            const tsconfig = ctx.fs.read(fileName, 'json')
+            const tsconfig = await ctx.fs.readAsync(fileName, 'json')
             const tsconfigNew = merge(tsconfig, fields)
-            ctx.fs.write(fileName, tsconfigNew, { jsonIndent: 2 })
+            await ctx.fs.writeAsync(fileName, tsconfigNew, { jsonIndent: 2 })
           },
         },
       }
 
-      api.packageJson.create({
+      await api.packageJson.createAsync({
         name: 'some-test-project',
         version: '1.0.0',
       })
-
-      api.tsconfig.create({
+      await api.tsconfig.createAsync({
         compilerOptions: {
           strict: true,
           target: 'ES2018',

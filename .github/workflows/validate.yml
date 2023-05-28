@@ -25,7 +25,7 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Run prettier
-        run: yarn -s format:check
+        run: yarn -s format
 
       - name: Run es-lint
-        run: yarn -s lint:check
+        run: yarn -s lint

@@ -15,6 +15,7 @@ import { Module } from '../../src/generator/helpers/types'
 import { ModuleGenerators } from '../../src/generator/ModuleGenerators'
 import { Settings } from '../../src/generator/Settings'
 import { createConsoleLogCapture, createPrismaSchema, prepareGraphQLSDLForSnapshot } from './helpers'
+import { getPackageManager } from './packageManager'
 
 /**
  * Define Nexus type definitions based on the Nexus Prisma configurations
@@ -117,8 +118,10 @@ export const testIntegration = (params: TestIntegrationParams) => {
     async () => {
       const result = await integrationTest(params)
       if (params.expect) {
+        expect.assertions(0)
         params.expect(result)
       } else {
+        expect.assertions(3)
         expect(result.logs).toMatchSnapshot(`logs`)
         expect(result.graphqlSchemaSDL).toMatchSnapshot(`graphqlSchemaSDL`)
         expect(result.graphqlOperationExecutionResult).toMatchSnapshot(`graphqlOperationExecutionResult`)
@@ -141,6 +144,7 @@ export const testGraphqlSchema = (
   params: Pick<TestIntegrationParams, 'api' | 'description' | 'database'>
 ) => {
   it(params.description, async () => {
+    expect.assertions(1)
     const dmmf = await PrismaInternals.getDMMF({
       datamodel: createPrismaSchema({
         content: params.database,
@@ -192,21 +196,25 @@ export const integrationTest = async (params: TestIntegrationParams) => {
     clientOutput: prismaClientOutputDir,
   })
 
-  const cacheHit = fs.exists(prismaClientOutputDirAbsolute)
+  const cacheHit = await fs.existsAsync(prismaClientOutputDirAbsolute)
   let dmmf: DMMF.Document
 
   if (!cacheHit) {
-    fs.write(`${outputDirPath}/schema.prisma`, prismaSchemaContents)
-    execa.commandSync(`yarn -s prisma db push --force-reset --schema ${outputDirPath}/schema.prisma`)
-    fs.copy(sqliteDatabaseFileOutputAbsolute, `${sqliteDatabaseFileOutputAbsolute}.bak`)
+    await fs.writeAsync(`${outputDirPath}/schema.prisma`, prismaSchemaContents)
+    await execa.command(
+      `${getPackageManager()} -s prisma db push --force-reset --schema ${outputDirPath}/schema.prisma`
+    )
+    await fs.copyAsync(sqliteDatabaseFileOutputAbsolute, `${sqliteDatabaseFileOutputAbsolute}.bak`)
     dmmf = await PrismaInternals.getDMMF({
       datamodel: prismaSchemaContents,
     })
-    fs.write(dmmfFileOutputAbsolute, dmmf)
+    await fs.writeAsync(dmmfFileOutputAbsolute, dmmf)
   } else {
     // restore empty database
-    fs.copy(`${sqliteDatabaseFileOutputAbsolute}.bak`, sqliteDatabaseFileOutputAbsolute, { overwrite: true })
-    dmmf = fs.read(dmmfFileOutputAbsolute, 'json')
+    await fs.copyAsync(`${sqliteDatabaseFileOutputAbsolute}.bak`, sqliteDatabaseFileOutputAbsolute, {
+      overwrite: true,
+    })
+    dmmf = await fs.readAsync(dmmfFileOutputAbsolute, 'json')
   }
 
   const prismaClientPackage = require(prismaClientOutputDirAbsolute)

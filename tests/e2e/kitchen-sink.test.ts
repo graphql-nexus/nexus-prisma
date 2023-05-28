@@ -6,12 +6,12 @@ import * as GQLScalars from 'graphql-scalars'
 import { konn, providers } from 'konn'
 import * as Path from 'path'
 import stripAnsi from 'strip-ansi'
-import { inspect } from 'util'
 
 import { envarSpecs } from '../../src/lib/peerDepValidator'
 import { createPrismaSchema, stripEndingLines, timeoutRace } from '../__helpers__/helpers'
 import { graphQLClient } from '../__providers__/graphqlClient'
 import { project } from '../__providers__/project'
+import { run } from '../__providers__/run'
 
 const d = debug('e2e')
 
@@ -36,17 +36,13 @@ const GRAPHQL_SCHEMA_FILE_PATH = `schema.graphql`
 
 const SERVER_READY_MESSAGE = `GraphQL API ready at http://localhost:4000/graphql`
 
-function runTestProjectBuild(): ProjectResult {
-  const commandConfig: Execa.SyncOptions = {
-    reject: false,
-    cwd: ctx.fs.cwd(),
-  }
-  const runFirstBuild = Execa.commandSync(`npm run build`, commandConfig)
-  const runReflectPrisma = Execa.commandSync(`npm run reflect:prisma`, commandConfig)
-  const runReflectNexus = Execa.commandSync(`npm run reflect:nexus`, commandConfig)
-  const runSecondBuild = Execa.commandSync(`npm run build`, commandConfig)
-  const fileGraphqlSchema = ctx.fs.read(GRAPHQL_SCHEMA_FILE_PATH)
-  const fileTypegen = ctx.fs.read(TYPEGEN_FILE_PATH)
+async function runTestProjectBuild(): Promise<ProjectResult> {
+  const runFirstBuild = await ctx.runPackagerCommandAsyncGracefully('run build')
+  const runReflectPrisma = await ctx.runPackagerCommandAsyncGracefully('run reflect:prisma')
+  const runReflectNexus = await ctx.runPackagerCommandAsyncGracefully('run reflect:nexus')
+  const runSecondBuild = await ctx.runPackagerCommandAsyncGracefully('run build')
+  const fileGraphqlSchema = await ctx.fs.readAsync(GRAPHQL_SCHEMA_FILE_PATH)
+  const fileTypegen = await ctx.fs.readAsync(TYPEGEN_FILE_PATH)
 
   return {
     runFirstBuild,
@@ -60,22 +56,26 @@ function runTestProjectBuild(): ProjectResult {
 
 const ctx = konn()
   .useBeforeEach(providers.dir())
-  .useBeforeEach(providers.run({ packageManager: 'yarn' }))
+  .useBeforeEach(run())
   .useBeforeEach(project())
   .useBeforeEach(graphQLClient())
   .done()
 
-beforeEach(() => {
-  ctx.fixture.use(Path.join(__dirname, 'fixtures/kitchen-sink'))
+beforeEach(async () => {
+  await ctx.fixture.useAsync(Path.join(__dirname, 'fixtures/kitchen-sink'))
   if (process.env.PAST_VERSION && process.env.PAST_VERSION.indexOf('prisma') !== -1) {
-    ctx.packageJson.merge({
+    await ctx.packageJson.mergeAsync({
       devDependencies: {
         typescript: '4.7.4',
       },
     })
   }
-  ctx.runOrThrow(`${Path.join(process.cwd(), `node_modules/.bin/yalc`)} add ${ctx.thisPackageName}`)
-  ctx.runOrThrow(`yarn install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
+  await ctx.runAsyncOrThrow(
+    `${Path.join(process.cwd(), `node_modules/.bin/yalc`)} add ${ctx.thisPackageName}`
+  )
+  await ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
+    env: { PEER_DEPENDENCY_CHECK: 'false' },
+  })
 })
 
 // TODO add an ESM test
@@ -274,14 +274,13 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
     },
   ]
 
-  files.forEach((fileSpec) => ctx.fs.write(fileSpec.filePath, fileSpec.content))
+  for await (const fileSpec of files) {
+    await ctx.fs.writeAsync(fileSpec.filePath, fileSpec.content)
+  }
 
   // todo api server & database & seed that allows for testing that prisma runtime usage works
 
-  // uncomment this to see dir (helpful to go there yourself and manually debug)
-  console.log(`e2e test project at: ${ctx.fs.cwd()}`)
-
-  const results = runTestProjectBuild()
+  const results = await runTestProjectBuild()
 
   // uncomment this to see the raw results (helpful for debugging)
   // console.log(`e2e output:\n`, inspect(results, { depth: 10, colors: true }))
@@ -339,7 +338,10 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
 
   if (process.env.DATABASE === 'no-db') {
     d(`database not available, skipping runtime test`)
+    expect.assertions(16)
     return
+  } else {
+    expect.assertions(26)
   }
 
   /**
@@ -348,11 +350,11 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
 
   d(`migrating database`)
 
-  ctx.runOrThrow(`npm run db:migrate`)
+  await ctx.runPackagerCommandAsyncOrThrow('run db:migrate')
 
   d(`starting server`)
 
-  const serverProcess = ctx.runAsync(`node build/server`, { reject: false })
+  const serverProcess = ctx.runAsyncOrThrow(`node build/server`, { reject: false })
   serverProcess.stdout!.pipe(process.stdout)
 
   const result = await timeoutRace<'server_started'>(
@@ -368,7 +370,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
 
   if (result === 'timeout') {
     throw new Error(
-      `server was not ready after 10 seconds. The output from child process was:\n\n${serverProcess.stdio}\n\n`
+      `server was not ready after 10 seconds. The output from child process was:\n\n${serverProcess.stdio.toString()}\n\n`
     )
   }
   d(`starting client queries`)

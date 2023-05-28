@@ -40,32 +40,41 @@ export type Contributes = {
 }
 
 export const monitorAsyncMethod = async (
-  execaChildProcess: RunAsyncReturnType,
-  timeout: number
+  runAsyncCallback: () => RunAsyncReturnType,
+  options: { retry: number }
 ): Promise<Execa.ExecaReturnValue<string>> => {
-  const start = Date.now()
-  console.log(`EXECA ${execaChildProcess.command} START`)
-  const timeoutId = setTimeout(() => {
-    execaChildProcess.kill('SIGTERM', {
-      forceKillAfterTimeout: timeout + 60 * 1000,
-    })
-  }, timeout)
-
-  const summary = () => {
-    const end = Date.now()
-    const diff = (end - start) / 1000
-    console.log(`EXECA ${execaChildProcess.command} FINISH (${diff}s)`)
-  }
-  try {
+  const invoker = async () => {
+    const start = Date.now()
+    const execaChildProcess = runAsyncCallback()
+    console.log(`EXECA ${execaChildProcess.command} START`)
     try {
-      return await execaChildProcess
-    } finally {
-      summary()
-      clearTimeout(timeoutId)
+      try {
+        return await execaChildProcess
+      } finally {
+        const end = Date.now()
+        const diff = (end - start) / 1000
+        console.log(`EXECA ${execaChildProcess.command} FINISH (${diff}s)`)
+      }
+    } catch (error) {
+      console.log(error)
+      throw error
     }
-  } catch (error) {
-    console.log(error)
-    throw error
+  }
+
+  let retryIndex = 0
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    try {
+      return await invoker()
+    } catch (error: any) {
+      console.log('CCCCC', JSON.stringify(error, null, 2))
+      if (error.timedOut === true && retryIndex < options.retry) {
+        retryIndex += 1
+        console.log(`Retrying (${retryIndex}/${options.retry})`)
+        continue
+      }
+      throw error
+    }
   }
 }
 

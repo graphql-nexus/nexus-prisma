@@ -13,10 +13,12 @@ it('works with ncc', async () => {
     `${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`
   )
   await monitorAsyncMethod(
-    ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
-      env: { PEER_DEPENDENCY_CHECK: 'false' },
-    }),
-    90 * 1000
+    () =>
+      ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
+        env: { PEER_DEPENDENCY_CHECK: 'false' },
+        timeout: 90 * 1000,
+      }),
+    { retry: 3 }
   )
   await ctx.runPackagerCommandAsyncOrThrow('build')
 

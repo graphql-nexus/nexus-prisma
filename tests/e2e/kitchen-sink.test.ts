@@ -70,17 +70,18 @@ beforeEach(async () => {
       },
     })
   }
-  await monitorAsyncMethod(
-    ctx.runAsyncOrThrow(`${Path.join(process.cwd(), `node_modules/.bin/yalc`)} add ${ctx.thisPackageName}`),
-    30 * 1000
-  )
-  await monitorAsyncMethod(
-    ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
-      env: { PEER_DEPENDENCY_CHECK: 'false' },
-    }),
-    90 * 1000
-  )
-}, 120 * 1000)
+  await ctx.runAsyncOrThrow(
+    `${Path.join(process.cwd(), `node_modules/.bin/yalc`)} add ${ctx.thisPackageName}`
+  ),
+    await monitorAsyncMethod(
+      () =>
+        ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
+          env: { PEER_DEPENDENCY_CHECK: 'false' },
+          timeout: 90 * 1000,
+        }),
+      { retry: 3 }
+    )
+}, 300 * 1000)
 
 // TODO add an ESM test
 

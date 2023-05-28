@@ -3,6 +3,7 @@
 .github
 node_modules
 dist-*
-tests
+tests/e2e/fixtures
+tests/__cache__
 docs
 jest.config.*

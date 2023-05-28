@@ -21,7 +21,7 @@ const base = testIntegrationPartial({
         definition(t) {
           t.nonNull.list.nonNull.field('users', {
             type: 'User',
-            resolve(_, __, ctx) {
+            resolve(_, __, _ctx) {
               return [{ id: '1' }]
             },
           })
@@ -79,7 +79,7 @@ const prismaClientWhereInstanceofStrategyWillFail: TestIntegrationParams['prisma
  * Some value that won't even pass Prisma Client duck typing check.
  */
 const prismaClientWhereDuckTypingStrategyWillFail: TestIntegrationParams['prismaClient'] = (
-  prismaClientPackage
+  _prismaClientPackage
 ) => {
   return 'should be prisma client instance but is not' as any
 }
@@ -96,6 +96,7 @@ describe('instanceOf_duckType_fallback strategy:', () => {
     ...base,
     // The emitted error contains a path that isn't stable across the CI/CI matrix. Needs to be processed.
     expect(result) {
+      expect.assertions(3)
       if (result.logs[0]) {
         result.logs[0] = result.logs[0]!.replace(
           /(.*imported from).*(is not the.*)/,
@@ -228,6 +229,7 @@ testIntegration({
   },
   // Node.js 14.x vs 16.x have differing error messages so we do not snapshot in order to have CI matrix pass without issue
   expect(result) {
+    expect.assertions(1)
     expect(result.graphqlOperationExecutionResult.errors?.[0]?.message).toMatch(/Cannot read.*findUnique.*/)
   },
   ...base,

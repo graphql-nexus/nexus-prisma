@@ -4,16 +4,14 @@ import 'ts-replace-all'
 import * as Path from 'path'
 import { createPrismaSchema } from '../__helpers__/helpers'
 import { project } from '../__providers__/project'
+import { monitorAsyncMethod, run } from '../__providers__/run'
 
-const ctx = konn()
-  .useBeforeEach(providers.dir())
-  .useBeforeEach(providers.run())
-  .useBeforeEach(project())
-  .done()
+const ctx = konn().useBeforeEach(providers.dir()).useBeforeEach(run()).useBeforeEach(project()).done()
 
 it('when project does not have ts-node installed nexus-prisma generator still generates if there are no TS generator config files present', async () => {
-  ctx.fixture.use(Path.join(__dirname, 'fixtures/ts-node-import-error'))
-  ctx.fs.write(
+  expect.assertions(2)
+  await ctx.fixture.useAsync(Path.join(__dirname, 'fixtures/ts-node-import-error'))
+  await ctx.fs.writeAsync(
     `prisma/schema.prisma`,
     createPrismaSchema({
       content: dindist`
@@ -24,17 +22,23 @@ it('when project does not have ts-node installed nexus-prisma generator still ge
     })
   )
 
-  ctx.fs.write(
+  await ctx.fs.writeAsync(
     'prisma/nexus-prisma.ts',
     dindist`
       throw new Error('Oops, something unexpected happened.')
     `
   )
 
-  ctx.runOrThrow(`yalc add ${ctx.thisPackageName}`)
-  ctx.runOrThrow(`npm install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
+  await ctx.runAsyncOrThrow(`yalc add ${ctx.thisPackageName}`)
+  await monitorAsyncMethod(
+    () =>
+      ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
+        env: { PEER_DEPENDENCY_CHECK: 'false' },
+      }),
+    { retry: 3, timeout: 90 * 1000 }
+  )
 
-  const result = await ctx.runPackageScript(`build`)
+  const result = await ctx.runPackagerCommandAsyncGracefully('run --silent build')
 
   expect(normalizeGeneratorOutput(result.stderr)).toMatchSnapshot('stderr')
   expect(normalizeGeneratorOutput(result.stdout)).toMatchSnapshot('stdout')

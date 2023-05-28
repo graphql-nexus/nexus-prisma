@@ -1,6 +1,6 @@
-import type { InitialOptionsTsJest } from 'ts-jest/dist/types'
+import type { JestConfigWithTsJest } from 'ts-jest/dist/types'
 
-const config: InitialOptionsTsJest = {
+const config: JestConfigWithTsJest = {
   preset: 'ts-jest',
   watchPlugins: [
     'jest-watch-typeahead/filename',
@@ -10,6 +10,7 @@ const config: InitialOptionsTsJest = {
   collectCoverageFrom: ['src/**/*'],
   coverageReporters: ['lcov', 'text', 'html'],
   projects: [`<rootDir>/jest.config.e2e.ts`, `<rootDir>/jest.config.unit.ts`],
+  testTimeout: 2 * 60 * 1000,
 }
 
 export default config

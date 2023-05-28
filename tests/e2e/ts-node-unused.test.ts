@@ -3,15 +3,16 @@ import dindist from 'dindist'
 import { konn, providers } from 'konn'
 import 'ts-replace-all'
 import { project } from '../__providers__/project'
+import { monitorAsyncMethod, run } from '../__providers__/run'
 import { createPrismaSchema } from '../__helpers__/helpers'
 
 const ctx = konn()
   .useBeforeAll(providers.dir())
-  .useBeforeAll(providers.run())
+  .useBeforeAll(run())
   .useBeforeAll(project())
-  .beforeAll((ctx) => {
-    ctx.fixture.use(Path.join(__dirname, 'fixtures/ts-node-unused'))
-    ctx.fs.write(
+  .beforeAll(async (ctx) => {
+    await ctx.fixture.useAsync(Path.join(__dirname, 'fixtures/ts-node-unused'))
+    await ctx.fs.writeAsync(
       `prisma/schema.prisma`,
       createPrismaSchema({
         content: dindist`
@@ -21,14 +22,24 @@ const ctx = konn()
         `,
       })
     )
-    ctx.runOrThrow(`${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`)
-    ctx.runOrThrow(`npm install --legacy-peer-deps`, { env: { PEER_DEPENDENCY_CHECK: 'false' } })
+    await ctx.runAsyncOrThrow(
+      `${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`
+    )
+    await monitorAsyncMethod(
+      () =>
+        ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
+          env: { PEER_DEPENDENCY_CHECK: 'false' },
+        }),
+      { retry: 3, timeout: 90 * 1000 }
+    )
+
     return ctx
   })
   .done()
 
 it('when project does not have ts-node installed nexus-prisma generator still generates if there are no TS generator config files present', async () => {
-  const result = await ctx.runOrThrowPackageScript(`build`)
+  expect.assertions(1)
+  const result = await ctx.runPackagerCommandAsyncOrThrow('run --silent build')
   expect(normalizeGeneratorOutput(result.stdout)).toMatchSnapshot()
 })
 

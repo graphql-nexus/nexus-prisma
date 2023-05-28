@@ -26,8 +26,8 @@ export type Params = {
 }
 
 export type Needs = Partial<Providers.Dir.Contributes>
-type RunOptions = SyncOptions 
-type RunAsyncOptions = RunOptions & { 
+type RunOptions = SyncOptions
+type RunAsyncOptions = RunOptions & {
   factoryTimeout?: number
 }
 
@@ -42,39 +42,38 @@ export type Contributes = {
   runPackagerCommandAsyncGracefully(command: string, options?: RunAsyncOptions): ExecaChildProcess
 }
 
-const runAsyncFactory = (
-  runAsync: (command: string, options?: Options) => ExecaChildProcess,
-  timeout: number,
-) => (command: string, options?: Options): ExecaChildProcess => {
-  const start = Date.now()
-  const promise = runAsync(command, options)
+const runAsyncFactory =
+  (runAsync: (command: string, options?: Options) => ExecaChildProcess, timeout: number) =>
+  (command: string, options?: Options): ExecaChildProcess => {
+    const start = Date.now()
+    const promise = runAsync(command, options)
 
-  const timeoutId = setTimeout(() => {
-    promise.kill('SIGTERM', {
-      forceKillAfterTimeout: timeout + 60 * 1000,
-    })
-  }, timeout)
+    const timeoutId = setTimeout(() => {
+      promise.kill('SIGTERM', {
+        forceKillAfterTimeout: timeout + 60 * 1000,
+      })
+    }, timeout)
 
-  const summary = () => {
-    const end = Date.now()
-    const diff = (end - start) / 1000
-    console.log(`RUN COMMAND (${diff}s)`, command)
-  }
-  promise.then(() => {
-    clearTimeout(timeoutId)
-    summary()
+    const summary = () => {
+      const end = Date.now()
+      const diff = (end - start) / 1000
+      console.log(`RUN COMMAND (${diff}s)`, command)
+    }
+    promise
+      .then(() => {
+        clearTimeout(timeoutId)
+        summary()
+        return promise
+      })
+      .catch((error: any) => {
+        clearTimeout(timeoutId)
+        summary()
+        console.log(error)
+        return Promise.reject(error)
+      })
+
     return promise
-  })
-  .catch((error: any) => {
-    clearTimeout(timeoutId)
-    summary()
-    console.log(error)
-    return Promise.reject(error)
-  })
-
-  return promise
-    
-}
+  }
 
 /**
  * Create a Run provider.
@@ -138,13 +137,16 @@ export const run = (params?: Params): Provider<Needs, Contributes> =>
             reject: false,
           })
         },
-        runPackagerCommandAsyncOrThrow(command, { factoryTimeout, ...options} = {}) {
+        runPackagerCommandAsyncOrThrow(command, { factoryTimeout, ...options } = {}) {
           log.trace(`will_run`, { command })
-          return runAsyncFactory(execaCommand, factoryTimeout ?? providerFactoryTimeout)(`${packageManager} ${command}`, {
-            cwd,
-            stdio,
-            ...options,
-          })
+          return runAsyncFactory(execaCommand, factoryTimeout ?? providerFactoryTimeout)(
+            `${packageManager} ${command}`,
+            {
+              cwd,
+              stdio,
+              ...options,
+            }
+          )
         },
         runPackagerCommandAsyncGracefully(command, options) {
           return this.runPackagerCommandAsyncOrThrow(command, {

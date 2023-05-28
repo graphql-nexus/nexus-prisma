@@ -71,7 +71,8 @@ beforeEach(async () => {
     })
   }
   await ctx.runAsyncOrThrow(
-    `${Path.join(process.cwd(), `node_modules/.bin/yalc`)} add ${ctx.thisPackageName}`, {
+    `${Path.join(process.cwd(), `node_modules/.bin/yalc`)} add ${ctx.thisPackageName}`,
+    {
       factoryTimeout: 30 * 1000,
     }
   )
@@ -80,7 +81,6 @@ beforeEach(async () => {
     factoryTimeout: 90 * 1000,
   })
 }, 120 * 1000)
-
 
 // TODO add an ESM test
 

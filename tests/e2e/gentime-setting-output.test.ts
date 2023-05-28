@@ -16,9 +16,8 @@ it('gentime setting output: custom directory', async () => {
     () =>
       ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
         env: { PEER_DEPENDENCY_CHECK: 'false' },
-        timeout: 90 * 1000,
       }),
-    { retry: 3 }
+    { retry: 3, timeout: 90 * 1000 }
   )
   await ctx.runPackagerCommandAsyncOrThrow('run prisma generate')
   const result = await ctx.runPackagerCommandAsyncOrThrow('run --silent dev', {

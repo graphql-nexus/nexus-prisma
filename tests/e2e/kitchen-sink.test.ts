@@ -77,9 +77,8 @@ beforeEach(async () => {
       () =>
         ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
           env: { PEER_DEPENDENCY_CHECK: 'false' },
-          timeout: 90 * 1000,
         }),
-      { retry: 3 }
+      { retry: 3, timeout: 90 * 1000 }
     )
 }, 300 * 1000)
 

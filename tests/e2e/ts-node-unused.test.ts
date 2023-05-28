@@ -29,9 +29,8 @@ const ctx = konn()
       () =>
         ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
           env: { PEER_DEPENDENCY_CHECK: 'false' },
-          timeout: 90 * 1000,
         }),
-      { retry: 3 }
+      { retry: 3, timeout: 90 * 1000 }
     )
 
     return ctx

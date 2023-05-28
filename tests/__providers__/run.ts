@@ -41,12 +41,17 @@ export type Contributes = {
 
 export const monitorAsyncMethod = async (
   runAsyncCallback: () => RunAsyncReturnType,
-  options: { retry: number }
+  options: { retry: number; timeout: number }
 ): Promise<Execa.ExecaReturnValue<string>> => {
   const invoker = async () => {
     const start = Date.now()
     const execaChildProcess = runAsyncCallback()
     console.log(`EXECA ${execaChildProcess.command} START`)
+    const timeoutId = setTimeout(() => {
+      execaChildProcess.kill('SIGTERM', {
+        forceKillAfterTimeout: options.timeout + 5000,
+      })
+    }, options.timeout)
     try {
       try {
         return await execaChildProcess
@@ -54,6 +59,7 @@ export const monitorAsyncMethod = async (
         const end = Date.now()
         const diff = (end - start) / 1000
         console.log(`EXECA ${execaChildProcess.command} FINISH (${diff}s)`)
+        clearTimeout(timeoutId)
       }
     } catch (error) {
       console.log(error)
@@ -67,7 +73,7 @@ export const monitorAsyncMethod = async (
     try {
       return await invoker()
     } catch (error: any) {
-      if (error.timedOut === true && retryIndex < options.retry) {
+      if ((error.timed === true || error.killed === true) && retryIndex < options.retry) {
         retryIndex += 1
         console.log(`Retrying (${retryIndex}/${options.retry})`)
         continue

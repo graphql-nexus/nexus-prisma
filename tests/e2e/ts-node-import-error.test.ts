@@ -34,9 +34,8 @@ it('when project does not have ts-node installed nexus-prisma generator still ge
     () =>
       ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
         env: { PEER_DEPENDENCY_CHECK: 'false' },
-        timeout: 90 * 1000,
       }),
-    { retry: 3 }
+    { retry: 3, timeout: 90 * 1000 }
   )
 
   const result = await ctx.runPackagerCommandAsyncGracefully('run --silent build')

@@ -34,7 +34,7 @@ const TYPEGEN_FILE_PATH = `src/${TYPEGEN_FILE_NAME}`
 
 const GRAPHQL_SCHEMA_FILE_PATH = `schema.graphql`
 
-const SERVER_READY_MESSAGE = `GraphQL API ready at http://localhost:4000/graphql`
+const SERVER_READY_MESSAGE = `GraphQL API ready at http://localhost:4000/`
 
 async function runTestProjectBuild(): Promise<ProjectResult> {
   const runFirstBuild = await ctx.runPackagerCommandAsyncGracefully('run build')
@@ -239,7 +239,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
           prisma: PrismaClient
         }
         
-        function context() {
+        async function context() {
           return {
             prisma,
           }
@@ -254,17 +254,21 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
       content: dindist`
         require('dotenv').config()
 
-        import { ApolloServer } from 'apollo-server'
+        import { ApolloServer } from '@apollo/server'
+        import { startStandaloneServer } from '@apollo/server/standalone'
         import context from './context'
         import schema from './schema'
 
-        const apollo = new ApolloServer({
+        const apolloServer = new ApolloServer({
           schema,
-          context,
         })
-
-        apollo.listen(4000, () => {
-          console.log('${SERVER_READY_MESSAGE}')
+        startStandaloneServer(apolloServer, {
+          context,
+          listen: {
+            port: 4000
+          },
+        }).then(({ url }) => {
+          console.log('GraphQL API ready at', url)
         })
       `,
     },

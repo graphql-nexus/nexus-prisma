@@ -123,19 +123,25 @@ To project relations you must by default expose an instance of Prisma Client on 
 ### Example: Exposing Prisma Client on GraphQL Context with Apollo Server
 
 ```ts
-import { ApolloServer } from 'apollo-server'
+import { ApolloServer } from '@apollo/server'
+import { startStandaloneServer } from '@apollo/server/standalone'
 import { PrismaClient } from '@prisma/client'
 import schema from './your/schema/somewhere'
 
 const prisma = new PrismaClient()
 
-new ApolloServer({
+const apolloServer = new ApolloServer({
   schema,
-  context() {
+})
+
+startStandaloneServer(apolloServer, {
+  context: async () => {
     return {
       prisma,
     }
   },
+}).then(({ url }) => {
+  console.log('GraphQL API ready at', url)
 })
 ```
 

@@ -134,19 +134,24 @@ export const renderTypeScriptDeclarationForDocumentModels = (
        * @example
        *
        *     import { PrismaClient } from '@prisma/client'
-       *     import { ApolloServer } from 'apollo-server'
+       *     import { ApolloServer } from '@apollo/server'
+       *     import { startStandaloneServer } from '@apollo/server/standalone'   
        *     import { makeSchema } from 'nexus'
        *     import { User, Post, $settings } from 'nexus-prisma'
        *
-       *     new ApolloServer({
+       *     const apolloServer = new ApolloServer({
        *       schema: makeSchema({
        *         types: [],
        *       }),
-       *       context() {
+       *     })
+       *     startStandaloneServer(apolloServer, {
+       *       context: async () => {
        *         return {
        *           db: new PrismaClient(), // <-- You put Prisma client on the "db" context property
        *         }
        *       },
+       *     }).then(({ url }) => {
+       *       console.log('GraphQL API ready at', url)
        *     })
        *
        *     $settings({

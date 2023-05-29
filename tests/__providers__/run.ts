@@ -49,7 +49,7 @@ export const monitorAsyncMethod = async (
     console.log(`EXECA ${execaChildProcess.command} START`)
     const timeoutId = setTimeout(() => {
       execaChildProcess.kill('SIGTERM', {
-        forceKillAfterTimeout: options.timeout + 5000,
+        forceKillAfterTimeout: 5000,
       })
     }, options.timeout)
     try {

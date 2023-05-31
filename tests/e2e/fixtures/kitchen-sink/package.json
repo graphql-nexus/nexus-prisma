@@ -16,7 +16,7 @@
     "@types/node": "^18.16.16",
     "@apollo/server": "^4.7.1",
     "cross-env": "^7.0.3",
-    "dotenv": "^16.1.0",
+    "dotenv": "^16.1.1",
     "graphql": "__dynamic__",
     "nexus": "__dynamic__",
     "prisma": "__dynamic__",

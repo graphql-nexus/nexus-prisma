@@ -1,3 +1,17 @@
+## [1.0.8](https://github.com/prisma/nexus-prisma/compare/v1.0.7...v1.0.8) (2023-06-05)
+
+
+### Testing
+
+* refactor tests to use async methods and configurable packager (default: yarn) ([#578](https://github.com/prisma/nexus-prisma/issues/578)) ([754a70e](https://github.com/prisma/nexus-prisma/commit/754a70ee491fcc584335dab038f2a48d98b2f8c5))
+
+
+### Bug fixes
+
+* **deps:** replace dependency apollo-server with @apollo/server ^4.0.0 ([#471](https://github.com/prisma/nexus-prisma/issues/471)) ([d0e7a65](https://github.com/prisma/nexus-prisma/commit/d0e7a651c887f2a3cd7702142912caae3729aaaf))
+* **deps:** update dependency graphql-scalars to ^1.22.1 ([#582](https://github.com/prisma/nexus-prisma/issues/582)) ([3b16a97](https://github.com/prisma/nexus-prisma/commit/3b16a978dbefbac77d31cabb45d31504c8a0c0ca))
+* **deps:** update dependency tslib to ^2.5.3 ([#595](https://github.com/prisma/nexus-prisma/issues/595)) ([218d284](https://github.com/prisma/nexus-prisma/commit/218d284a5d02bc034633897c5c19234b1ed79201))
+
 ## [1.0.7](https://github.com/prisma/nexus-prisma/compare/v1.0.6...v1.0.7) (2023-05-22)
 
 

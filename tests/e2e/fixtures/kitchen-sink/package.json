@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@prisma/client": "__dynamic__",
-    "@types/node": "^18.16.16",
+    "@types/node": "^18.16.18",
     "@apollo/server": "^4.7.3",
     "cross-env": "^7.0.3",
     "dotenv": "^16.1.4",

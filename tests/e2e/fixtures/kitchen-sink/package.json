@@ -14,7 +14,7 @@
   "devDependencies": {
     "@prisma/client": "__dynamic__",
     "@types/node": "^18.16.18",
-    "@apollo/server": "^4.7.4",
+    "@apollo/server": "^4.7.5",
     "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "graphql": "__dynamic__",

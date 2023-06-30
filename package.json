@@ -120,7 +120,7 @@
     "read-pkg-up": "7.0.1",
     "slug": "^8.2.2",
     "strip-ansi": "6",
-    "ts-jest": "29.1.0",
+    "ts-jest": "29.1.1",
     "ts-node": "^10.9.1",
     "type-fest": "^3.12.0",
     "typescript": "5.1.6",

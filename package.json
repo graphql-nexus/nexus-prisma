@@ -91,7 +91,7 @@
     "@types/lodash": "^4.14.195",
     "@types/node": "^18.16.19",
     "@types/object-hash": "^3.0.2",
-    "@types/pluralize": "^0.0.29",
+    "@types/pluralize": "^0.0.30",
     "@types/semver": "^7.5.0",
     "@types/slug": "^5.0.3",
     "@types/strip-ansi": "^5.2.1",

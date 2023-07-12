@@ -74,8 +74,8 @@
     "release:canary": "dripip preview",
     "release:stable": "dripip stable",
     "prepublishOnly": "yarn build",
-    "generate": "node scripts/production/postinstall.js",
-    "postinstall": "node scripts/production/postinstall.js"
+    "generate": "node scripts/production/postinstall.cjs",
+    "postinstall": "node scripts/production/postinstall.cjs"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.6",

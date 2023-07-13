@@ -392,13 +392,21 @@
   dependencies:
     tslib "^2.4.0"
 
-"@theguild/remark-mermaid@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@theguild/remark-mermaid/-/remark-mermaid-0.0.3.tgz#247e8e84aacf483d2f99d8d12ccd34f3cf7ce543"
-  integrity sha512-fccVR6o4UPUztrBjdUhM4ahwx+X7YHhoxsUoXv2vI07vz4dq+I03Ot0SjuZzDA/H7engxcb8ZxzCUEkZgGr/2g==
+"@theguild/remark-mermaid@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@theguild/remark-mermaid/-/remark-mermaid-0.0.4.tgz#a48edb1ddada28e3c7136bbbc4edd22bd2c6ed0b"
+  integrity sha512-C1gssw07eURtCwzXqZZdvyV/eawQ/cXfARaXIgBU9orffox+/YQ+exxmNu9v16NSGzAVsGF4qEVHvCOcCR/FpQ==
   dependencies:
     mermaid "^10.2.2"
-    unist-util-visit "^4.1.2"
+    unist-util-visit "^5.0.0"
+
+"@theguild/remark-npm2yarn@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@theguild/remark-npm2yarn/-/remark-npm2yarn-0.1.1.tgz#7392d8a3ec176c22ee5e26f2e44eae8e0d97e191"
+  integrity sha512-ZKwd/bjQ9V+pESLnu8+q8jqn15alXzJOuVckraebsXwqVBTw53Gmupiw9zCdLNHU829KTYNycJYea6m9HRLuOg==
+  dependencies:
+    npm-to-yarn "^2.0.0"
+    unist-util-visit "^5.0.0"
 
 "@types/acorn@^4.0.0":
   version "4.0.6"
@@ -3384,10 +3392,10 @@ next@13.4.9:
     "@next/swc-win32-ia32-msvc" "13.4.9"
     "@next/swc-win32-x64-msvc" "13.4.9"
 
-nextra-theme-docs@2.9.0:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/nextra-theme-docs/-/nextra-theme-docs-2.9.0.tgz#87ded443430cb621355bd3a00d5a3220a1b39b8e"
-  integrity sha512-Gbjx5atl63JKWOEV2hAefP4X0wmJoLtFX4NekvNu9Y9fAdvtFdW0O2p0f8ISMS1JJgAl1ZmXm411J7rHnRnhmg==
+nextra-theme-docs@2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/nextra-theme-docs/-/nextra-theme-docs-2.10.0.tgz#4a8cdf1dd776b2b4df5ba9e8ab539828e4b94f58"
+  integrity sha512-uXoqRoewbu0JoqQ1m67aIztWe9/nEhcSeHMimhLxZghKZxkYN0kTR5y5jmrwOHRPuJUTLL2YFwy1rvWJIZS2lw==
   dependencies:
     "@headlessui/react" "^1.7.10"
     "@popperjs/core" "^2.11.6"
@@ -3402,16 +3410,17 @@ nextra-theme-docs@2.9.0:
     scroll-into-view-if-needed "^3.0.0"
     zod "^3.20.2"
 
-nextra@2.9.0:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/nextra/-/nextra-2.9.0.tgz#edd49e11d34cd7114747e3be7680e590adfa21ff"
-  integrity sha512-GwYFwuS0UzCXAUVvs9sVAFe4AQeZ0VACbqW8rzw2goxHvpTXAWbIdXShPGz+MEPB8aAckfHy1p39XbfcVU3cRA==
+nextra@2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/nextra/-/nextra-2.10.0.tgz#fe4a6b19ca2f0e858a0f8d21dfb6273f50ba912f"
+  integrity sha512-euv93UnWpdth8slMRJLqMrWvCCzR/VTVH6DPrn1JW7hZS03c2lzG2q+fsiYULGiy/kFyysmlxd4Nx5KGB1Txwg==
   dependencies:
     "@headlessui/react" "^1.7.10"
     "@mdx-js/mdx" "^2.3.0"
     "@mdx-js/react" "^2.3.0"
     "@napi-rs/simple-git" "^0.1.8"
-    "@theguild/remark-mermaid" "^0.0.3"
+    "@theguild/remark-mermaid" "^0.0.4"
+    "@theguild/remark-npm2yarn" "^0.1.1"
     clsx "^1.2.1"
     github-slugger "^2.0.0"
     graceful-fs "^4.2.11"
@@ -3458,6 +3467,11 @@ npm-run-path@^2.0.0:
   integrity sha512-lJxZYlT4DW/bRUtFh1MQIWqmLwQfAxnqWG4HhEdjMlkrJYnJn0Jrr2u3mgxqaWsdiBc76TYkTG/mhrnYTuzfHw==
   dependencies:
     path-key "^2.0.0"
+
+npm-to-yarn@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/npm-to-yarn/-/npm-to-yarn-2.0.0.tgz#59c9c615eca3ba8920308a0b418007b73ffc7492"
+  integrity sha512-/IbjiJ7vqbxfxJxAZ+QI9CCRjnIbvGxn5KQcSY9xHh0lMKc/Sgqmm7yp7KPmd6TiTZX5/KiSBKlkGHo59ucZbg==
 
 object-assign@^4.0.1, object-assign@^4.1.1:
   version "4.1.1"
@@ -4511,14 +4525,6 @@ unist-util-visit-parents@^5.0.0:
     "@types/unist" "^2.0.0"
     unist-util-is "^5.0.0"
 
-unist-util-visit-parents@^5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/unist-util-visit-parents/-/unist-util-visit-parents-5.1.1.tgz#868f353e6fce6bf8fa875b251b0f4fec3be709bb"
-  integrity sha512-gks4baapT/kNRaWxuGkl5BIhoanZo7sC/cUT/JToSRNL1dYoXRFl75d++NkjYk4TAu2uv2Px+l8guMajogeuiw==
-  dependencies:
-    "@types/unist" "^2.0.0"
-    unist-util-is "^5.0.0"
-
 unist-util-visit-parents@^6.0.0:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/unist-util-visit-parents/-/unist-util-visit-parents-6.0.1.tgz#4d5f85755c3b8f0dc69e21eca5d6d82d22162815"
@@ -4544,15 +4550,6 @@ unist-util-visit@^4.0.0:
     "@types/unist" "^2.0.0"
     unist-util-is "^5.0.0"
     unist-util-visit-parents "^5.0.0"
-
-unist-util-visit@^4.1.2:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/unist-util-visit/-/unist-util-visit-4.1.2.tgz#125a42d1eb876283715a3cb5cceaa531828c72e2"
-  integrity sha512-MSd8OUGISqHdVvfY9TPhyK2VdUrPgxkUtWSuMHF6XAAFuL4LokseigBnZtPnJMu+FbynTkFNnFlyjxpVKujMRg==
-  dependencies:
-    "@types/unist" "^2.0.0"
-    unist-util-is "^5.0.0"
-    unist-util-visit-parents "^5.1.1"
 
 unist-util-visit@^5.0.0:
   version "5.0.0"

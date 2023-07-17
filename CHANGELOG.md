@@ -1,3 +1,10 @@
+## [1.0.10](https://github.com/prisma/nexus-prisma/compare/v1.0.9...v1.0.10) (2023-07-17)
+
+
+### Bug fixes
+
+* **deps:** update dependency semver to ^7.5.4 ([#647](https://github.com/prisma/nexus-prisma/issues/647)) ([faa50e7](https://github.com/prisma/nexus-prisma/commit/faa50e7dbfbadd41e528566c4abe76a481963d54))
+
 ## [1.0.9](https://github.com/prisma/nexus-prisma/compare/v1.0.8...v1.0.9) (2023-07-03)
 
 

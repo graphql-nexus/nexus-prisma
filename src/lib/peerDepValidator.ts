@@ -46,7 +46,7 @@ type Failure =
 export function enforceValidPeerDependencies({ packageJson }: { packageJson: PackageJson }): void {
   if (
     envarSpecs.NO_PEER_DEPENDENCY_CHECK.values.includes(
-      process.env[envarSpecs.NO_PEER_DEPENDENCY_CHECK.name] ?? ''
+      process.env[envarSpecs.NO_PEER_DEPENDENCY_CHECK.name] ?? '',
     )
   )
     return
@@ -186,7 +186,7 @@ export function validatePeerDependencyRangeSatisfied({
         consequence: `There seems to be a bug so the regular correctness checks of the peer dep checker cannot be carried out now. You are on your own. Please report this issue.`,
         disable: prettyPrintedDisableGuide,
         code,
-      })
+      }),
     )
     return null
   }
@@ -210,6 +210,6 @@ export function validatePeerDependencyRangeSatisfied({
 
 function renderPackageJsonField(packageJson: PackageJson, fieldName: keyof PackageJson): string {
   return kleur.yellow(
-    packageJson[fieldName] === undefined ? `<${fieldName} is undefined>` : String(packageJson[fieldName])
+    packageJson[fieldName] === undefined ? `<${fieldName} is undefined>` : String(packageJson[fieldName]),
   )
 }

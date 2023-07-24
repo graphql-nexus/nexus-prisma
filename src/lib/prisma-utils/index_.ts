@@ -25,7 +25,7 @@ export const typeScriptOrmModelPropertyNameFromModelName = (modelName: string) =
  */
 export const duckTypeIsPrismaClient = (
   prisma: unknown,
-  prismaOrmModelPropertyName: string
+  prismaOrmModelPropertyName: string,
 ): prisma is PrismaClient => {
   return (
     prisma !== null &&

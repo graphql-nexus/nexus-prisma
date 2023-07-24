@@ -31,7 +31,7 @@ const NO_MODELS_DEFINED_COMMENT = dedent`
 
 export const renderTypeScriptDeclarationForDocumentModels = (
   dmmf: DMMF.Document,
-  settings: Settings.Gentime.Manager
+  settings: Settings.Gentime.Manager,
 ): string => {
   const models = dmmf.datamodel.models
   const enums = dmmf.datamodel.enums
@@ -167,7 +167,7 @@ export const renderTypeScriptDeclarationForDocumentModels = (
 
 const renderTypeScriptDeclarationForEnum = (
   enum_: DMMF.DatamodelEnum,
-  settings: Settings.Gentime.Manager
+  settings: Settings.Gentime.Manager,
 ): string => {
   const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForEnum({ enum: enum_, settings }) + '\n' : ''
   const description = renderPrismaNodeDocumentationToDescription({ settings, node: enum_ })
@@ -183,7 +183,7 @@ const renderTypeScriptDeclarationForEnum = (
 
 const renderTypeScriptDeclarationForModel = (
   model: DMMF.Model,
-  settings: Settings.Gentime.Manager
+  settings: Settings.Gentime.Manager,
 ): string => {
   const jsdoc = settings.data.docPropagation.JSDoc ? jsDocForModel({ model, settings }) + '\n' : ''
   const description = renderPrismaNodeDocumentationToDescription({ settings, node: model })
@@ -208,7 +208,7 @@ const renderPrismaNodeDocumentationToDescription = (params: {
 
 const renderTypeScriptDeclarationForModelFields = (
   model: DMMF.Model,
-  settings: Settings.Gentime.Manager
+  settings: Settings.Gentime.Manager,
 ): string => {
   return model.fields
     .map((field) => renderTypeScriptDeclarationForField({ field, model, settings }))
@@ -316,7 +316,7 @@ const renderNexusType = (field: DMMF.Field, settings: Settings.Gentime.Manager):
  */
 export const fieldTypeToGraphQLType = (
   field: DMMF.Field,
-  settings: Settings.Gentime.Data
+  settings: Settings.Gentime.Data,
 ): LiteralUnion<StandardGraphQLScalarType, string> => {
   // TODO remove once PC is fixed https://prisma-company.slack.com/archives/C016KUHB1R6/p1638816683155000?thread_ts=1638563060.145800&cid=C016KUHB1R6
   if (typeof field.type !== 'string') {

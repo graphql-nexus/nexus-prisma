@@ -69,7 +69,7 @@ const base = testIntegrationPartial({
  * Break the instanceof check but duck typing will succeed.
  */
 const prismaClientWhereInstanceofStrategyWillFail: TestIntegrationParams['prismaClient'] = (
-  prismaClientPackage
+  prismaClientPackage,
 ) => {
   const prisma = new prismaClientPackage.PrismaClient()
   return { ...prisma }
@@ -79,7 +79,7 @@ const prismaClientWhereInstanceofStrategyWillFail: TestIntegrationParams['prisma
  * Some value that won't even pass Prisma Client duck typing check.
  */
 const prismaClientWhereDuckTypingStrategyWillFail: TestIntegrationParams['prismaClient'] = (
-  _prismaClientPackage
+  _prismaClientPackage,
 ) => {
   return 'should be prisma client instance but is not' as any
 }
@@ -100,7 +100,7 @@ describe('instanceOf_duckType_fallback strategy:', () => {
       if (result.logs[0]) {
         result.logs[0] = result.logs[0]!.replace(
           /(.*imported from).*(is not the.*)/,
-          '$1 <dynamic_path> $2'
+          '$1 <dynamic_path> $2',
         ).replace(ansiEscapeSequencePattern, '')
       }
       expect(result.logs).toMatchSnapshot(`logs`)

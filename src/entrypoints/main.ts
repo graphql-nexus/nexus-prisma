@@ -9,8 +9,8 @@ const packageJson = require('../../package.json') as PackageJson
 if (!packageJson || !packageJson.version || !packageJson.name) {
   console.warn(
     `Nexus Prisma failed to import own package.json. It will not be able to validate your peer dependency setup! Saw:\n\n${inspect(
-      packageJson
-    )}`
+      packageJson,
+    )}`,
   )
 } else {
   enforceValidPeerDependencies({

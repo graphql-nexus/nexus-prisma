@@ -36,5 +36,5 @@ export const Json = asNexusMethod(
     // Override the default 'JsonObject' name with one that matches what Nexus Prisma expects.
     name: 'Json',
   }),
-  'json'
+  'json',
 )

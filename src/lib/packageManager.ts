@@ -64,7 +64,7 @@ export function renderRunScript(pmt: PackageManagerType, scriptName: string): st
 export function renderAddDeps(
   pmt: PackageManagerType,
   packages: string[],
-  options?: { dev?: boolean }
+  options?: { dev?: boolean },
 ): string {
   const dev = options?.dev ?? false
   return pmt === 'npm'

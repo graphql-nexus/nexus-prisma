@@ -12,14 +12,14 @@ it(
     expect.assertions(1)
     await ctx.fixture.useAsync(Path.join(__dirname, 'fixtures/ncc'))
     await ctx.runAsyncOrThrow(
-      `${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`
+      `${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`,
     )
     await monitorAsyncMethod(
       () =>
         ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps --prefer-offline', {
           env: { PEER_DEPENDENCY_CHECK: 'false' },
         }),
-      { retry: 3, timeout: 90 * 1000 }
+      { retry: 3, timeout: 90 * 1000 },
     )
     await ctx.runPackagerCommandAsyncOrThrow('build')
     // Remove this to ensure that when the ncc build is run in the next step

@@ -21,14 +21,14 @@ it(
         id  String  @id
       }
     `,
-      })
+      }),
     )
 
     await ctx.fs.writeAsync(
       'prisma/nexus-prisma.ts',
       dindist`
       throw new Error('Oops, something unexpected happened.')
-    `
+    `,
     )
 
     await ctx.runAsyncOrThrow(`yalc add ${ctx.thisPackageName}`)
@@ -37,7 +37,7 @@ it(
         ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps --prefer-offline', {
           env: { PEER_DEPENDENCY_CHECK: 'false' },
         }),
-      { retry: 3, timeout: 90 * 1000 }
+      { retry: 3, timeout: 90 * 1000 },
     )
 
     const result = await ctx.runPackagerCommandAsyncGracefully('run --silent build')
@@ -62,5 +62,5 @@ const normalizeGeneratorOutput = (output: string) =>
     // Remove when resolved.
     .replace(
       /npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.\n/,
-      ''
+      '',
     )

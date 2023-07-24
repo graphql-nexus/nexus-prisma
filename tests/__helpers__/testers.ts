@@ -127,12 +127,12 @@ export const testIntegration = (params: TestIntegrationParams) => {
         expect(result.graphqlOperationExecutionResult).toMatchSnapshot(`graphqlOperationExecutionResult`)
       }
     },
-    60_000
+    60_000,
   )
 }
 
 export const testIntegrationPartial = <T extends Partial<Omit<TestIntegrationParams, 'description'>>>(
-  params: T
+  params: T,
 ): T => {
   return params
 }
@@ -141,7 +141,7 @@ export const testIntegrationPartial = <T extends Partial<Omit<TestIntegrationPar
  * Test that the given Prisma schema + API Schema lead to the expected GraphQL schema.
  */
 export const testGraphqlSchema = (
-  params: Pick<TestIntegrationParams, 'api' | 'description' | 'database'>
+  params: Pick<TestIntegrationParams, 'api' | 'description' | 'database'>,
 ) => {
   it(params.description, async () => {
     expect.assertions(1)
@@ -202,7 +202,7 @@ export const integrationTest = async (params: TestIntegrationParams) => {
   if (!cacheHit) {
     await fs.writeAsync(`${outputDirPath}/schema.prisma`, prismaSchemaContents)
     await execa.command(
-      `${getPackageManager()} -s prisma db push --force-reset --schema ${outputDirPath}/schema.prisma`
+      `${getPackageManager()} -s prisma db push --force-reset --schema ${outputDirPath}/schema.prisma`,
     )
     await fs.copyAsync(sqliteDatabaseFileOutputAbsolute, `${sqliteDatabaseFileOutputAbsolute}.bak`)
     dmmf = await PrismaInternals.getDMMF({
@@ -317,7 +317,7 @@ export const integrationTest = async (params: TestIntegrationParams) => {
  * For the given Prisma Schema generate the derived source code.
  */
 export async function generateModules(
-  content: string
+  content: string,
 ): Promise<{ indexjs_esm: string; indexjs_cjs: string; indexdts: string }> {
   const prismaSchemaContents = createPrismaSchema({ content })
 
@@ -328,7 +328,7 @@ export async function generateModules(
   const [indexjs_esm, indexjs_cjs, indexdts] = generateRuntime(dmmf, Settings.Gentime.settings) as [
     Module,
     Module,
-    Module
+    Module,
   ]
 
   return {

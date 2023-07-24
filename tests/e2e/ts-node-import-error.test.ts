@@ -32,7 +32,7 @@ it('when project does not have ts-node installed nexus-prisma generator still ge
   await ctx.runAsyncOrThrow(`yalc add ${ctx.thisPackageName}`)
   await monitorAsyncMethod(
     () =>
-      ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
+      ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps --prefer-offline', {
         env: { PEER_DEPENDENCY_CHECK: 'false' },
       }),
     { retry: 3, timeout: 90 * 1000 },

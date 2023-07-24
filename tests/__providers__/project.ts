@@ -39,7 +39,7 @@ export const project = () =>
       }
 
       const thisPackageName = thisPackageJson.name
-      
+
       const dynamicPackagesVersions = getDynamicPackagesVersions()
 
       const api: Project = {

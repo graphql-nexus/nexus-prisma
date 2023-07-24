@@ -20,7 +20,7 @@ it(
     console.log('ncc.4')
     await monitorAsyncMethod(
       () =>
-        ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
+        ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps --prefer-offline', {
           env: { PEER_DEPENDENCY_CHECK: 'false' },
         }),
       { retry: 3, timeout: 90 * 1000 }

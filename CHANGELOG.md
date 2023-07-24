@@ -1,3 +1,34 @@
+## [1.0.10](https://github.com/prisma/nexus-prisma/compare/v1.0.9...v1.0.10) (2023-07-17)
+
+
+### Bug fixes
+
+* **deps:** update dependency semver to ^7.5.4 ([#647](https://github.com/prisma/nexus-prisma/issues/647)) ([faa50e7](https://github.com/prisma/nexus-prisma/commit/faa50e7dbfbadd41e528566c4abe76a481963d54))
+
+## [1.0.9](https://github.com/prisma/nexus-prisma/compare/v1.0.8...v1.0.9) (2023-07-03)
+
+
+### Bug fixes
+
+* **deps:** update dependency graphql-scalars to ^1.22.2 ([#602](https://github.com/prisma/nexus-prisma/issues/602)) ([db9e024](https://github.com/prisma/nexus-prisma/commit/db9e024d9de051f42fb07d04191494301ed5a8bb))
+* **deps:** update dependency semver to ^7.5.2 ([#610](https://github.com/prisma/nexus-prisma/issues/610)) ([5141551](https://github.com/prisma/nexus-prisma/commit/5141551918ef629291441f857255992dcc32f384))
+* **deps:** update dependency semver to ^7.5.3 ([#623](https://github.com/prisma/nexus-prisma/issues/623)) ([c03bad3](https://github.com/prisma/nexus-prisma/commit/c03bad3bdc5ff754b95165807ff73779e5d83338))
+* **deps:** update dependency tslib to ^2.6.0 ([#629](https://github.com/prisma/nexus-prisma/issues/629)) ([7a40f0d](https://github.com/prisma/nexus-prisma/commit/7a40f0d2be4f5ed3d915e3560d8e18bb6f229157))
+
+## [1.0.8](https://github.com/prisma/nexus-prisma/compare/v1.0.7...v1.0.8) (2023-06-05)
+
+
+### Testing
+
+* refactor tests to use async methods and configurable packager (default: yarn) ([#578](https://github.com/prisma/nexus-prisma/issues/578)) ([754a70e](https://github.com/prisma/nexus-prisma/commit/754a70ee491fcc584335dab038f2a48d98b2f8c5))
+
+
+### Bug fixes
+
+* **deps:** replace dependency apollo-server with @apollo/server ^4.0.0 ([#471](https://github.com/prisma/nexus-prisma/issues/471)) ([d0e7a65](https://github.com/prisma/nexus-prisma/commit/d0e7a651c887f2a3cd7702142912caae3729aaaf))
+* **deps:** update dependency graphql-scalars to ^1.22.1 ([#582](https://github.com/prisma/nexus-prisma/issues/582)) ([3b16a97](https://github.com/prisma/nexus-prisma/commit/3b16a978dbefbac77d31cabb45d31504c8a0c0ca))
+* **deps:** update dependency tslib to ^2.5.3 ([#595](https://github.com/prisma/nexus-prisma/issues/595)) ([218d284](https://github.com/prisma/nexus-prisma/commit/218d284a5d02bc034633897c5c19234b1ed79201))
+
 ## [1.0.7](https://github.com/prisma/nexus-prisma/compare/v1.0.6...v1.0.7) (2023-05-22)
 
 

@@ -50,7 +50,7 @@ beforeAll(async () => {
       })
 
       console.log(failure)
-    `
+    `,
   )
 
   await ctx.fs.writeAsync(
@@ -65,7 +65,7 @@ beforeAll(async () => {
       enforceValidPeerDependencies({
         packageJson,
       })
-    `
+    `,
   )
 })
 
@@ -116,7 +116,7 @@ async function setupPeerDepRequirement({
       peerDependenciesMeta: {
         [name]: { optional },
       },
-    })
+    }),
   )
 }
 
@@ -206,12 +206,12 @@ describe('enforceValidPeerDependencies', () => {
     expect.assertions(2)
     expect(
       (await runEnforceValidPeerDependencies({ env: { [envarSpecs.PEER_DEPENDENCY_CHECK.name]: 'false' } }))
-        .stdout
+        .stdout,
     ).toEqual(``)
 
     expect(
       (await runEnforceValidPeerDependencies({ env: { [envarSpecs.PEER_DEPENDENCY_CHECK.name]: '0' } }))
-        .stdout
+        .stdout,
     ).toEqual(``)
   })
 
@@ -221,12 +221,12 @@ describe('enforceValidPeerDependencies', () => {
     expect.assertions(2)
     expect(
       (await runEnforceValidPeerDependencies({ env: { [envarSpecs.NO_PEER_DEPENDENCY_CHECK.name]: 'true' } }))
-        .stdout
+        .stdout,
     ).toEqual(``)
 
     expect(
       (await runEnforceValidPeerDependencies({ env: { [envarSpecs.NO_PEER_DEPENDENCY_CHECK.name]: '1' } }))
-        .stdout
+        .stdout,
     ).toEqual(``)
   })
 

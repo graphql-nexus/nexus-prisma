@@ -83,7 +83,7 @@ export const generateRuntimeAndEmit = (dmmf: DMMF.Document, settings: Settings.G
   sourceFiles.forEach((sf) => {
     const filePath = Path.join(
       outPutDir,
-      sf.fileName.endsWith('d.ts') ? `${settings.data.output.name}.d.ts` : `${settings.data.output.name}.js`
+      sf.fileName.endsWith('d.ts') ? `${settings.data.output.name}.d.ts` : `${settings.data.output.name}.js`,
     )
     fs.remove(filePath)
     fs.write(filePath, sf.content)

@@ -141,7 +141,7 @@ export const createModule = (params: {
 
 export const createNexusTypeDefConfigurations = (
   dmmf: DMMF.Document,
-  settings: Settings
+  settings: Settings,
 ): NexusTypeDefConfigurations => {
   return {
     ...createNexusObjectTypeDefConfigurations(dmmf, settings),
@@ -168,7 +168,7 @@ type NexusObjectTypeDefConfiguration = Record<
  */
 const createNexusObjectTypeDefConfigurations = (
   dmmf: DMMF.Document,
-  settings: Settings
+  settings: Settings,
 ): NexusObjectTypeDefConfigurations => {
   return chain(dmmf.datamodel.models)
     .map((model) => {
@@ -246,7 +246,7 @@ export const prismaFieldToNexusType = (field: DMMF.Field, settings: Settings) =>
 export const nexusResolverFromPrismaField = (
   model: DMMF.Model,
   field: DMMF.Field,
-  settings: Settings
+  settings: Settings,
 ): undefined | Resolver => {
   if (field.kind !== 'object') {
     return undefined
@@ -270,8 +270,8 @@ export const nexusResolverFromPrismaField = (
           // TODO rich errors
           throw new Error(
             `Could not perform "PrismaClientOnContext" check because there was an error while trying to import Prisma Client:\n\n${String(
-              e
-            )}`
+              e,
+            )}`,
           )
         }
 
@@ -286,8 +286,8 @@ export const nexusResolverFromPrismaField = (
           // TODO rich errors
           throw new Error(
             `Could not perform "PrismaClientOnContext" check because could not get a reference to a valid Prisma Client class. Found:\n\n${inspect(
-              PrismaClientPackage
-            )}`
+              PrismaClientPackage,
+            )}`,
           )
         }
 
@@ -299,13 +299,13 @@ export const nexusResolverFromPrismaField = (
           console.error(1)
           // TODO rich errors
           throw new Error(
-            `Check "PrismaClientOnContext" failed using "duckType" strategy. The GraphQL context.${settings.runtime.data.prismaClientContextField} value is not an instance of the Prisma Client.`
+            `Check "PrismaClientOnContext" failed using "duckType" strategy. The GraphQL context.${settings.runtime.data.prismaClientContextField} value is not an instance of the Prisma Client.`,
           )
         }
       } else if (settings.runtime.data.checks.PrismaClientOnContext.strategy === 'instanceOf') {
         if (!performInstanceOfStrategy()) {
           throw new Error(
-            `Check "PrismaClientOnContext" failed using "instanceOf" strategy. The GraphQL context.${settings.runtime.data.prismaClientContextField} value is not an instance of the Prisma Client.`
+            `Check "PrismaClientOnContext" failed using "instanceOf" strategy. The GraphQL context.${settings.runtime.data.prismaClientContextField} value is not an instance of the Prisma Client.`,
           )
         }
       } else {
@@ -313,7 +313,7 @@ export const nexusResolverFromPrismaField = (
           if (!PrismaUtils.duckTypeIsPrismaClient(prisma, prismaOrmModelPropertyName)) {
             // TODO rich errors
             throw new Error(
-              `Check "PrismaClientOnContext" failed using "instanceOf_duckType_fallback" strategy. The GraphQL context.${settings.runtime.data.prismaClientContextField} value is not an instance of the Prisma Client.`
+              `Check "PrismaClientOnContext" failed using "instanceOf_duckType_fallback" strategy. The GraphQL context.${settings.runtime.data.prismaClientContextField} value is not an instance of the Prisma Client.`,
             )
           }
           // DuckType passed but InstanceOf strategy failed, so show a warning.
@@ -373,7 +373,7 @@ type NexusEnumTypeDefConfiguration = AnyNexusEnumTypeConfig
  */
 const createNexusEnumTypeDefConfigurations = (
   dmmf: DMMF.Document,
-  settings: Settings
+  settings: Settings,
 ): NexusEnumTypeDefConfigurations => {
   return chain(dmmf.datamodel.enums)
     .map((enum_): AnyNexusEnumTypeConfig => {

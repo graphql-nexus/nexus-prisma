@@ -71,14 +71,14 @@ beforeEach(async () => {
     })
   }
   await ctx.runAsyncOrThrow(
-    `${Path.join(process.cwd(), `node_modules/.bin/yalc`)} add ${ctx.thisPackageName}`
+    `${Path.join(process.cwd(), `node_modules/.bin/yalc`)} add ${ctx.thisPackageName}`,
   ),
     await monitorAsyncMethod(
       () =>
         ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps --prefer-offline', {
           env: { PEER_DEPENDENCY_CHECK: 'false' },
         }),
-      { retry: 3, timeout: 90 * 1000 }
+      { retry: 3, timeout: 90 * 1000 },
     )
 }, 300 * 1000)
 
@@ -301,25 +301,25 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
   expect(results.runFirstBuild.exitCode).toBe(2)
 
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2305: Module '"nexus-prisma"' has no exported member '\$settings'.*/
+    /.*error TS2305: Module '"nexus-prisma"' has no exported member '\$settings'.*/,
   )
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'Bar'.*/
+    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'Bar'.*/,
   )
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'Foo'.*/
+    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'Foo'.*/,
   )
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'SomeEnumA'.*/
+    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'SomeEnumA'.*/,
   )
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2339: Property 'json' does not exist on type 'ObjectDefinitionBlock<any>'.*/
+    /.*error TS2339: Property 'json' does not exist on type 'ObjectDefinitionBlock<any>'.*/,
   )
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2339: Property 'dateTime' does not exist on type 'ObjectDefinitionBlock<any>'.*/
+    /.*error TS2339: Property 'dateTime' does not exist on type 'ObjectDefinitionBlock<any>'.*/,
   )
   expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2339: Property 'bigInt' does not exist on type 'ObjectDefinitionBlock<any>'.*/
+    /.*error TS2339: Property 'bigInt' does not exist on type 'ObjectDefinitionBlock<any>'.*/,
   )
 
   expect(results.runReflectPrisma.exitCode).toBe(0)
@@ -341,7 +341,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
    */
 
   expect(ctx.fs.read('node_modules/.nexus-prisma/index.js')).toMatch(
-    /.*"prismaClientImportId": "@prisma\/client".*/
+    /.*"prismaClientImportId": "@prisma\/client".*/,
   )
 
   if (process.env.DATABASE === 'no-db') {
@@ -370,15 +370,15 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
       new Promise((res) =>
         serverProcess.stdout!.on('data', (data: Buffer) => {
           if (data.toString().match(SERVER_READY_MESSAGE)) res('server_started')
-        })
+        }),
       ),
     ],
-    10_000
+    10_000,
   )
 
   if (result === 'timeout') {
     throw new Error(
-      `server was not ready after 10 seconds. The output from child process was:\n\n${serverProcess.stdio.toString()}\n\n`
+      `server was not ready after 10 seconds. The output from child process was:\n\n${serverProcess.stdio.toString()}\n\n`,
     )
   }
   d(`starting client queries`)

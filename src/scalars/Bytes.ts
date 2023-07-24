@@ -36,5 +36,5 @@ export const Bytes = asNexusMethod(
     // Override the default 'Byte' name with one that matches what Nexus Prisma expects.
     name: 'Bytes',
   }),
-  'bytes'
+  'bytes',
 )

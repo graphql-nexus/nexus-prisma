@@ -20,17 +20,17 @@ const ctx = konn()
             id  String  @id
           }
         `,
-      })
+      }),
     )
     await ctx.runAsyncOrThrow(
-      `${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`
+      `${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`,
     )
     await monitorAsyncMethod(
       () =>
         ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps --prefer-offline', {
           env: { PEER_DEPENDENCY_CHECK: 'false' },
         }),
-      { retry: 3, timeout: 90 * 1000 }
+      { retry: 3, timeout: 90 * 1000 },
     )
 
     return ctx

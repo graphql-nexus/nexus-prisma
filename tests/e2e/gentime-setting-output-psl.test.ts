@@ -31,17 +31,17 @@ it('gentime setting output: custom directory', async () => {
       model Foo {
         id String @id @default(cuid())
       }
-    `
+    `,
   )
   await ctx.runAsyncOrThrow(
-    `${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`
+    `${Path.join(process.cwd(), 'node_modules/.bin/yalc')} add ${ctx.thisPackageName}`,
   )
   await monitorAsyncMethod(
     () =>
       ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps --prefer-offline', {
         env: { PEER_DEPENDENCY_CHECK: 'false' },
       }),
-    { retry: 3, timeout: 90 * 1000 }
+    { retry: 3, timeout: 90 * 1000 },
   )
   await ctx.runPackagerCommandAsyncOrThrow('prisma generate')
   const result = await ctx.runPackagerCommandAsyncOrThrow('run --silent dev', {

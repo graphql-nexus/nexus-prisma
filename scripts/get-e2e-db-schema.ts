@@ -41,7 +41,7 @@ const args = arg({
 const schemaName = parseComboCase(
   args['--node-version'] ?? '',
   args['--os'] ?? '',
-  args['--prisma-client-version'] ?? ''
+  args['--prisma-client-version'] ?? '',
 )
 
 if (args['--github-env']) {

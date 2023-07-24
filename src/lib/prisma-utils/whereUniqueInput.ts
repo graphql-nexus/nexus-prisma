@@ -15,10 +15,10 @@ export const createWhereUniqueInput = (source: RecordUnknown, model: DMMF.Model)
     // TODO rich errors
     throw new Error(
       `Cannot create Prisma Client where unique input because the source data (${inspect(
-        source
+        source,
       )}) is missing the following unique identifier fields: ${uniqueIdentifierFieldsMissingInData.join(
-        ', '
-      )}`
+        ', ',
+      )}`,
     )
   }
 

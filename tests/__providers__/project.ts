@@ -4,8 +4,8 @@ import { merge } from 'lodash'
 import readPkgUp from 'read-pkg-up'
 import { PackageJson, TsConfigJson } from 'type-fest'
 import { assertBuildPresent } from '../__helpers__/helpers'
+import { getDynamicPackagesVersions } from '../__helpers__/packagesVersions'
 import type * as Run from './run'
-import * as Package from '../../package.json'
 
 type Project = {
   thisPackageName: string
@@ -40,6 +40,8 @@ export const project = () =>
 
       const thisPackageName = thisPackageJson.name
 
+      const dynamicPackagesVersions = getDynamicPackagesVersions()
+
       const api: Project = {
         thisPackageName,
         fixture: {
@@ -52,10 +54,10 @@ export const project = () =>
             })
             await api.packageJson.mergeAsync({
               devDependencies: {
-                '@prisma/client': Package.devDependencies['@prisma/client'],
-                prisma: Package.devDependencies.prisma,
-                graphql: Package.devDependencies.graphql,
-                nexus: Package.devDependencies.nexus,
+                '@prisma/client': dynamicPackagesVersions['@prisma/client'],
+                prisma: dynamicPackagesVersions.prisma,
+                graphql: dynamicPackagesVersions.graphql,
+                nexus: dynamicPackagesVersions.nexus,
               },
             })
           },

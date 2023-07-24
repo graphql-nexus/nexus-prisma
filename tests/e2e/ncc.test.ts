@@ -30,5 +30,5 @@ it(
     })
     expect(stripEndingLines(result.stdout)).toMatchSnapshot()
   },
-  320 * 1000
+  320 * 1000,
 )

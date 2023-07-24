@@ -45,7 +45,7 @@ it(
     expect(normalizeGeneratorOutput(result.stderr)).toMatchSnapshot('stderr')
     expect(normalizeGeneratorOutput(result.stdout)).toMatchSnapshot('stdout')
   },
-  320 * 1000
+  320 * 1000,
 )
 
 const normalizeGeneratorOutput = (output: string) =>

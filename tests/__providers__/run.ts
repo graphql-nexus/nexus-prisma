@@ -41,7 +41,7 @@ export type Contributes = {
 
 export const monitorAsyncMethod = async (
   runAsyncCallback: () => RunAsyncReturnType,
-  options: { retry: number; timeout: number }
+  options: { retry: number; timeout: number },
 ): Promise<Execa.ExecaReturnValue<string>> => {
   const invoker = async () => {
     const start = Date.now()
@@ -143,7 +143,7 @@ export const run = (params?: Params): Provider<Needs, Contributes> =>
               cwd,
               stdio,
               ...options,
-            })
+            }),
           )
         },
 
@@ -162,7 +162,7 @@ export const run = (params?: Params): Provider<Needs, Contributes> =>
               cwd,
               stdio,
               ...options,
-            })
+            }),
           )
         },
         runPackagerCommandAsyncGracefully(command, options) {

@@ -57,7 +57,7 @@ export function loadUserGentimeSettings(): void {
           }`,
           consequence: `${nexusPrisma} will stop generation.`,
           solution: `Fix the ${tsNode} import error (missing dependency?) or stop using ${nexusPrisma} generator configuration module.`,
-        })
+        }),
       )
 
       throw error

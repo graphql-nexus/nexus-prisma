@@ -89,7 +89,7 @@ const nodeDocumentation = (
   params:
     | { settings: Settings.Gentime.Manager; model: DMMF.Model }
     | { settings: Settings.Gentime.Manager; model: DMMF.Model; field: DMMF.Field }
-    | { settings: Settings.Gentime.Manager; enum: DMMF.DatamodelEnum }
+    | { settings: Settings.Gentime.Manager; enum: DMMF.DatamodelEnum },
 ): string | null => {
   const documentation =
     'field' in params
@@ -207,7 +207,7 @@ const fieldExample = ({ model, field }: FieldModelParams): string => {
  */
 
 const missingDocsIntro = (
-  info: { kind: 'model'; model: DMMF.Model } | { kind: 'enum'; enum: DMMF.DatamodelEnum } | { kind: 'field' }
+  info: { kind: 'model'; model: DMMF.Model } | { kind: 'enum'; enum: DMMF.DatamodelEnum } | { kind: 'field' },
 ): string => {
   const thisItem =
     info.kind === 'enum'

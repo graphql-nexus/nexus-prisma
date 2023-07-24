@@ -4,7 +4,7 @@ import * as Path from 'path'
 
 export const timeoutRace = async <T>(
   values: Iterable<T | PromiseLike<T>>,
-  timeout: number
+  timeout: number,
 ): Promise<Awaited<T> | 'timeout'> => {
   let timeoutHandle: NodeJS.Timeout | undefined
 
@@ -120,7 +120,7 @@ export const stripNexusQueryOk = (sdl: string): string => {
         ok: Boolean!
       }
     `,
-    ''
+    '',
   )
 }
 

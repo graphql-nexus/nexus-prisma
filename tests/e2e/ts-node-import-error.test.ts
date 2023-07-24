@@ -19,14 +19,14 @@ it('when project does not have ts-node installed nexus-prisma generator still ge
         id  String  @id
       }
     `,
-    })
+    }),
   )
 
   await ctx.fs.writeAsync(
     'prisma/nexus-prisma.ts',
     dindist`
       throw new Error('Oops, something unexpected happened.')
-    `
+    `,
   )
 
   await ctx.runAsyncOrThrow(`yalc add ${ctx.thisPackageName}`)
@@ -35,7 +35,7 @@ it('when project does not have ts-node installed nexus-prisma generator still ge
       ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps', {
         env: { PEER_DEPENDENCY_CHECK: 'false' },
       }),
-    { retry: 3, timeout: 90 * 1000 }
+    { retry: 3, timeout: 90 * 1000 },
   )
 
   const result = await ctx.runPackagerCommandAsyncGracefully('run --silent build')
@@ -58,5 +58,5 @@ const normalizeGeneratorOutput = (output: string) =>
     // Remove when resolved.
     .replace(
       /npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.\n/,
-      ''
+      '',
     )

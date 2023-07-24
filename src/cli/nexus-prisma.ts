@@ -41,7 +41,7 @@ generatorHandler({
     if (!prismaClientGenerator) {
       // TODO consider a prisma-client-less mode
       throw new Error(
-        `Nexus Prisma cannot be used without Prisma Client. Please add it to your Prisma Schema file.`
+        `Nexus Prisma cannot be used without Prisma Client. Please add it to your Prisma Schema file.`,
       )
     }
 
@@ -71,7 +71,7 @@ generatorHandler({
               output: '${generator.output.value}'
             })
         `)}`,
-        }) + '\n'
+        }) + '\n',
       )
     }
 
@@ -110,7 +110,7 @@ generatorHandler({
     generateRuntimeAndEmit(prismaClientDmmf, Settings.Gentime.settings)
 
     process.stdout.write(
-      `You can now start using Nexus Prisma in your code. Reference: https://pris.ly/d/nexus-prisma\n`
+      `You can now start using Nexus Prisma in your code. Reference: https://pris.ly/d/nexus-prisma\n`,
     )
   },
 })
@@ -127,7 +127,7 @@ generatorHandler({
  * Otherwise we return an import ID as an absolute path to the output location.
  */
 function getPrismaClientImportIdForItsGeneratorOutputConfig(
-  prismaClientGeneratorConfig: GeneratorConfig
+  prismaClientGeneratorConfig: GeneratorConfig,
 ): string {
   const prismaClientPackageMoniker = `@prisma/client`
   const prismaClientDefaultOutput = Path.normalize(`/node_modules/@prisma/client`)
@@ -176,16 +176,16 @@ function getPrismaClientImportIdForItsGeneratorOutputConfig(
      * care.
      */
     const dirPrismaClientOutputWithoutTrailingNodeModulesMoniker = resolveGitHubActionsWindowsPathTilde(
-      expandTilde(prismaClientGeneratorConfig.output.value.replace(prismaClientDefaultOutput, ''))
+      expandTilde(prismaClientGeneratorConfig.output.value.replace(prismaClientDefaultOutput, '')),
     )
 
     const dirProjectForThisNexusPrisma = resolveGitHubActionsWindowsPathTilde(
-      expandTilde(Path.join(__dirname, '../../../..'))
+      expandTilde(Path.join(__dirname, '../../../..')),
     )
 
     const dirDiff = Path.relative(
       dirPrismaClientOutputWithoutTrailingNodeModulesMoniker,
-      dirProjectForThisNexusPrisma
+      dirProjectForThisNexusPrisma,
     )
 
     d(`found prisma client/nexus prisma layout:`, {

@@ -2,18 +2,18 @@ import arg from 'arg'
 import fs from 'fs-jetpack'
 import { z } from 'zod'
 
-
 const numberParser = z.string().regex(/\d+/)
 
 const osParser = z.union([z.literal('macos-latest'), z.literal('ubuntu-latest'), z.literal('windows-latest')])
 
-const getConnectionString = ({ os, nodeVersion }: { nodeVersion: string, os: string }) => `node_${nodeVersion}_${os.replace('-', '_')}`
+const getConnectionString = ({ os, nodeVersion }: { nodeVersion: string; os: string }) =>
+  `node_${nodeVersion}_${os.replace('-', '_')}`
 
 const args = arg({
   '--os': String,
   '--node-version': String,
   '--prisma-client-version': String,
-  '--github-env': String
+  '--github-env': String,
 })
 
 const schemaName = parseComboCase(
@@ -35,7 +35,7 @@ if (args['--github-env']) {
 function parseComboCase(nodeVersionInput: string, osInput: string, prismaClientInput: string): string {
   const nodeVersion = numberParser.parse(nodeVersionInput)
   const os = osParser.parse(osInput)
-  const schema = getConnectionString({ nodeVersion, os})
+  const schema = getConnectionString({ nodeVersion, os })
   if (!prismaClientInput) {
     return schema
   } else {

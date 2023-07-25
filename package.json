@@ -157,7 +157,7 @@
     "semver": "^7.5.4",
     "setset": "^0.0.9",
     "ts-replace-all": "^1.0.0",
-    "tslib": "^2.6.0"
+    "tslib": "^2.6.1"
   },
   "nodemonConfig": {
     "events": {

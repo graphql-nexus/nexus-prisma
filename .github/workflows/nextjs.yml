@@ -31,11 +31,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Setup Node
+
+      - name: Get lts node versions
+        id: get-lts-versions
+        run: scripts/get-lts-versions.sh
+
+      - name: Use Node.js ${{ steps.get-lts-versions.outputs.last_lts_version }}
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: ${{ steps.get-lts-versions.outputs.last_lts_version }}
           cache: 'yarn'
+
       - name: Setup Pages
         uses: actions/configure-pages@v3
         with:
@@ -44,6 +50,7 @@ jobs:
           #
           # You may remove this line if you want to manage the configuration yourself.
           static_site_generator: next
+
       - name: Restore cache
         uses: actions/cache@v3
         with:
@@ -54,15 +61,19 @@ jobs:
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/docs/yarn.lock') }}-
+
       - name: Install dependencies
         working-directory: ./docs
         run: yarn install
+
       - name: Build with Next.js
         working-directory: ./docs
         run: yarn next build
+
       - name: Static HTML export with Next.js
         working-directory: ./docs
         run: yarn next export
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:

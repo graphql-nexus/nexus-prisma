@@ -27,10 +27,14 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Use Node.js 18
+      - name: Get lts node versions
+        id: get-lts-versions
+        run: scripts/get-lts-versions.sh
+
+      - name: Use Node.js ${{ steps.get-lts-versions.outputs.last_lts_version }}
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: ${{ steps.get-lts-versions.outputs.last_lts_version }}
           cache: 'yarn'
 
       - name: Install dependencies

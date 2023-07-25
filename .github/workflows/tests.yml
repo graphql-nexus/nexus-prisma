@@ -2,29 +2,29 @@ on:
   workflow_call:
 
 jobs:
-  get-active-and-current-lts-versions:
+  get-lts-versions:
     runs-on: ubuntu-latest
     outputs:
-      matrix_lts_versions: ${{ steps.get-active-and-current-lts-versions.outputs.matrix_lts_versions }}
-      matrix_last_lts_version: ${{ steps.get-active-and-current-lts-versions.outputs.matrix_last_lts_version }}
+      matrix_lts_versions: ${{ steps.get-lts-versions.outputs.matrix_lts_versions }}
+      matrix_last_lts_version: ${{ steps.get-lts-versions.outputs.matrix_last_lts_version }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Fetch Node LTS versions
-        id: get-active-and-current-lts-versions
-        run: scripts/get-active-and-current-lts-versions.sh
+        id: get-lts-versions
+        run: scripts/get-lts-versions.sh
 
   test-latest-prisma-without-database:
     name: Test with latest Prisma
     timeout-minutes: 40
-    needs: [get-active-and-current-lts-versions]
+    needs: [get-lts-versions]
 
     strategy:
       matrix:
         os: ['macos-latest', 'windows-latest']
-        node-version: ${{ fromJson(needs.get-active-and-current-lts-versions.outputs.matrix_lts_versions) }}
+        node-version: ${{ fromJson(needs.get-lts-versions.outputs.matrix_lts_versions) }}
         database: ['no-db']
 
     runs-on: ${{ matrix.os }}
@@ -61,12 +61,12 @@ jobs:
   test-latest-prisma-with-database:
     name: Test with latest Prisma
     timeout-minutes: 40
-    needs: [get-active-and-current-lts-versions]
+    needs: [get-lts-versions]
 
     strategy:
       matrix:
         os: ['ubuntu-latest']
-        node-version: ${{ fromJson(needs.get-active-and-current-lts-versions.outputs.matrix_lts_versions) }}
+        node-version: ${{ fromJson(needs.get-lts-versions.outputs.matrix_lts_versions) }}
         database: ['db']
 
     runs-on: ${{ matrix.os }}
@@ -116,12 +116,12 @@ jobs:
   test-past-versions-with-database:
     name: Test with past versions
     timeout-minutes: 40
-    needs: [get-active-and-current-lts-versions]
+    needs: [get-lts-versions]
 
     strategy:
       matrix:
         os: ['ubuntu-latest']
-        node-version: ${{ fromJson(needs.get-active-and-current-lts-versions.outputs.matrix_last_lts_version) }}
+        node-version: ${{ fromJson(needs.get-lts-versions.outputs.matrix_last_lts_version) }}
         database: ['db']
         past-version: ['prisma@4.0, graphql@15.8.0', 'graphql@15.8.0']
 

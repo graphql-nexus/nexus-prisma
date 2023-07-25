@@ -40,13 +40,13 @@ it(
     )
     await monitorAsyncMethod(
       () =>
-        ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps --prefer-offline', {
+        ctx.runPackagerCommandAsyncOrThrow('install', '--legacy-peer-deps', {
           env: { PEER_DEPENDENCY_CHECK: 'false' },
         }),
       { retry: 3, timeout: 90 * 1000 },
     )
-    await ctx.runPackagerCommandAsyncOrThrow('prisma generate')
-    const result = await ctx.runPackagerCommandAsyncOrThrow('run --silent dev', {
+    await ctx.runPackagerCommandAsyncOrThrow('run', 'prisma generate')
+    const result = await ctx.runPackagerCommandAsyncOrThrow('run', '--silent dev', {
       env: { PEER_DEPENDENCY_CHECK: 'false' },
     })
     expect(stripEndingLines(result.stdout)).toMatchSnapshot()

@@ -25,7 +25,7 @@ beforeAll(async () => {
   )
   await monitorAsyncMethod(
     () =>
-      ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps --prefer-offline', {
+      ctx.runPackagerCommandAsyncOrThrow('install', '--legacy-peer-deps', {
         env: { PEER_DEPENDENCY_CHECK: 'false' },
       }),
     { retry: 3, timeout: 90 * 1000 },
@@ -36,7 +36,7 @@ beforeAll(async () => {
 
 it('when project does not have ts-node installed nexus-prisma generator still generates if there are no TS generator config files present', async () => {
   expect.assertions(1)
-  const result = await ctx.runPackagerCommandAsyncOrThrow('run --silent build')
+  const result = await ctx.runPackagerCommandAsyncOrThrow('run', '--silent build')
   expect(normalizeGeneratorOutput(result.stdout)).toMatchSnapshot()
 })
 

@@ -16,16 +16,16 @@ it(
     )
     await monitorAsyncMethod(
       () =>
-        ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps --prefer-offline', {
+        ctx.runPackagerCommandAsyncOrThrow('install', '--legacy-peer-deps', {
           env: { PEER_DEPENDENCY_CHECK: 'false' },
         }),
       { retry: 3, timeout: 90 * 1000 },
     )
-    await ctx.runPackagerCommandAsyncOrThrow('build')
+    await ctx.runPackagerCommandAsyncOrThrow('build', '')
     // Remove this to ensure that when the ncc build is run in the next step
     // it is truly running independent of any node_modules.
     await ctx.fs.removeAsync('node_modules')
-    const result = await ctx.runPackagerCommandAsyncOrThrow('run --silent start:dist', {
+    const result = await ctx.runPackagerCommandAsyncOrThrow('run', '--silent start:dist', {
       env: { PEER_DEPENDENCY_CHECK: 'false' },
     })
     expect(stripEndingLines(result.stdout)).toMatchSnapshot()

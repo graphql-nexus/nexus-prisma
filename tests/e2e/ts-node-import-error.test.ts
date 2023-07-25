@@ -34,13 +34,13 @@ it(
     await ctx.runAsyncOrThrow(`yalc add ${ctx.thisPackageName}`)
     await monitorAsyncMethod(
       () =>
-        ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps --prefer-offline', {
+        ctx.runPackagerCommandAsyncOrThrow('install', '--legacy-peer-deps', {
           env: { PEER_DEPENDENCY_CHECK: 'false' },
         }),
       { retry: 3, timeout: 90 * 1000 },
     )
 
-    const result = await ctx.runPackagerCommandAsyncGracefully('run --silent build')
+    const result = await ctx.runPackagerCommandAsyncGracefully('run', '--silent build')
 
     expect(normalizeGeneratorOutput(result.stderr)).toMatchSnapshot('stderr')
     expect(normalizeGeneratorOutput(result.stdout)).toMatchSnapshot('stdout')

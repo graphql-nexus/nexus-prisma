@@ -2,40 +2,18 @@ import arg from 'arg'
 import fs from 'fs-jetpack'
 import { z } from 'zod'
 
-type ComboCase =
-  | '14 + windows-latest'
-  | '14 + macos-latest'
-  | '14 + ubuntu-latest'
-  | '16 + windows-latest'
-  | '16 + macos-latest'
-  | '16 + ubuntu-latest'
-  | '18 + windows-latest'
-  | '18 + macos-latest'
-  | '18 + ubuntu-latest'
 
-const nodeVersionParser = z.union([z.literal('14'), z.literal('16'), z.literal('18')])
+const numberParser = z.string().regex(/\d+/)
 
 const osParser = z.union([z.literal('macos-latest'), z.literal('ubuntu-latest'), z.literal('windows-latest')])
 
-const prismaClientParser = z.string().regex(/4.\d+/)
-
-const connectionStringMapping: Record<ComboCase, string> = {
-  '14 + macos-latest': 'node_14_macos_latest',
-  '14 + windows-latest': 'node_14_windows_latest',
-  '14 + ubuntu-latest': 'node_14_ubuntu_latest',
-  '16 + macos-latest': 'node_16_macos_latest',
-  '16 + windows-latest': 'node_16_windows_latest',
-  '16 + ubuntu-latest': 'node_16_ubuntu_latest',
-  '18 + macos-latest': 'node_18_macos_latest',
-  '18 + windows-latest': 'node_18_windows_latest',
-  '18 + ubuntu-latest': 'node_18_ubuntu_latest',
-}
+const getConnectionString = ({ os, nodeVersion }: { nodeVersion: string, os: string }) => `node_${nodeVersion}_${os.replace('-', '_')}`
 
 const args = arg({
   '--os': String,
   '--node-version': String,
   '--prisma-client-version': String,
-  '--github-env': String,
+  '--github-env': String
 })
 
 const schemaName = parseComboCase(
@@ -55,14 +33,13 @@ if (args['--github-env']) {
 //
 
 function parseComboCase(nodeVersionInput: string, osInput: string, prismaClientInput: string): string {
-  const nodeVersion = nodeVersionParser.parse(nodeVersionInput)
+  const nodeVersion = numberParser.parse(nodeVersionInput)
   const os = osParser.parse(osInput)
-  const comboCase: ComboCase = `${nodeVersion} + ${os}`
-  const schema = connectionStringMapping[comboCase]
+  const schema = getConnectionString({ nodeVersion, os})
   if (!prismaClientInput) {
     return schema
   } else {
-    const prismaClientVersion = prismaClientParser.parse(prismaClientInput)
+    const prismaClientVersion = numberParser.parse(prismaClientInput)
     return [schema, prismaClientVersion].join('_')
   }
 }

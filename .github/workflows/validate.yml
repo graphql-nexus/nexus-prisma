@@ -27,5 +27,5 @@ jobs:
       - name: Run prettier
         run: yarn -s format
 
-      - name: Run es-lint
+      - name: Run eslint
         run: yarn -s lint

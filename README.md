@@ -3,7 +3,7 @@
   <h1 align="center"><a style="color:black;" href="https://graphql-nexus.github.io/nexus-prisma">nexus-prisma</a></h1>
 </p>
 
-[![Main health](https://github.com/graphql-nexus/nexus-prisma/actions/workflows/main-health.yml/badge.svg)](https://github.com/graphql-nexus/nexus-prisma/actions/workflows/main-health.yml)
+[![Release health](https://github.com/graphql-nexus/nexus-prisma/actions/workflows/release.yml/badge.svg)](https://github.com/graphql-nexus/nexus-prisma/actions/workflows/release.yml)
 
 [Prisma](https://prisma.io) plugin for [Nexus](https://nexusjs.org).
 

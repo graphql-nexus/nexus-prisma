@@ -1,3 +1,10 @@
+## [1.0.12](https://github.com/prisma/nexus-prisma/compare/v1.0.11...v1.0.12) (2023-07-26)
+
+
+### Bug fixes
+
+* add patch to print original error during semantic github publish ([#686](https://github.com/prisma/nexus-prisma/issues/686)) ([2f82d70](https://github.com/prisma/nexus-prisma/commit/2f82d70f2c819087288543254c51e9248fe667a6))
+
 ## [1.0.11](https://github.com/prisma/nexus-prisma/compare/v1.0.10...v1.0.11) (2023-07-26)
 
 

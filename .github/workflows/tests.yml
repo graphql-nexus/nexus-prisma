@@ -3,6 +3,7 @@ on:
 
 jobs:
   get-lts-versions:
+    name: Retrieve Node.js lts versions
     runs-on: ubuntu-latest
     outputs:
       matrix_lts_versions: ${{ steps.get-lts-versions.outputs.matrix_lts_versions }}

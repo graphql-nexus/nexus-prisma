@@ -37,10 +37,10 @@ const GRAPHQL_SCHEMA_FILE_PATH = `schema.graphql`
 const SERVER_READY_MESSAGE = `GraphQL API ready at http://localhost:4000/`
 
 async function runTestProjectBuild(): Promise<ProjectResult> {
-  const runFirstBuild = await ctx.runPackagerCommandAsyncGracefully('run build')
-  const runReflectPrisma = await ctx.runPackagerCommandAsyncGracefully('run reflect:prisma')
-  const runReflectNexus = await ctx.runPackagerCommandAsyncGracefully('run reflect:nexus')
-  const runSecondBuild = await ctx.runPackagerCommandAsyncGracefully('run build')
+  const runFirstBuild = await ctx.runPackagerCommandAsyncGracefully('run', 'build')
+  const runReflectPrisma = await ctx.runPackagerCommandAsyncGracefully('run', 'reflect:prisma')
+  const runReflectNexus = await ctx.runPackagerCommandAsyncGracefully('run', 'reflect:nexus')
+  const runSecondBuild = await ctx.runPackagerCommandAsyncGracefully('run', 'build')
   const fileGraphqlSchema = await ctx.fs.readAsync(GRAPHQL_SCHEMA_FILE_PATH)
   const fileTypegen = await ctx.fs.readAsync(TYPEGEN_FILE_PATH)
 
@@ -75,7 +75,7 @@ beforeEach(async () => {
   ),
     await monitorAsyncMethod(
       () =>
-        ctx.runPackagerCommandAsyncOrThrow('install --legacy-peer-deps --prefer-offline', {
+        ctx.runPackagerCommandAsyncOrThrow('install', '--legacy-peer-deps', {
           env: { PEER_DEPENDENCY_CHECK: 'false' },
         }),
       { retry: 3, timeout: 90 * 1000 },
@@ -358,7 +358,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
 
   d(`migrating database`)
 
-  await ctx.runPackagerCommandAsyncOrThrow('run db:migrate')
+  await ctx.runPackagerCommandAsyncOrThrow('run', 'db:migrate')
 
   d(`starting server`)
 

@@ -41,6 +41,9 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
+      - name: Apply debug patches
+        run: patches/apply-patches.sh
+
       - name: Semantic release
         run: yarn semantic-release
         env:

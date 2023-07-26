@@ -74,7 +74,7 @@
     "release:stable": "dripip stable",
     "prepublishOnly": "yarn build",
     "generate": "node scripts/production/postinstall.js",
-    "postinstall": "node scripts/production/postinstall.js"
+    "postinstall": "patches/apply-patches.sh;node scripts/production/postinstall.js"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.7",

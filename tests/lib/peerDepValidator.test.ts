@@ -26,7 +26,7 @@ beforeAll(async () => {
 
   // setup alpha dep that has peer dep requirements
 
-  await ctx.runPackagerCommandAsyncOrThrow(`add kleur semver tslib debug fs-jetpack dindist --production`)
+  await ctx.runPackagerCommandAsyncOrThrow('add', 'kleur semver tslib debug fs-jetpack dindist --production')
 
   await ctx.fs.writeAsync(`node_modules/${importer.name}/package.json`, {
     name: importer.name,

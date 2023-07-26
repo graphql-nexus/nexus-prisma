@@ -1,7 +1,7 @@
 import * as Execa from 'execa'
 import { provider, Provider } from 'konn'
 import { Providers } from 'konn/providers'
-import { getPackageManager } from '../__helpers__/packageManager'
+import { getAdditionalPackagerCommandArgs, getPackageManager } from '../__helpers__/packageManager'
 
 // import { Dir } from '../Dir'
 
@@ -35,8 +35,12 @@ export type Contributes = {
   // runPackagerCommandGracefully(command: string, options?: RunOptions): Execa.ExecaSyncReturnValue
   runAsyncOrThrow(command: string, options?: RunAsyncOptions): RunAsyncReturnType
   runAsyncGracefully(command: string, options?: RunAsyncOptions): RunAsyncReturnType
-  runPackagerCommandAsyncOrThrow(command: string, options?: RunAsyncOptions): RunAsyncReturnType
-  runPackagerCommandAsyncGracefully(command: string, options?: RunAsyncOptions): RunAsyncReturnType
+  runPackagerCommandAsyncOrThrow(command: string, args: string, options?: RunAsyncOptions): RunAsyncReturnType
+  runPackagerCommandAsyncGracefully(
+    command: string,
+    args: string,
+    options?: RunAsyncOptions,
+  ): RunAsyncReturnType
 }
 
 export const monitorAsyncMethod = async (
@@ -49,7 +53,7 @@ export const monitorAsyncMethod = async (
     console.log(`EXECA ${execaChildProcess.command} START`)
     const timeoutId = setTimeout(() => {
       execaChildProcess.kill('SIGTERM', {
-        forceKillAfterTimeout: options.timeout + 5000,
+        forceKillAfterTimeout: 5000,
       })
     }, options.timeout)
     try {
@@ -121,16 +125,16 @@ export const run = (params?: Params): Provider<Needs, Contributes> =>
         //     reject: false,
         //   })
         // },
-        // runPackagerCommandOrThrow(command, options) {
+        // runPackagerCommandOrThrow(command, args, options) {
         //   log.trace(`will_run`, { command })
-        //   return Execa.commandSync(`${packageManager} ${command}`, {
+        //   return Execa.commandSync(`${packageManager} ${command} ${args}`, {
         //     cwd,
         //     stdio,
         //     ...options,
         //   })
         // },
-        // runPackagerCommandGracefully(command, options) {
-        //   return this.runPackagerCommandOrThrow(command, {
+        // runPackagerCommandGracefully(command, args, options) {
+        //   return this.runPackagerCommandOrThrow(command, args, {
         //     ...options,
         //     reject: false,
         //   })
@@ -153,20 +157,23 @@ export const run = (params?: Params): Provider<Needs, Contributes> =>
             reject: false,
           })
         },
-        runPackagerCommandAsyncOrThrow(partialCommand, options) {
-          const command = `${packageManager} ${partialCommand}`
-          log.trace(`will_run`, { command })
-          return injectCommand(
+        runPackagerCommandAsyncOrThrow(command, args, options) {
+          const fullCommand = `${packageManager} ${command} ${args}${getAdditionalPackagerCommandArgs(
+            packageManager,
             command,
-            Execa.command(command, {
+          )}`
+          log.trace(`will_run`, { fullCommand })
+          return injectCommand(
+            fullCommand,
+            Execa.command(fullCommand, {
               cwd,
               stdio,
               ...options,
             }),
           )
         },
-        runPackagerCommandAsyncGracefully(command, options) {
-          return this.runPackagerCommandAsyncOrThrow(command, {
+        runPackagerCommandAsyncGracefully(command, args, options) {
+          return this.runPackagerCommandAsyncOrThrow(command, args, {
             ...options,
             reject: false,
           })

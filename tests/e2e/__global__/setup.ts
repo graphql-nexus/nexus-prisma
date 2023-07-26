@@ -1,4 +1,3 @@
-require('ts-node/register')
 import * as Execa from 'execa'
 import type { Config } from '@jest/types'
 import { getPackageManager } from '../../__helpers__/packageManager'

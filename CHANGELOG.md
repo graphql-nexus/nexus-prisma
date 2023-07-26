@@ -1,3 +1,23 @@
+## [1.0.11](https://github.com/prisma/nexus-prisma/compare/v1.0.10...v1.0.11) (2023-07-26)
+
+
+### Bug fixes
+
+* **deps:** update dependency tslib to ^2.6.1 ([#678](https://github.com/prisma/nexus-prisma/issues/678)) ([e00e803](https://github.com/prisma/nexus-prisma/commit/e00e80329829f2bc4ed69ee35c866c1c0c3d6cc8))
+
+
+### Testing
+
+* fix retrieval of dynamic packages versions ([#676](https://github.com/prisma/nexus-prisma/issues/676)) ([4bdd177](https://github.com/prisma/nexus-prisma/commit/4bdd1777c26a2c452bbda53bd67dd5693b445e94))
+* fix sigkill timeout for execa monitor ([#581](https://github.com/prisma/nexus-prisma/issues/581)) ([9fa8cc7](https://github.com/prisma/nexus-prisma/commit/9fa8cc7782c93972251f59553692977007fa6acf))
+* prefer offline installation of dependencies in tests ([#677](https://github.com/prisma/nexus-prisma/issues/677)) ([dfcda87](https://github.com/prisma/nexus-prisma/commit/dfcda87f93f781fdfb55de2aa911fff48547e548))
+
+
+### CI
+
+* add dynamic retrieval lts nodejs version in ci workflows ([#680](https://github.com/prisma/nexus-prisma/issues/680)) ([1d65a9a](https://github.com/prisma/nexus-prisma/commit/1d65a9a0955ec8859aadb5e80d116ba3772417ab))
+* switch scheduled weekly releases into on main branch push releases ([#683](https://github.com/prisma/nexus-prisma/issues/683)) ([20b53fc](https://github.com/prisma/nexus-prisma/commit/20b53fcd2f7a132e5e7fcc6998dbeb0f93659bf3))
+
 ## [1.0.10](https://github.com/prisma/nexus-prisma/compare/v1.0.9...v1.0.10) (2023-07-17)
 
 

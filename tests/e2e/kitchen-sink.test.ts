@@ -382,7 +382,6 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
     )
   }
   d(`starting client queries`)
-
   const data = await ctx.graphQLClient.request(gql`
     query {
       bars {
@@ -437,7 +436,15 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
     }
   `)
 
-  const [{ foo }] = data.bars
+  const {
+    bars: [{ foo }],
+  } = data as {
+    bars: [
+      {
+        foo: Record<string, unknown>
+      },
+    ]
+  }
 
   expect(foo.JsonManually).toBeNull()
   expect(foo.DateTimeManually).toBeNull()

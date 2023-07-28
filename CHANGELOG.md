@@ -1,3 +1,24 @@
+## [1.0.17](https://github.com/graphql-nexus/nexus-prisma/compare/v1.0.16...v1.0.17) (2023-07-28)
+
+
+### Bug fixes
+
+* release ([#690](https://github.com/graphql-nexus/nexus-prisma/issues/690)) ([f1443af](https://github.com/graphql-nexus/nexus-prisma/commit/f1443af47d3e0a2c8bc4267c73d32bd7026efc6e))
+
+## [1.0.16](https://github.com/prisma/nexus-prisma/compare/v1.0.15...v1.0.16) (2023-07-28)
+
+
+### Bug fixes
+
+* some test ([103285e](https://github.com/prisma/nexus-prisma/commit/103285e410d700c4fa0c3291f8d23fbcfa1d8c99))
+
+## [1.0.15](https://github.com/prisma/nexus-prisma/compare/v1.0.14...v1.0.15) (2023-07-28)
+
+
+### Bug fixes
+
+* test release ([50d9736](https://github.com/prisma/nexus-prisma/commit/50d97366a19a31e2727cbbb295fb37f323ca915d))
+
 ## [1.0.12](https://github.com/prisma/nexus-prisma/compare/v1.0.11...v1.0.12) (2023-07-26)
 
 

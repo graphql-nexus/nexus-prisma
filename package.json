@@ -1,8 +1,8 @@
 {
-  "name": "@txo/test-do-not-use",
+  "name": "nexus-prisma",
   "version": "1.0.16",
   "main": "./dist-cjs/entrypoints/main.js",
-  "repository": "git@github.com:prisma/nexus-prisma.git",
+  "repository": "git@github.com:graphql-nexus/nexus-prisma.git",
   "author": "Jason Kuhrt",
   "license": "MIT",
   "files": [

@@ -1,3 +1,10 @@
+## [1.0.15](https://github.com/prisma/nexus-prisma/compare/v1.0.14...v1.0.15) (2023-07-28)
+
+
+### Bug fixes
+
+* test release ([50d9736](https://github.com/prisma/nexus-prisma/commit/50d97366a19a31e2727cbbb295fb37f323ca915d))
+
 ## [1.0.12](https://github.com/prisma/nexus-prisma/compare/v1.0.11...v1.0.12) (2023-07-26)
 
 

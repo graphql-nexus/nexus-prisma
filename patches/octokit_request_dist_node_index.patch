@@ -1,0 +1,12 @@
+--- node_modules/@semantic-release/github/node_modules/@octokit/request/dist-node/index.js.original	2023-07-26 23:58:48
++++ node_modules/@semantic-release/github/node_modules/@octokit/request/dist-node/index.js	2023-07-26 23:59:44
+@@ -107,7 +107,8 @@
+     };
+   }).catch(error => {
+     if (error instanceof requestError.RequestError) throw error;else if (error.name === "AbortError") throw error;
+-    throw new requestError.RequestError(error.message, 500, {
++    console.log(error, error.stack);
++	throw new requestError.RequestError(error.message, 500, {
+       request: requestOptions
+     });
+   });

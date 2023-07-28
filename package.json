@@ -1,6 +1,6 @@
 {
   "name": "nexus-prisma",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "main": "./dist-cjs/entrypoints/main.js",
   "repository": "git@github.com:graphql-nexus/nexus-prisma.git",
   "author": "Jason Kuhrt",

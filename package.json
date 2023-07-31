@@ -7,7 +7,6 @@
   "license": "MIT",
   "files": [
     "dist-cjs",
-    "dist-esm",
     "scripts/production",
     "scalars.d.ts",
     "scalars.js",
@@ -15,18 +14,9 @@
     "generator.js"
   ],
   "exports": {
-    ".": {
-      "require": "./dist-cjs/entrypoints/main.js",
-      "import": "./dist-esm/entrypoints/main.js"
-    },
-    "./scalars": {
-      "require": "./dist-cjs/entrypoints/scalars.js",
-      "import": "./dist-esm/entrypoints/scalars.js"
-    },
-    "./generator": {
-      "require": "./dist-cjs/entrypoints/generator.js",
-      "import": "./dist-esm/entrypoints/generator.js"
-    },
+    ".": "./dist-cjs/entrypoints/main.js",
+    "./scalars": "./dist-cjs/entrypoints/scalars.js",
+    "./generator": "./dist-cjs/entrypoints/generator.js",
     "./*": {
       "default": "./*.js"
     }
@@ -57,10 +47,10 @@
     "format": "prettier --check .",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
-    "dev": "yarn -s clean && tsc --build --watch tsconfig.cjs.json tsconfig.esm.json",
+    "dev": "yarn -s clean && tsc --build --watch tsconfig.cjs.json",
     "dev:ts": "yarn dev",
     "dev:yalc": "nodemon --delay 1.5 --exec 'yalc push --no-scripts' --watch 'dist-*/**/*'",
-    "build": "yarn generate && yarn clean && tsc --build tsconfig.cjs.json tsconfig.esm.json",
+    "build": "yarn generate && yarn clean && tsc --build tsconfig.cjs.json",
     "test": "cross-env NO_COLOR=true DEBUG='konn*,e2e' jest",
     "test:e2e": "cross-env NO_COLOR=true DEBUG=e2e jest --selectProjects e2e",
     "test:unit": "cross-env NO_COLOR=true jest --selectProjects unit",

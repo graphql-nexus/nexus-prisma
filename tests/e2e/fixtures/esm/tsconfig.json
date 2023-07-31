@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "ES2015"
+  },
+  "include": ["."]
+}

@@ -22,9 +22,10 @@ export const timeoutRace = async <T>(
 }
 
 export function assertBuildPresent() {
+  /* not supported yet, for more info https://github.com/graphql-nexus/nexus-prisma/discussions/693 
   if (fs.exists(Path.join(__dirname, '../../dist-esm')) === false)
     throw new Error(`Please run build ESM before running this test`)
-
+  */
   if (fs.exists(Path.join(__dirname, '../../dist-cjs')) === false)
     throw new Error(`Please run build CJS before running this test`)
 }

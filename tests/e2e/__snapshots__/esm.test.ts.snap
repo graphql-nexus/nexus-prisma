@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`esm: esm project successfully imports nexus-prisma 1`] = `
+"type Foo {
+  id: ID!
+}
+
+type Query {
+  foos: [Foo]
+}"
+`;

@@ -14,15 +14,9 @@
     "generator.js"
   ],
   "exports": {
-    ".": {
-      "require": "./dist-cjs/entrypoints/main.js"
-    },
-    "./scalars": {
-      "require": "./dist-cjs/entrypoints/scalars.js"
-    },
-    "./generator": {
-      "require": "./dist-cjs/entrypoints/generator.js"
-    },
+    ".": "./dist-cjs/entrypoints/main.js",
+    "./scalars": "./dist-cjs/entrypoints/scalars.js",
+    "./generator": "./dist-cjs/entrypoints/generator.js",
     "./*": {
       "default": "./*.js"
     }

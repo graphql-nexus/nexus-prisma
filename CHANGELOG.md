@@ -1,3 +1,10 @@
+## [1.0.18](https://github.com/graphql-nexus/nexus-prisma/compare/v1.0.17...v1.0.18) (2023-07-31)
+
+
+### Bug fixes
+
+* remove esm build ([#696](https://github.com/graphql-nexus/nexus-prisma/issues/696)) ([9c549b8](https://github.com/graphql-nexus/nexus-prisma/commit/9c549b85f47d569bf7aa4f66667e1ecada55a278))
+
 ## [1.0.17](https://github.com/graphql-nexus/nexus-prisma/compare/v1.0.16...v1.0.17) (2023-07-28)
 
 

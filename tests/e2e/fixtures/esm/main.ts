@@ -1,6 +1,7 @@
 import { printSchema } from 'graphql'
 import { makeSchema, objectType, queryType } from 'nexus'
-import { Foo } from './generated/nexus-prisma'
+import NexusPrisma from './nexus-prisma.cjs'
+const { Foo } = NexusPrisma
 
 const schema = makeSchema({
   types: [

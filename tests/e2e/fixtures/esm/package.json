@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npm run build:prisma",
     "build:prisma": "prisma generate",
-    "dev": "ts-node main"
+    "dev": "tsc && ts-node --esm main.js"
   },
   "devDependencies": {
     "@prisma/client": "__dynamic__",

@@ -1,7 +1,7 @@
 import * as fs from 'fs-jetpack'
 import * as Path from 'path'
 
-import { DMMF } from '@prisma/client/runtime'
+import { DMMF } from '@prisma/client/runtime/library'
 
 import { d } from '../helpers/debugNexusPrisma'
 import { Module } from './helpers/types'

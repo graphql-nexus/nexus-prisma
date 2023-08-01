@@ -1,6 +1,6 @@
 import dedent from 'dindist'
 
-import { DMMF } from '@prisma/client/runtime'
+import { DMMF } from '@prisma/client/runtime/library'
 
 import { PrismaDocumentation } from '../../lib/prisma-documentation'
 import type { Settings } from '../Settings'

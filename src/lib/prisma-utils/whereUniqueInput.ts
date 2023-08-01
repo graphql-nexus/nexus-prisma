@@ -1,4 +1,4 @@
-import { DMMF } from '@prisma/client/runtime'
+import { DMMF } from '@prisma/client/runtime/library'
 import { pick } from 'lodash'
 import { inspect } from 'util'
 import { RecordUnknown } from '../../helpers/utils'

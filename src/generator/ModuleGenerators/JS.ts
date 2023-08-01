@@ -4,7 +4,7 @@ import * as Nexus from 'nexus'
 import { NexusEnumTypeConfig, NexusListDef, NexusNonNullDef, NexusNullDef } from 'nexus/dist/core'
 import { inspect } from 'util'
 
-import type { DMMF } from '@prisma/client/runtime'
+import type { DMMF } from '@prisma/client/runtime/library'
 
 import { MaybePromise, RecordUnknown, Resolver } from '../../helpers/utils'
 import { Messenger } from '../../lib/messenger'
@@ -340,20 +340,6 @@ export const nexusResolverFromPrismaField = (
     const findUnique = prismaModel.findUnique as (query: unknown) => MaybePromise<unknown>
     const result: unknown = findUnique({
       where: whereUnique,
-      /**
-       *
-       * The user might have configured Prisma Client globally to rejectOnNotFound.
-       * In the context of this Nexus Prisma managed resolver, we don't want that setting to
-       * be a behavioral factor. Instead, Nexus Prisma has its own documented rules about the logic
-       * it uses to project nullability from the database to the api.
-       *
-       * More details about this design can be found in the README.
-       *
-       * References:
-       *
-       * - https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#rejectonnotfound
-       */
-      rejectOnNotFound: false,
     })
 
     // @ts-expect-error Only known at runtime

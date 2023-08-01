@@ -18,7 +18,7 @@ jobs:
         run: scripts/get-lts-versions.sh
 
   test-latest-prisma-without-database:
-    name: Test with latest Prisma
+    name: Test
     timeout-minutes: 40
     needs: [get-lts-versions]
 
@@ -60,7 +60,7 @@ jobs:
           DATABASE: ${{ matrix.database }}
 
   test-latest-prisma-with-database:
-    name: Test with latest Prisma
+    name: Test
     timeout-minutes: 40
     needs: [get-lts-versions]
 
@@ -114,8 +114,8 @@ jobs:
         env:
           DATABASE: ${{ matrix.database }}
 
-  test-past-versions-with-database:
-    name: Test with past versions
+  test-bottom-versions-with-database:
+    name: Test
     timeout-minutes: 40
     needs: [get-lts-versions]
 
@@ -124,7 +124,7 @@ jobs:
         os: ['ubuntu-latest']
         node-version: ${{ fromJson(needs.get-lts-versions.outputs.matrix_last_lts_version) }}
         database: ['db']
-        past-version: ['prisma@4.0, graphql@15.8.0', 'graphql@15.8.0']
+        bottom-version: ['prisma@5.0, graphql@15.8.0', 'graphql@15.8.0']
 
     runs-on: ${{ matrix.os }}
 
@@ -158,23 +158,23 @@ jobs:
         run: yarn -s build
 
       - name: Set E2E DB Schema
-        if: contains(matrix.past-version, 'prisma')
+        if: contains(matrix.bottom-version, 'prisma')
         run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --prisma-client-version 4.0 --github-env $GITHUB_ENV
 
       - name: Set E2E DB Schema
-        if: contains(matrix.past-version, 'prisma') == false
+        if: contains(matrix.bottom-version, 'prisma') == false
         run: yarn -s ts-node scripts/get-e2e-db-schema --os ${{ matrix.os }} --node-version ${{ matrix.node-version }} --github-env $GITHUB_ENV
 
-      - name: Install past prisma dev packages
-        if: contains(matrix.past-version, 'prisma')
-        run: yarn -s add prisma@4.0 @prisma/client@4.0 @prisma/internals@4.0 --dev
+      - name: Install bottom prisma dev packages
+        if: contains(matrix.bottom-version, 'prisma')
+        run: yarn -s add prisma@5.0 @prisma/client@5.0 @prisma/internals@5.0 --dev
 
-      - name: Install past prisma packages
-        if: contains(matrix.past-version, 'prisma')
-        run: yarn -s add @prisma/generator-helper@4.0
+      - name: Install bottom prisma packages
+        if: contains(matrix.bottom-version, 'prisma')
+        run: yarn -s add @prisma/generator-helper@5.0
 
-      - name: Install past graphql packages
-        if: contains(matrix.past-version, 'graphql')
+      - name: Install bottom graphql packages
+        if: contains(matrix.bottom-version, 'graphql')
         run: yarn -s add graphql@^15.8.0 nexus@1.2 --dev
 
       #NOTE: addresses issue "npm ERR! maxAge must be a number" due picking npm version from local semantic-release
@@ -185,4 +185,4 @@ jobs:
         run: yarn -s test:ci
         env:
           DATABASE: ${{ matrix.database }}
-          PAST_VERSION: ${{ matrix.past-version }}
+          BOTTOM_VERSION: ${{ matrix.bottom-version }}

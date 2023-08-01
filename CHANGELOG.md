@@ -1,3 +1,14 @@
+## [2.0.0](https://github.com/graphql-nexus/nexus-prisma/compare/v1.0.18...v2.0.0) (2023-08-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** Upgrade prisma dependencies to v5
+
+### chore
+
+* **deps:** update prisma monorepo to v5 (major) ([#656](https://github.com/graphql-nexus/nexus-prisma/issues/656)) ([c19b45d](https://github.com/graphql-nexus/nexus-prisma/commit/c19b45d8ec2cb11cc04a52ff4f7319c351476c79))
+
 ## [1.0.18](https://github.com/graphql-nexus/nexus-prisma/compare/v1.0.17...v1.0.18) (2023-07-31)
 
 

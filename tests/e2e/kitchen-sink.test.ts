@@ -369,6 +369,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
     [
       new Promise((res) =>
         serverProcess.stdout!.on('data', (data: Buffer) => {
+          console.log(data.toString())
           if (data.toString().match(SERVER_READY_MESSAGE)) res('server_started')
         }),
       ),
@@ -381,37 +382,29 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
       `server was not ready after 10 seconds. The output from child process was:\n\n${serverProcess.stdio.toString()}\n\n`,
     )
   }
-  d(`starting client queries`)
-  const data = await ctx.graphQLClient.request(gql`
-    query {
-      bars {
-        foo {
-          JsonManually
-          DateTimeManually
-          BytesManually
-          DecimalManually
-          BigIntManually
-          someEnumA
-          someJsonField
-          someDateTimeField
-          someBytesField
-          someDecimalField
-          someBigIntField
+  try {
+    d(`starting client queries`)
+    const data = await ctx.graphQLClient.request(gql`
+      query {
+        bars {
+          foo {
+            JsonManually
+            DateTimeManually
+            BytesManually
+            DecimalManually
+            BigIntManually
+            someEnumA
+            someJsonField
+            someDateTimeField
+            someBytesField
+            someDecimalField
+            someBigIntField
+          }
         }
       }
-    }
-  `)
+    `)
 
-  d(`stopping server`)
-
-  serverProcess.cancel()
-  // On Windows the serverProcess never completes the promise so we do an ugly timeout here
-  // and rely on jest --forceExit to terminate the process
-
-  await timeoutRace([serverProcess], 2_000)
-
-  d(`stopped server`)
-  expect(data).toMatchInlineSnapshot(`
+    expect(data).toMatchInlineSnapshot(`
     {
       "bars": [
         {
@@ -436,23 +429,33 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
     }
   `)
 
-  const {
-    bars: [{ foo }],
-  } = data as {
-    bars: [
-      {
-        foo: Record<string, unknown>
-      },
-    ]
-  }
+    const {
+      bars: [{ foo }],
+    } = data as {
+      bars: [
+        {
+          foo: Record<string, unknown>
+        },
+      ]
+    }
 
-  expect(foo.JsonManually).toBeNull()
-  expect(foo.DateTimeManually).toBeNull()
-  expect(foo.BytesManually).toBeNull()
-  expect(foo.BigIntManually).toBeNull()
-  expect(typeof foo.someEnumA).toEqual('string')
-  expect(typeof foo.someJsonField).toEqual('object')
-  expect(typeof foo.someDateTimeField).toEqual('string')
-  expect(typeof foo.someBytesField).toEqual('object')
-  expect(typeof GQLScalars.BigIntResolver.parseValue(foo.someBigIntField)).toEqual('bigint')
+    expect(foo.JsonManually).toBeNull()
+    expect(foo.DateTimeManually).toBeNull()
+    expect(foo.BytesManually).toBeNull()
+    expect(foo.BigIntManually).toBeNull()
+    expect(typeof foo.someEnumA).toEqual('string')
+    expect(typeof foo.someJsonField).toEqual('object')
+    expect(typeof foo.someDateTimeField).toEqual('string')
+    expect(typeof foo.someBytesField).toEqual('object')
+    expect(typeof GQLScalars.BigIntResolver.parseValue(foo.someBigIntField)).toEqual('bigint')
+  } finally {
+    d(`stopping server`)
+
+    serverProcess.cancel()
+    // On Windows the serverProcess never completes the promise so we do an ugly timeout here
+    // and rely on jest --forceExit to terminate the process
+
+    await timeoutRace([serverProcess], 2_000)
+    d(`stopped server`)
+  }
 }, 120_000)

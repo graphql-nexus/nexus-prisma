@@ -124,7 +124,7 @@ jobs:
         os: ['ubuntu-latest']
         node-version: ${{ fromJson(needs.get-lts-versions.outputs.matrix_last_lts_version) }}
         database: ['db']
-        past-version: ['prisma@4.0, graphql@15.8.0', 'graphql@15.8.0']
+        past-version: ['prisma@5.0, graphql@15.8.0', 'graphql@15.8.0']
 
     runs-on: ${{ matrix.os }}
 
@@ -167,11 +167,11 @@ jobs:
 
       - name: Install past prisma dev packages
         if: contains(matrix.past-version, 'prisma')
-        run: yarn -s add prisma@4.0 @prisma/client@4.0 @prisma/internals@4.0 --dev
+        run: yarn -s add prisma@5.0 @prisma/client@5.0 @prisma/internals@5.0 --dev
 
       - name: Install past prisma packages
         if: contains(matrix.past-version, 'prisma')
-        run: yarn -s add @prisma/generator-helper@4.0
+        run: yarn -s add @prisma/generator-helper@5.0
 
       - name: Install past graphql packages
         if: contains(matrix.past-version, 'graphql')

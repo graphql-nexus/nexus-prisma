@@ -1,4 +1,4 @@
-import { DMMF } from '@prisma/client/runtime'
+import { DMMF } from '@prisma/client/runtime/library'
 import dedent from 'dindist'
 import kleur from 'kleur'
 import ono from 'ono'

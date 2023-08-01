@@ -1,4 +1,4 @@
-import { DMMF } from '@prisma/client/runtime'
+import { DMMF } from '@prisma/client/runtime/library'
 
 export type DocumentableNode = DMMF.Model | DMMF.Field | DMMF.DatamodelEnum
 

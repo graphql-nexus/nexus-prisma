@@ -586,11 +586,7 @@ This formatting logic is conservative. We are open to making it less so, in orde
 
 ## ESM Support
 
-Nexus Prisma supports both [ESM](https://nodejs.org/api/esm.html) and CJS. There shouldn't be anything you need to "do", things should "just work". Here's the highlights of how it works though:
-
-- We publish both a CJS and ESM build to npm.
-- When the generator runs, it emits CJS code to the CJS build _and_ ESM code to the ESM build.
-- Nexus Prisma CLI exists both in the ESM and CJS builds but its built to not matter which is used. That said, the package manifest is setup to run the CJS of the CLI and so that is what ends up being used in practice.
+We are not supporting esm build yet, more info [here](https://github.com/graphql-nexus/nexus-prisma/discussions/693).
 
 ## Refined DX
 

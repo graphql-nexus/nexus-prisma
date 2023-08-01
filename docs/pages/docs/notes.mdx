@@ -87,7 +87,7 @@ We test Node versions that are `Active LTS` and `Current`. For which versions of
 
 We only officially support what we test.
 
-We test Prisma Client versions `2.30.x`, `2.29.x`.
+We are testing Prisma Client versions `^5.0` but locked to the recent version, which has passed tests. If there is a newer release of prisma dependencies than the locked version, but it failed, we are still upgrading other dependencies and testing given changes against the locked version.
 
 ## Supported Versions Of `ts-node`
 
@@ -99,7 +99,7 @@ Reminder: `ts-node` is an optional peer dep required when you are working with t
 
 ### Matrix Testing Policy
 
-We test the latest versions of `@prisma/client` against Node 18, 16 and 14 on Ubuntu, macOS, and Windows while past versions of `@prisma/client` are tested only against Node 18 on Ubuntu. We do this to keep the CI test matris reasonable as the number of past `@prisma/client` versions supported could grow long.
+We test the latest versions of `@prisma/client` against `Active LTS` and `Current` Node on Ubuntu, macOS, and Windows while past versions of `@prisma/client` are tested only against `Current` Node on Ubuntu. We do this to keep the CI test matris reasonable as the number of past `@prisma/client` versions supported could grow long.
 
 ### Patch Version Support Policy
 

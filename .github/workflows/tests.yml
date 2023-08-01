@@ -115,7 +115,7 @@ jobs:
           DATABASE: ${{ matrix.database }}
 
   test-bottom-versions-with-database:
-    name: Test bottom
+    name: Test
     timeout-minutes: 40
     needs: [get-lts-versions]
 

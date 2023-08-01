@@ -63,7 +63,7 @@ const ctx = konn()
 
 beforeEach(async () => {
   await ctx.fixture.useAsync(Path.join(__dirname, 'fixtures/kitchen-sink'))
-  if (process.env.PAST_VERSION && process.env.PAST_VERSION.indexOf('prisma') !== -1) {
+  if (process.env.BOTTOM_VERSION && process.env.BOTTOM_VERSION.indexOf('prisma') !== -1) {
     await ctx.packageJson.mergeAsync({
       devDependencies: {
         typescript: '4.7.4',

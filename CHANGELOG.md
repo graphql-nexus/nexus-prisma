@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/graphql-nexus/nexus-prisma/compare/v2.0.0...v2.0.1) (2023-08-19)
+
+
+### Bug fixes
+
+* **deps:** update dependency tslib to ^2.6.2 ([#735](https://github.com/graphql-nexus/nexus-prisma/issues/735)) ([47f659d](https://github.com/graphql-nexus/nexus-prisma/commit/47f659ddfe2aa1a3954785b2f5b66b3753cb45ed))
+
 ## [2.0.0](https://github.com/graphql-nexus/nexus-prisma/compare/v1.0.18...v2.0.0) (2023-08-01)
 
 

@@ -119,7 +119,7 @@
     "type-fest": "^4.2.0",
     "typescript": "5.1.6",
     "yalc": "^1.0.0-pre.53",
-    "zod": "^3.22.1"
+    "zod": "^3.22.2"
   },
   "optionalDependencies": {
     "semantic-release": "^21.0.7"

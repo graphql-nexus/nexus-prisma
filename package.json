@@ -100,7 +100,7 @@
     "graphql-request": "^6.1.0",
     "graphql-tag": "^2.12.6",
     "husky": "^8.0.3",
-    "jest": "29.6.2",
+    "jest": "29.6.3",
     "jest-watch-select-projects": "^2.0.0",
     "jest-watch-typeahead": "2.2.2",
     "konn": "^0.7.0",

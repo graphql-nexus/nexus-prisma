@@ -79,7 +79,7 @@
     "@semantic-release/git": "^10.0.1",
     "@types/debug": "^4.1.8",
     "@types/expand-tilde": "^2.0.0",
-    "@types/jest": "29.5.4",
+    "@types/jest": "29.5.5",
     "@types/lodash": "^4.14.198",
     "@types/node": "^18.17.17",
     "@types/object-hash": "^3.0.4",

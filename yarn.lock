@@ -2217,6 +2217,14 @@ aggregate-error@^4.0.0, aggregate-error@^4.0.1:
     clean-stack "^4.0.0"
     indent-string "^5.0.0"
 
+aggregate-error@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/aggregate-error/-/aggregate-error-5.0.0.tgz#ffe15045d7521c51c9d618e3d7f37c13f29b3fd3"
+  integrity sha512-gOsf2YwSlleG6IjRYG2A7k0HmBMEo6qVNk9Bp/EaLgAJT5ngH6PXbqa4ItvnEwCm/velL5jAnQgsHsWnjhGmvw==
+  dependencies:
+    clean-stack "^5.2.0"
+    indent-string "^5.0.0"
+
 ajv@^6.12.3, ajv@^6.12.4:
   version "6.12.6"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.12.6.tgz#baf5a62e802b07d977034586f8c3baf5adf26df4"
@@ -2858,6 +2866,13 @@ clean-stack@^4.0.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/clean-stack/-/clean-stack-4.2.0.tgz#c464e4cde4ac789f4e0735c5d75beb49d7b30b31"
   integrity sha512-LYv6XPxoyODi36Dp976riBtSY27VmFo+MKqEU9QCCWyTrdEPDog+RWA7xQWHi6Vbp61j5c4cdzzX1NidnwtUWg==
+  dependencies:
+    escape-string-regexp "5.0.0"
+
+clean-stack@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/clean-stack/-/clean-stack-5.2.0.tgz#c7a0c91939c7caace30a3bf254e8a8ac276d1189"
+  integrity sha512-TyUIUJgdFnCISzG5zu3291TAsE77ddchd0bepon1VVQrKLGKFED4iXFEDQ24mIPdPBbyE16PK3F8MYE1CmcBEQ==
   dependencies:
     escape-string-regexp "5.0.0"
 
@@ -7713,17 +7728,17 @@ safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-semantic-release@^21.1.1:
-  version "21.1.1"
-  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-21.1.1.tgz#b1a0735fe5037699b26f81ec9e7e8a2fb89d5972"
-  integrity sha512-OCIazQnaCHdq1F6zfmKS0P7jZakYq0weiqW2mxUWo4H2CDnxelUoa/0Bs/dQatoHc6JFh6lG2HWpusdl93bFcw==
+semantic-release@^21.1.2:
+  version "21.1.2"
+  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-21.1.2.tgz#f4c5ba7c17b53ce90bac4fa6ccf21178d0384445"
+  integrity sha512-kz76azHrT8+VEkQjoCBHE06JNQgTgsC4bT8XfCzb7DHcsk9vG3fqeMVik8h5rcWCYi2Fd+M3bwA7BG8Z8cRwtA==
   dependencies:
     "@semantic-release/commit-analyzer" "^10.0.0"
     "@semantic-release/error" "^4.0.0"
     "@semantic-release/github" "^9.0.0"
     "@semantic-release/npm" "^10.0.2"
     "@semantic-release/release-notes-generator" "^11.0.0"
-    aggregate-error "^4.0.1"
+    aggregate-error "^5.0.0"
     cosmiconfig "^8.0.0"
     debug "^4.0.0"
     env-ci "^9.0.0"

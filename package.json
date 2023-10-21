@@ -80,7 +80,7 @@
     "@types/debug": "^4.1.10",
     "@types/expand-tilde": "^2.0.1",
     "@types/jest": "29.5.6",
-    "@types/lodash": "^4.14.198",
+    "@types/lodash": "^4.14.200",
     "@types/node": "^18.17.18",
     "@types/object-hash": "^3.0.4",
     "@types/pluralize": "^0.0.30",

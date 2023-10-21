@@ -2026,10 +2026,10 @@
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.4.tgz#0a41252ad431c473158b22f9bfb9a63df7541cff"
   integrity sha512-MMzuxN3GdFwskAnb6fz0orFvhfqi752yjaXylr0Rp4oDg5H0Zn1IuyRhDVvYOwAXoJirx2xuS16I3WjxnAIHiQ==
 
-"@types/slug@^5.0.4":
-  version "5.0.4"
-  resolved "https://registry.yarnpkg.com/@types/slug/-/slug-5.0.4.tgz#0be8738fed9c3115238422471d58c1105ff5c633"
-  integrity sha512-6zl8VXHEDtDsfdSlRsLW3uatVpwPJ17MKIzOy3m2lObF1dtA/dHl71pKvqiJJL1YKhdsB4gJ4WXENSLQ9TjcPQ==
+"@types/slug@^5.0.6":
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/@types/slug/-/slug-5.0.6.tgz#853926edebc15ae65eda18722a031877b9baa188"
+  integrity sha512-7z9pKAJRwVN/aJnDm8CHgq+0qizT3OuunI4M8IlZ0UcsWYbG3EW2ob7qbaeB+qk1wygoi88/i1/KvUDpHX5zRA==
 
 "@types/stack-utils@^2.0.0":
   version "2.0.1"

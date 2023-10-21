@@ -78,7 +78,7 @@
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@types/debug": "^4.1.10",
-    "@types/expand-tilde": "^2.0.0",
+    "@types/expand-tilde": "^2.0.1",
     "@types/jest": "29.5.5",
     "@types/lodash": "^4.14.198",
     "@types/node": "^18.17.18",

@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@prisma/client": "__dynamic__",
-    "@vercel/ncc": "0.38.0",
+    "@vercel/ncc": "0.38.1",
     "graphql": "__dynamic__",
     "nexus": "__dynamic__",
     "prisma": "__dynamic__",

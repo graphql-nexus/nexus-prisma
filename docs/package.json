@@ -19,7 +19,7 @@
     "@types/node": "18.18.6",
     "@types/react": "18.2.31",
     "autoprefixer": "10.4.16",
-    "eslint": "8.49.0",
+    "eslint": "8.52.0",
     "eslint-config-next": "13.5.2",
     "next": "13.5.2",
     "nextra": "2.12.3",

@@ -116,7 +116,7 @@
     "strip-ansi": "6",
     "ts-jest": "29.1.1",
     "ts-node": "^10.9.1",
-    "type-fest": "^4.5.0",
+    "type-fest": "^4.6.0",
     "typescript": "5.2.2",
     "yalc": "^1.0.0-pre.53",
     "zod": "^3.22.4"

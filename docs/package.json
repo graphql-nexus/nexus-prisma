@@ -16,7 +16,7 @@
   "devDependencies": {
     "@prisma-labs/prettier-config": "0.1.0",
     "@reach/skip-nav": "0.18.0",
-    "@types/node": "18.18.7",
+    "@types/node": "18.18.8",
     "@types/react": "18.2.33",
     "autoprefixer": "10.4.16",
     "eslint": "8.52.0",

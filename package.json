@@ -71,7 +71,7 @@
   "devDependencies": {
     "@commitlint/cli": "^18.2.0",
     "@commitlint/config-conventional": "^18.1.0",
-    "@homer0/prettier-plugin-jsdoc": "^7.0.3",
+    "@homer0/prettier-plugin-jsdoc": "^8.0.0",
     "@prisma-labs/prettier-config": "0.1.0",
     "@prisma/client": "^5.0.0",
     "@prisma/internals": "^5.0.0",

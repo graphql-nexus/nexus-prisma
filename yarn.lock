@@ -8609,10 +8609,10 @@ type-fest@^4.6.0:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-4.6.0.tgz#9c575f7e20530defef4f9cdc5e2c85d6e4ea0fc9"
   integrity sha512-rLjWJzQFOq4xw7MgJrCZ6T1jIOvvYElXT12r+y0CC6u67hegDHaxcPqb2fZHOGlqxugGQPNB1EnTezjBetkwkw==
 
-type-fest@^4.7.0:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-4.7.0.tgz#f1b65f6eaf2486d3a873bd6a63a4ac7c8f99baca"
-  integrity sha512-OYI0GNgutT8XtqvoSYUWzBkwoTXgkDVJSSyzzjtGp+HNyrGOJypM2UHtbnbEmNk2/OI7YmKpjjI/gfFSrfEQwQ==
+type-fest@^4.7.1:
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-4.7.1.tgz#dbe462c5f350d708ec6ca6fe8925b5b6541ca9a7"
+  integrity sha512-iWr8RUmzAJRfhZugX9O7nZE6pCxDU8CZ3QxsLuTnGcBLJpCaP2ll3s4eMTBoFnU/CeXY/5rfQSuAEsTGJO4y8A==
 
 typedarray@^0.0.6:
   version "0.0.6"

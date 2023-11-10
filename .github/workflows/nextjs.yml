@@ -70,10 +70,6 @@ jobs:
         working-directory: ./docs
         run: yarn next build
 
-      - name: Static HTML export with Next.js
-        working-directory: ./docs
-        run: yarn next export
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:

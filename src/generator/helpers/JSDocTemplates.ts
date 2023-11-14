@@ -95,10 +95,10 @@ const nodeDocumentation = (
     'field' in params
       ? params.field.documentation
       : 'model' in params
-      ? params.model.documentation
-      : 'enum' in params
-      ? params.enum.documentation
-      : null
+        ? params.model.documentation
+        : 'enum' in params
+          ? params.enum.documentation
+          : null
 
   if (documentation) {
     return dedent`
@@ -114,8 +114,8 @@ const nodeDocumentation = (
           settings: params.settings,
         })
       : 'model' in params
-      ? modelMissingDocGuide(params.model)
-      : enumMissingDocGuide(params.enum)
+        ? modelMissingDocGuide(params.model)
+        : enumMissingDocGuide(params.enum)
   }
 
   return null
@@ -213,8 +213,8 @@ const missingDocsIntro = (
     info.kind === 'enum'
       ? `enum ${info.enum.name}`
       : info.kind === 'model'
-      ? `model ${info.model.name}`
-      : info.kind
+        ? `model ${info.model.name}`
+        : info.kind
 
   return dedent`
      * ### ️⚠️ You have not written documentation for ${thisItem}

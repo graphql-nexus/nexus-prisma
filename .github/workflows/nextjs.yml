@@ -37,7 +37,7 @@ jobs:
         run: scripts/get-lts-versions.sh
 
       - name: Use Node.js ${{ steps.get-lts-versions.outputs.last_lts_version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ steps.get-lts-versions.outputs.last_lts_version }}
           cache: 'yarn'
@@ -69,10 +69,6 @@ jobs:
       - name: Build with Next.js
         working-directory: ./docs
         run: yarn next build
-
-      - name: Static HTML export with Next.js
-        working-directory: ./docs
-        run: yarn next export
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2

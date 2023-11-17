@@ -81,7 +81,7 @@
     "@types/expand-tilde": "^2.0.2",
     "@types/jest": "29.5.8",
     "@types/lodash": "^4.14.201",
-    "@types/node": "^20.9.0",
+    "@types/node": "^20.9.1",
     "@types/object-hash": "^3.0.6",
     "@types/pluralize": "^0.0.33",
     "@types/semver": "^7.5.5",

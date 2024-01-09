@@ -607,7 +607,7 @@ const createNexusStringFilterType = (): NexusInputObjectTypeDef<string> => {
     name: typeName,
     definition(t) {
       let queryModeType = enumTypes.find((type) => {
-        return type.name === 'QueryMode'
+        return type.name === 'StringFilterQueryMode'
       })
       if (!queryModeType) {
         queryModeType = createQueryModeType()
@@ -649,9 +649,9 @@ const createNexusNestedStringFilterType = (): NexusInputObjectTypeDef<string> =>
   })
 }
 
-const createQueryModeType = (): NexusEnumTypeDef<'QueryMode'> => {
+const createQueryModeType = (): NexusEnumTypeDef<'StringFilterQueryMode'> => {
   return Nexus.enumType({
-    name: 'QueryMode',
+    name: 'StringFilterQueryMode',
     members: ['default', 'insensitive'],
   })
 }

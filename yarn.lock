@@ -8635,10 +8635,10 @@ type-fest@^3.12.0, type-fest@^3.8.0:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-3.12.0.tgz#4ce26edc1ccc59fc171e495887ef391fe1f5280e"
   integrity sha512-qj9wWsnFvVEMUDbESiilKeXeHL7FwwiFcogfhfyjmvT968RXSvnl23f1JOClTHYItsi7o501C/7qVllscUP3oA==
 
-type-fest@^4.10.0:
-  version "4.10.0"
-  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-4.10.0.tgz#30e6d2648fecb67c296d0de31b32d156e501c38d"
-  integrity sha512-NPaKJsb4wyJ16qc8zBQrWswLKv/YirgBFykvUQ1Iajt2wd+twC8E4hFXdlIXqiMl6kWA0zY8tUJ9ELVAdu5h7w==
+type-fest@^4.10.1:
+  version "4.10.1"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-4.10.1.tgz#35e6cd34d1fe331cf261d8ebb83e64788b89db4b"
+  integrity sha512-7ZnJYTp6uc04uYRISWtiX3DSKB/fxNQT0B5o1OUeCqiQiwF+JC9+rJiZIDrPrNCLLuTqyQmh4VdQqh/ZOkv9MQ==
 
 type-fest@^4.6.0:
   version "4.6.0"

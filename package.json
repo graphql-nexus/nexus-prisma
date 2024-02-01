@@ -65,7 +65,7 @@
     "prepublishOnly": "yarn build",
     "generate": "node scripts/production/postinstall.js",
     "postinstall": "node scripts/production/postinstall.js",
-    "prepare": "husky install",
+    "prepare": "husky",
     "type:check": "tsc --noEmit"
   },
   "devDependencies": {

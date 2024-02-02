@@ -63,11 +63,12 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.56.0.tgz#ef20350fec605a7f7035a01764731b2de0f3782b"
   integrity sha512-gMsVel9D7f2HLkBma9VbtzZRehRogVRfbr++f06nL2vnCGCNlzOD+/MUov/F4p8myyAHspEhVobgjpX64q5m6A==
 
-"@headlessui/react@^1.7.10":
-  version "1.7.11"
-  resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-1.7.11.tgz#1cc5750226abe5af2c94f72e975c0c8d2f5cc5a6"
-  integrity sha512-EaDbVgcyiylhtskZZf4Qb/JiiByY7cYbd0qgZ9xm2pm2X7hKojG0P4TaQYKgPOV3vojPhd/pZyQh3nmRkkcSyw==
+"@headlessui/react@^1.7.17":
+  version "1.7.18"
+  resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-1.7.18.tgz#30af4634d2215b2ca1aa29d07f33d02bea82d9d7"
+  integrity sha512-4i5DOrzwN4qSgNsL4Si61VMkUcWbcSKueUV7sFhpHzQcSShdlHENE5+QBntMSRvHt8NyoFO2AGG8si9lq+w4zQ==
   dependencies:
+    "@tanstack/react-virtual" "^3.0.0-beta.60"
     client-only "^0.0.1"
 
 "@humanwhocodes/config-array@^0.11.13":
@@ -367,10 +368,10 @@
     tiny-glob "^0.2.9"
     tslib "^2.4.0"
 
-"@popperjs/core@^2.11.6":
-  version "2.11.6"
-  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.6.tgz#cee20bd55e68a1720bdab363ecf0c821ded4cd45"
-  integrity sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==
+"@popperjs/core@^2.11.8":
+  version "2.11.8"
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
+  integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
 "@prisma-labs/prettier-config@0.1.0":
   version "0.1.0"
@@ -400,6 +401,18 @@
   integrity sha512-E4KcWTpoLHqwPHLxidpOqQbcrZVgi0rsmmZXUle1jXmJfuIf/UWpczUJ7MZZ5tlxytgJXyp0w4PGkkeLiuIdZw==
   dependencies:
     tslib "^2.4.0"
+
+"@tanstack/react-virtual@^3.0.0-beta.60":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-virtual/-/react-virtual-3.0.4.tgz#32a90aa6faa2eeebb5f4ca561d26bae9f3435e45"
+  integrity sha512-tiqKW/e2MJVCr7/pRUXulpkyxllaOclkHNfhKTo4pmHjJIqnhMfwIjc1Q1R0Un3PI3kQywywu/791c8z9u0qeA==
+  dependencies:
+    "@tanstack/virtual-core" "3.0.0"
+
+"@tanstack/virtual-core@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/virtual-core/-/virtual-core-3.0.0.tgz#637bee36f0cabf96a1d436887c90f138a7e9378b"
+  integrity sha512-SYXOBTjJb05rXa2vl55TTwO40A6wKu0R5i1qQwhJYNDIqaIGF7D0HsLw+pJAyi2OvntlEIVusx3xtbbgSUi6zg==
 
 "@theguild/remark-mermaid@^0.0.5":
   version "0.0.5"
@@ -1044,10 +1057,10 @@ commander@^8.0.0, commander@^8.3.0:
   resolved "https://registry.yarnpkg.com/commander/-/commander-8.3.0.tgz#4837ea1b2da67b9c616a67afbb0fafee567bca66"
   integrity sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==
 
-compute-scroll-into-view@^2.0.2:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/compute-scroll-into-view/-/compute-scroll-into-view-2.0.3.tgz#e78c9804a2396a7a47159523b23b0695ad2391cc"
-  integrity sha512-mj/AjC7WqXeVlUB6zUq5Qrivb6et0kyasDQcbCWLDusYUqaXng+BfOnhCdRqPOa5/dWNn5e9+u40H6w2BYRdNQ==
+compute-scroll-into-view@^3.0.2:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/compute-scroll-into-view/-/compute-scroll-into-view-3.1.0.tgz#753f11d972596558d8fe7c6bcbc8497690ab4c87"
+  integrity sha512-rj8l8pD4bJ1nx+dAkMhV1xB5RuZEyVysfxJqB1pRchh1KVvwOv9b7CGB8ZfjTImVv2oF+sYMUkMZq6Na5Ftmbg==
 
 concat-map@0.0.1:
   version "0.0.1"
@@ -3912,13 +3925,13 @@ next@14.1.0:
     "@next/swc-win32-ia32-msvc" "14.1.0"
     "@next/swc-win32-x64-msvc" "14.1.0"
 
-nextra-theme-docs@2.13.2:
-  version "2.13.2"
-  resolved "https://registry.yarnpkg.com/nextra-theme-docs/-/nextra-theme-docs-2.13.2.tgz#7f0c2bdd83d8866201775edd654398417a564878"
-  integrity sha512-yE4umXaImp1/kf/sFciPj2+EFrNSwd9Db26hi98sIIiujzGf3+9eUgAz45vF9CwBw50FSXxm1QGRcY+slQ4xQQ==
+nextra-theme-docs@2.13.3:
+  version "2.13.3"
+  resolved "https://registry.yarnpkg.com/nextra-theme-docs/-/nextra-theme-docs-2.13.3.tgz#32057ca14e4f5b821f681e43dfcdb0b5bc46bc91"
+  integrity sha512-B6xrnR86Gg4GzV56AomSwtmvSyAvnJz1xKOGGav1XKxkwvC8QeI17jdt/CqiKyIObJ+5bLqSFiKhaAZ5DYQP3g==
   dependencies:
-    "@headlessui/react" "^1.7.10"
-    "@popperjs/core" "^2.11.6"
+    "@headlessui/react" "^1.7.17"
+    "@popperjs/core" "^2.11.8"
     clsx "^2.0.0"
     escape-string-regexp "^5.0.0"
     flexsearch "^0.7.31"
@@ -3928,15 +3941,15 @@ nextra-theme-docs@2.13.2:
     match-sorter "^6.3.1"
     next-seo "^6.0.0"
     next-themes "^0.2.1"
-    scroll-into-view-if-needed "^3.0.0"
+    scroll-into-view-if-needed "^3.1.0"
     zod "^3.22.3"
 
-nextra@2.13.2:
-  version "2.13.2"
-  resolved "https://registry.yarnpkg.com/nextra/-/nextra-2.13.2.tgz#d460c2551c1daf1ff0ebc52690ff66f583c3dc67"
-  integrity sha512-pIgOSXNUqTz1laxV4ChFZOU7lzJAoDHHaBPj8L09PuxrLKqU1BU/iZtXAG6bQeKCx8EPdBsoXxEuENnL9QGnGA==
+nextra@2.13.3:
+  version "2.13.3"
+  resolved "https://registry.yarnpkg.com/nextra/-/nextra-2.13.3.tgz#0b24d17fc5581a9b50eede8a195ea33b9aba4920"
+  integrity sha512-OBVuyQKh+oqrbVt0AosgNYnuReWuNrtJVEN7q18b/oEg2wEpuiq3UJfmIvGgOdNYc3zv3OYrzbcq7IhwtdHHEw==
   dependencies:
-    "@headlessui/react" "^1.7.10"
+    "@headlessui/react" "^1.7.17"
     "@mdx-js/mdx" "^2.3.0"
     "@mdx-js/react" "^2.3.0"
     "@napi-rs/simple-git" "^0.1.9"
@@ -4630,12 +4643,12 @@ scheduler@^0.23.0:
   dependencies:
     loose-envify "^1.1.0"
 
-scroll-into-view-if-needed@^3.0.0:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/scroll-into-view-if-needed/-/scroll-into-view-if-needed-3.0.3.tgz#57256bef78f3c3c288070d2aaa63cf547aa11e70"
-  integrity sha512-QoCH0lVw0tbA7Rl6sToH7e1tO3n95Oi6JgBgC8hEpNNZUC91MfasJ/4E1ZdbzGueNDZ+Y7ObfRaelKUgTyPbJA==
+scroll-into-view-if-needed@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/scroll-into-view-if-needed/-/scroll-into-view-if-needed-3.1.0.tgz#fa9524518c799b45a2ef6bbffb92bcad0296d01f"
+  integrity sha512-49oNpRjWRvnU8NyGVmUaYG4jtTkNonFZI86MmGRDqBphEK2EXT9gdEUoQPZhuBM8yWHxCWbobltqYO5M4XrUvQ==
   dependencies:
-    compute-scroll-into-view "^2.0.2"
+    compute-scroll-into-view "^3.0.2"
 
 section-matter@^1.0.0:
   version "1.0.0"

@@ -16,7 +16,9 @@
     },
     {
       "matchPackageNames": ["read-pkg-up"],
-      "allowedVersions": "<8.0.0"
+      "allowedVersions": "<8.0.0",
+      "replacementName": "",
+      "replacementVersion": ""
     },
     {
       "matchPackageNames": ["strip-ansi"],

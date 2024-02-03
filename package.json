@@ -110,7 +110,7 @@
     "object-hash": "^3.0.0",
     "prettier": "3.2.4",
     "prisma": "^5.0.0",
-    "read-pkg-up": "7.0.1",
+    "read-package-up": "11.0.0",
     "slug": "^8.2.3",
     "strip-ansi": "6",
     "ts-jest": "29.1.2",

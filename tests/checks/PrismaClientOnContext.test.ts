@@ -98,10 +98,9 @@ describe('instanceOf_duckType_fallback strategy:', () => {
     expect(result) {
       expect.assertions(3)
       if (result.logs[0]) {
-        result.logs[0] = result.logs[0]!.replace(
-          /(.*imported from).*(is not the.*)/,
-          '$1 <dynamic_path> $2',
-        ).replace(ansiEscapeSequencePattern, '')
+        result.logs[0] = result.logs[0]
+          .replace(/(.*imported from).*(is not the.*)/, '$1 <dynamic_path> $2')
+          .replace(ansiEscapeSequencePattern, '')
       }
       expect(result.logs).toMatchSnapshot(`logs`)
       expect(result.graphqlSchemaSDL).toMatchSnapshot(`graphqlSchemaSDL`)

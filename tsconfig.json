@@ -26,9 +26,9 @@
 
     "baseUrl": ".",
     "paths": {
-      ".nexus-prisma": [".nexus-prisma"]
-    }
+      ".nexus-prisma": [".nexus-prisma"],
+    },
   },
   "include": ["src", "tests", "scripts", "utils"],
-  "exclude": ["dist-*", "tests/e2e/fixtures", "docs"]
+  "exclude": ["dist-*", "tests/e2e/fixtures", "docs"],
 }

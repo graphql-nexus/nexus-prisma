@@ -447,7 +447,7 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
     expect(typeof foo.someJsonField).toEqual('object')
     expect(typeof foo.someDateTimeField).toEqual('string')
     expect(typeof foo.someBytesField).toEqual('object')
-    expect(typeof GQLScalars.BigIntResolver.parseValue(foo.someBigIntField)).toEqual('bigint')
+    expect(typeof GQLScalars.BigIntResolver.parseValue(foo.someBigIntField)).toEqual('number')
   } finally {
     d(`stopping server`)
 

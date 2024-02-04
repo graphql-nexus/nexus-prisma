@@ -44,7 +44,7 @@ export const createWhereUniqueInput = (source: RecordUnknown, model: DMMF.Model)
  *          3. Exactly one field with an `@unique` annotation (if multiple, use first).
  *          4. Multiple fields targeted by an `@@unique` clause.
  */
-function getUniqueIdentifierFields(model: DMMF.Model): FieldName[] {
+function getUniqueIdentifierFields(model: DMMF.Model): readonly FieldName[] {
   // Try finding 1
   const singleIdField = model.fields.find((f) => f.isId)
 

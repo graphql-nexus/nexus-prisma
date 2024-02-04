@@ -1,3 +1,15 @@
+## [2.0.2](https://github.com/graphql-nexus/nexus-prisma/compare/v2.0.1...v2.0.2) (2024-02-03)
+
+
+### CI
+
+* remove nodejs lts versions that didn't start yet ([#806](https://github.com/graphql-nexus/nexus-prisma/issues/806)) ([42c6c7f](https://github.com/graphql-nexus/nexus-prisma/commit/42c6c7fbdd0c2fdd8d1588deb46c9c4f22b9e8bf))
+
+
+### Bug fixes
+
+* **deps:** update dependency graphql-scalars to ^1.22.4 ([#816](https://github.com/graphql-nexus/nexus-prisma/issues/816)) ([3ae332f](https://github.com/graphql-nexus/nexus-prisma/commit/3ae332fba2be207fc853d377b1416d10fa51370a))
+
 ## [2.0.1](https://github.com/graphql-nexus/nexus-prisma/compare/v2.0.0...v2.0.1) (2023-08-19)
 
 

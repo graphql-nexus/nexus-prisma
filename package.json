@@ -84,7 +84,7 @@
     "@types/node": "^20.11.17",
     "@types/object-hash": "^3.0.6",
     "@types/pluralize": "^0.0.33",
-    "@types/semver": "^7.5.6",
+    "@types/semver": "^7.5.7",
     "@types/slug": "^5.0.7",
     "@types/strip-ansi": "^5.2.1",
     "@typescript-eslint/eslint-plugin": "^6.21.0",

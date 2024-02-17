@@ -13,10 +13,10 @@
   },
   "devDependencies": {
     "@prisma/client": "__dynamic__",
-    "@types/node": "^20.11.16",
+    "@types/node": "^20.11.19",
     "@apollo/server": "^4.10.0",
     "cross-env": "^7.0.3",
-    "dotenv": "^16.4.1",
+    "dotenv": "^16.4.4",
     "graphql": "__dynamic__",
     "nexus": "__dynamic__",
     "prisma": "__dynamic__",

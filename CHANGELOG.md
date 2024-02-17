@@ -1,3 +1,10 @@
+## [2.0.3](https://github.com/graphql-nexus/nexus-prisma/compare/v2.0.2...v2.0.3) (2024-02-06)
+
+
+### Bug fixes
+
+* **deps:** update dependency semver to ^7.6.0 ([#978](https://github.com/graphql-nexus/nexus-prisma/issues/978)) ([850b7dd](https://github.com/graphql-nexus/nexus-prisma/commit/850b7dd668620f95d769b910cd1b2a87567a6d19))
+
 ## [2.0.2](https://github.com/graphql-nexus/nexus-prisma/compare/v2.0.1...v2.0.2) (2024-02-03)
 
 

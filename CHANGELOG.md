@@ -1,3 +1,10 @@
+## [2.0.4](https://github.com/graphql-nexus/nexus-prisma/compare/v2.0.3...v2.0.4) (2024-02-17)
+
+
+### Bug fixes
+
+* **externalToInternalDMMF.ts:** import `.js` ([#985](https://github.com/graphql-nexus/nexus-prisma/issues/985)) ([1dba723](https://github.com/graphql-nexus/nexus-prisma/commit/1dba7239921f0d4addcbf7a5f91983152ba7eaa9))
+
 ## [2.0.3](https://github.com/graphql-nexus/nexus-prisma/compare/v2.0.2...v2.0.3) (2024-02-06)
 
 

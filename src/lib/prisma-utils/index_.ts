@@ -13,7 +13,7 @@ export * from './externalToInternalDMMF'
  * //                                      ^^^^^^^^^^^^^^^^^^^^
  * ```
  */
-export const TypeScriptOrmCompoundUniquePropertyName = (fieldNames: string[]) => fieldNames.join('_')
+export const TypeScriptOrmCompoundUniquePropertyName = (fieldNames: readonly string[]) => fieldNames.join('_')
 
 /**
  * Convert a Prisma model name as it would appear in a PSL file to its version as it would appear in the ORM `prismaClient.<model>.<operation>(...)`.

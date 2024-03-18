@@ -121,7 +121,7 @@
     "zod": "^3.22.4"
   },
   "optionalDependencies": {
-    "semantic-release": "^23.0.4"
+    "semantic-release": "^23.0.5"
   },
   "prettier": "@prisma-labs/prettier-config",
   "peerDependencies": {

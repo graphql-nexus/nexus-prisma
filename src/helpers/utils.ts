@@ -1,8 +1,14 @@
 import * as Os from 'os'
 import * as Path from 'path'
 import { inspect } from 'util'
+import { GraphQLResolveInfo } from 'graphql/type'
 
-export type Resolver = (root: RecordUnknown, args: RecordUnknown, ctx: RecordUnknown) => MaybePromise<unknown>
+export type Resolver = (
+  root: RecordUnknown,
+  args: RecordUnknown,
+  ctx: RecordUnknown,
+  info: GraphQLResolveInfo,
+) => MaybePromise<unknown>
 
 export type MaybePromise<T> = T | Promise<T>
 

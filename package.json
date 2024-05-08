@@ -118,7 +118,7 @@
     "type-fest": "^4.16.0",
     "typescript": "5.3.3",
     "yalc": "^1.0.0-pre.53",
-    "zod": "^3.23.0"
+    "zod": "^3.23.8"
   },
   "optionalDependencies": {
     "semantic-release": "^23.0.8"

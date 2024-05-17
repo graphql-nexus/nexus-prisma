@@ -1,6 +1,7 @@
 import dedent from 'dindist'
 import * as OS from 'os'
 import { LiteralUnion } from 'type-fest'
+import { camelCase } from 'lodash'
 
 import { DMMF } from '@prisma/generator-helper'
 
@@ -11,6 +12,7 @@ import { PrismaDmmf } from '../../lib/prisma-dmmf'
 import { jsDocForEnum, jsDocForField, jsDocForModel } from '../helpers/JSDocTemplates'
 import { Module } from '../helpers/types'
 import type { Settings } from '../Settings'
+import { getAllUniqueIdentifierFields } from '../../lib/prisma-utils/whereUniqueInput'
 
 export const createModule = (dmmf: DMMF.Document, settings: Settings.Gentime.Manager): Module => {
   return {
@@ -56,6 +58,25 @@ export const renderTypeScriptDeclarationForDocumentModels = (
           ? NO_MODELS_DEFINED_COMMENT
           : models.map((model) => renderTypeScriptDeclarationForModel(model, settings)).join('\n\n')
       }
+      
+      // Inputs
+      
+      ${
+        models.length === 0
+          ? NO_MODELS_DEFINED_COMMENT
+          : models.map((model) => renderTypeScriptDeclarationForModelInputs(model, settings)).join('\n\n')
+      }
+      
+      // Queries
+      
+      export interface Query {
+        $name: 'Query'
+        ${
+          models.length === 0
+            ? NO_MODELS_DEFINED_COMMENT
+            : models.map((model) => renderTypeScriptDeclarationForModelQueries(model)).join('\n\n')
+        }
+      }
 
       // Enums
 
@@ -95,6 +116,49 @@ export const renderTypeScriptDeclarationForDocumentModels = (
               })
               .join('\n\n')
       }
+      
+      //
+      //
+      // EXPORTS: PRISMA MODELS
+      // EXPORTS: PRISMA MODELS
+      // EXPORTS: PRISMA MODELS
+      // EXPORTS: PRISMA MODELS
+      //
+      //
+      
+      //
+      //
+      // EXPORTS: INPUTS
+      // EXPORTS: INPUTS
+      // EXPORTS: INPUTS
+      // EXPORTS: INPUTS
+      //
+      //
+      
+      ${
+        models.length === 0
+          ? NO_MODELS_DEFINED_COMMENT
+          : models
+              .map((model) => {
+                return dedent`
+                export const ${model.name}WhereUniqueInput: ${model.name}WhereUniqueInput
+                
+                export const ${model.name}WhereInput: ${model.name}WhereInput
+              `
+              })
+              .join('\n\n')
+      }
+      
+      //
+      //
+      // EXPORTS: INPUTS
+      // EXPORTS: INPUTS
+      // EXPORTS: INPUTS
+      // EXPORTS: INPUTS
+      //
+      //
+      
+      export const Query: Query
 
       //
       //
@@ -193,6 +257,216 @@ const renderTypeScriptDeclarationForModel = (
       $name: '${model.name}'
       $description: ${description}
       ${renderTypeScriptDeclarationForModelFields(model, settings)}
+    }
+  `
+}
+
+const renderTypeScriptDeclarationForModelQueries = (model: DMMF.Model): string => {
+  const queryName = camelCase(model.name)
+
+  return dedent`
+    ${queryName}: {
+      /**
+       * The name of this query field.
+       */
+      name: '${queryName}'
+      
+      /**
+       * The resolver of this query field
+       */
+      resolve: NexusCore.FieldResolver<'Query', '${queryName}'>
+      
+      /**
+       * The type of this query field
+       */
+      type: NexusCore.NexusNonNullDef<'${model.name}' & NexusCore.GetGen<'allNamedTypes', string>>
+      
+      /**
+       * The argument variables for this query field
+       */
+      args: {
+        where: NexusCore.NexusNonNullDef<'${model.name}WhereUniqueInput' & NexusCore.GetGen<'allNamedTypes', string>>
+      }
+    }
+    ${queryName}s: {
+      /**
+       * The name of this query field.
+       */
+      name: '${queryName}s'
+      
+      /**
+       * The resolver of this query field
+       */
+      resolve: NexusCore.FieldResolver<'Query', '${queryName}s'>
+      
+      /**
+       * The type of this query field
+       */
+      type: NexusCore.NexusNonNullDef<'${model.name}s' & NexusCore.GetGen<'allNamedTypes', string>>
+      
+      /**
+       * The argument variables for this query field
+       */
+      args: {
+        where: '${model.name}WhereUniqueInput' & NexusCore.GetGen<'allNamedTypes', string>
+      }
+    }
+  `
+}
+
+const renderTypeScriptDeclarationForModelInputs = (
+  model: DMMF.Model,
+  settings: Settings.Gentime.Manager,
+): string => {
+  const uniqueFields = getAllUniqueIdentifierFields(model)
+
+  const whereUniqueInputType = `${model.name}WhereUniqueInput`
+  const whereInputType = `${model.name}WhereInput`
+
+  return dedent`
+    export interface ${whereUniqueInputType} {
+      $name: '${whereUniqueInputType}'
+      ${Object.keys(uniqueFields)
+        .map((fieldName) => {
+          const field = uniqueFields[fieldName]
+          if (field) {
+            if (Array.isArray(field)) {
+              const graphqlType = `${model.name}_${fieldName}_UniqueInput`
+              return dedent`
+              ${fieldName}: {
+                /**
+                 * A function for setting an alternate Nexus name for this field.
+                 */
+                as: < T extends string>(alias: T) => {
+                  /**
+                   * The name of this field.
+                   */
+                  name: T
+                  
+                  /**
+                   * The type of this field.
+                   */
+                  type: '${graphqlType}' & NexusCore.GetGen<'allNamedTypes', string>
+                }
+                
+                /**
+                 * The name of this field.
+                 */
+                name: '${fieldName}'
+                
+                /**
+                 * The type of this field.
+                 */
+                type: '${graphqlType}' & NexusCore.GetGen<'allNamedTypes', string>
+              }
+            `
+            } else {
+              const graphqlType = fieldTypeToGraphQLType(field, settings.data)
+              if (graphqlType) {
+                return dedent`
+                ${fieldName}: {
+                  /**
+                   * A function for setting an alternate Nexus name for this field.
+                   */
+                  as: < T extends string>(alias: T) => {
+                    /**
+                     * The name of this field.
+                     */
+                    name: T
+                    
+                    /**
+                     * The type of this field.
+                     */
+                    type: '${graphqlType}' & NexusCore.GetGen<'allNamedTypes', string>
+                  }
+                  
+                  /**
+                   * The name of this field.
+                   */
+                  name: '${fieldName}'
+                  
+                  /**
+                   * The type of this field.
+                   */
+                  type: '${graphqlType}' & NexusCore.GetGen<'allNamedTypes', string>
+                }
+              `
+              }
+            }
+          }
+          return ''
+        })
+        .join('\n')}
+    }
+    
+    export interface ${whereInputType} {
+      $name: '${whereInputType}'
+      AND: {
+        /**
+         * The name of this field.
+         */
+        name: 'AND'
+        
+        /**
+         * The type of this field.
+         */
+        type: NexusCore.NexusListDef< NexusCore.NexusNonNullDef<'${whereInputType}' & NexusCore.GetGen<'allNamedTypes', string>>>
+      }
+      OR: {
+        /**
+         * The name of this field.
+         */
+        name: 'OR'
+        
+        /**
+         * The type of this field.
+         */
+        type: NexusCore.NexusListDef< NexusCore.NexusNonNullDef<'${whereInputType}' & NexusCore.GetGen<'allNamedTypes', string>>>
+      }
+      NOT: {
+        /**
+         * The name of this field.
+         */
+        name: 'NOT'
+        
+        /**
+         * The type of this field.
+         */
+        type: NexusCore.NexusListDef< NexusCore.NexusNonNullDef<'${whereInputType}' & NexusCore.GetGen<'allNamedTypes', string>>>
+      }
+      ${model.fields
+        .map((field) => {
+          const typeName = `${fieldTypeToGraphQLType(field, settings.data)}Filter`
+          return dedent`
+          ${field.name}: {
+            /**
+             * A function for setting an alternate Nexus name for this field.
+             */
+            as: < T extends string>(alias: T) => {
+              /**
+               * The name of this field.
+               */
+              name: T
+              
+              /**
+               * The type of this field.
+               */
+              type: NexusCore.NexusNullDef<'${typeName}' & NexusCore.GetGen<'allNamedTypes', string>>
+            }
+            
+            /**
+             * The name of this field.
+             */
+            name: '${field.name}'
+            
+            /**
+             * The type of this field.
+             */
+            type: NexusCore.NexusNullDef<'${typeName}' & NexusCore.GetGen<'allNamedTypes', string>>
+          }
+        `
+        })
+        .join('\n')}
     }
   `
 }

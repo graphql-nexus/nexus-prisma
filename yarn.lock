@@ -8067,10 +8067,10 @@ slice-ansi@^7.0.0:
     ansi-styles "^6.2.1"
     is-fullwidth-code-point "^5.0.0"
 
-slug@^8.2.3:
-  version "8.2.3"
-  resolved "https://registry.yarnpkg.com/slug/-/slug-8.2.3.tgz#9aa33e532ae9ccddaf55a42abd9bf6a89d5e44d2"
-  integrity sha512-fXjhAZszNecz855GUNIwW0+sFPi9WV4bMiEKDOCA4wcq1ts1UnUVNy/F78B0Aat7/W3rA+se//33ILKNMrbeYQ==
+slug@^9.1.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/slug/-/slug-9.1.0.tgz#246baf1e9d8e821f7f5863a7c8bdd86a7ec3f12c"
+  integrity sha512-ioOsCfzQSu+D6NZ8XMCR8IW9FgvF8W7Xzz56hBkB/ALvNaWeBs2MUvvPugq3GCrxfHPFeK6hAxGkY/WLnfX2Lg==
 
 smart-buffer@^4.2.0:
   version "4.2.0"

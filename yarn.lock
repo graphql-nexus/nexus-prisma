@@ -651,14 +651,14 @@
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.2.0.tgz#5f3d96ec6b2354ad6d8a28bf216a1d97b5426861"
   integrity sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==
 
-"@homer0/prettier-plugin-jsdoc@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@homer0/prettier-plugin-jsdoc/-/prettier-plugin-jsdoc-8.0.0.tgz#b9b84c999588879706062b6f74eb459b785ae8d0"
-  integrity sha512-I8sYdNEisS2W9nNG0FDUsrMEoPuV5QE+b9wFilTOTMy1zCg72JJN3LS0FeCzkOBr3EmrUfcLhGoUY9FzAmmaNA==
+"@homer0/prettier-plugin-jsdoc@^9.1.0":
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/@homer0/prettier-plugin-jsdoc/-/prettier-plugin-jsdoc-9.1.0.tgz#7900638ab396b7f76f3de1cb7d9e100dd9c47793"
+  integrity sha512-rnB/WRzp8+RSjtO2+GFuvHJKqx1Wz+cFalm6QrFjmSk5X9+gHXcgvedRSaDgBWSFnVCNty5GGeGSzKCLeMJhrA==
   dependencies:
-    comment-parser "^1.4.0"
-    prettier "^3.0.3"
-    ramda "0.29.0"
+    comment-parser "^1.4.1"
+    prettier "^3.3.3"
+    ramda "0.30.1"
 
 "@humanwhocodes/config-array@^0.11.14":
   version "0.11.14"
@@ -3091,7 +3091,7 @@ commander@11.1.0:
   resolved "https://registry.yarnpkg.com/commander/-/commander-11.1.0.tgz#62fdce76006a68e5c1ab3314dc92e800eb83d906"
   integrity sha512-yPVavfyCcRhmorC7rWlkHn15b4wDVgVmBA7kV4QVBsF7kv/9TKJAbAXVTxvTnwP8HHKjRCJDClKbciiYS7p0DQ==
 
-comment-parser@^1.4.0:
+comment-parser@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/comment-parser/-/comment-parser-1.4.1.tgz#bdafead37961ac079be11eb7ec65c4d021eaf9cc"
   integrity sha512-buhp5kePrmda3vhc5B9t7pUQXAb2Tnd0qgpkIhPhkHXxJpiPJ11H0ZEU0oBpJ2QztSbzG/ZxMj/CHsYJqRHmyg==
@@ -7319,10 +7319,10 @@ prettier@3.2.5:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.2.5.tgz#e52bc3090586e824964a8813b09aba6233b28368"
   integrity sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==
 
-prettier@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.0.3.tgz#432a51f7ba422d1469096c0fdc28e235db8f9643"
-  integrity sha512-L/4pUDMxcNa8R/EthV08Zt42WBO4h1rarVtK0K+QJG0X187OLo7l699jWw0GKuwzkPQ//jMFA/8Xm6Fh3J/DAg==
+prettier@^3.3.3:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.3.3.tgz#30c54fe0be0d8d12e6ae61dbb10109ea00d53105"
+  integrity sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==
 
 pretty-format@^29.0.0, pretty-format@^29.3.1:
   version "29.3.1"
@@ -7452,10 +7452,10 @@ quick-lru@^4.0.1:
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-4.0.1.tgz#5b8878f113a58217848c6482026c73e1ba57727f"
   integrity sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g==
 
-ramda@0.29.0:
-  version "0.29.0"
-  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.29.0.tgz#fbbb67a740a754c8a4cbb41e2a6e0eb8507f55fb"
-  integrity sha512-BBea6L67bYLtdbOqfp8f58fPMqEwx0doL+pAi8TZyp2YWz8R9G8z9x75CZI8W+ftqhFHCpEX2cRnUUXK130iKA==
+ramda@0.30.1:
+  version "0.30.1"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.30.1.tgz#7108ac95673062b060025052cd5143ae8fc605bf"
+  integrity sha512-tEF5I22zJnuclswcZMc8bDIrwRHRzf+NqVEmqg50ShAZMP7MWeR/RGDthfM/p+BlqvF2fXAzpn8i+SJcYD3alw==
 
 randomatic@^3.0.0:
   version "3.1.1"

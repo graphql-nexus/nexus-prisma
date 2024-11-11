@@ -17,7 +17,7 @@
     "@reach/skip-nav": "0.18.0",
     "@types/node": "20.12.7",
     "@types/react": "18.2.79",
-    "autoprefixer": "10.4.19",
+    "autoprefixer": "10.4.20",
     "eslint": "8.57.0",
     "eslint-config-next": "14.2.2",
     "next": "14.2.2",

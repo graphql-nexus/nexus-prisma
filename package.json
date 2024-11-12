@@ -95,7 +95,7 @@
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "execa": "^5.1.1",
-    "graphql": "^16.8.1",
+    "graphql": "^16.9.0",
     "graphql-request": "^6.1.0",
     "graphql-tag": "^2.12.6",
     "husky": "^9.0.11",

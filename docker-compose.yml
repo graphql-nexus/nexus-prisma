@@ -2,7 +2,7 @@ version: '3.8'
 services:
   # postgres://prisma:prisma@localhost:5700
   postgres:
-    image: postgres:16
+    image: postgres:17
     container_name: nexus-prisma-test
     restart: always
     environment:

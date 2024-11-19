@@ -69,8 +69,8 @@
     "type:check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@commitlint/cli": "^18.6.1",
-    "@commitlint/config-conventional": "^18.6.3",
+    "@commitlint/cli": "^19.6.0",
+    "@commitlint/config-conventional": "^19.6.0",
     "@homer0/prettier-plugin-jsdoc": "^9.1.0",
     "@prisma-labs/prettier-config": "0.1.0",
     "@prisma/client": "^5.0.0",

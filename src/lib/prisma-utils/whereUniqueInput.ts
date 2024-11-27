@@ -71,3 +71,36 @@ function getUniqueIdentifierFields(model: DMMF.Model): FieldName[] {
 
   throw new Error(`Unable to resolve a unique identifier for the Prisma model: ${model.name}`)
 }
+
+export function getAllUniqueIdentifierFields(model: DMMF.Model): Record<string, DMMF.Field | DMMF.Field[]> {
+  const identifierFields: Record<string, DMMF.Field | DMMF.Field[]> = {}
+  const singleIdField = model.fields.find((f) => f.isId)
+
+  if (singleIdField) {
+    identifierFields[singleIdField.name] = singleIdField
+  }
+
+  if (model.primaryKey && model.primaryKey.fields.length > 0) {
+    const name = model.primaryKey.name || model.primaryKey.fields.join('_')
+    identifierFields[name] = model.primaryKey.fields
+      .map((fieldName) => model.fields.find((f) => f.name === fieldName))
+      .filter((f) => f) as DMMF.Field[]
+  }
+
+  const singleUniqueField = model.fields.find((f) => f.isUnique)
+
+  if (singleUniqueField) {
+    identifierFields[singleUniqueField.name] = singleUniqueField
+  }
+
+  if (model.uniqueFields && model.uniqueFields.length > 0) {
+    model.uniqueFields.forEach((uniqueFields) => {
+      const name = uniqueFields.join('_')
+      identifierFields[name] = uniqueFields
+        .map((fieldName) => model.fields.find((f) => f.name === fieldName))
+        .filter((f) => f) as DMMF.Field[]
+    })
+  }
+
+  return identifierFields
+}

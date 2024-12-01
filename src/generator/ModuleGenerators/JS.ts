@@ -188,7 +188,7 @@ const createNexusObjectTypeDefConfigurations = (
         ),
       }
     }),
-    'name',
+    '$name',
   )
 }
 

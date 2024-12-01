@@ -1,6 +1,5 @@
 import debug from 'debug'
 import dindist from 'dindist'
-import * as Execa from 'execa'
 import { gql } from 'graphql-request'
 import * as GQLScalars from 'graphql-scalars'
 import { konn, providers } from 'konn'
@@ -12,21 +11,28 @@ import { createPrismaSchema, stripEndingLines, timeoutRace } from '../__helpers_
 import { graphQLClient } from '../__providers__/graphqlClient'
 import { project } from '../__providers__/project'
 import { monitorAsyncMethod, run } from '../__providers__/run'
+import { inspect } from 'util'
 
 const d = debug('e2e')
+
+const assertExec = async <RESULTS>(
+  title: string,
+  execCallback: () => Promise<RESULTS>,
+  assertCallback: (results: RESULTS) => void,
+) => {
+  d(`→ assert ${title}`)
+  const results = await execCallback()
+  try {
+    assertCallback(results)
+  } catch (error) {
+    console.log(`e2e output:\n`, inspect(results, { depth: 10, colors: true }))
+    throw error
+  }
+}
 
 type FileSpec = {
   filePath: string
   content: string
-}
-
-interface ProjectResult {
-  runFirstBuild: Execa.ExecaSyncReturnValue<string>
-  runReflectPrisma: Execa.ExecaSyncReturnValue<string>
-  runReflectNexus: Execa.ExecaSyncReturnValue<string>
-  runSecondBuild: Execa.ExecaSyncReturnValue<string>
-  fileGraphqlSchema?: string
-  fileTypegen?: string
 }
 
 const TYPEGEN_FILE_NAME = `typegen.ts`
@@ -35,24 +41,6 @@ const TYPEGEN_FILE_PATH = `src/${TYPEGEN_FILE_NAME}`
 const GRAPHQL_SCHEMA_FILE_PATH = `schema.graphql`
 
 const SERVER_READY_MESSAGE = `GraphQL API ready at http://localhost:4000/`
-
-async function runTestProjectBuild(): Promise<ProjectResult> {
-  const runFirstBuild = await ctx.runPackagerCommandAsyncGracefully('run', 'build')
-  const runReflectPrisma = await ctx.runPackagerCommandAsyncGracefully('run', 'reflect:prisma')
-  const runReflectNexus = await ctx.runPackagerCommandAsyncGracefully('run', 'reflect:nexus')
-  const runSecondBuild = await ctx.runPackagerCommandAsyncGracefully('run', 'build')
-  const fileGraphqlSchema = await ctx.fs.readAsync(GRAPHQL_SCHEMA_FILE_PATH)
-  const fileTypegen = await ctx.fs.readAsync(TYPEGEN_FILE_PATH)
-
-  return {
-    runFirstBuild,
-    runReflectPrisma,
-    runReflectNexus,
-    runSecondBuild,
-    fileGraphqlSchema,
-    fileTypegen,
-  }
-}
 
 const ctx = konn()
   .useBeforeEach(providers.dir())
@@ -288,53 +276,94 @@ it('A full-featured project type checks, generates expected GraphQL schema, and 
 
   // todo api server & database & seed that allows for testing that prisma runtime usage works
 
-  const results = await runTestProjectBuild()
-
-  // uncomment this to see the raw results (helpful for debugging)
-  // console.log(`e2e output:\n`, inspect(results, { depth: 10, colors: true }))
-
   /**
    * Sanity checks around buildtime
    */
+
   d(`assert various aspects of the buildtime results`)
 
-  expect(results.runFirstBuild.exitCode).toBe(2)
-
-  expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2305: Module '"nexus-prisma"' has no exported member '\$settings'.*/,
+  await assertExec(
+    'first build',
+    async () => {
+      return await ctx.runPackagerCommandAsyncGracefully('run', 'build')
+    },
+    (runFirstBuild) => {
+      expect(runFirstBuild.exitCode).toBe(2)
+      expect(stripAnsi(runFirstBuild.stdout)).toMatch(
+        /.*error TS2305: Module '"nexus-prisma"' has no exported member '\$settings'.*/,
+      )
+      expect(stripAnsi(runFirstBuild.stdout)).toMatch(
+        /.*error TS2305: Module '"nexus-prisma"' has no exported member 'Bar'.*/,
+      )
+      expect(stripAnsi(runFirstBuild.stdout)).toMatch(
+        /.*error TS2305: Module '"nexus-prisma"' has no exported member 'Foo'.*/,
+      )
+      expect(stripAnsi(runFirstBuild.stdout)).toMatch(
+        /.*error TS2305: Module '"nexus-prisma"' has no exported member 'SomeEnumA'.*/,
+      )
+      expect(stripAnsi(runFirstBuild.stdout)).toMatch(
+        /.*error TS2339: Property 'json' does not exist on type 'ObjectDefinitionBlock<any>'.*/,
+      )
+      expect(stripAnsi(runFirstBuild.stdout)).toMatch(
+        /.*error TS2339: Property 'dateTime' does not exist on type 'ObjectDefinitionBlock<any>'.*/,
+      )
+      expect(stripAnsi(runFirstBuild.stdout)).toMatch(
+        /.*error TS2339: Property 'bigInt' does not exist on type 'ObjectDefinitionBlock<any>'.*/,
+      )
+    },
   )
-  expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'Bar'.*/,
-  )
-  expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'Foo'.*/,
-  )
-  expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2305: Module '"nexus-prisma"' has no exported member 'SomeEnumA'.*/,
-  )
-  expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2339: Property 'json' does not exist on type 'ObjectDefinitionBlock<any>'.*/,
-  )
-  expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2339: Property 'dateTime' does not exist on type 'ObjectDefinitionBlock<any>'.*/,
-  )
-  expect(stripAnsi(results.runFirstBuild.stdout)).toMatch(
-    /.*error TS2339: Property 'bigInt' does not exist on type 'ObjectDefinitionBlock<any>'.*/,
+
+  await assertExec(
+    'reflect prisma',
+    async () => {
+      return await ctx.runPackagerCommandAsyncGracefully('run', 'reflect:prisma')
+    },
+    (runReflectPrisma) => {
+      expect(runReflectPrisma.exitCode).toBe(0)
+      expect(stripAnsi(runReflectPrisma.stdout)).toMatch(/.*Generated Nexus Prisma.*/)
+    },
   )
 
-  expect(results.runReflectPrisma.exitCode).toBe(0)
+  await assertExec(
+    'reflect nexus',
+    async () => {
+      return await ctx.runPackagerCommandAsyncGracefully('run', 'reflect:nexus')
+    },
+    (runReflectNexus) => {
+      expect(runReflectNexus.exitCode).toBe(0)
+      expect(stripAnsi(runReflectNexus.stdout)).toMatch(/.*Generated Artifacts.*/)
+    },
+  )
 
-  expect(stripAnsi(results.runReflectPrisma.stdout)).toMatch(/.*Generated Nexus Prisma.*/)
+  await assertExec(
+    'second build',
+    async () => {
+      return await ctx.runPackagerCommandAsyncGracefully('run', 'build')
+    },
+    (runSecondBuild) => {
+      expect(runSecondBuild.exitCode).toBe(0)
+    },
+  )
 
-  expect(results.runReflectNexus.exitCode).toBe(0)
+  await assertExec(
+    'graphql schema',
+    async () => {
+      return await ctx.fs.readAsync(GRAPHQL_SCHEMA_FILE_PATH)
+    },
+    (fileGraphqlSchema) => {
+      expect(stripEndingLines(fileGraphqlSchema)).toMatchSnapshot('graphql schema')
+    },
+  )
 
-  expect(stripAnsi(results.runReflectNexus.stdout)).toMatch(/.*Generated Artifacts.*/)
-
-  expect(results.runSecondBuild.exitCode).toBe(0)
-
-  expect(stripEndingLines(results.fileGraphqlSchema)).toMatchSnapshot('graphql schema')
-
-  expect(results.fileTypegen).toMatchSnapshot('nexus typegen')
+  await assertExec(
+    'assert typegen',
+    async () => {
+      return await ctx.fs.readAsync(TYPEGEN_FILE_PATH)
+    },
+    (fileTypegen) => {
+      expect(fileTypegen).toMatchSnapshot('nexus typegen')
+    },
+  )
 
   /**
    * Sanity check the Prisma Client import ID

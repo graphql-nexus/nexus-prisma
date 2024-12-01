@@ -1,5 +1,5 @@
 import dedent from 'dindist'
-import { chain } from 'lodash'
+import keyBy from 'lodash/keyBy'
 import * as Nexus from 'nexus'
 import { NexusEnumTypeConfig, NexusListDef, NexusNonNullDef, NexusNullDef } from 'nexus/dist/core'
 import { inspect } from 'util'
@@ -170,26 +170,26 @@ const createNexusObjectTypeDefConfigurations = (
   dmmf: DMMF.Document,
   settings: Settings,
 ): NexusObjectTypeDefConfigurations => {
-  return chain(dmmf.datamodel.models)
-    .map((model) => {
+  return keyBy(
+    dmmf.datamodel.models.map((model) => {
       return {
         $name: model.name,
         $description: prismaNodeDocumentationToDescription({ settings, node: model }),
-        ...chain(model.fields)
-          .map((field) => {
+        ...keyBy(
+          model.fields.map((field) => {
             return {
               name: field.name,
               type: prismaFieldToNexusType(field, settings),
               description: prismaNodeDocumentationToDescription({ settings, node: field }),
               resolve: nexusResolverFromPrismaField(model, field, settings),
             }
-          })
-          .keyBy('name')
-          .value(),
+          }),
+          'name',
+        ),
       }
-    })
-    .keyBy('$name')
-    .value()
+    }),
+    'name',
+  )
 }
 
 const prismaNodeDocumentationToDescription = (params: {
@@ -361,14 +361,14 @@ const createNexusEnumTypeDefConfigurations = (
   dmmf: DMMF.Document,
   settings: Settings,
 ): NexusEnumTypeDefConfigurations => {
-  return chain(dmmf.datamodel.enums)
-    .map((enum_): AnyNexusEnumTypeConfig => {
+  return keyBy(
+    dmmf.datamodel.enums.map((enum_): AnyNexusEnumTypeConfig => {
       return {
         name: enum_.name,
         description: prismaNodeDocumentationToDescription({ settings, node: enum_ }),
         members: enum_.values.map((val) => val.name),
       }
-    })
-    .keyBy('name')
-    .value()
+    }),
+    'name',
+  )
 }

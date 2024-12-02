@@ -6,6 +6,9 @@ on:
       - opened
       - synchronize
 
+permissions:
+  contents: write
+
 jobs:
   release-test:
     name: Release test

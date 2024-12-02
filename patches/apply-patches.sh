@@ -9,9 +9,11 @@ if [ ! -f $applied_patches_file ]; then
   if [ ! -z $1 ]; then
     patches_folder=$1
   fi
+  ls -A1 $patches_folder/*.patch
 
   if [ -d $patches_folder ]; then
     for patch_file in $(ls -A1 $patches_folder/*.patch); do
+      echo "Applying patch $patch_file"
       patch -p0 -N < $patch_file
     done
   fi

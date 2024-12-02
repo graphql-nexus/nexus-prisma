@@ -24,7 +24,11 @@ jobs:
 
     strategy:
       matrix:
-        os: ['macos-latest', 'windows-latest']
+        os: [
+            'macos-latest',
+            # temporarily disabled due to performance issues
+            #  'windows-latest'
+          ]
         node-version: ${{ fromJson(needs.get-lts-versions.outputs.matrix_lts_versions) }}
         database: ['no-db']
 

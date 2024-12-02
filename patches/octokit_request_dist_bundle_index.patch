@@ -1,0 +1,10 @@
+--- node_modules/@semantic-release/github/node_modules/@octokit/request/dist-bundle/index.js.original	2024-12-02 22:59:40
++++ node_modules/@semantic-release/github/node_modules/@octokit/request/dist-bundle/index.js	2024-12-02 23:03:06
+@@ -70,6 +70,7 @@
+         }
+       }
+     }
++    console.log(error, error.stack);
+     const requestError = new RequestError(message, 500, {
+       request: requestOptions
+     });

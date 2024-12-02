@@ -1,0 +1,44 @@
+name: Release test
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  release-test:
+    name: Release test
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Get lts node versions
+        id: get-lts-versions
+        run: scripts/get-lts-versions.sh
+
+      - name: Use Node.js ${{ steps.get-lts-versions.outputs.last_lts_version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ steps.get-lts-versions.outputs.last_lts_version }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Install semantic release
+        run: yarn add -D semantic-release@23.1.1 @semantic-release/changelog@6.0.3 @semantic-release/git@10.0.1
+
+      - name: Apply debug patches
+        run: patches/apply-patches.sh
+      - name: Semantic release dry run
+        run: yarn semantic-release --extends ./.releaserc.dryrun.js
+        env:
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          GITHUB_ACTIONS: ''
+          GITHUB_TOKEN: ${{ github.token }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

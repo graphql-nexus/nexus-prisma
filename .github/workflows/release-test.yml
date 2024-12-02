@@ -39,7 +39,7 @@ jobs:
       - name: Apply debug patches
         run: patches/apply-patches.sh
       - name: Semantic release dry run
-        run: DEBUG=* GITHUB_ACTIONS="" yarn semantic-release --dry-run --branches ${{ github.event.pull_request.head.ref }}
+        run: GITHUB_ACTIONS="" yarn semantic-release --dry-run --branches ${{ github.event.pull_request.head.ref }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

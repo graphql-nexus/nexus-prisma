@@ -44,6 +44,9 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
+      - name: Install semantic release
+        run: yarn add -D semantic-release@23.1.1 @semantic-release/changelog@6.0.3 @semantic-release/git@10.0.1
+
       - name: Semantic release
         run: yarn semantic-release
         env:

@@ -1,35 +1,24 @@
-name: Prerelease
+name: Release test
 
 on:
-  workflow_dispatch:
-  push:
-    branches:
-      - alpha
-      - beta
-      - next
-      - next-major
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+permissions:
+  contents: write
 
 jobs:
-  validate:
-    name: Validate
-    uses: ./.github/workflows/validate.yml
-
-  tests:
-    needs: [validate]
-    name: Tests
-    uses: ./.github/workflows/tests.yml
-
-  prerelease:
-    if: contains(fromJson('["alpha", "beta", "next", "next-major"]'), github.ref_name)
-    name: Prerelease
-    needs: [tests]
+  release-test:
+    name: Release test
 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Get lts node versions
         id: get-lts-versions
@@ -47,8 +36,10 @@ jobs:
       - name: Install semantic release
         run: yarn add -D semantic-release@23.1.1 @semantic-release/changelog@6.0.3 @semantic-release/git@10.0.1
 
-      - name: Semantic release
-        run: yarn semantic-release
+      - name: Apply debug patches
+        run: patches/apply-patches.sh
+      - name: Semantic release dry run
+        run: GITHUB_ACTIONS="" yarn semantic-release --dry-run --branches ${{ github.event.pull_request.head.ref }}
         env:
-          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELASE_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

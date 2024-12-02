@@ -24,7 +24,11 @@ jobs:
 
     strategy:
       matrix:
-        os: ['macos-latest', 'windows-latest']
+        os: [
+            'macos-latest',
+            # temporarily disabled due to performance issues
+            #  'windows-latest'
+          ]
         node-version: ${{ fromJson(needs.get-lts-versions.outputs.matrix_lts_versions) }}
         database: ['no-db']
 
@@ -176,10 +180,6 @@ jobs:
       - name: Install bottom graphql packages
         if: contains(matrix.bottom-version, 'graphql')
         run: yarn -s add graphql@^15.8.0 nexus@1.2 --dev
-
-      #NOTE: addresses issue "npm ERR! maxAge must be a number" due picking npm version from local semantic-release
-      - name: Remove semantic-release
-        run: yarn -s remove semantic-release
 
       - name: Test
         run: yarn -s test:ci

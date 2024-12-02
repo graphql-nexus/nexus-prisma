@@ -75,8 +75,6 @@
     "@prisma-labs/prettier-config": "0.1.0",
     "@prisma/client": "^5.0.0",
     "@prisma/internals": "^5.0.0",
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/git": "^10.0.1",
     "@types/debug": "^4.1.12",
     "@types/expand-tilde": "^2.0.2",
     "@types/jest": "29.5.14",
@@ -119,9 +117,6 @@
     "typescript": "5.3.3",
     "yalc": "^1.0.0-pre.53",
     "zod": "^3.23.8"
-  },
-  "optionalDependencies": {
-    "semantic-release": "^23.1.1"
   },
   "prettier": "@prisma-labs/prettier-config",
   "peerDependencies": {

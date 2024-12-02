@@ -1,3 +1,19 @@
+## [2.0.6](https://github.com/graphql-nexus/nexus-prisma/compare/v2.0.5...v2.0.6) (2024-12-02)
+
+
+### CI
+
+* move install of semantic release packages into release workflow ([#1132](https://github.com/graphql-nexus/nexus-prisma/issues/1132)) ([81e690a](https://github.com/graphql-nexus/nexus-prisma/commit/81e690aab5091e9faf36c7abcd147101c153eae5))
+
+
+### Bug fixes
+
+* **deps:** update dependency debug to ^4.3.7 ([#1109](https://github.com/graphql-nexus/nexus-prisma/issues/1109)) ([0287422](https://github.com/graphql-nexus/nexus-prisma/commit/0287422cc872c392e5452774be8ccd25804a7ac4))
+* **deps:** update dependency graphql-scalars to ^1.23.0 ([#1044](https://github.com/graphql-nexus/nexus-prisma/issues/1044)) ([49bcb35](https://github.com/graphql-nexus/nexus-prisma/commit/49bcb355decfe3efc407a70aee2bd35e168db01a))
+* **deps:** update dependency semver to ^7.6.3 ([#1110](https://github.com/graphql-nexus/nexus-prisma/issues/1110)) ([74af1c6](https://github.com/graphql-nexus/nexus-prisma/commit/74af1c6e8661c93a68723b5d3a33b3b9ad2e6dab))
+* **deps:** update dependency tslib to ^2.8.1 ([#1119](https://github.com/graphql-nexus/nexus-prisma/issues/1119)) ([4ea8f30](https://github.com/graphql-nexus/nexus-prisma/commit/4ea8f3055fc202a08d2a98a4fff42182f1725992))
+* remove unsafe use of chain method ([#1131](https://github.com/graphql-nexus/nexus-prisma/issues/1131)) ([a19d628](https://github.com/graphql-nexus/nexus-prisma/commit/a19d628c13d60d1c03de272e2cc61c0eee4583a1))
+
 ## [2.0.5](https://github.com/graphql-nexus/nexus-prisma/compare/v2.0.4...v2.0.5) (2024-02-23)
 
 

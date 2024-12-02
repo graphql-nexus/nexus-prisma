@@ -35,9 +35,10 @@ jobs:
 
       - name: Apply debug patches
         run: patches/apply-patches.sh
+      - run: |
+          echo "PR_HEAD_REF=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
       - name: Semantic release dry run
         run: GITHUB_ACTIONS="" yarn semantic-release --extends ./.releaserc.dry-run.js
         env:
-          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
           GITHUB_TOKEN: ${{ github.token }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

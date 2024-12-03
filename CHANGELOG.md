@@ -1,3 +1,10 @@
+## [2.0.7](https://github.com/graphql-nexus/nexus-prisma/compare/v2.0.6...v2.0.7) (2024-12-03)
+
+
+### Bug fixes
+
+* remove redundant polyfill ts-replace-all ([#1135](https://github.com/graphql-nexus/nexus-prisma/issues/1135)) ([5563256](https://github.com/graphql-nexus/nexus-prisma/commit/556325693e6f15afc8ae4071d26fbe5e2afa7b72))
+
 ## [2.0.6](https://github.com/graphql-nexus/nexus-prisma/compare/v2.0.5...v2.0.6) (2024-12-02)
 
 

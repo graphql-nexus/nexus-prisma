@@ -1,6 +1,5 @@
 import dindist from 'dindist'
 import { konn, providers } from 'konn'
-import 'ts-replace-all'
 import * as Path from 'path'
 import { createPrismaSchema } from '../__helpers__/helpers'
 import { project } from '../__providers__/project'

@@ -147,7 +147,6 @@
     "pluralize": "^8.0.0",
     "semver": "^7.6.3",
     "setset": "^0.0.9",
-    "ts-replace-all": "^1.0.0",
     "tslib": "^2.8.1"
   },
   "nodemonConfig": {

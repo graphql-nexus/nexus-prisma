@@ -1,7 +1,6 @@
 import * as Path from 'path'
 import dindist from 'dindist'
 import { konn, providers } from 'konn'
-import 'ts-replace-all'
 import { project } from '../__providers__/project'
 import { monitorAsyncMethod, run } from '../__providers__/run'
 import { createPrismaSchema } from '../__helpers__/helpers'

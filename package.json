@@ -112,7 +112,7 @@
     "prisma": "^5.0.0",
     "read-pkg-up": "7.0.1",
     "semantic-release": "23.1.1",
-    "slug": "^8.2.3",
+    "slug": "^10.0.0",
     "strip-ansi": "6.0.1",
     "ts-jest": "29.2.5",
     "ts-node": "^10.9.2",

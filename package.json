@@ -117,7 +117,7 @@
     "ts-jest": "29.2.5",
     "ts-node": "^10.9.2",
     "type-fest": "^4.30.0",
-    "typescript": "5.3.3",
+    "typescript": "5.7.2",
     "yalc": "^1.0.0-pre.53",
     "zod": "^3.23.8"
   },

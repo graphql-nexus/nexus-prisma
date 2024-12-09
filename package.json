@@ -111,7 +111,7 @@
     "prettier": "3.4.2",
     "prisma": "^5.0.0",
     "read-pkg-up": "7.0.1",
-    "semantic-release": "23.1.1",
+    "semantic-release": "24.2.0",
     "slug": "^8.2.3",
     "strip-ansi": "6.0.1",
     "ts-jest": "29.2.5",

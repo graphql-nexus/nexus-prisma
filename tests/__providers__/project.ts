@@ -4,6 +4,7 @@ import { merge } from 'lodash'
 import readPkgUp from 'read-pkg-up'
 import { PackageJson, TsConfigJson } from 'type-fest'
 import { assertBuildPresent } from '../__helpers__/helpers'
+import { getNodeMajorVersion } from '../__helpers__/nodeVersion'
 import { getDynamicPackagesVersions } from '../__helpers__/packagesVersions'
 import type * as Run from './run'
 
@@ -14,6 +15,7 @@ type Project = {
   }
   packageJson: {
     mergeAsync(fields: PackageJson): Promise<void>
+    mergeIfExistAsync(fields: PackageJson): Promise<void>
     createAsync(fields: PackageJson): Promise<void>
   }
   tsconfig: {
@@ -52,9 +54,10 @@ export const project = () =>
             await ctx.fs.copyAsync(path, ctx.fs.cwd(), {
               overwrite: true,
             })
-            await api.packageJson.mergeAsync({
+            await api.packageJson.mergeIfExistAsync({
               devDependencies: {
                 '@prisma/client': dynamicPackagesVersions['@prisma/client'],
+                '@types/node': `^${getNodeMajorVersion()}.0.0`,
                 prisma: dynamicPackagesVersions.prisma,
                 graphql: dynamicPackagesVersions.graphql,
                 nexus: dynamicPackagesVersions.nexus,
@@ -71,6 +74,21 @@ export const project = () =>
             const fileName = 'package.json'
             const PackageJson = await ctx.fs.readAsync(fileName, 'json')
             const PackageJsonNew = merge(PackageJson, fields)
+            await ctx.fs.writeAsync(fileName, PackageJsonNew, { jsonIndent: 2 })
+          },
+          mergeIfExistAsync: async (fields) => {
+            const fileName = 'package.json'
+            const PackageJson = await ctx.fs.readAsync(fileName, 'json')
+            const PackageJsonNew = Object.assign({}, PackageJson)
+            Object.keys(fields).forEach((key) => {
+              const destinationField = (PackageJsonNew[key] ??= {})
+              const sourceField = fields[key] as Record<string, string>
+              Object.keys(sourceField).forEach((subKey) => {
+                if (destinationField[subKey] != null) {
+                  destinationField[subKey] = sourceField[subKey]
+                }
+              })
+            })
             await ctx.fs.writeAsync(fileName, PackageJsonNew, { jsonIndent: 2 })
           },
         },

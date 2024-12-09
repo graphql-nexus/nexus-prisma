@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "@prisma/client": "__dynamic__",
+    "@types/node": "__dynamic__",
     "graphql": "__dynamic__",
     "nexus": "__dynamic__",
     "prisma": "__dynamic__",

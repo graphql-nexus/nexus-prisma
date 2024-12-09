@@ -1,3 +1,10 @@
+## [2.0.8](https://github.com/graphql-nexus/nexus-prisma/compare/v2.0.7...v2.0.8) (2024-12-09)
+
+
+### Bug fixes
+
+* **deps:** update dependency debug to ^4.4.0 ([#1147](https://github.com/graphql-nexus/nexus-prisma/issues/1147)) ([48f17db](https://github.com/graphql-nexus/nexus-prisma/commit/48f17db9b2fe50d36021cbf46f7d388825ae6fbd))
+
 ## [2.0.7](https://github.com/graphql-nexus/nexus-prisma/compare/v2.0.6...v2.0.7) (2024-12-03)
 
 

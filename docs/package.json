@@ -16,7 +16,7 @@
     "@prisma-labs/prettier-config": "0.1.0",
     "@reach/skip-nav": "0.18.0",
     "@types/node": "20.12.7",
-    "@types/react": "18.3.14",
+    "@types/react": "19.0.2",
     "autoprefixer": "10.4.20",
     "eslint": "8.57.1",
     "eslint-config-next": "15.0.4",
@@ -25,8 +25,8 @@
     "nextra-theme-docs": "2.13.4",
     "postcss": "8.4.49",
     "prettier": "3.4.2",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
     "tailwindcss": "3.4.16",
     "typescript": "5.3.3"
   }

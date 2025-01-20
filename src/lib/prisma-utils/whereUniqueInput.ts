@@ -9,7 +9,7 @@ type FieldName = string
 export const createWhereUniqueInput = (source: RecordUnknown, model: DMMF.Model) => {
   // TODO There is no reason to compute this every time. Memoize or move.
   const uniqueIdentifierFields = getUniqueIdentifierFields(model)
-  const uniqueIdentifierFieldsMissingInData = uniqueIdentifierFields.filter((_) => !source[_])
+  const uniqueIdentifierFieldsMissingInData = uniqueIdentifierFields.filter((_) => source[_] == null)
 
   if (uniqueIdentifierFieldsMissingInData.length > 0) {
     // TODO rich errors

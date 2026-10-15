@@ -93,7 +93,7 @@
     "cross-env": "^7.0.3",
     "dripip": "0.10.0",
     "eslint": "^8.57.1",
-    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-prettier": "^9.1.2",
     "execa": "^5.1.1",
     "graphql": "^16.9.0",
     "graphql-request": "^6.1.0",
